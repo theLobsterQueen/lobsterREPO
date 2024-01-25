@@ -1,0 +1,11 @@
+
+// BASIC 2D VERTEX SHADER //
+#version 140
+
+// INPUT ATTRIBUTES //
+in vec3 vertexPos;
+void main()
+{
+	// ASSIGNS INPUT VERTEX POSITION TO GL-POSITION //
+	gl_Position = vec4(vertexPos, 1.0);
+}

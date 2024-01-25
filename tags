@@ -1,0 +1,70 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/media/layna/WorkDisk/School/Third_Year/Second_Semester/Realtime/lobsterEngine/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+EngineCore	./include/engineCore.h	/^struct EngineCore$/;"	s
+Entity	./include/entity.h	/^struct Entity$/;"	s
+ID	./include/entity.h	/^	entityID ID;$/;"	m	struct:Entity	typeref:typename:entityID
+LOBSTER_APP	./include/app.h	/^#define LOBSTER_APP /;"	d
+LOBSTER_COMPONENTS	./include/component.h	/^#define LOBSTER_COMPONENTS /;"	d
+LOBSTER_CONSTANTS	./include/importantConstants.h	/^#define LOBSTER_CONSTANTS /;"	d
+LOBSTER_ENGINE_CORE	./include/engineCore.h	/^#define LOBSTER_ENGINE_CORE /;"	d
+LOBSTER_ENTITY	./include/entity.h	/^#define LOBSTER_ENTITY /;"	d
+LOBSTER_GRAPHICS_H	./include/graphics.h	/^#define LOBSTER_GRAPHICS_H$/;"	d
+LOBSTER_MAX_COMPONENTS	./include/importantConstants.h	/^#define LOBSTER_MAX_COMPONENTS	/;"	d
+LOBSTER_MAX_ENTITIES	./include/importantConstants.h	/^#define LOBSTER_MAX_ENTITIES /;"	d
+LOBSTER_MESH	./include/mesh.h	/^#define LOBSTER_MESH /;"	d
+LOBSTER_PIPELINE	./include/pipeline.h	/^#define LOBSTER_PIPELINE /;"	d
+LOBSTER_SCENE	./include/scene.h	/^#define LOBSTER_SCENE /;"	d
+LOBSTER_UTILS	./include/utilities.h	/^#define LOBSTER_UTILS /;"	d
+Mesh	./include/mesh.h	/^struct Mesh$/;"	s
+Pipeline	./include/pipeline.h	/^class Pipeline$/;"	c
+Scene	./include/scene.h	/^struct Scene$/;"	s
+addMesh	./include/scene.h	/^	void addMesh(Scene& targetScene, entityID entityIndex, Mesh inputMesh)$/;"	f	namespace:sceneManagement	typeref:typename:void
+app	./include/app.h	/^namespace app$/;"	n
+basePipeline	./include/engineCore.h	/^	Pipeline basePipeline;$/;"	m	struct:EngineCore	typeref:typename:Pipeline
+begin	./src/app.cpp	/^void app :: begin(EngineCore& core)$/;"	f	class:app	typeref:typename:void
+beginRenderPass	./src/graphics.cpp	/^void graphics :: beginRenderPass(float r, float g, float b, float a)$/;"	f	class:graphics	typeref:typename:void
+changeTitle	./src/graphics.cpp	/^void graphics :: changeTitle(EngineCore& core, std :: string windowName)$/;"	f	class:graphics	typeref:typename:void
+checkErrors	./src/utilities.cpp	/^void checkErrors()$/;"	f	typeref:typename:void
+componentCounter	./include/component.h	/^unsigned char componentCounter = 0;$/;"	v	typeref:typename:unsigned char
+componentMask	./include/entity.h	/^	std :: bitset<LOBSTER_MAX_COMPONENTS> componentMask = 0;$/;"	m	struct:Entity	typeref:typename:std::bitset<LOBSTER_MAX_COMPONENTS>
+create	./src/mesh.cpp	/^Mesh mesh :: create(std :: vector<GLfloat> inputVertices)$/;"	f	class:mesh	typeref:typename:Mesh
+createScene	./include/scene.h	/^	Scene createScene(std :: string inputName="MyScene")$/;"	f	namespace:sceneManagement	typeref:typename:Scene
+createTestScene	./src/app.cpp	/^void app :: createTestScene(EngineCore& core)$/;"	f	class:app	typeref:typename:void
+currentScene	./include/engineCore.h	/^	Scene currentScene;$/;"	m	struct:EngineCore	typeref:typename:Scene
+debug	./include/engineCore.h	/^	bool debug;$/;"	m	struct:EngineCore	typeref:typename:bool
+draw	./src/mesh.cpp	/^void mesh :: draw(Mesh inputMesh, Pipeline& pipeline)$/;"	f	class:mesh	typeref:typename:void
+entities	./include/scene.h	/^	Entity entities[LOBSTER_MAX_ENTITIES];$/;"	m	struct:Scene	typeref:typename:Entity[]
+entityID	./include/importantConstants.h	/^typedef unsigned short int entityID;$/;"	t	typeref:typename:unsigned short int
+fragShader	./include/pipeline.h	/^		GLuint fragShader;$/;"	m	class:Pipeline	typeref:typename:GLuint
+glRef	./include/engineCore.h	/^	void * glRef;$/;"	m	struct:EngineCore	typeref:typename:void *
+graphics	./include/graphics.h	/^namespace graphics$/;"	n
+init	./include/pipeline.h	/^		void init()$/;"	f	class:Pipeline	typeref:typename:void
+linkProgram	./include/pipeline.h	/^		void linkProgram()$/;"	f	class:Pipeline	typeref:typename:void
+loadShader	./include/pipeline.h	/^		void loadShader(GLenum shaderType, const char * shaderPath, bool debugPrint = false)$/;"	f	class:Pipeline	typeref:typename:void
+main	./src/main.cpp	/^int main()$/;"	f	typeref:typename:int
+mesh	./include/mesh.h	/^namespace mesh$/;"	n
+meshes	./include/scene.h	/^	Mesh meshes[LOBSTER_MAX_COMPONENTS];	$/;"	m	struct:Scene	typeref:typename:Mesh[]
+name	./include/scene.h	/^	std :: string name;$/;"	m	struct:Scene	typeref:typename:std::string
+name	./makeFile.py	/^name = "LobsterEngine"$/;"	v
+present	./src/graphics.cpp	/^void graphics :: present(EngineCore& core)$/;"	f	class:graphics	typeref:typename:void
+printProgramLog	./src/utilities.cpp	/^void printProgramLog(GLuint program)$/;"	f	typeref:typename:void
+printShaderLog	./src/utilities.cpp	/^void printShaderLog(GLuint shader)$/;"	f	typeref:typename:void
+program	./include/pipeline.h	/^		GLuint program;$/;"	m	class:Pipeline	typeref:typename:GLuint
+run	./src/app.cpp	/^void app :: run(EngineCore& core)$/;"	f	class:app	typeref:typename:void
+sceneManagement	./include/scene.h	/^namespace sceneManagement$/;"	n
+use	./include/pipeline.h	/^		void use()$/;"	f	class:Pipeline	typeref:typename:void
+vertShader	./include/pipeline.h	/^		GLuint vertShader;$/;"	m	class:Pipeline	typeref:typename:GLuint
+vertexCount	./include/mesh.h	/^	unsigned short int vertexCount = 0;$/;"	m	struct:Mesh	typeref:typename:unsigned short int
+vertexPositions	./include/mesh.h	/^	std :: vector<GLfloat> vertexPositions;$/;"	m	struct:Mesh	typeref:typename:std::vector<GLfloat>
+winHeight	./include/engineCore.h	/^	unsigned short int winHeight = 720;$/;"	m	struct:EngineCore	typeref:typename:unsigned short int
+winRef	./include/engineCore.h	/^	SDL_Window * winRef;$/;"	m	struct:EngineCore	typeref:typename:SDL_Window *
+winWidth	./include/engineCore.h	/^	unsigned short int winWidth = 1280;$/;"	m	struct:EngineCore	typeref:typename:unsigned short int

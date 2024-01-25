@@ -1,0 +1,11 @@
+
+// BASIC 2D FRAGMENT SHADER //
+#version 140
+
+// OUTPUT ATTRIBUTES //
+out vec4 color;
+void main()
+{
+	// ASSIGNS FINAL COLOR OUTPUT //
+	color = vec4(1.0, 1.0, 1.0, 1.0);
+}

@@ -18,6 +18,7 @@
 #include <engineCore.h>
 #include <app.h>
 #include <mesh.h>
+#include <importantConstants.h>
 
 int main()
 {
@@ -75,17 +76,6 @@ int main()
 	std :: cout << "GL VERSION: " << glGetString(GL_VERSION) << std :: endl;
 	std :: cout << "GLSL VERSION: " 
 		<< glGetString(GL_SHADING_LANGUAGE_VERSION) << std :: endl;
-
-	// INITIALIZES VERTEX ARRAY AND VERTEX BUFFER //
-	GLuint VAO; GLuint VBO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-	// ENABLES ATTRIBUTE ARRAYS //
-	glEnableVertexAttribArray(0);
 
 	// BEGINS ENGINE OPERATION //
 	app :: begin(core);

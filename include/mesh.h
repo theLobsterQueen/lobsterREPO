@@ -14,25 +14,30 @@
 
 // LOBSTER INCLUDES //
 #include <graphics.h>
+#include <importantConstants.h>
 
 /// <summary> ///
 ///		This class holds the basic vertex/index/texture and other such attributes
 ///			so that the object as a whole can be rendered easily by OpenGL.
 /// </summary> ///
-
 struct Mesh
 {
-	std :: vector<GLfloat> vertexPositions;
+	std :: vector<GLfloat> vertexBuffer = { };
+	std :: vector<GLfloat> colorBuffer = { };
+
 	unsigned short int vertexCount = 0;
+	GLuint VAO = 0;
 };
 
 // FUNCTION DEFINITIONS //
 namespace mesh
 {
 	/// <summary> ///
-	///		This function creates and returns a new mesh component with input vertices.
+	///		This function creates and returns a new mesh component with input vertices,
+	///			and assigns it the color of input color struct.
 	/// </summary> ///
-	Mesh * createMesh(std :: vector<GLfloat> inputVertices);
+	Mesh * createMesh
+		(std :: vector<GLfloat> inputVertices, std :: vector<GLfloat> inputColor);
 
 	/// <summary> ///
 	///		This function draws an input mesh component.

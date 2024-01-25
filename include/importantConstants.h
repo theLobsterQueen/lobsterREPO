@@ -11,9 +11,17 @@
 #define LOBSTER_MAX_ENTITIES 	256
 #define LOBSTER_MAX_COMPONENTS	32
 
-// TYPEDEFS TO IMPROVE READABILITY //
+// ECS ID'S/MASKS TO IMPROVE READABILITY //
 typedef unsigned short int  	entityID;
 typedef unsigned char 			componentID;
 typedef unsigned int 			componentMask;
+
+// DEFINES VERTEX ATTRIBUTES //
+#define POSITION_VEC				0
+#define COLOR_VEC					1
+
+// COLOR STRUCT TO USE IN ENGINE //
+struct Color
+	{ GLfloat r, g, b, a; };
 
 #endif

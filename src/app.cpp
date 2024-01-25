@@ -53,10 +53,20 @@ void app :: createTestScene(EngineCore * core)
 		sceneManagement :: newEntityID(core -> curSceneRef), // ENTITY INDEX (EMPTY ENTITY) //
 		componentManagement :: getID<Mesh>(), // ID OF COMPONENT TO ADD //
 		(char *) mesh :: createMesh
-		({
-			-0.5f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f
-		})
+		(
+			// POSITION VEC //
+			{
+				-0.5f, -0.5f, 0.0f,
+				 0.0f,  0.5f, 0.0f,
+				 0.5f, -0.5f, 0.0f
+			},
+
+			// COLOR VEC //
+			{
+				1.0f, 0.0f, 0.0f, 1.0f,
+				0.0f, 1.0f, 0.0f, 1.0f,
+				0.0f, 0.0f, 1.0f, 1.0f
+			}
+		)
 	);
 }

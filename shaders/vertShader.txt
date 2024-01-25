@@ -1,11 +1,18 @@
-
 // BASIC 2D VERTEX SHADER //
-#version 140
+#version 460
 
 // INPUT ATTRIBUTES //
-in vec3 vertexPos;
+layout (location = 0) in vec3 in_vertexPos;
+layout (location = 1) in vec4 in_colorVec;
+
+// OUTPUT ATTRIBUTES //
+layout (location = 0) out vec4 out_colorVec;
+
 void main()
 {
 	// ASSIGNS INPUT VERTEX POSITION TO GL-POSITION //
-	gl_Position = vec4(vertexPos, 1.0);
+	gl_Position = vec4(in_vertexPos, 1.0);
+
+	// OUTPUTS THE COLOR VECTOR WITHOUT EDITING //
+	out_colorVec = in_colorVec;
 }

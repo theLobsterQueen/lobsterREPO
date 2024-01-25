@@ -5,17 +5,18 @@
 void app :: begin(EngineCore * core)
 {
 	// INITIALIZES CORE VALUES //
-	core -> basePipelineRef = new Pipeline();
-	core -> curSceneRef = new Scene;
+	core -> basePipelineRef = graphics :: createPipeline();
+	core -> curSceneRef = sceneManagement :: createScene();
 
 	// CREATES BASE RENDER PIPELINE //
-	core -> basePipelineRef -> init();
-	core -> basePipelineRef -> loadShader(GL_VERTEX_SHADER, "shaders/vertShader.txt");
-	core -> basePipelineRef -> loadShader(GL_FRAGMENT_SHADER, "shaders/fragShader.txt");
-	core -> basePipelineRef -> linkProgram();
+	graphics :: loadShader
+		(core -> basePipelineRef, GL_VERTEX_SHADER, "shaders/vertShader.txt");
+	graphics :: loadShader
+		(core -> basePipelineRef, GL_FRAGMENT_SHADER, "shaders/fragShader.txt");
+	graphics :: compileProgram(core -> basePipelineRef);
 
 	// CHANGES THE NAME OF THE WINDOW TO THE NEW CURRENT SCENE //
-	graphics :: changeTitle(core, core -> curSceneRef -> name);
+	windowManagement :: changeTitle(core -> winRef, core -> curSceneRef -> name);
 
 	// (TEMP) CREATES TEST SCENE //
 	createTestScene(core);

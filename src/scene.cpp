@@ -1,10 +1,10 @@
 // INCLUDES DEFINITIONS //
 #include <scene.h>
 
-Scene sceneManagement :: createScene(std :: string inputName)
+Scene * sceneManagement :: createScene(std :: string inputName)
 {
-	Scene newScene;
-	newScene.name = inputName;
+	Scene * newScene = new Scene;
+	newScene -> name = inputName;
 	return newScene;
 }
 

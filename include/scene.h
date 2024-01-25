@@ -17,7 +17,6 @@
 
 // LOBSTER INCLUDES //
 #include <mesh.h>
-#include <graphics.h>
 #include <entity.h>
 #include <component.h>
 #include <importantConstants.h>
@@ -47,7 +46,7 @@ namespace sceneManagement
 	/// <summary> ///
 	///		This function returns a new scene with a given name.
 	/// </summary> ///
-	Scene createScene(std :: string inputName="MyScene");
+	Scene * createScene(std :: string inputName="MyScene");
 
 	/// <summary> ///
 	///		Returns an index to the entity nearest to Index 0 with a component mask

@@ -13,7 +13,7 @@
 #include <GL/glu.h>
 
 // LOBSTER INCLUDES //
-#include <pipeline.h>
+#include <graphics.h>
 
 /// <summary> ///
 ///		This class holds the basic vertex/index/texture and other such attributes

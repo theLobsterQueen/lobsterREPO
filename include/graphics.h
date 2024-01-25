@@ -1,10 +1,12 @@
-#ifndef LOBSTER_GRAPHICS_H
-#define LOBSTER_GRAPHICS_H
+#ifndef LOBSTER_PIPELINE
+#define LOBSTER_PIPELINE 1
 
 // INCLUDES AND INITIALIZATIONS //
 
-// STD INCLUDES //
-#include <string>
+// STANDARD INCLUDES //
+#include <iostream>
+#include <fstream>
+#include <filesystem>
 
 // SDL/GL INCLUDES //
 #include <SDL2/SDL.h>
@@ -12,26 +14,55 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-// LOBSTER INCLUDES //
+// INTERNAL INCLUDES //
+#include <utilities.h>
 #include <engineCore.h>
 
-// PROTOTYPE STRUCTS //
+// STRUCT PROTOTYPE //
 struct EngineCore;
 
 /// <summary> ///
-///		This file defines functions that change the appearence of the engine in some way,
-///			but do not fit within other objects such as the render pipeline
-///			or individual meshes.
+///		This struct holds an OpenGL program, and containers for the latest loaded shaders
+///			of each programmable type of shader.
 /// </summary> ///
+
+struct Pipeline
+{
+	GLuint program;
+	GLuint vertShader;
+	GLuint fragShader;
+};
 
 namespace graphics
 {
-	// FUNCTION DEFINITIONS //
+	// PUBLIC METHODS //
 
 	/// <summary> ///
-	///		Changes the title of the main window.
+	///		Creates and returns a new, fully initialized pipeline instance.
 	/// </summary> ///
-	void changeTitle(EngineCore * core, std :: string windowName);
+	Pipeline * createPipeline();
+
+	/// <summary> ///
+	///		Loads a shader at input shader path into input target pipeline, and compiles
+	//			it as input shader type. The shader can be printed fully in console
+	///			if the caller sets input debug bool as true.
+	/// </summary> ///
+	void loadShader
+	// PARAMETERS //
+	(
+		Pipeline * targetPipeline, GLenum shaderType, const char * shaderPath, 
+		bool debugPrint = false
+	);
+
+	/// <summary> ///
+	///		Attaches the latest loaded shaders to the render pipeline.
+	/// </summary> ///
+	void compileProgram(Pipeline * targetPipeline);
+
+	/// <summary> ///
+	///		Sets program of input target pipeline as the active program.
+	/// </summary> ///
+	void usePipeline(Pipeline * targetPipeline);
 
 	/// <summary> ///
 	///		This function clears the screen a specific color, and prepares the

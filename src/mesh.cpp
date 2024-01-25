@@ -27,7 +27,7 @@ Mesh * mesh :: createMesh(std :: vector<GLfloat> inputVertices)
 void mesh :: draw(Mesh * inputMesh, Pipeline * pipeline)
 {
 	// USES THE INPUT PIPELINE //
-	pipeline -> use();
+	graphics :: usePipeline(pipeline);
 
 	// BINDS THE BUFFER TO THE CONTEXT AND ENSURE IT'S CORRECTLY CONFIGURED //
 	glBufferData

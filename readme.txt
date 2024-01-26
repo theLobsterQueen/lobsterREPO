@@ -10,6 +10,12 @@ Sources :
 	https://lazyfoo.net/tutorials/SDL/51_SDL_and_modern_opengl/index.php
 	https://youtu.be/sXbqwzXtecE?list=PLvv0ScY6vfd9zlZkIIqGDeG5TUWswkMox
  	https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html
+	https://www.youtube.com/watch?v=XnUMm-uNmvY
+
+// KEY //
+X: Done
+?: "Could" be done.
+~: Working on it.
 
 // GOALS //
 Sprint 0 (PRE-PRODUCTION) :
@@ -17,15 +23,15 @@ Sprint 0 (PRE-PRODUCTION) :
 		[X] How am I going to organize my scene structure?
 		[X] How will I render objects to the screen?
 		[?] How will I organize my main loop?
-		[ ] How will I will take and handle input?
+		[X] How will I will take and handle input?
 
 Sprint 1 (ENGINE BACKEND FUNDAMENTALS) :
-	[ ] Handle basic SDL2 input events.
+	[X] Handle basic SDL2 input events.
 	[X] Render entities onto the screen.
 	[X] Create foundations for entity component system.
 	[X] Create basic file loaders for GLSL shaders.
-	[ ] Use uniforms and systems logic to make a scene fully interactable.	
-	[ ] Build out base components library for more advanced functionalities.
+	[X] Use uniforms and systems logic to make a scene fully interactable.	
+	[~] Build out base components library for more advanced functionalities.
 		  (Collision detecting component, lighting component.)
 	[ ] Create a fully 3D base shader, complete with (probably Phong) lighting system.
 	[ ] Create material component to dictate color.

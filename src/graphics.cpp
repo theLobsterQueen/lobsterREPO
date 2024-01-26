@@ -46,8 +46,13 @@ void graphicManagement :: loadShader
 	std :: ifstream shaderFile(shaderPath);
 	if(!shaderFile.is_open())
 	{
-		std :: cout << "COULD NOT FIND SHADER AT " << shaderPath << "!" << std :: endl;
-		return;
+		// ATTEMPTS TO LOAD IT FROM THE PERSEPCTIVE OF AN EXECUTABLE IN DEBUG/RELEASE //
+		shaderFile.open(std :: string("../../") + shaderPath);
+		if(!shaderFile.is_open())
+		{
+			std :: cout << "COULD NOT FIND SHADER AT " << shaderPath << "!" << std :: endl;
+			return;
+		}
 	}
 
 	std :: string uniOpCaller("!! UNIFORMS");
@@ -58,6 +63,16 @@ void graphicManagement :: loadShader
 		{
 			// VARIABLE INITIALIZATION //
 			std :: ifstream uniFile("shaders/uniforms.txt");
+			if(!uniFile.is_open())
+			{
+				// ATTEMPTS LOADING FFROM ALTERNATE DIRECTORY //
+				uniFile.open("../../shaders/uniforms.txt");
+				if(!uniFile.is_open())
+				{
+					std :: cout << "ERROR! COULD NOT FIND UNIFORMS FILE." << std :: endl;
+					return;
+				}
+			}
 
 			// COPIES DATA INTO SHADER //
 			std :: string tempLine;

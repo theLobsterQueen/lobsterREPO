@@ -15,13 +15,14 @@
 typedef unsigned short int  	entityID;
 typedef unsigned char 			componentID;
 typedef unsigned int 			componentMask;
+typedef char *					compPtr;
 
 // DEFINES VERTEX ATTRIBUTES //
 #define POSITION_VEC				0
 #define COLOR_VEC					1
 
-// COLOR STRUCT TO USE IN ENGINE //
-struct Color
-	{ GLfloat r, g, b, a; };
+// DEFINES UNIFORMS //
+#define PLAYER_POS_UNIFORM			0
+#define IS_CENTERED_UNIFORM			1
 
 #endif

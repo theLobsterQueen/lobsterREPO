@@ -33,7 +33,7 @@ struct Pipeline
 	GLuint fragShader;
 };
 
-namespace graphics
+namespace graphicManagement
 {
 	// PUBLIC METHODS //
 

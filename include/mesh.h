@@ -30,7 +30,7 @@ struct Mesh
 };
 
 // FUNCTION DEFINITIONS //
-namespace mesh
+namespace meshManagement
 {
 	/// <summary> ///
 	///		This function creates and returns a new mesh component with input vertices,

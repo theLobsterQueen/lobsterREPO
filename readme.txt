@@ -6,7 +6,7 @@ The dev blog is updated regularly, so be sure to tune in from time to time!
 
 Sources :
 	https://www.libsdl.org/
-	https://antongerdelan.net/opengl/hellotriangle.html
+	https://antongerdelan.net/opengl/index.html
 	https://lazyfoo.net/tutorials/SDL/51_SDL_and_modern_opengl/index.php
 	https://youtu.be/sXbqwzXtecE?list=PLvv0ScY6vfd9zlZkIIqGDeG5TUWswkMox
  	https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html

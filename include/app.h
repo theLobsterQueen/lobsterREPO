@@ -17,8 +17,9 @@
 #include <window.h>
 #include <mesh.h>
 #include <scene.h>
+#include <transform.h>
 
-namespace app
+namespace appManagement
 {
 	// FUNCTION DEFINITIONS //
 
@@ -38,6 +39,11 @@ namespace app
 	///		This populates the current scene with test draw meshes.
 	/// </summary> ///
 	void createTestScene(EngineCore * core);
+
+	/// <summary> ///
+	///		Updates the general game state by processing SDL2 events.
+	/// </summary> ///
+	void update(EngineCore * core);
 };
 
 #endif

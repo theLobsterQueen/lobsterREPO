@@ -1,7 +1,7 @@
 // INCLUDES DEFINITION //
 #include <graphics.h>
 
-Pipeline * graphics :: createPipeline()
+Pipeline * graphicManagement :: createPipeline()
 {
 	Pipeline * newPipeline = new Pipeline; 
 	newPipeline -> program = glCreateProgram(); 
@@ -10,7 +10,7 @@ Pipeline * graphics :: createPipeline()
 	return newPipeline;
 }
 
-void graphics :: loadShader
+void graphicManagement :: loadShader
 // PARAMETERS //
 (
 	Pipeline * targetPipeline, GLenum shaderType, const char * shaderPath, 
@@ -50,12 +50,29 @@ void graphics :: loadShader
 		return;
 	}
 
+	std :: string uniOpCaller("!! UNIFORMS");
 	while(std :: getline(shaderFile, line))
 	{
-		if(debugPrint)
-			std :: cout << line << std :: endl;
+		// SEARCHES FOR '!!', WHICH INDICATES CUSTOM OPERATION //
+		if(line == uniOpCaller)
+		{
+			// VARIABLE INITIALIZATION //
+			std :: ifstream uniFile("shaders/uniforms.txt");
+
+			// COPIES DATA INTO SHADER //
+			std :: string tempLine;
+			while(std :: getline(uniFile, tempLine))
+				shaderString += tempLine + "\n";
+
+			continue;
+		}
+
+		// IF NOT PRODUCT OF CUSTOM OPERATION, COPIES RAW TEXT INTO SHADER //
 		shaderString += line + "\n";
 	}
+
+	if(debugPrint)
+		std :: cout << std :: endl << shaderString << std :: endl;
 
 	const char * source[] = { shaderString.c_str() };
 	glShaderSource(newShader, 1, source, NULL);
@@ -81,7 +98,7 @@ void graphics :: loadShader
 	shaderFile.close();
 }
 
-void graphics :: compileProgram(Pipeline * targetPipeline)
+void graphicManagement :: compileProgram(Pipeline * targetPipeline)
 {
 	// VARIABLE INITIALIZATION //
 	GLuint prog = targetPipeline -> program;
@@ -123,16 +140,16 @@ void graphics :: compileProgram(Pipeline * targetPipeline)
 	}
 }
 
-void graphics :: usePipeline(Pipeline * targetPipeline)
+void graphicManagement :: usePipeline(Pipeline * targetPipeline)
 { 
 	glUseProgram(targetPipeline -> program); 
 }
 
-void graphics :: beginRenderPass(float r, float g, float b, float a)
+void graphicManagement :: beginRenderPass(float r, float g, float b, float a)
 {
 	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void graphics :: present(EngineCore * core)
+void graphicManagement :: present(EngineCore * core)
 	{ SDL_GL_SwapWindow(core -> winRef); }

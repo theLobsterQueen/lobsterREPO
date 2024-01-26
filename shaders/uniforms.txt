@@ -1,0 +1,3 @@
+// DEFINES UNIFORMS //
+layout (location = 0) uniform vec3 			playerPos;
+layout (location = 1) uniform unsigned int 	noOffset;

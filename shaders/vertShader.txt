@@ -8,10 +8,17 @@ layout (location = 1) in vec4 in_colorVec;
 // OUTPUT ATTRIBUTES //
 layout (location = 0) out vec4 out_colorVec;
 
+!! UNIFORMS
+
 void main()
 {
-	// ASSIGNS INPUT VERTEX POSITION TO GL-POSITION //
-	gl_Position = vec4(in_vertexPos, 1.0);
+	// IF NOT CENTERED, OFFSETS VERTEX BY PLAYER POSITION //
+	vec3 vertexPos = in_vertexPos;
+	if(noOffset == 0)
+		vertexPos -= playerPos;
+
+	// ASSIGNS VERTEX VALUE //
+	gl_Position = vec4(vertexPos, 1.0);
 
 	// OUTPUTS THE COLOR VECTOR WITHOUT EDITING //
 	out_colorVec = in_colorVec;

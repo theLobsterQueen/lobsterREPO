@@ -9,6 +9,9 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+// LOBSTER INCLUDES //
+#include <input.h>
+
 // STRUCT PROTOTYPES //
 struct Scene;
 struct Pipeline;
@@ -20,6 +23,11 @@ struct Pipeline;
 
 struct EngineCore
 {
+	/// <summary> ///
+	///		If this boolean is ever set to false, turns off the application.
+	/// </summary> ///
+	bool isRunning = true;
+
 	/// <summary> ///
 	///		This boolean describes whether the engine should give verbose
 	///			debug statements during its operation.
@@ -54,6 +62,18 @@ struct EngineCore
 	///		This field contains the currently actively scene.
 	/// </summary> ///
 	Scene * curSceneRef = nullptr;
+
+	/// <summary> ///
+	///		This field contains a reference to the general input state
+	///			of the application. 
+	/// </summary> ///
+	InputState * inputState = new InputState;
+
+	/// <summary> ///
+	///		This field holds the time passed since the last time getDeltaTime was
+	///			called. getDeltaTime can be found in the appManagement namespace.
+	/// </summary> ///
+	double deltaTime = 0;
 };
 
 #endif

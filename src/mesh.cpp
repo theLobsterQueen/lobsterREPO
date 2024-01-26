@@ -2,7 +2,7 @@
 #include <mesh.h>
 
 // FUNCTION IMPLEMENTATIONS //
-Mesh * mesh :: createMesh
+Mesh * meshManagement :: createMesh
 	(std :: vector<GLfloat> inputVertices, std :: vector<GLfloat> inputColors)
 {
 	// CREATES NEW MESH STRUCT //
@@ -66,13 +66,16 @@ Mesh * mesh :: createMesh
 	glEnableVertexAttribArray(POSITION_VEC);
 	glEnableVertexAttribArray(COLOR_VEC);
 
+	// UNBINDS VECTOR BUFFER //
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 	return newMesh;
 }
 
-void mesh :: draw(Mesh * inputMesh, Pipeline * pipeline)
+void meshManagement :: draw(Mesh * inputMesh, Pipeline * pipeline)
 {
 	// USES THE INPUT PIPELINE //
-	graphics :: usePipeline(pipeline);
+	graphicManagement :: usePipeline(pipeline);
 
 	// PREPARES TO DRAW WITH INPUT MESH'S VAO //
 	glBindVertexArray(inputMesh -> VAO);

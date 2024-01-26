@@ -78,7 +78,7 @@ int main()
 		<< glGetString(GL_SHADING_LANGUAGE_VERSION) << std :: endl;
 
 	// BEGINS ENGINE OPERATION //
-	app :: begin(core);
+	appManagement :: begin(core);
 
 	// CLEAN UP APPPLICATION //
 	SDL_DestroyWindow(core -> winRef);

@@ -39,7 +39,10 @@ void pushConstant(const char * constantName, T constantValue)
 	if(!constantFile.is_open())
 	{
 		constantFile.open
-			("./shaders/constants.txt", std :: ios_base :: trunc | std :: ios_base :: out);
+		(
+			"./../../shaders/constants.txt", 
+			std :: ios_base :: trunc | std :: ios_base :: out
+		);
 
 		if(!constantFile.is_open())
 		{

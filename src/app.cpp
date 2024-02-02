@@ -73,7 +73,7 @@ void appManagement :: createTestScene(EngineCore * core)
 void appManagement :: run(EngineCore * core)
 {
 	// VARIABLE INITIALIZATION //
-	unsigned long int newDelta = SDL_GetTicks64();
+	unsigned long int newDelta = SDL_GetTicks();
 	unsigned long int oldDelta = 0;
 	static float timer = 0.0f;
 
@@ -81,7 +81,7 @@ void appManagement :: run(EngineCore * core)
 	{
 		// UPDATES DELTA TIME //
 		oldDelta = newDelta;
-		newDelta = SDL_GetTicks64();
+		newDelta = SDL_GetTicks();
 		
 		core -> deltaTime = (newDelta - oldDelta) / 1000.0f;
 

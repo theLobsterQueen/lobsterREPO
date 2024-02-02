@@ -20,7 +20,7 @@
 #include <mesh.h>
 #include <importantConstants.h>
 
-int main()
+int main(int argv, char ** args)
 {
 	// CREATES ENGINE CORE REFERENCE //
 	EngineCore * core = new EngineCore;

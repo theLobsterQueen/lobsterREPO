@@ -5,6 +5,9 @@ DevBlog link: https://sites.google.com/view/lobsterenginedevblog/home?authuser=0
 The dev blog is updated regularly, so be sure to tune in from time to time!
 
 Sources :
+	Hudson, James. "Lecture4: OpenGL Textures." Computer Graphics 1, 9/13/2023, 
+		Shawnee State University.
+
 	https://www.libsdl.org/
 	https://antongerdelan.net/opengl/index.html
 	https://lazyfoo.net/tutorials/SDL/51_SDL_and_modern_opengl/index.php
@@ -12,6 +15,7 @@ Sources :
  	https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html
 	https://www.youtube.com/watch?v=XnUMm-uNmvY
 	https://www.scratchapixel.com/index.html
+	
 
 // KEY //
 X: Done

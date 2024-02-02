@@ -9,6 +9,9 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+// STD INCLUDES //
+#include <vector>
+
 // LOBSTER INCLUDES //
 #include <input.h>
 

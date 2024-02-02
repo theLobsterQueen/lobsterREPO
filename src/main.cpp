@@ -25,6 +25,10 @@ int main()
 	// CREATES ENGINE CORE REFERENCE //
 	EngineCore * core = new EngineCore;
 
+	// IF DEBUG IS ENABLED, PRINTS OUT MESSAGE //
+	if(core -> debug)
+		std :: cout << "[DEBUG ENABLED]" << std :: endl;
+
 	// INITIALIZES SDL //
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{

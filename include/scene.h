@@ -67,7 +67,7 @@ namespace sceneManagement
 	/// <summary> ///
 	///		This function sets the engine's current scene to input target scene.
 	/// </summary> ///
-	void useScene(EngineCore * core, Scene * targetScene);
+	void changeScene(EngineCore * core, Scene * targetScene);
 
 	/// <summary> ///
 	///		Returns an index to the entity nearest to Index 0 with a component mask
@@ -94,7 +94,7 @@ namespace sceneManagement
 	/// <summary> ///
 	///		Iterates through all entities in the scene, and draws them.
 	/// </summary> ///
-	void renderScene(Scene * targetScene, Pipeline * inputPipeline);
+	void renderScene(EngineCore * core);
 };
 
 #endif

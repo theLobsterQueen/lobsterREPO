@@ -1,0 +1,135 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/media/layna/WorkDisk/School/Third_Year/Second_Semester/Realtime/lobsterREPO/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+COLOR_VEC	./include/importantConstants.h	/^#define COLOR_VEC	/;"	d
+EngineCore	./include/engineCore.h	/^struct EngineCore$/;"	s
+Entity	./include/entity.h	/^struct Entity$/;"	s
+ID	./include/entity.h	/^	entityID ID;$/;"	m	struct:Entity	typeref:typename:entityID
+InputState	./include/input.h	/^struct InputState$/;"	s
+LOBSTER_APP	./include/app.h	/^#define LOBSTER_APP /;"	d
+LOBSTER_COMPONENTS	./include/component.h	/^#define LOBSTER_COMPONENTS /;"	d
+LOBSTER_CONSTANTS	./include/importantConstants.h	/^#define LOBSTER_CONSTANTS /;"	d
+LOBSTER_ENGINE_CORE	./include/engineCore.h	/^#define LOBSTER_ENGINE_CORE /;"	d
+LOBSTER_ENTITY	./include/entity.h	/^#define LOBSTER_ENTITY /;"	d
+LOBSTER_INPUT	./include/input.h	/^#define LOBSTER_INPUT /;"	d
+LOBSTER_MATH_H	./include/math.h	/^#define LOBSTER_MATH_H /;"	d
+LOBSTER_MAX_COMPONENTS	./include/importantConstants.h	/^#define LOBSTER_MAX_COMPONENTS	/;"	d
+LOBSTER_MAX_ENTITIES	./include/importantConstants.h	/^#define LOBSTER_MAX_ENTITIES /;"	d
+LOBSTER_MESH	./include/mesh.h	/^#define LOBSTER_MESH /;"	d
+LOBSTER_PIPELINE	./include/graphics.h	/^#define LOBSTER_PIPELINE /;"	d
+LOBSTER_SCENE	./include/scene.h	/^#define LOBSTER_SCENE /;"	d
+LOBSTER_TRANSFORM	./include/transform.h	/^#define LOBSTER_TRANSFORM /;"	d
+LOBSTER_UTILS	./include/utilities.h	/^#define LOBSTER_UTILS /;"	d
+LOBSTER_WINDOW_H	./include/window.h	/^#define LOBSTER_WINDOW_H /;"	d
+LobMatrix	./include/math.h	/^		LobMatrix$/;"	f	class:LobMatrix
+LobMatrix	./include/math.h	/^		LobMatrix(unsigned int inputNumCols, unsigned int inputNumRows)$/;"	f	class:LobMatrix
+LobMatrix	./include/math.h	/^class LobMatrix$/;"	c
+LobVector	./include/math.h	/^		LobVector(float * inputData, unsigned int inputSize)$/;"	f	class:LobVector
+LobVector	./include/math.h	/^		LobVector(unsigned int inputSize)$/;"	f	class:LobVector
+LobVector	./include/math.h	/^class LobVector$/;"	c
+Mesh	./include/mesh.h	/^struct Mesh$/;"	s
+POSITION_VEC	./include/importantConstants.h	/^#define POSITION_VEC	/;"	d
+Pipeline	./include/graphics.h	/^struct Pipeline$/;"	s
+Scene	./include/scene.h	/^struct Scene$/;"	s
+Transform	./include/transform.h	/^struct Transform$/;"	s
+UNI_WORLD_MATRIX	./include/importantConstants.h	/^#define UNI_WORLD_MATRIX	/;"	d
+VAO	./include/mesh.h	/^	GLuint VAO = 0;$/;"	m	struct:Mesh	typeref:typename:GLuint
+Viewport	./include/scene.h	/^struct Viewport$/;"	s
+activeEntities	./include/scene.h	/^	unsigned short int activeEntities = 0;$/;"	m	struct:Scene	typeref:typename:unsigned short int
+addComp	./src/scene.cpp	/^void sceneManagement :: addComp$/;"	f	class:sceneManagement	typeref:typename:void
+altPressed	./include/input.h	/^	bool altPressed = false;$/;"	m	struct:InputState	typeref:typename:bool
+appManagement	./include/app.h	/^namespace appManagement$/;"	n
+begin	./src/app.cpp	/^void appManagement :: begin(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
+beginRenderPass	./src/graphics.cpp	/^void graphicManagement :: beginRenderPass()$/;"	f	class:graphicManagement	typeref:typename:void
+changeTitle	./src/window.cpp	/^void windowManagement :: changeTitle(SDL_Window * window, std :: string windowName)$/;"	f	class:windowManagement	typeref:typename:void
+checkErrors	./src/utilities.cpp	/^void checkErrors()$/;"	f	typeref:typename:void
+cntrlPressed	./include/input.h	/^	bool cntrlPressed = false;$/;"	m	struct:InputState	typeref:typename:bool
+colorBuffer	./include/mesh.h	/^	std :: vector<GLfloat> colorBuffer = { };$/;"	m	struct:Mesh	typeref:typename:std::vector<GLfloat>
+compPtr	./include/importantConstants.h	/^typedef char *					compPtr;$/;"	t	typeref:typename:char *
+compileProgram	./src/graphics.cpp	/^void graphicManagement :: compileProgram(Pipeline * targetPipeline)$/;"	f	class:graphicManagement	typeref:typename:void
+componentCounter	./include/component.h	/^	static unsigned char componentCounter = 0;$/;"	v	namespace:componentManagement	typeref:typename:unsigned char
+componentID	./include/importantConstants.h	/^typedef unsigned char 			componentID;$/;"	t	typeref:typename:unsigned char
+componentManagement	./include/component.h	/^namespace componentManagement$/;"	n
+componentMask	./include/importantConstants.h	/^typedef unsigned int 			componentMask;$/;"	t	typeref:typename:unsigned int
+components	./include/scene.h	/^	char * components[LOBSTER_MAX_COMPONENTS][LOBSTER_MAX_ENTITIES] = { };	$/;"	m	struct:Scene	typeref:typename:char * [][]
+constantFile	./include/utilities.h	/^static std :: fstream constantFile$/;"	v	typeref:typename:std::fstream
+createMesh	./src/mesh.cpp	/^Mesh * meshManagement :: createMesh$/;"	f	class:meshManagement	typeref:typename:Mesh *
+createPipeline	./src/graphics.cpp	/^Pipeline * graphicManagement :: createPipeline()$/;"	f	class:graphicManagement	typeref:typename:Pipeline *
+createScene	./src/scene.cpp	/^Scene * sceneManagement :: createScene(std :: string inputName)$/;"	f	class:sceneManagement	typeref:typename:Scene *
+createTestScene	./src/app.cpp	/^void appManagement :: createTestScene(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
+curPipelineRef	./include/engineCore.h	/^	Pipeline * curPipelineRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:Pipeline *
+curSceneRef	./include/engineCore.h	/^	Scene * curSceneRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:Scene *
+data	./include/math.h	/^		float * data;$/;"	m	class:LobVector	typeref:typename:float *
+data	./include/math.h	/^		std :: vector<float> data;$/;"	m	class:LobMatrix	typeref:typename:std::vector<float>
+debug	./include/engineCore.h	/^	bool debug = true;$/;"	m	struct:EngineCore	typeref:typename:bool
+debugPath	./makeFile.py	/^debugPath = "bin\/debug"$/;"	v
+deleteEntity	./src/scene.cpp	/^void sceneManagement :: deleteEntity(Scene * targetScene, entityID entityIndex)$/;"	f	class:sceneManagement	typeref:typename:void
+deltaTime	./include/engineCore.h	/^	double deltaTime = 0;$/;"	m	struct:EngineCore	typeref:typename:double
+dot	./src/math.cpp	/^float math :: dot(LobVector x, LobVector y)$/;"	f	class:math	typeref:typename:float
+draw	./src/mesh.cpp	/^void meshManagement :: draw(EngineCore * core, Mesh * inputMesh)$/;"	f	class:meshManagement	typeref:typename:void
+entities	./include/scene.h	/^	Entity entities[LOBSTER_MAX_ENTITIES] = { };$/;"	m	struct:Scene	typeref:typename:Entity[]
+entityID	./include/importantConstants.h	/^typedef unsigned short int  	entityID;$/;"	t	typeref:typename:unsigned short int
+extension	./makeFile.py	/^extension = "elf"$/;"	v
+fragShader	./include/graphics.h	/^	GLuint fragShader;$/;"	m	struct:Pipeline	typeref:typename:GLuint
+getCol	./include/math.h	/^		LobVector getCol(unsigned int index)$/;"	f	class:LobMatrix	typeref:typename:LobVector
+getData	./include/math.h	/^		float * getData()$/;"	f	class:LobMatrix	typeref:typename:float *
+getData	./include/math.h	/^		float * getData()$/;"	f	class:LobVector	typeref:typename:float *
+getID	./include/component.h	/^	componentID getID()$/;"	f	namespace:componentManagement	typeref:typename:componentID
+getPoint	./include/math.h	/^		float getPoint(unsigned int colIndex, unsigned int rowIndex)$/;"	f	class:LobMatrix	typeref:typename:float
+getRow	./include/math.h	/^		LobVector getRow(unsigned int index)$/;"	f	class:LobMatrix	typeref:typename:LobVector
+getSize	./include/math.h	/^		unsigned int getSize()$/;"	f	class:LobVector	typeref:typename:unsigned int
+glRef	./include/engineCore.h	/^	void * glRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:void *
+graphicManagement	./include/graphics.h	/^namespace graphicManagement$/;"	n
+initialized	./include/utilities.h	/^static bool initialized = false;$/;"	v	typeref:typename:bool
+inputState	./include/engineCore.h	/^	InputState * inputState = new InputState;$/;"	m	struct:EngineCore	typeref:typename:InputState *
+isCentered	./include/transform.h	/^	bool isCentered = false;$/;"	m	struct:Transform	typeref:typename:bool
+isRunning	./include/engineCore.h	/^	bool isRunning = true;$/;"	m	struct:EngineCore	typeref:typename:bool
+loadShader	./src/graphics.cpp	/^void graphicManagement :: loadShader$/;"	f	class:graphicManagement	typeref:typename:void
+main	./src/main.cpp	/^int main()$/;"	f	typeref:typename:int
+mask	./include/entity.h	/^	componentMask mask = 0;$/;"	m	struct:Entity	typeref:typename:componentMask
+math	./include/math.h	/^namespace math$/;"	n
+meshManagement	./include/mesh.h	/^namespace meshManagement$/;"	n
+name	./include/scene.h	/^	std :: string name = "";$/;"	m	struct:Scene	typeref:typename:std::string
+name	./makeFile.py	/^name = "LobsterEngine"$/;"	v
+newEntityID	./src/scene.cpp	/^entityID sceneManagement :: newEntityID(Scene * targetScene)$/;"	f	class:sceneManagement	typeref:typename:entityID
+numCols	./include/math.h	/^		unsigned int numCols = 0;$/;"	m	class:LobMatrix	typeref:typename:unsigned int
+numRows	./include/math.h	/^		unsigned int numRows = 0;$/;"	m	class:LobMatrix	typeref:typename:unsigned int
+operator *	./include/math.h	/^		LobMatrix operator *(LobMatrix& rhs)$/;"	f	class:LobMatrix	typeref:typename:LobMatrix
+operator *=	./include/math.h	/^		LobMatrix& operator *=(LobMatrix rhs)$/;"	f	class:LobMatrix	typeref:typename:LobMatrix &
+operator []	./include/math.h	/^		float& operator[](int index)$/;"	f	class:LobVector	typeref:typename:float &
+out	./include/math.h	/^		void out()$/;"	f	class:LobMatrix	typeref:typename:void
+playerPos	./include/scene.h	/^	GLfloat playerPos[3] = {0};$/;"	m	struct:Viewport	typeref:typename:GLfloat[3]
+present	./src/graphics.cpp	/^void graphicManagement :: present(EngineCore * core)$/;"	f	class:graphicManagement	typeref:typename:void
+pressedKeys	./include/input.h	/^	std :: bitset<128> pressedKeys = {0};$/;"	m	struct:InputState	typeref:typename:std::bitset<128>
+printProgramLog	./src/utilities.cpp	/^void printProgramLog(GLuint program)$/;"	f	typeref:typename:void
+printShaderLog	./src/utilities.cpp	/^void printShaderLog(GLuint shader)$/;"	f	typeref:typename:void
+program	./include/graphics.h	/^	GLuint program;$/;"	m	struct:Pipeline	typeref:typename:GLuint
+pushConstant	./include/utilities.h	/^void pushConstant(const char * constantName, T constantValue)$/;"	f	typeref:typename:void
+renderScene	./src/scene.cpp	/^void sceneManagement :: renderScene(EngineCore * core)$/;"	f	class:sceneManagement	typeref:typename:void
+run	./src/app.cpp	/^void appManagement :: run(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
+sceneManagement	./include/scene.h	/^namespace sceneManagement$/;"	n
+setCol	./include/math.h	/^		void setCol(LobVector newCol, unsigned int index)$/;"	f	class:LobMatrix	typeref:typename:void
+setPoint	./include/math.h	/^		void setPoint(unsigned int colIndex, unsigned int rowIndex, float value)$/;"	f	class:LobMatrix	typeref:typename:void
+setRow	./include/math.h	/^		void setRow(LobVector newRow, unsigned int index)$/;"	f	class:LobMatrix	typeref:typename:void
+shiftPressed	./include/input.h	/^	bool shiftPressed = false;$/;"	m	struct:InputState	typeref:typename:bool
+size	./include/math.h	/^		unsigned int size;$/;"	m	class:LobVector	typeref:typename:unsigned int
+tempScale	./include/engineCore.h	/^	float tempScale = 1;$/;"	m	struct:EngineCore	typeref:typename:float
+update	./src/app.cpp	/^void appManagement :: update(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
+usePipeline	./src/graphics.cpp	/^void graphicManagement :: usePipeline(Pipeline * targetPipeline)$/;"	f	class:graphicManagement	typeref:typename:void
+useScene	./src/scene.cpp	/^void sceneManagement :: useScene(EngineCore * core, Scene * targetScene)$/;"	f	class:sceneManagement	typeref:typename:void
+vertShader	./include/graphics.h	/^	GLuint vertShader;$/;"	m	struct:Pipeline	typeref:typename:GLuint
+vertexBuffer	./include/mesh.h	/^	std :: vector<GLfloat> vertexBuffer = { };$/;"	m	struct:Mesh	typeref:typename:std::vector<GLfloat>
+vertexCount	./include/mesh.h	/^	unsigned short int vertexCount = 0;$/;"	m	struct:Mesh	typeref:typename:unsigned short int
+viewRef	./include/scene.h	/^	Viewport * viewRef = new Viewport;$/;"	m	struct:Scene	typeref:typename:Viewport *
+winHeight	./include/engineCore.h	/^	unsigned short int winHeight = 720;$/;"	m	struct:EngineCore	typeref:typename:unsigned short int
+winRef	./include/engineCore.h	/^	SDL_Window * winRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:SDL_Window *
+winWidth	./include/engineCore.h	/^	unsigned short int winWidth = 1280;$/;"	m	struct:EngineCore	typeref:typename:unsigned short int
+windowManagement	./include/window.h	/^namespace windowManagement$/;"	n

@@ -1,4 +1,4 @@
-// BASIC 2D VERTEX SHADER //
+// BASIC 3D VERTEX SHADER //
 #version 460
 
 // INPUT ATTRIBUTES //
@@ -8,18 +8,18 @@ layout (location = 1) in vec4 in_colorVec;
 // OUTPUT ATTRIBUTES //
 layout (location = 0) out vec4 out_colorVec;
 
-!! UNIFORMS
+// INCLUDES AND INITIALIZATIONS //
+#include<constants>
+#include<uniforms>
 
 void main()
 {
-	// IF NOT CENTERED, OFFSETS VERTEX BY PLAYER POSITION //
-	vec3 vertexPos = in_vertexPos;
-	if(noOffset == 0)
-		vertexPos -= playerPos;
+	// TRANSFORMS VERTEX ATTRIBUTE INTO 4D OBJECT //
+	vec4 vertexPos = vec4(in_vertexPos, 1.0);
+	vertexPos *= u_worldMatrix;
+	vertexPos *= u_projMatrix; 
 
-	// ASSIGNS VERTEX VALUE //
-	gl_Position = vec4(vertexPos, 1.0);
-
-	// OUTPUTS THE COLOR VECTOR WITHOUT EDITING //
+	// APPLIES VERTEX AND COLOR DATA //
+	gl_Position = vertexPos;
 	out_colorVec = in_colorVec;
 }

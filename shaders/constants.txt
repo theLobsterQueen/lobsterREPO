@@ -1,0 +1,4 @@
+
+// DEFINES CONSTANTS //
+float c_farClip = 200f;
+float c_nearClip = 0.001f;

@@ -5,6 +5,7 @@
 
 // STD INCLUDES //
 #include <vector>
+#include <cmath>
 
 // SDL/GL INCLUDES //
 #include <SDL2/SDL.h>
@@ -15,6 +16,8 @@
 // LOBSTER INCLUDES //
 #include <graphics.h>
 #include <importantConstants.h>
+#include <scene.h>
+#include <math.h>
 
 /// <summary> ///
 ///		This class holds the basic vertex/index/texture and other such attributes
@@ -42,7 +45,7 @@ namespace meshManagement
 	/// <summary> ///
 	///		This function draws an input mesh component.
 	/// </summary> ///
-	void draw(Mesh * inputMesh, Pipeline * pipeline);
+	void draw(EngineCore * core, Mesh * inputMesh);
 };
 
 #endif

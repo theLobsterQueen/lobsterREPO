@@ -5,6 +5,8 @@
 
 // STD INCLUDES //
 #include <iostream>
+#include <fstream>
+#include <cmath>
 
 // SDL/GL INCLUDES //
 #include <SDL2/SDL.h>
@@ -18,6 +20,9 @@
 #include <mesh.h>
 #include <scene.h>
 #include <transform.h>
+#include <utilities.h>
+#include <importantConstants.h>
+#include <math.h>
 
 namespace appManagement
 {

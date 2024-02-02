@@ -5,15 +5,31 @@
 void appManagement :: begin(EngineCore * core)
 {
 	// INITIALIZES CORE VALUES //
-	core -> basePipelineRef = graphicManagement :: createPipeline();
+	core -> curPipelineRef = graphicManagement :: createPipeline();
 	core -> curSceneRef = sceneManagement :: createScene();
+
+	// VARIABLE INITIALIZATION //
+	float aspectRatio = (core -> winWidth) / (core -> winHeight);
+	core -> hozFOV = math :: toRadians(35);
+	core -> verFOV = aspectRatio * core -> hozFOV;
+
+	// PUSHES CONSTANTS //
+	pushConstant<float>("c_farClip", 200.0f);
+	pushConstant<float>("c_nearClip", 0.001f);
 
 	// CREATES BASE RENDER PIPELINE //
 	graphicManagement :: loadShader
-		(core -> basePipelineRef, GL_VERTEX_SHADER, "shaders/vertShader.txt");
+	(
+		core -> curPipelineRef, GL_VERTEX_SHADER, 
+		"shaders/vertShader.txt", core -> debug
+	);
 	graphicManagement :: loadShader
-		(core -> basePipelineRef, GL_FRAGMENT_SHADER, "shaders/fragShader.txt");
-	graphicManagement :: compileProgram(core -> basePipelineRef);
+	(
+		core -> curPipelineRef, GL_FRAGMENT_SHADER, 
+		"shaders/fragShader.txt", core -> debug
+	);
+
+	graphicManagement :: compileProgram(core -> curPipelineRef);
 
 	// CHANGES THE NAME OF THE WINDOW TO THE NEW CURRENT SCENE //
 	windowManagement :: changeTitle(core -> winRef, core -> curSceneRef -> name);
@@ -25,126 +41,62 @@ void appManagement :: begin(EngineCore * core)
 	run(core);
 }
 
+void appManagement :: createTestScene(EngineCore * core)
+{
+	// CREATES A WALL FACING THE PLAYER //
+	sceneManagement :: addComp
+	(
+		core -> curSceneRef,
+		sceneManagement :: newEntityID(core -> curSceneRef),
+		componentManagement :: getID<Mesh>(),
+		(compPtr) meshManagement :: createMesh
+		(
+			// VERTICES //
+			std :: vector<GLfloat>
+			{
+				-1.0f, -1.0f, -50.0f,
+				1.0f, -1.0f, -50.0f,
+				0.0f, 1.0f, -50.0f
+			},
+
+			// COLORS //
+			std :: vector<GLfloat>
+			{
+				1.0f, 0.0f, 0.0f, 1.0f,
+				0.0f, 1.0f, 0.0f, 1.0f,
+				0.0f, 0.0f, 1.0f, 1.0f,
+			}
+		)
+	);
+}
+
 void appManagement :: run(EngineCore * core)
 {
 	// VARIABLE INITIALIZATION //
 	unsigned long int newDelta = SDL_GetTicks64();
 	unsigned long int oldDelta = 0;
-	
-	// MAIN OPERATION LOOP //
+	static float timer = 0.0f;
+
 	while(core -> isRunning)
 	{
 		// UPDATES DELTA TIME //
 		oldDelta = newDelta;
 		newDelta = SDL_GetTicks64();
 		
-		core -> deltaTime = (newDelta - oldDelta) * (30 / 1000.0f);
+		core -> deltaTime = (newDelta - oldDelta) / 1000.0f;
 
-		// UPDATES GAME STATE //
+		// UPDATES ENGINE //
 		appManagement :: update(core);
 
-		// RENDER PHASE //
-		graphicManagement :: beginRenderPass(0.1f, 0.1f, 0.1f, 1.0f);
-		
-		// RENDERS THE CURRENT SCENE //
-		sceneManagement :: renderScene(core -> curSceneRef, core -> basePipelineRef);
-		
-		// PRESENTS THE RENDERED PRODUCT TO THE USER //
+		// BEGINS RENDERING PHASE //
+		graphicManagement :: beginRenderPass(core);
+
+		// RENDERS CURRENT SCENE //
+		sceneManagement :: renderScene(core);
+
+		// PRESENTS TO SCREEN //
 		graphicManagement :: present(core);
 	}
-}
-
-void appManagement :: createTestScene(EngineCore * core) 
-{
-	// CREATE TRANS ICON BECAUSE I'M JUST THAT DAMN COOL //
-	sceneManagement :: addComp
-	(
-		core -> curSceneRef, // TARGET SCENE TO ADD COMPONENT TO //
-		sceneManagement :: newEntityID(core -> curSceneRef), // ENTITY INDEX (EMPTY ENTITY) //
-		componentManagement :: getID<Mesh>(), // ID OF COMPONENT TO ADD //
-		(compPtr) meshManagement :: createMesh
-		(
-			// POSITION VEC //
-			{
-				 0.8f,  0.0f, 0.0f,
-				 0.1f,  0.8f, 0.0f,
-				 0.1f, -0.8f, 0.0f
-			},
-
-			// COLOR VEC //
-			{
-				1.0f, 0.0f, 0.5f, 1.0f,
-				0.8f, 0.8f, 0.8f, 1.0f,
-				0.8f, 0.8f, 0.8f, 1.0f
-			}
-		)
-	);
-
-	sceneManagement :: addComp
-	(
-		core -> curSceneRef, // TARGET SCENE TO ADD COMPONENT TO //
-		sceneManagement :: newEntityID(core -> curSceneRef), // ENTITY INDEX (EMPTY ENTITY) //
-		componentManagement :: getID<Mesh>(), // ID OF COMPONENT TO ADD //
-		(compPtr) meshManagement :: createMesh
-		(
-			// POSITION VEC //
-			{
-				-0.8f,  0.0f, 0.0f,
-				-0.1f,  0.8f, 0.0f,
-				-0.1f, -0.8f, 0.0f
-			},
-
-			// COLOR VEC //
-			{
-				0.0f, 0.5f, 1.0f, 1.0f,
-				0.8f, 0.8f, 0.8f, 1.0f,
-				0.8f, 0.8f, 0.8f, 1.0f
-			}
-		)
-	);
-
-	// PLAYER RETICLE //
-	GLuint retID = sceneManagement :: newEntityID(core -> curSceneRef);
-	Transform * retTrans = new Transform;
-	retTrans -> isCentered = true;
-
-	sceneManagement :: addComp
-	(
-		core -> curSceneRef, // TARGET SCENE TO ADD COMPONENT TO //
-		retID, // ENTITY INDEX (PLAYER RETICLE) //
-		componentManagement :: getID<Mesh>(), // ID OF COMPONENT TO ADD //
-		(compPtr) meshManagement :: createMesh
-		(
-			// POSITION VEC //
-			{
-				 0.0f , -0.05f, 0.0f ,
-				-0.05f,  0.0f , 0.0f ,
-				 0.0f ,  0.05f, 0.0f ,
-
-				 0.0f ,  0.05f, 0.0f ,
-				 0.05f,  0.0f , 0.0f ,
-				 0.0f , -0.05f, 0.0f 
-			},
-
-			// COLOR VEC //
-			{
-				0.0f, 0.0f, 0.0f, 1.0f,
-				0.0f, 0.0f, 0.0f, 1.0f,
-				0.0f, 0.0f, 0.0f, 1.0f,
-
-				0.0f, 0.0f, 0.0f, 1.0f,
-				0.0f, 0.0f, 0.0f, 1.0f,
-				0.0f, 0.0f, 0.0f, 1.0f
-			}
-		)
-	);
-	sceneManagement :: addComp
-	(
-		core -> curSceneRef, 
-		retID, 
-		componentManagement :: getID<Transform>(), 
-		(compPtr) retTrans 
-	);
 }
 
 void appManagement :: update(EngineCore * core)
@@ -210,7 +162,7 @@ void appManagement :: update(EngineCore * core)
 					// SWAPS THE ADDRESS BETWEEN STATIC ALTERNATE SAVED SCENE //
 						// AND ENGINE'S CURRENT SCENE //
 					Scene * tempScene = core -> curSceneRef;
-					sceneManagement :: useScene(core, alternateScene);
+					sceneManagement :: changeScene(core, alternateScene);
 					alternateScene = tempScene;
 				}
 			}
@@ -218,7 +170,7 @@ void appManagement :: update(EngineCore * core)
 	}
 
 	// TAKES PLAYER WASD MOVEMENT //
-	float moveSpeed = 0.05f * core -> deltaTime;
+	float moveSpeed = 1.0f * core -> deltaTime;
 	auto keys = core -> inputState -> pressedKeys;
 
 	if(keys['a'])
@@ -226,7 +178,35 @@ void appManagement :: update(EngineCore * core)
 	if(keys['d'])
 		playerPos[0] += moveSpeed;
 	if(keys['w'])
-		playerPos[1] += moveSpeed;
+		playerPos[2] += moveSpeed * 10;
 	if(keys['s'])
+		playerPos[2] -= moveSpeed * 10;
+	if(keys[','])
 		playerPos[1] -= moveSpeed;
+	if(keys['.'])
+		playerPos[1] += moveSpeed;
+
+	if(keys['q'])
+		core -> tempScale += moveSpeed * core -> deltaTime;
+	if(keys['e'])
+		core -> tempScale -= moveSpeed * core -> deltaTime;
+
+	float rotSpeed = moveSpeed * 20;
+	if(keys['r'])
+		core -> tempRot[0] += (rotSpeed * core -> deltaTime);
+	if(keys['t'])
+		core -> tempRot[0] -= (rotSpeed * core -> deltaTime);
+
+	if(keys['y'])
+		core -> tempRot[1] += (rotSpeed * core -> deltaTime);
+	if(keys['u'])
+		core -> tempRot[1] -= (rotSpeed * core -> deltaTime);
+
+	if(keys['i'])
+		core -> tempRot[2] += (rotSpeed * core -> deltaTime);
+	if(keys['o'])
+		core -> tempRot[2] -= (rotSpeed * core -> deltaTime);
+
+	if(core -> tempScale < 0.05f)
+		core -> tempScale = 0.05f;
 }

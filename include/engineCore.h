@@ -32,7 +32,7 @@ struct EngineCore
 	///		This boolean describes whether the engine should give verbose
 	///			debug statements during its operation.
 	/// </summary> ///
-	bool debug = false;
+	bool debug = true;
 
 	/// <summary> ///
 	/// 	This pointer references the main window.
@@ -47,6 +47,12 @@ struct EngineCore
 	unsigned short int winHeight = 720;
 
 	/// <summary> ///
+	///		These fields dictate the field of view..
+	/// </summary> ///
+	float hozFOV = 0;
+	float verFOV = 0;
+
+	/// <summary> ///
 	///		This pointer references the OpenGL context.
 	/// </summary> ///
 	void * glRef = nullptr;
@@ -55,7 +61,7 @@ struct EngineCore
 	///		This is a reference to the "base pipeline," or the pipeline that all
 	///			projects in this engine initialize with.
 	/// </summary> ///
-	Pipeline * basePipelineRef = nullptr;
+	Pipeline * curPipelineRef = nullptr;
 
 
 	/// <summary> ///
@@ -74,6 +80,9 @@ struct EngineCore
 	///			called. getDeltaTime can be found in the appManagement namespace.
 	/// </summary> ///
 	double deltaTime = 0;
+
+	float tempScale = 1.0f;
+	std :: vector<float> tempRot = { 0, 0, 0 };
 };
 
 #endif

@@ -1,4 +1,4 @@
-// BASIC 2D FRAGMENT SHADER //
+// BASIC FRAGMENT SHADER //
 #version 460
 
 // INPUT ATTRIBUTES //
@@ -7,15 +7,12 @@ layout(location = 0) in vec4 in_colorVec;
 // OUTPUT ATTRIBUTES //
 out vec4 out_colorVec;
 
-!! UNIFORMS
+// INCLUDES AND INITIALIZATIONS //
+#include<constants>
+#include<uniforms>
 
 void main()
 {
 	// ASSIGNS FINAL COLOR OUTPUT //
-	vec4 tempColor = in_colorVec;
-	tempColor.r += playerPos.x;
-	tempColor.g += playerPos.y;
-	tempColor.b -= playerPos.x;
-
-	out_colorVec = tempColor; // in_colorVec;
+	out_colorVec = in_colorVec;
 }

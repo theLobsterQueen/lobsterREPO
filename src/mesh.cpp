@@ -11,14 +11,14 @@ Mesh * meshManagement :: createMesh
 	// ASSURES VALIDITY OF INPUT //
 	if(inputVertices.size() % 3 != 0)
 	{
-		std :: cout << "ERROR: INPUT VERTICES ARE NOT EASILY DIVISBLE BY 3!" 
+		std :: cout << "ERROR: INPUT POSITIONS VERTICES ARE NOT EASILY DIVISBLE BY 3!" 
 			<< std :: endl; 
 		return newMesh;
 	}
 
 	if(inputColors.size() % 4 != 0)
 	{
-		std :: cout << "ERROR: INPUT VERTICES ARE NOT EASILY DIVISBLE BY 4!" 
+		std :: cout << "ERROR: INPUT COLOR VERTICES ARE NOT EASILY DIVISBLE BY 4!" 
 			<< std :: endl; 
 		return newMesh;
 	}
@@ -72,10 +72,45 @@ Mesh * meshManagement :: createMesh
 	return newMesh;
 }
 
-void meshManagement :: draw(Mesh * inputMesh, Pipeline * pipeline)
+void meshManagement :: draw(EngineCore * core, Mesh * inputMesh)
 {
 	// USES THE INPUT PIPELINE //
-	graphicManagement :: usePipeline(pipeline);
+	Scene * targetScene = core -> curSceneRef;
+
+	// CREATES ROTATION MATRIX //
+	LobMatrix rotMat = 
+		math :: rotateMatrix(std :: vector<float> { 1, 0, 0 }, core -> tempRot[0]) *
+		math :: rotateMatrix(std :: vector<float> { 0, 1, 0 }, core -> tempRot[1]) *
+		math :: rotateMatrix(std :: vector<float> { 0, 0, 1 }, core -> tempRot[2]);
+
+	// CREATES SCALED TRANSLATION MATRIX //
+	LobMatrix transMat =
+	{
+		std :: vector<float>
+		{
+			// COLUMN ONE //
+			1, 0, 0, -(targetScene -> viewRef -> playerPos[0]),
+
+			// COLUMN TWO //
+			0, 1, 0, -(targetScene -> viewRef -> playerPos[1]),
+
+			// COLUMN THREE //
+			0, 0, 1, -(targetScene -> viewRef -> playerPos[2]),
+
+			// COLUMN FOUR //
+			0, 0, 0, 1
+		},
+		4, 4 // IS FOUR COLUMNS WIDE AND FOUR ROWS TALL //
+	};
+
+	LobMatrix worldMat = rotMat * transMat;
+
+	// SETS OBJECT WORLD MATRIX //
+	glUniformMatrix4fv
+	(
+		UNI_WORLD_MATRIX,  // WHAT UNIFORM IT'S SETTING //
+		1, GL_FALSE, worldMat.getData()
+	);
 
 	// PREPARES TO DRAW WITH INPUT MESH'S VAO //
 	glBindVertexArray(inputMesh -> VAO);

@@ -17,6 +17,7 @@
 // INTERNAL INCLUDES //
 #include <utilities.h>
 #include <engineCore.h>
+#include <importantConstants.h>
 
 // STRUCT PROTOTYPE //
 struct EngineCore;
@@ -68,7 +69,7 @@ namespace graphicManagement
 	///		This function clears the screen a specific color, and prepares the
 	///			engine for another render pass.
 	/// </summary> ///
-	void beginRenderPass(float r, float g, float b, float a);
+	void beginRenderPass(EngineCore * core);
 
 	/// <summary> ///
 	///		Flips the buffers over using a more engine-friendly function

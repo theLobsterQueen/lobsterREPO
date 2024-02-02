@@ -22,7 +22,10 @@ typedef char *					compPtr;
 #define COLOR_VEC					1
 
 // DEFINES UNIFORMS //
-#define PLAYER_POS_UNIFORM			0
-#define IS_CENTERED_UNIFORM			1
+#define UNI_WORLD_MATRIX			0
+#define UNI_PROJ_MATRIX				1
+
+// PRE-DEFINES A FOV //
+#define LOB_FOV						80
 
 #endif

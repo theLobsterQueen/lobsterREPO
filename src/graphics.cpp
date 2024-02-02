@@ -55,19 +55,36 @@ void graphicManagement :: loadShader
 		}
 	}
 
-	std :: string uniOpCaller("!! UNIFORMS");
 	while(std :: getline(shaderFile, line))
 	{
-		// SEARCHES FOR '!!', WHICH INDICATES CUSTOM OPERATION //
-		if(line == uniOpCaller)
+		// SEARCHES FOR INCLUDE DIRECTIVE //
+		if(line.find(std :: string("#include")) != std :: string :: npos)
 		{
 			// VARIABLE INITIALIZATION //
-			std :: ifstream uniFile("shaders/uniforms.txt");
-			if(!uniFile.is_open())
+			std :: ifstream targetFile;
+			std :: string targetString = "";
+
+			// LOOKS FOR VALID INCLUDE TARGETS //
+			if(line.find(std :: string("<uniforms>")) != std :: string :: npos)
+				targetString = "uniforms.txt";
+			else if(line.find(std :: string("<constants>")) != std :: string :: npos)
+				targetString = "constants.txt";
+
+			// IF TARGET STRING IS STILL EMPTY, INVALID INCLUDE DIRECTIVE //
+			if(targetString == "")
 			{
-				// ATTEMPTS LOADING FFROM ALTERNATE DIRECTORY //
-				uniFile.open("../../shaders/uniforms.txt");
-				if(!uniFile.is_open())
+				std :: cout << "INVALID INCLUDE DIRECTIVE!" << std :: endl;
+				return;
+			}
+
+			// ATTEMPTS TO OPEN TARGET FILE //
+			targetFile.open("./shaders/" + targetString);
+
+			// IF COULD NOT BE FOUND, ATTEMPTS LOADING FROM ALTERNATE DIRECTORY //
+			if(!targetFile.is_open())
+			{
+				targetFile.open("../../shaders/" + targetString);
+				if(!targetFile.is_open())
 				{
 					std :: cout << "ERROR! COULD NOT FIND UNIFORMS FILE." << std :: endl;
 					return;
@@ -76,9 +93,11 @@ void graphicManagement :: loadShader
 
 			// COPIES DATA INTO SHADER //
 			std :: string tempLine;
-			while(std :: getline(uniFile, tempLine))
+			while(std :: getline(targetFile, tempLine))
 				shaderString += tempLine + "\n";
-
+			
+			// AFTER DATA IS COPIED, ADDS AN ADDITIONAL NEWLINE FOR READABILITY //
+			shaderString += "\n";
 			continue;
 		}
 
@@ -160,10 +179,33 @@ void graphicManagement :: usePipeline(Pipeline * targetPipeline)
 	glUseProgram(targetPipeline -> program); 
 }
 
-void graphicManagement :: beginRenderPass(float r, float g, float b, float a)
+void graphicManagement :: beginRenderPass(EngineCore * core)
 {
-	glClearColor(r, g, b, a);
+	// CLEARS SCREEN //
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	// USES PIPELINE //
+	graphicManagement :: usePipeline(core -> curPipelineRef);
+
+	// CREATES PROJECTION MATRIX DATA //
+	float projMatrix[16] =
+	{
+		// FIRST COLUMN //
+		core -> hozFOV, 0, 0, 0,
+
+		// SECOND COLUMN //
+		0, core -> verFOV, 0, 0,
+
+		// THIRD COLUMN //
+		0, 0, 0, 0,
+
+		// FOURTH COLUMN //
+		0, 0, -1, 0
+	};
+
+	// ACTIVES CURRENT PIPELINE AND PUSHES PROJECTION MATRIX //
+	glUniformMatrix4fv(UNI_PROJ_MATRIX, 1, GL_FALSE, projMatrix);
 }
 
 void graphicManagement :: present(EngineCore * core)

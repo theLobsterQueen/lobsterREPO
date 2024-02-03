@@ -43,7 +43,9 @@ void appManagement :: begin(EngineCore * core)
 
 void appManagement :: createTestScene(EngineCore * core)
 {
-	// CREATES A WALL FACING THE PLAYER //
+	// SETS THE PLAYER'S STARTING POSITION //
+	core -> curSceneRef -> viewRef -> playerPos[2] = -2000.0f;
+
 	sceneManagement :: addComp
 	(
 		core -> curSceneRef,
@@ -54,17 +56,52 @@ void appManagement :: createTestScene(EngineCore * core)
 			// VERTICES //
 			std :: vector<GLfloat>
 			{
-				-1.0f, -1.0f, -50.0f,
-				1.0f, -1.0f, -50.0f,
-				0.0f, 1.0f, -50.0f
+				// FRONT-FACE //
+				-1.0f, 1.0f, -0.1f,
+				1.0f, 1.0f, -0.1f,
+				1.0f, -1.0f, -0.1f,
+				-1.0f, -1.0f, -0.1f,
+				
+				// BACK-FACE //
+				-1.0f, 1.0f, 0.1f,
+				1.0f, 1.0f, 0.1f,
+				1.0f, -1.0f, 0.1f,
+				-1.0f, -1.0f, 0.1f,
+			},
+
+			// INDICES //
+			std :: vector<GLuint>
+			{
+				// FRONT FACE //
+				0, 1, 2,
+				2, 3, 0,
+
+				// LEFT FACE //
+				0, 4, 3,
+				3, 7, 4,
+
+				// BACK FACE //
+				4, 5, 6,
+				6, 7, 4,
+
+				// RIGHT FACE //
+				1, 5, 6,
+				6, 2, 1
 			},
 
 			// COLORS //
 			std :: vector<GLfloat>
 			{
-				1.0f, 0.0f, 0.0f, 1.0f,
-				0.0f, 1.0f, 0.0f, 1.0f,
 				0.0f, 0.0f, 1.0f, 1.0f,
+				0.0f, 0.0f, 1.0f, 1.0f,
+				0.0f, 0.0f, 1.0f, 1.0f,
+				0.0f, 0.0f, 1.0f, 1.0f,
+
+
+				0.0f, 1.0f, 0.0f, 1.0f,
+				0.0f, 1.0f, 0.0f, 1.0f,
+				0.0f, 1.0f, 0.0f, 1.0f,
+				0.0f, 1.0f, 0.0f, 1.0f
 			}
 		)
 	);
@@ -178,18 +215,18 @@ void appManagement :: update(EngineCore * core)
 	if(keys['d'])
 		playerPos[0] += moveSpeed;
 	if(keys['w'])
-		playerPos[2] += moveSpeed * 10;
+		playerPos[2] += moveSpeed * 40;
 	if(keys['s'])
-		playerPos[2] -= moveSpeed * 10;
+		playerPos[2] -= moveSpeed * 40;
 	if(keys[','])
 		playerPos[1] -= moveSpeed;
 	if(keys['.'])
 		playerPos[1] += moveSpeed;
 
 	if(keys['q'])
-		core -> tempScale += moveSpeed * core -> deltaTime;
+		core -> tempScale += (moveSpeed * 10) * core -> deltaTime;
 	if(keys['e'])
-		core -> tempScale -= moveSpeed * core -> deltaTime;
+		core -> tempScale -= (moveSpeed * 10) * core -> deltaTime;
 
 	float rotSpeed = moveSpeed * 20;
 	if(keys['r'])

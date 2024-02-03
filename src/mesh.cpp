@@ -3,16 +3,33 @@
 
 // FUNCTION IMPLEMENTATIONS //
 Mesh * meshManagement :: createMesh
-	(std :: vector<GLfloat> inputVertices, std :: vector<GLfloat> inputColors)
+
+// PARMETERS //
+(
+	std :: vector<GLfloat> inputVertices, 
+	std :: vector<GLuint> inputIndices, 
+	std :: vector<GLfloat> inputColors
+)
+
+// FUNCTION //
 {
 	// CREATES NEW MESH STRUCT //
 	Mesh * newMesh = new Mesh;
 
 	// ASSURES VALIDITY OF INPUT //
+
+/*	
 	if(inputVertices.size() % 3 != 0)
 	{
-		std :: cout << "ERROR: INPUT POSITIONS VERTICES ARE NOT EASILY DIVISBLE BY 3!" 
+		std :: cout << "ERROR: INPUT POSITION VERTICES ARE NOT EASILY DIVISBLE BY 3!" 
 			<< std :: endl; 
+		return newMesh;
+	}
+
+	if(inputIndices.size() != (inputVertices.size() / 3))
+	{
+		std :: cout << "ERROR: INPUT INDICES CANNOT BE CORRECTLY MAPPED TO INPUT "
+			<< "VERTICES!" << std :: endl; 
 		return newMesh;
 	}
 
@@ -22,14 +39,17 @@ Mesh * meshManagement :: createMesh
 			<< std :: endl; 
 		return newMesh;
 	}
+*/
 
 	// LOADS VERTEX DATA INTO CLASS MEMORY //
 	newMesh -> vertexBuffer = inputVertices;
+	newMesh -> indexBuffer = inputIndices;
 	newMesh -> colorBuffer = inputColors;
 
 	// DERIVES VERTEX COUNT FROM INPUT VERTICES //
 	newMesh -> vertexCount = inputVertices.size() / 3;
-	
+	newMesh -> indexCount = inputIndices.size();
+
 	// CREATES A VERTEX BUFFER, ASSINGS ITS VERTEX DATA, AND BINDS TO VERTEX ARRAY //
 	GLuint vertexBuffer = 0;
 	glGenBuffers(1, &vertexBuffer);
@@ -39,6 +59,18 @@ Mesh * meshManagement :: createMesh
 		GL_ARRAY_BUFFER,
 		newMesh -> vertexBuffer.size() * sizeof(GLfloat),
 		newMesh -> vertexBuffer.data(),
+		GL_STATIC_DRAW
+	);
+
+	// CREATES A VERTEX BUFFER, ASSINGS ITS VERTEX DATA, AND BINDS TO VERTEX ARRAY //
+	GLuint indexBuffer = 0;
+	glGenBuffers(1, &indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBufferData
+	(
+		GL_ELEMENT_ARRAY_BUFFER,
+		newMesh -> indexBuffer.size() * sizeof(GLuint),
+		newMesh -> indexBuffer.data(),
 		GL_STATIC_DRAW
 	);
 
@@ -84,6 +116,18 @@ void meshManagement :: draw(EngineCore * core, Mesh * inputMesh)
 		math :: rotateMatrix(std :: vector<float> { 0, 0, 1 }, core -> tempRot[2]);
 
 	// CREATES SCALED TRANSLATION MATRIX //
+	LobMatrix scaleMat =
+	{
+		std :: vector<float>
+		{
+			(core -> tempScale), 0.0f, 0.0f, 0.0f,
+			0.0f, (core -> tempScale), 0.0f, 0.0f,
+			0.0f, 0.0f, (core -> tempScale), 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
+		},
+		4, 4
+	};
+
 	LobMatrix transMat =
 	{
 		std :: vector<float>
@@ -95,7 +139,7 @@ void meshManagement :: draw(EngineCore * core, Mesh * inputMesh)
 			0, 1, 0, -(targetScene -> viewRef -> playerPos[1]),
 
 			// COLUMN THREE //
-			0, 0, 1, -(targetScene -> viewRef -> playerPos[2]),
+			0, 0, 1, targetScene -> viewRef -> playerPos[2],
 
 			// COLUMN FOUR //
 			0, 0, 0, 1
@@ -103,7 +147,7 @@ void meshManagement :: draw(EngineCore * core, Mesh * inputMesh)
 		4, 4 // IS FOUR COLUMNS WIDE AND FOUR ROWS TALL //
 	};
 
-	LobMatrix worldMat = rotMat * transMat;
+	LobMatrix worldMat = scaleMat * rotMat * transMat;
 
 	// SETS OBJECT WORLD MATRIX //
 	glUniformMatrix4fv
@@ -116,5 +160,11 @@ void meshManagement :: draw(EngineCore * core, Mesh * inputMesh)
 	glBindVertexArray(inputMesh -> VAO);
 
 	// DRAWS MESH //
-	glDrawArrays(GL_TRIANGLES, 0, inputMesh -> vertexCount);
+	glDrawElements
+	(
+		GL_TRIANGLES, 
+		inputMesh -> indexCount, 
+		GL_UNSIGNED_INT,
+		inputMesh -> indexBuffer.data()
+	);
 }

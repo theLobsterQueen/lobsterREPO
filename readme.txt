@@ -15,7 +15,7 @@ Sources :
  	https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html
 	https://www.youtube.com/watch?v=XnUMm-uNmvY
 	https://www.scratchapixel.com/index.html
-	
+	http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-9-vbo-indexing/
 
 // KEY //
 X: Done

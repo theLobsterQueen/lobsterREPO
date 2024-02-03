@@ -26,9 +26,11 @@
 struct Mesh
 {
 	std :: vector<GLfloat> vertexBuffer = { };
+	std :: vector<GLuint> indexBuffer = { };
 	std :: vector<GLfloat> colorBuffer = { };
 
 	unsigned short int vertexCount = 0;
+	unsigned short int indexCount = 0;
 	GLuint VAO = 0;
 };
 
@@ -40,7 +42,11 @@ namespace meshManagement
 	///			and assigns it the color of input color struct.
 	/// </summary> ///
 	Mesh * createMesh
-		(std :: vector<GLfloat> inputVertices, std :: vector<GLfloat> inputColor);
+	(
+		std :: vector<GLfloat> inputVertices, 
+		std :: vector<GLuint> inputIndices, 
+		std :: vector<GLfloat> inputColors
+	);
 
 	/// <summary> ///
 	///		This function draws an input mesh component.

@@ -2,7 +2,7 @@ import os
 debugPath = "bin/debug"
 name = "LobsterEngine"
 extension = "elf"
-targetsLinux = True
+targetsLinux = False
 
 if targetsLinux :
 	os.system\
@@ -30,3 +30,5 @@ else :
 		f'-static-libstdc++ -static-libgcc\n'
 		f'echo "WINDOWS COMPILATION COMPLETED!"\n'
 	)
+
+	os.system('wine ./bin/debug/LobsterEngine.exe')

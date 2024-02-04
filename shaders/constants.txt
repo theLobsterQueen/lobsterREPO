@@ -1,4 +1,4 @@
 
 // DEFINES CONSTANTS //
-float c_farClip = 200f;
-float c_nearClip = 0.001f;
+float c_hozFOV = 2006.37f;
+float c_verFOV = 2006.37f;

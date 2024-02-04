@@ -14,8 +14,8 @@ void appManagement :: begin(EngineCore * core)
 	core -> verFOV = aspectRatio * core -> hozFOV;
 
 	// PUSHES CONSTANTS //
-	pushConstant<float>("c_farClip", 200.0f);
-	pushConstant<float>("c_nearClip", 0.001f);
+	pushConstant("c_hozFOV", core -> hozFOV);
+	pushConstant("c_verFOV", core -> verFOV);
 
 	// CREATES BASE RENDER PIPELINE //
 	graphicManagement :: loadShader
@@ -44,7 +44,7 @@ void appManagement :: begin(EngineCore * core)
 void appManagement :: createTestScene(EngineCore * core)
 {
 	// SETS THE PLAYER'S STARTING POSITION //
-	core -> curSceneRef -> viewRef -> playerPos[2] = -2000.0f;
+	// core -> curSceneRef -> viewRef -> playerPos[2] = -2000.0f;
 
 	sceneManagement :: addComp
 	(

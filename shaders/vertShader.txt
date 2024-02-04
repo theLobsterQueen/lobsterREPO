@@ -17,7 +17,10 @@ void main()
 	// TRANSFORMS VERTEX ATTRIBUTE INTO 4D OBJECT //
 	vec4 vertexPos = vec4(in_vertexPos, 1.0);
 	vertexPos *= u_worldMatrix;
-	vertexPos *= u_projMatrix; 
+	// vertexPos *= u_projMatrix; 
+	float px = (c_hozFOV * vertexPos.x) / -vertexPos.z;
+	float py = (c_verFOV * vertexPos.y) / -vertexPos.z;
+	vertexPos = vec4(px, py, vertexPos.yz);
 
 	// APPLIES VERTEX AND COLOR DATA //
 	gl_Position = vertexPos;

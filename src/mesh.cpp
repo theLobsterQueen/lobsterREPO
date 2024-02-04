@@ -16,31 +16,6 @@ Mesh * meshManagement :: createMesh
 	// CREATES NEW MESH STRUCT //
 	Mesh * newMesh = new Mesh;
 
-	// ASSURES VALIDITY OF INPUT //
-
-/*	
-	if(inputVertices.size() % 3 != 0)
-	{
-		std :: cout << "ERROR: INPUT POSITION VERTICES ARE NOT EASILY DIVISBLE BY 3!" 
-			<< std :: endl; 
-		return newMesh;
-	}
-
-	if(inputIndices.size() != (inputVertices.size() / 3))
-	{
-		std :: cout << "ERROR: INPUT INDICES CANNOT BE CORRECTLY MAPPED TO INPUT "
-			<< "VERTICES!" << std :: endl; 
-		return newMesh;
-	}
-
-	if(inputColors.size() % 4 != 0)
-	{
-		std :: cout << "ERROR: INPUT COLOR VERTICES ARE NOT EASILY DIVISBLE BY 4!" 
-			<< std :: endl; 
-		return newMesh;
-	}
-*/
-
 	// LOADS VERTEX DATA INTO CLASS MEMORY //
 	newMesh -> vertexBuffer = inputVertices;
 	newMesh -> indexBuffer = inputIndices;
@@ -133,13 +108,13 @@ void meshManagement :: draw(EngineCore * core, Mesh * inputMesh)
 		std :: vector<float>
 		{
 			// COLUMN ONE //
-			1, 0, 0, -(targetScene -> viewRef -> playerPos[0]),
+			1, 0, 0, targetScene -> viewRef -> playerPos[0],
 
 			// COLUMN TWO //
-			0, 1, 0, -(targetScene -> viewRef -> playerPos[1]),
+			0, 1, 0, targetScene -> viewRef -> playerPos[1],
 
 			// COLUMN THREE //
-			0, 0, 1, targetScene -> viewRef -> playerPos[2],
+			0, 0, 1, -(targetScene -> viewRef -> playerPos[2]),
 
 			// COLUMN FOUR //
 			0, 0, 0, 1

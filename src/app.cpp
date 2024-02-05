@@ -43,30 +43,28 @@ void appManagement :: begin(EngineCore * core)
 
 void appManagement :: createTestScene(EngineCore * core)
 {
-	// SETS THE PLAYER'S STARTING POSITION //
-	// core -> curSceneRef -> viewRef -> playerPos[2] = -2000.0f;
-
+	entityID newEntity = sceneManagement :: newEntityID(core -> curSceneRef);
 	sceneManagement :: addComp
 	(
 		core -> curSceneRef,
-		sceneManagement :: newEntityID(core -> curSceneRef),
-		componentManagement :: getID<Mesh>(),
-		(compPtr) meshManagement :: createMesh
+		newEntity,
+		MESH_COMP_ID,
+		(compPtr) meshHandler :: createMesh
 		(
 			// VERTICES //
 			std :: vector<GLfloat>
 			{
 				// FRONT-FACE //
-				-1.0f, 1.0f, -0.1f,
-				1.0f, 1.0f, -0.1f,
-				1.0f, -1.0f, -0.1f,
-				-1.0f, -1.0f, -0.1f,
+				-1.0f, 1.0f, -0.5f,
+				1.0f, 1.0f, -0.5f,
+				1.0f, -1.0f, -0.5f,
+				-1.0f, -1.0f, -0.5f,
 				
 				// BACK-FACE //
-				-1.0f, 1.0f, 0.1f,
-				1.0f, 1.0f, 0.1f,
-				1.0f, -1.0f, 0.1f,
-				-1.0f, -1.0f, 0.1f,
+				-1.0f, 1.0f, 0.5f,
+				1.0f, 1.0f, 0.5f,
+				1.0f, -1.0f, 0.5f,
+				-1.0f, -1.0f, 0.5f,
 			},
 
 			// INDICES //
@@ -105,6 +103,14 @@ void appManagement :: createTestScene(EngineCore * core)
 			}
 		)
 	);
+
+	sceneManagement :: addComp
+	(
+		core -> curSceneRef,
+		newEntity,
+		TRANS_COMP_ID,
+		(compPtr) transformHandler :: createTransform()
+	);
 }
 
 void appManagement :: run(EngineCore * core)
@@ -140,8 +146,6 @@ void appManagement :: update(EngineCore * core)
 {
 	// VARIABLE INITIALIZATION //
 	SDL_Event event;
-	static Scene * alternateScene = sceneManagement :: createScene("Scene2");
-	GLfloat * playerPos = core -> curSceneRef -> viewRef -> playerPos;
 
 	// IF POLLING RETURNS 0, THERE IS NO PENDING EVENT: RETURNS //
 	while(SDL_PollEvent(&event))
@@ -194,56 +198,8 @@ void appManagement :: update(EngineCore * core)
 		{
 			switch(justPressed[i])
 			{
-				case ' ' :
-				{
-					// SWAPS THE ADDRESS BETWEEN STATIC ALTERNATE SAVED SCENE //
-						// AND ENGINE'S CURRENT SCENE //
-					Scene * tempScene = core -> curSceneRef;
-					sceneManagement :: changeScene(core, alternateScene);
-					alternateScene = tempScene;
-				}
+
 			}
 		}
 	}
-
-	// TAKES PLAYER WASD MOVEMENT //
-	float moveSpeed = 1.0f * core -> deltaTime;
-	auto keys = core -> inputState -> pressedKeys;
-
-	if(keys['a'])
-		playerPos[0] -= moveSpeed;
-	if(keys['d'])
-		playerPos[0] += moveSpeed;
-	if(keys['w'])
-		playerPos[2] += moveSpeed * 40;
-	if(keys['s'])
-		playerPos[2] -= moveSpeed * 40;
-	if(keys[','])
-		playerPos[1] -= moveSpeed;
-	if(keys['.'])
-		playerPos[1] += moveSpeed;
-
-	if(keys['q'])
-		core -> tempScale += (moveSpeed * 10) * core -> deltaTime;
-	if(keys['e'])
-		core -> tempScale -= (moveSpeed * 10) * core -> deltaTime;
-
-	float rotSpeed = moveSpeed * 20;
-	if(keys['r'])
-		core -> tempRot[0] += (rotSpeed * core -> deltaTime);
-	if(keys['t'])
-		core -> tempRot[0] -= (rotSpeed * core -> deltaTime);
-
-	if(keys['y'])
-		core -> tempRot[1] += (rotSpeed * core -> deltaTime);
-	if(keys['u'])
-		core -> tempRot[1] -= (rotSpeed * core -> deltaTime);
-
-	if(keys['i'])
-		core -> tempRot[2] += (rotSpeed * core -> deltaTime);
-	if(keys['o'])
-		core -> tempRot[2] -= (rotSpeed * core -> deltaTime);
-
-	if(core -> tempScale < 0.05f)
-		core -> tempScale = 0.05f;
 }

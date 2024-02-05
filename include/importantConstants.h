@@ -28,4 +28,8 @@ typedef char *					compPtr;
 // PRE-DEFINES A FOV //
 #define LOB_FOV						80
 
+// COMPONENT DEFINTIONS //
+#define MESH_COMP_ID				0
+#define TRANS_COMP_ID				1
+
 #endif

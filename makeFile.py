@@ -2,7 +2,7 @@ import os
 debugPath = "bin/debug"
 name = "LobsterEngine"
 extension = "elf"
-targetsLinux = False
+targetsLinux = True
 
 if targetsLinux :
 	os.system\

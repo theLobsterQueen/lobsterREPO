@@ -38,7 +38,7 @@ Sprint 1 (ENGINE BACKEND FUNDAMENTALS) :
 	[X] Use uniforms and systems logic to make a scene fully interactable.	
 	[~] Build out base components library for more advanced functionalities.
 		  (Collision detecting component, lighting component.)
-	[ ] Create a fully 3D base shader, complete with (probably Phong) lighting system.
+	[~] Create a fully 3D base shader, complete with (probably Phong) lighting system.
 	[ ] Create material component to dictate color.
 		  (STRETCH: Make it PBR, adding in details like smoothness/metallicity.)
 

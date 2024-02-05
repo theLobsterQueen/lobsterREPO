@@ -17,24 +17,12 @@
 // LOBSTER INCLUDES //
 #include <mesh.h>
 #include <entity.h>
-#include <component.h>
 #include <importantConstants.h>
 #include <window.h>
 #include <transform.h>
 
 // STRUCT PROTOTYPES //
 struct EngineCore;
-
-/// <summary> ///
-///		This struct serves as the "player" viewpoint for the scene. It holds the
-///			positional offset that the player is at which will affect the rendering
-///			of the objects in the scene, and may also carry any other data relevant
-///			to the player's perspective.
-/// </summary> ///
-struct Viewport
-{
-	GLfloat playerPos[3] = {0};
-};
 
 /// <summary> ///
 /// 	This struct acts as the "master catalog" of all things existing inside of a single
@@ -49,7 +37,6 @@ struct Scene
 	// BASIC ATTRIBUTES //
 	std :: string name = "";
 	unsigned short int activeEntities = 0;
-	Viewport * viewRef = new Viewport;
 
 	// ENTITY/COMPONENT CONTAINER //
 	Entity entities[LOBSTER_MAX_ENTITIES] = { };

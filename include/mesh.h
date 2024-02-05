@@ -35,7 +35,7 @@ struct Mesh
 };
 
 // FUNCTION DEFINITIONS //
-namespace meshManagement
+namespace meshHandler
 {
 	/// <summary> ///
 	///		This function creates and returns a new mesh component with input vertices,
@@ -48,10 +48,7 @@ namespace meshManagement
 		std :: vector<GLfloat> inputColors
 	);
 
-	/// <summary> ///
-	///		This function draws an input mesh component.
-	/// </summary> ///
-	void draw(EngineCore * core, Mesh * inputMesh);
+	void drawMesh(Mesh * inputMesh);
 };
 
 #endif

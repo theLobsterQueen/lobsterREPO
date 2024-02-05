@@ -33,7 +33,15 @@ void sceneManagement :: deleteEntity(Scene * targetScene, entityID entityIndex)
 }
 
 void sceneManagement :: addComp
-	(Scene * targetScene, entityID entityIndex, componentID compIndex, compPtr inputCompPtr)
+// PARAMETERS //
+(
+	Scene * targetScene, 
+	entityID entityIndex, 
+	componentID compIndex, 
+	compPtr inputCompPtr
+)
+
+// FUNCTION //
 { 
 	// IF ENTITY MASK IS EMPTY BEFORE ADDING, INCREMENTS ACTIVE ENTITY COUNTER //
 	if(targetScene -> entities[entityIndex].mask == 0)
@@ -64,14 +72,30 @@ void sceneManagement :: renderScene(EngineCore * core)
 			continue;
 		}
 
-		// READS ENTITY AND SAVES MESH ID //
-		Entity temp = targetScene -> entities[entityIndex];
-		componentID meshID = componentManagement :: getID<Mesh>();
+		// READS ENTITY DATA //
+		Entity curEntity = targetScene -> entities[entityIndex];
 
 		// THEN, DRAWS MESH IF ONE IS EQUIPPED ON THE ENTITY //
-		if((temp.mask & (1 << meshID)) > 0)
-			meshManagement :: draw
-				(core, (Mesh *) (targetScene -> components[meshID][entityIndex]));
+		if((curEntity.mask & (1 << MESH_COMP_ID)) > 0)
+		{
+			// IF ENTITY HAS TRANSFORM COMPONENT, GRABS IT //
+				// OTHERWISE, SETS WORLD MATRIX TO IDENTITY MATRIX //
+			LobMatrix worldMat = math :: identityMatrix();
+			if((curEntity.mask & (1 << TRANS_COMP_ID)) > 0)
+				worldMat = transformHandler :: getWorldMat
+					((Transform *) targetScene -> components[TRANS_COMP_ID][entityIndex]);
+
+			// SETS OBJECT WORLD MATRIX //
+			glUniformMatrix4fv
+			(
+				UNI_WORLD_MATRIX,  // WHAT UNIFORM IT'S SETTING //
+				1, GL_FALSE, worldMat.getData()
+			);
+
+			// DRAWS MESH //
+			meshHandler :: drawMesh
+				((Mesh *) targetScene -> components[MESH_COMP_ID][entityIndex]);
+		}
 
 		// REDUCES ACTIVE ENTITY COUNT AND INCREASING ENTITY INDEX //
 			// FOR NEXT ITERATION //

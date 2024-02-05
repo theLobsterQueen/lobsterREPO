@@ -1,14 +1,48 @@
 #ifndef LOBSTER_TRANSFORM
 #define LOBSTER_TRANSFORM 1
 
+// INCLUDES AND INITIALIZATIONS //
+
+// LOBSTER INCLUDES //
+#include <math.h>
+
+// STD INCLUDES //
+#include <vector>
+
+// STRUCT DEFINITIONS //
+
+/// <summary> ///
+///		This struct represents the center point of a mesh in world space coordinates,
+///			the rotation of that object centered about its origin point,
+///			and the scale of the object.
+/// </summary> ///
+
 struct Transform
 {
+	std :: vector<float> position;
+	std :: vector<float> rotation;
+	std :: vector<float> scale;
+};
+
+namespace transformHandler
+{
 	/// <summary> ///
-	///		This field describes whether or not the attached entity is "centered."
-	///			If an entity is centered it is drawn without regarding player position
-	///			offset.
+	///		Creates and returns a reference to a new transform component.
 	/// </summary> ///
-	bool isCentered = false;
+	Transform * createTransform();
+
+	Transform * createTransform
+	(
+		std :: vector<float> inputPosition,
+		std :: vector<float> inputRotation,
+		std :: vector<float> inputScale
+	);
+
+	/// <summary> ///
+	///		Returns a "worldMatrix" based on the data inside a target transform
+	///			component.
+	/// </summary> ///
+	LobMatrix getWorldMat(Transform * inputTrans);
 };
 
 #endif

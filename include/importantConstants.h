@@ -24,6 +24,7 @@ typedef char *					compPtr;
 // DEFINES UNIFORMS //
 #define UNI_WORLD_MATRIX			0
 #define UNI_PROJ_MATRIX				1
+#define UNI_CAMERA_MATRIX			2
 
 // PRE-DEFINES A FOV //
 #define LOB_FOV						80
@@ -31,5 +32,6 @@ typedef char *					compPtr;
 // COMPONENT DEFINTIONS //
 #define MESH_COMP_ID				0
 #define TRANS_COMP_ID				1
+#define CAMERA_COMP_ID				2
 
 #endif

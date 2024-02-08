@@ -1,35 +1,32 @@
 // INCLUDES DEFINITION AND USES NAMESPACE //
 #include <app.h>
 
+// (TEMP) FILE-GLOBAL VARIABLES //
+static entityID testID = 0;
+static entityID camID = 0;
+static bool movingCamera = false;
+
 // FUNCTION IMPLEMENTATIONS //
 void appManagement :: begin(EngineCore * core)
 {
 	// INITIALIZES CORE VALUES //
-	core -> curPipelineRef = graphicManagement :: createPipeline();
 	core -> curSceneRef = sceneManagement :: createScene();
 
-	// VARIABLE INITIALIZATION //
-	float aspectRatio = (core -> winWidth) / (core -> winHeight);
-	core -> hozFOV = math :: toRadians(35);
-	core -> verFOV = aspectRatio * core -> hozFOV;
-
-	// PUSHES CONSTANTS //
-	pushConstant("c_hozFOV", core -> hozFOV);
-	pushConstant("c_verFOV", core -> verFOV);
-
 	// CREATES BASE RENDER PIPELINE //
+	Pipeline * basePipeline = graphicManagement :: createPipeline();
 	graphicManagement :: loadShader
 	(
-		core -> curPipelineRef, GL_VERTEX_SHADER, 
+		basePipeline, GL_VERTEX_SHADER, 
 		"shaders/vertShader.txt", core -> debug
 	);
 	graphicManagement :: loadShader
 	(
-		core -> curPipelineRef, GL_FRAGMENT_SHADER, 
+		basePipeline, GL_FRAGMENT_SHADER, 
 		"shaders/fragShader.txt", core -> debug
 	);
 
-	graphicManagement :: compileProgram(core -> curPipelineRef);
+	graphicManagement :: compileProgram(basePipeline);
+	core -> pipelineRefs.push_back(basePipeline);
 
 	// CHANGES THE NAME OF THE WINDOW TO THE NEW CURRENT SCENE //
 	windowManagement :: changeTitle(core -> winRef, core -> curSceneRef -> name);
@@ -43,11 +40,12 @@ void appManagement :: begin(EngineCore * core)
 
 void appManagement :: createTestScene(EngineCore * core)
 {
-	entityID newEntity = sceneManagement :: newEntityID(core -> curSceneRef);
+	entityID testID = sceneManagement :: newEntityID(core -> curSceneRef);
+
 	sceneManagement :: addComp
 	(
 		core -> curSceneRef,
-		newEntity,
+		testID,
 		MESH_COMP_ID,
 		(compPtr) meshHandler :: createMesh
 		(
@@ -107,7 +105,36 @@ void appManagement :: createTestScene(EngineCore * core)
 	sceneManagement :: addComp
 	(
 		core -> curSceneRef,
-		newEntity,
+		testID,
+		TRANS_COMP_ID,
+		(compPtr) transformHandler :: createTransform()
+	);
+
+	// INITIAL TRANSFORM OFFSET //
+	transformHandler :: translate
+	(
+		(Transform *) core -> curSceneRef -> components[TRANS_COMP_ID][testID],
+		std :: vector<float> { 0.0f, 0.0f, 1.0f }
+	);
+
+	// CREATES CAMERA COMPONENT //
+	camID = sceneManagement :: newEntityID(core -> curSceneRef);
+	sceneManagement :: addComp
+	(
+		core -> curSceneRef,
+		camID,
+		CAMERA_COMP_ID,
+		(compPtr) cameraHandler :: createCamera
+		(	
+			core -> winWidth / core -> winHeight,
+			70, core -> pipelineRefs[0]
+		)
+	);
+
+	sceneManagement :: addComp
+	(
+		core -> curSceneRef,
+		camID,
 		TRANS_COMP_ID,
 		(compPtr) transformHandler :: createTransform()
 	);
@@ -134,8 +161,15 @@ void appManagement :: run(EngineCore * core)
 		// BEGINS RENDERING PHASE //
 		graphicManagement :: beginRenderPass(core);
 
+		// TEST FUNCTIONS //
+		if(movingCamera)
+			testFuncs :: processInput(core, camID);
+
+		else
+			testFuncs :: processInput(core, testID);
+
 		// RENDERS CURRENT SCENE //
-		sceneManagement :: renderScene(core);
+		sceneManagement :: renderScene(core -> curSceneRef, camID);
 
 		// PRESENTS TO SCREEN //
 		graphicManagement :: present(core);
@@ -198,7 +232,9 @@ void appManagement :: update(EngineCore * core)
 		{
 			switch(justPressed[i])
 			{
-
+				case ' ' :
+					movingCamera = !movingCamera;
+				break;
 			}
 		}
 	}

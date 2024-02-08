@@ -20,13 +20,14 @@
 #include <importantConstants.h>
 #include <window.h>
 #include <transform.h>
+#include <camera.h>
 
 // STRUCT PROTOTYPES //
 struct EngineCore;
 
 /// <summary> ///
 /// 	This struct acts as the "master catalog" of all things existing inside of a single
-///			environment, or scene. Here you will find all the entities instatiated in
+//			environment, or scene. Here you will find all the entities instatiated in
 ///			the scene, any scripts that may exist in the scene, and other
 ///			scene-global variables that may be accessed by any scripts/components
 ///			in the scene.
@@ -81,7 +82,12 @@ namespace sceneManagement
 	/// <summary> ///
 	///		Iterates through all entities in the scene, and draws them.
 	/// </summary> ///
-	void renderScene(EngineCore * core);
+	void renderScene(Scene * targetScene, entityID targetCamera);
+
+	/// <summary> ///
+	///		Returns a array of all entities with input component.
+	/// </summary> ///
+	std :: vector<entityID> sceneView(Scene * inputScene, componentID compID);
 };
 
 #endif

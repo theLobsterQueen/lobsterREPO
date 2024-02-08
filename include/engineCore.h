@@ -50,22 +50,9 @@ struct EngineCore
 	unsigned short int winHeight = 720;
 
 	/// <summary> ///
-	///		These fields dictate the field of view..
-	/// </summary> ///
-	float hozFOV = 0;
-	float verFOV = 0;
-
-	/// <summary> ///
 	///		This pointer references the OpenGL context.
 	/// </summary> ///
 	void * glRef = nullptr;
-
-	/// <summary> ///
-	///		This is a reference to the "base pipeline," or the pipeline that all
-	///			projects in this engine initialize with.
-	/// </summary> ///
-	Pipeline * curPipelineRef = nullptr;
-
 
 	/// <summary> ///
 	///		This field contains the currently actively scene.
@@ -77,6 +64,11 @@ struct EngineCore
 	///			of the application. 
 	/// </summary> ///
 	InputState * inputState = new InputState;
+
+	/// <summary> ///
+	///		A collection of all created pipelines within the engine context.
+	/// </summary> ///
+	std :: vector<Pipeline *> pipelineRefs;
 
 	/// <summary> ///
 	///		This field holds the time passed since the last time getDeltaTime was

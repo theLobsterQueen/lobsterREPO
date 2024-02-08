@@ -5,7 +5,11 @@
 
 // STANDARD INCLUDES //
 #include <importantConstants.h>
+#include <vector>
 #include <bitset>
+
+// STRUCT PROTOTYPES //
+struct Scene;
 
 /// <summary> ///
 ///		This struct is the core to how the engine operates: an entity holds a key

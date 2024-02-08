@@ -5,10 +5,6 @@
 Transform * transformHandler :: createTransform()
 {
 	Transform * newTrans = new Transform;
-	newTrans -> position = std :: vector<float> { 0.0f, 0.0f, 0.0f };
-	newTrans -> rotation = std :: vector<float> { 0.0f, 0.0f, 0.0f };
-	newTrans -> scale = std :: vector<float> { 1.0f, 1.0f, 1.0f };
-
 	return newTrans;
 }
 
@@ -76,4 +72,25 @@ LobMatrix transformHandler :: getWorldMat(Transform * inputTrans)
 
 	// RETURNS WORLD MATRIX //
 	return scaleMat * rotMat * transMat;
+}
+
+void transformHandler :: translate
+	(Transform * inputTrans, std :: vector<float> deltaVector)
+{
+	for(int i = 0; i < 3; i++)
+		inputTrans -> position[i] = inputTrans -> position[i] + deltaVector[i];
+}
+
+void transformHandler :: rotate
+	(Transform * inputTrans, std :: vector<float> deltaVector)
+{
+	for(int i = 0; i < 3; i++)
+		inputTrans -> rotation[i] = inputTrans -> rotation[i] + deltaVector[i];
+}
+
+void transformHandler :: scale
+	(Transform * inputTrans, std :: vector<float> deltaVector)
+{
+	for(int i = 0; i < 3; i++)
+		inputTrans -> scale[i] = inputTrans -> scale[i] + deltaVector[i];
 }

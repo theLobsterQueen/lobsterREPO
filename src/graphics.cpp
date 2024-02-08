@@ -183,29 +183,9 @@ void graphicManagement :: beginRenderPass(EngineCore * core)
 {
 	// CLEARS SCREEN //
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// USES PIPELINE //
-	graphicManagement :: usePipeline(core -> curPipelineRef);
 
-	// CREATES PROJECTION MATRIX DATA //
-	float projMatrix[16] =
-	{
-		// FIRST COLUMN //
-		core -> hozFOV, 0, 0, 0,
-
-		// SECOND COLUMN //
-		0, core -> verFOV, 0, 0,
-
-		// THIRD COLUMN //
-		0, 0, 0, 0,
-
-		// FOURTH COLUMN //
-		0, 0, -1, 0
-	};
-
-	// ACTIVES CURRENT PIPELINE AND PUSHES PROJECTION MATRIX //
-	glUniformMatrix4fv(UNI_PROJ_MATRIX, 1, GL_FALSE, projMatrix);
 }
 
 void graphicManagement :: present(EngineCore * core)

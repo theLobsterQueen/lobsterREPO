@@ -1,4 +1,0 @@
-
-// DEFINES CONSTANTS //
-float c_hozFOV = 2006.37f;
-float c_verFOV = 2006.37f;

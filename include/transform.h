@@ -19,9 +19,9 @@
 
 struct Transform
 {
-	std :: vector<float> position;
-	std :: vector<float> rotation;
-	std :: vector<float> scale;
+	std :: vector<float> position = { 0.0f, 0.0f, 0.0f };
+	std :: vector<float> rotation = { 0.0f, 0.0f, 0.0f };
+	std :: vector<float> scale = { 1.0f, 1.0f, 1.0f };
 };
 
 namespace transformHandler
@@ -43,6 +43,24 @@ namespace transformHandler
 	///			component.
 	/// </summary> ///
 	LobMatrix getWorldMat(Transform * inputTrans);
+
+	/// <summary> ///
+	/// 	Modifies the position value of input transform by input delta vector.
+	/// </summary> ///
+
+	void translate(Transform * inputTrans, std :: vector<float> deltaVector);
+
+	/// <summary> ///
+	/// 	Modifies the rotation value of input transform by input delta vector.
+	/// </summary> ///
+
+	void rotate(Transform * inputTrans, std :: vector<float> deltaVector);
+
+	/// <summary> ///
+	/// 	Modifies the scale value of input transform by input delta vector.
+	/// </summary> ///
+
+	void scale(Transform * inputTrans, std :: vector<float> deltaVector);
 };
 
 #endif

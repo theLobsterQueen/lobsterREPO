@@ -63,6 +63,31 @@ float math :: dot(LobMatrix matY, LobMatrix matX, unsigned int yIndex, unsigned 
 	return totalValue;
 }
 
+float math :: dot(std :: vector<float> x, std :: vector<float> y)
+{
+	if(x.size() != y.size())
+	{
+		std :: cout << "ERROR! ATTEMPTING TO FIND THE DOT PRODUCT OF TWO "
+			<< "VECTORS WITH DIFFERENT SIZES!" << std :: endl;
+		return 0;
+	}
+
+	float total = 0;
+	for(char i = 0; i < x.size(); i++)
+		total += x[i] * y[i];
+
+	return total;
+}
+
+std :: vector<float> math :: scaleVec(std :: vector<float> x, float s)
+{
+	std :: vector<float> scaled = x;
+	for(char i = 0; i < x.size(); i++)
+		scaled[i] = x[i] * s;
+
+	return scaled;
+}
+
 LobMatrix math :: rotateMatrix(std :: vector<float> axis, float angle)
 {
 	// VARIABLE INITIALIZATION //

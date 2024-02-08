@@ -25,6 +25,8 @@ class LobMatrix;
 namespace math
 {
 	float dot(LobMatrix matY, LobMatrix matX, unsigned int yIndex, unsigned int xIndex);
+	float dot(std :: vector<float> x, std :: vector<float> y);
+	std :: vector<float> scaleVec(std :: vector<float> x, float s);
 	std :: vector<float> cross(std :: vector<float> x, std :: vector<float> y);
 	LobMatrix identityMatrix();
 	LobMatrix inverse(LobMatrix inputMat);
@@ -112,6 +114,24 @@ class LobMatrix
 
 		unsigned int getRows()
 			{ return numRows; }
+
+		std :: vector<float> getRow(unsigned int rowIndex)
+		{
+			std :: vector<float> rowVec;
+			for(int i = 0; i < numCols; i++)
+				rowVec.push_back(data[(numCols * rowIndex) + i]);
+
+			return rowVec;
+		}
+
+		std :: vector<float> getCol(unsigned int colIndex)
+		{
+			std :: vector<float> colVec;
+			for(int i = 0; i < numRows; i++)
+				colVec.push_back(data[(numRows * colIndex) + i]);
+
+			return colVec;
+		}
 
 		float getPoint(unsigned int y, unsigned int x)
 			{ return data[(numRows * x) + y]; }

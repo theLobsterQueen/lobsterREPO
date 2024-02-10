@@ -11,13 +11,14 @@ Sources :
 	https://www.libsdl.org/
 	https://antongerdelan.net/opengl/index.html
 	https://lazyfoo.net/tutorials/SDL/51_SDL_and_modern_opengl/index.php
-	https://youtu.be/sXbqwzXtecE?list=PLvv0ScY6vfd9zlZkIIqGDeG5TUWswkMox
  	https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html
-	https://www.youtube.com/watch?v=XnUMm-uNmvY
 	https://www.scratchapixel.com/index.html
 	http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-9-vbo-indexing/
-	https://www.youtube.com/watch?v=
-		W3gAzLwfIP0&list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2&index=2
+
+	https://youtu.be/sXbqwzXtecE?list=PLvv0ScY6vfd9zlZkIIqGDeG5TUWswkMox
+	https://youtu.be/md3jFANT3UM
+	https://youtu.be/XnUMm-uNmvY
+	https://youtu.be/W3gAzLwfIP0?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2
 
 // KEY //
 X: Done

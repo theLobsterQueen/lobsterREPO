@@ -6,11 +6,8 @@ Camera * cameraHandler ::
 	createCamera(float inputAspect, float inputFOV, Pipeline * inputPipeline)
 {
 	Camera * newCamera = new Camera;
-	float FOV = math :: toRadians(inputFOV / 2);
-
 	newCamera -> aspectRatio = inputAspect;
-	newCamera -> hozFOV = 1 / (tan(inputAspect * FOV));
-	newCamera -> verFOV = 1 / (tan(FOV));
+	newCamera -> FOV = 1 / tan(math :: toRadians(inputFOV / 2));
 	newCamera -> curPipelineRef = inputPipeline;
 
 	return newCamera;
@@ -23,10 +20,10 @@ LobMatrix cameraHandler :: getViewProjMatrix(Camera * camera)
 		std :: vector<float>
 		{
 			// FIRST COLUMN //
-			camera -> hozFOV, 0, 0, 0,
+			camera -> FOV / camera -> aspectRatio, 0, 0, 0,
 
 			// SECOND COLUMN //
-			0, camera -> verFOV, 0, 0,
+			0, camera -> FOV, 0, 0,
 
 			// THIRD COLUMN //
 			0, 0, camera -> far / (camera -> near - camera -> far), -1,

@@ -41,73 +41,47 @@ void appManagement :: begin(EngineCore * core)
 void appManagement :: createTestScene(EngineCore * core)
 {
 	entityID testID = sceneManagement :: newEntityID(core -> curSceneRef);
-	Mesh * tempMesh = meshHandler :: getMeshFromPLY("./assets/models/cube.ply");
-	meshHandler :: printMesh(tempMesh);
+	
+	// FISHIES!!! //
+	sceneManagement :: addComp
+	(
+		core -> curSceneRef,
+		testID, MESH_COMP_ID,
+		(compPtr) meshHandler :: getMeshFromPLY("./assets/models/cube.ply")
+	);
 
 	sceneManagement :: addComp
 	(
 		core -> curSceneRef,
-		testID,
-		MESH_COMP_ID,
-		(compPtr) (tempMesh)
-	);
-	
-	sceneManagement :: addComp
-	(
-		core -> curSceneRef,
-		testID,
-		TRANS_COMP_ID,
+		testID, TRANS_COMP_ID,
 		(compPtr) transformHandler :: createTransform()
 	);
 
-	entityID tempID = sceneManagement :: newEntityID(core -> curSceneRef);
-	sceneManagement :: addComp
-	(
-		core -> curSceneRef,
-		tempID,
-		MESH_COMP_ID,
-		(compPtr) (meshHandler :: getMeshFromPLY("./assets/models/cube.ply"))
-	);
-
-	sceneManagement :: addComp
-	(
-		core -> curSceneRef,
-		tempID,
-		TRANS_COMP_ID,
-		(compPtr) (transformHandler :: createTransform())
-	);
-
-	// INITIAL TRANSFORM OFFSET //
+	// OFFSETS FISH //
 	transformHandler :: translate
 	(
-		(Transform *) core -> curSceneRef -> components[TRANS_COMP_ID][testID],
+		(Transform *) (core -> curSceneRef -> components[TRANS_COMP_ID][testID]),
 		std :: vector<float> { 0.0f, 0.0f, -10.0f }
 	);
 
 	transformHandler :: rotate
 	(
-		(Transform *) core -> curSceneRef -> components[TRANS_COMP_ID][testID],
+		(Transform *) (core -> curSceneRef -> components[TRANS_COMP_ID][testID]),
 		std :: vector<float> { 90.0f, 0.0f, 0.0f }
 	);
 
-	transformHandler :: translate
-	(
-		(Transform *) core -> curSceneRef -> components[TRANS_COMP_ID][tempID],
-		std :: vector<float> { 5.0f, 0.0f, -10.0f }
-	);
-	
 	// CREATES CAMERA COMPONENT //
 	camID = sceneManagement :: newEntityID(core -> curSceneRef);
+	float aspect = ((float) core -> winWidth) / ((float) core -> winHeight);
+	std :: cout << "ASPECT RATIO IS: " << aspect << "!" << std :: endl;
+
 	sceneManagement :: addComp
 	(
 		core -> curSceneRef,
 		camID,
 		CAMERA_COMP_ID,
 		(compPtr) cameraHandler :: createCamera
-		(	
-			core -> winWidth / core -> winHeight,
-			70, core -> pipelineRefs[0]
-		)
+			(aspect, 70, core -> pipelineRefs[0])
 	);
 
 	sceneManagement :: addComp

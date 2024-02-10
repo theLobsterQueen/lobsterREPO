@@ -34,7 +34,7 @@ struct EngineCore
 	/// <summary> ///
 	///		This boolean describes whether the engine should give verbose
 	///			debug statements during its operation.
-	/// </summary> ///
+	// </summary> ///
 	bool debug = true;
 
 	/// <summary> ///
@@ -46,8 +46,8 @@ struct EngineCore
 	///		These values dictate the starting width/height of the engine window.
 	///			(Defaults to standard HD 16:9 resolution.)
 	/// </summary> ///
-	unsigned short int winWidth = 1280;
-	unsigned short int winHeight = 720;
+	unsigned short int winWidth = 1300;
+	unsigned short int winHeight = 650;
 
 	/// <summary> ///
 	///		This pointer references the OpenGL context.

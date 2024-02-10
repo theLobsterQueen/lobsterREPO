@@ -49,7 +49,7 @@ int main(int argv, char ** args)
 	// ENABLES DOUBLE-BUFFERING //
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	
-	// INCREASES DEPTH BUFFER SIZE //
+	// ENABLES DEPTH BUFFER TESTING AND  INCREASES DEPTH BUFFER SIZE //
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
 	// FORCES HARDWARE ACCELERATION //
@@ -73,6 +73,9 @@ int main(int argv, char ** args)
 	// INITIALIZES GLEW //
 	glewExperimental = GL_TRUE;
 	glewInit();
+
+	// SETS OUT OPEN-GL SETTINGS //
+	glEnable(GL_DEPTH_TEST);
 
 	// PRINTS OUT OPEN-GL VERSION //
 	std :: cout << "GL VENDOR: " << glGetString(GL_VENDOR) << std :: endl;

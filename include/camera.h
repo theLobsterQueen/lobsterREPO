@@ -33,8 +33,7 @@ struct Camera
 	///			value of the horizontal field of view and the aspect ratio
 	///			of the target viewport.
 	/// </summary> ///
-	float hozFOV;
-	float verFOV;
+	float FOV;
 
 	/// <summary> ///
 	///		The two clipping distance values for the camera.

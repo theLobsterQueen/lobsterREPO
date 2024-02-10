@@ -7,7 +7,7 @@
 #include <vector>
 #include <cmath>
 #include <fstream>
-#include <stdio.h>
+#include <sstream>
 
 // SDL/GL INCLUDES //
 #include <SDL2/SDL.h>

@@ -30,7 +30,7 @@ namespace math
 	std :: vector<float> cross(std :: vector<float> x, std :: vector<float> y);
 	LobMatrix identityMatrix();
 	LobMatrix inverse(LobMatrix inputMat);
-	LobMatrix rotateMatrix(std :: vector<float> axis, float angle);
+	LobMatrix rotateMatrix(std :: vector<float> axis, float inputAngle);
 	float toRadians(float x);
 };
 

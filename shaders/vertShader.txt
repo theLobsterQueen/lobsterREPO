@@ -16,10 +16,11 @@ void main()
 {
 	// TRANSFORMS VERTEX ATTRIBUTE INTO 4D OBJECT //
 	vec4 vertexPos = vec4(in_vertexPos, 1.0);
-	vertexPos *= u_worldMatrix;
-	vertexPos *= (u_camMatrix * u_projMatrix);
+	vertexPos *= u_modelWorldMatrix;
+	vertexPos *= u_worldViewMatrix;
+	vertexPos *= u_viewProjMatrix;
 
 	// APPLIES VERTEX AND COLOR DATA //
 	gl_Position = vertexPos;
-	out_colorVec = in_colorVec;
+	out_colorVec = vec4(in_colorVec.xyz, 1.0);
 }

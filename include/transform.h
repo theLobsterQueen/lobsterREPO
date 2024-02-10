@@ -42,7 +42,7 @@ namespace transformHandler
 	///		Returns a "worldMatrix" based on the data inside a target transform
 	///			component.
 	/// </summary> ///
-	LobMatrix getWorldMat(Transform * inputTrans);
+	LobMatrix getModelWorldMatrix(Transform * inputTrans);
 
 	/// <summary> ///
 	/// 	Modifies the position value of input transform by input delta vector.

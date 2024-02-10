@@ -16,6 +16,8 @@ Sources :
 	https://www.youtube.com/watch?v=XnUMm-uNmvY
 	https://www.scratchapixel.com/index.html
 	http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-9-vbo-indexing/
+	https://www.youtube.com/watch?v=
+		W3gAzLwfIP0&list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2&index=2
 
 // KEY //
 X: Done
@@ -39,8 +41,6 @@ Sprint 1 (ENGINE BACKEND FUNDAMENTALS) :
 	[~] Build out base components library for more advanced functionalities.
 		  (Collision detecting component, lighting component.)
 	[~] Create a fully 3D base shader, complete with (probably Phong) lighting system.
-	[ ] Create material component to dictate color.
-		  (STRETCH: Make it PBR, adding in details like smoothness/metallicity.)
 
 Sprint 2-Beyond :
 	????

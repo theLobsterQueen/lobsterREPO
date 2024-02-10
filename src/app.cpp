@@ -41,67 +41,17 @@ void appManagement :: begin(EngineCore * core)
 void appManagement :: createTestScene(EngineCore * core)
 {
 	entityID testID = sceneManagement :: newEntityID(core -> curSceneRef);
+	Mesh * tempMesh = meshHandler :: getMeshFromPLY("./assets/models/cube.ply");
+	meshHandler :: printMesh(tempMesh);
 
 	sceneManagement :: addComp
 	(
 		core -> curSceneRef,
 		testID,
 		MESH_COMP_ID,
-		(compPtr) meshHandler :: createMesh
-		(
-			// VERTICES //
-			std :: vector<GLfloat>
-			{
-				// FRONT-FACE //
-				-1.0f, 1.0f, -0.5f,
-				1.0f, 1.0f, -0.5f,
-				1.0f, -1.0f, -0.5f,
-				-1.0f, -1.0f, -0.5f,
-				
-				// BACK-FACE //
-				-1.0f, 1.0f, 0.5f,
-				1.0f, 1.0f, 0.5f,
-				1.0f, -1.0f, 0.5f,
-				-1.0f, -1.0f, 0.5f,
-			},
-
-			// INDICES //
-			std :: vector<GLuint>
-			{
-				// FRONT FACE //
-				0, 1, 2,
-				2, 3, 0,
-
-				// LEFT FACE //
-				0, 4, 3,
-				3, 7, 4,
-
-				// BACK FACE //
-				4, 5, 6,
-				6, 7, 4,
-
-				// RIGHT FACE //
-				1, 5, 6,
-				6, 2, 1
-			},
-
-			// COLORS //
-			std :: vector<GLfloat>
-			{
-				0.0f, 0.0f, 1.0f, 1.0f,
-				0.0f, 0.0f, 1.0f, 1.0f,
-				0.0f, 0.0f, 1.0f, 1.0f,
-				0.0f, 0.0f, 1.0f, 1.0f,
-
-
-				0.0f, 1.0f, 0.0f, 1.0f,
-				0.0f, 1.0f, 0.0f, 1.0f,
-				0.0f, 1.0f, 0.0f, 1.0f,
-				0.0f, 1.0f, 0.0f, 1.0f
-			}
-		)
+		(compPtr) (tempMesh)
 	);
-
+	
 	sceneManagement :: addComp
 	(
 		core -> curSceneRef,
@@ -110,13 +60,42 @@ void appManagement :: createTestScene(EngineCore * core)
 		(compPtr) transformHandler :: createTransform()
 	);
 
+	entityID tempID = sceneManagement :: newEntityID(core -> curSceneRef);
+	sceneManagement :: addComp
+	(
+		core -> curSceneRef,
+		tempID,
+		MESH_COMP_ID,
+		(compPtr) (meshHandler :: getMeshFromPLY("./assets/models/cube.ply"))
+	);
+
+	sceneManagement :: addComp
+	(
+		core -> curSceneRef,
+		tempID,
+		TRANS_COMP_ID,
+		(compPtr) (transformHandler :: createTransform())
+	);
+
 	// INITIAL TRANSFORM OFFSET //
 	transformHandler :: translate
 	(
 		(Transform *) core -> curSceneRef -> components[TRANS_COMP_ID][testID],
-		std :: vector<float> { 0.0f, 0.0f, 1.0f }
+		std :: vector<float> { 0.0f, 0.0f, -10.0f }
 	);
 
+	transformHandler :: rotate
+	(
+		(Transform *) core -> curSceneRef -> components[TRANS_COMP_ID][testID],
+		std :: vector<float> { 90.0f, 0.0f, 0.0f }
+	);
+
+	transformHandler :: translate
+	(
+		(Transform *) core -> curSceneRef -> components[TRANS_COMP_ID][tempID],
+		std :: vector<float> { 5.0f, 0.0f, -10.0f }
+	);
+	
 	// CREATES CAMERA COMPONENT //
 	camID = sceneManagement :: newEntityID(core -> curSceneRef);
 	sceneManagement :: addComp
@@ -170,7 +149,7 @@ void appManagement :: run(EngineCore * core)
 
 		// RENDERS CURRENT SCENE //
 		sceneManagement :: renderScene(core -> curSceneRef, camID);
-
+		
 		// PRESENTS TO SCREEN //
 		graphicManagement :: present(core);
 	}
@@ -234,6 +213,11 @@ void appManagement :: update(EngineCore * core)
 			{
 				case ' ' :
 					movingCamera = !movingCamera;
+					std :: cout << "CHANGING TO: ";
+					if(movingCamera)
+						std :: cout << "CAMERA!" << std :: endl;
+					else
+						std :: cout << "MESH!" << std :: endl;
 				break;
 			}
 		}

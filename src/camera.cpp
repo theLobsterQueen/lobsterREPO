@@ -16,10 +16,35 @@ Camera * cameraHandler ::
 	return newCamera;
 }
 
-LobMatrix cameraHandler :: getViewMatrix(Camera * camera, Transform * camTrans)
+LobMatrix cameraHandler :: getViewProjMatrix(Camera * camera)
+{
+	LobMatrix projMatrix = LobMatrix
+	(
+		std :: vector<float>
+		{
+			// FIRST COLUMN //
+			camera -> hozFOV, 0, 0, 0,
+
+			// SECOND COLUMN //
+			0, camera -> verFOV, 0, 0,
+
+			// THIRD COLUMN //
+			0, 0, camera -> far / (camera -> near - camera -> far), -1,
+
+			// FOURTH COLUMN //
+			0, 0, (camera -> far * camera -> near) / 
+				(camera -> near - camera -> far), 0
+		},
+		4, 4
+	);
+
+	return projMatrix;
+}
+
+LobMatrix cameraHandler :: getWorldViewMatrix(Camera * camera, Transform * camTrans)
 {
 	// CREATES VIEW MATRIX //
-	LobMatrix viewMat = LobMatrix
+	LobMatrix worldViewMat = LobMatrix
 	(
 		std :: vector<float>
 		{
@@ -41,5 +66,5 @@ LobMatrix cameraHandler :: getViewMatrix(Camera * camera, Transform * camTrans)
 		4, 4
 	);
 
-	return viewMat;
+	return worldViewMat;
 }

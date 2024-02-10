@@ -27,7 +27,7 @@ Transform * transformHandler :: createTransform
 	return newTrans;
 }
 
-LobMatrix transformHandler :: getWorldMat(Transform * inputTrans)
+LobMatrix transformHandler :: getModelWorldMatrix(Transform * inputTrans)
 {
 	// CREATES ROTATION MATRIX //
 	LobMatrix rotMat = 
@@ -62,7 +62,7 @@ LobMatrix transformHandler :: getWorldMat(Transform * inputTrans)
 			0, 1, 0, inputTrans -> position[1],
 
 			// COLUMN THREE //
-			0, 0, 1, -(inputTrans -> position[2]),
+			0, 0, 1, inputTrans -> position[2],
 
 			// COLUMN FOUR //
 			0, 0, 0, 1

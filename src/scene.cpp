@@ -69,39 +69,20 @@ void sceneManagement :: renderScene(Scene * targetScene, entityID cameraEntity)
 		return;
 	}
 
-	// USES THE CAMERA'S SELECTED PIPELINE //
+	// READS COMPONENTS FROM CAMERA ENTITY //
 	Camera * camera = (Camera *) 
 		(targetScene -> components[CAMERA_COMP_ID][cameraEntity]);
+	Transform * transform = (Transform *)
+		(targetScene -> components[TRANS_COMP_ID][cameraEntity]);
 	graphicManagement :: usePipeline(camera -> curPipelineRef);
 
-	// PUSHES CAMERA MATRIX TO SHADER //
-	glUniformMatrix4fv
-	(
-		UNI_CAMERA_MATRIX,  // WHAT UNIFORM IT'S SETTING //
-		1, GL_FALSE, cameraHandler :: 
-		getViewMatrix
-		  (camera, (Transform *) (targetScene -> components[TRANS_COMP_ID][cameraEntity])
-		).getData()
-	);
+	// GETS MODEL-WORLD AND WORLD-VIEW MATRICES //
+	LobMatrix worldView = cameraHandler :: getWorldViewMatrix(camera, transform);
+	LobMatrix viewProj = cameraHandler :: getViewProjMatrix(camera);
 
-	// CREATES PROJECTION MATRIX DATA //
-	float projMatrix[16] =
-	{
-		// FIRST COLUMN //
-		camera -> hozFOV, 0, 0, 0,
-
-		// SECOND COLUMN //
-		0, camera -> verFOV, 0, 0,
-
-		// THIRD COLUMN //
-		0, 0, camera -> far / (camera -> near - camera -> far), -1,
-
-		// FOURTH COLUMN //
-		0, 0, (camera -> far * camera -> near) / (camera -> near - camera -> far), 0
-	};
-
-	// ACTIVES CURRENT PIPELINE AND PUSHES PROJECTION MATRIX //
-	glUniformMatrix4fv(UNI_PROJ_MATRIX, 1, GL_FALSE, projMatrix);
+	// PUSHES MATRICES TO SHADER //
+	glUniformMatrix4fv(UNI_WORLD_VIEW_MATRIX, 1, GL_FALSE, worldView.getData());
+	glUniformMatrix4fv(UNI_VIEW_PROJ_MATRIX, 1, GL_FALSE, viewProj.getData());
 
 	// BEGINS ITERATING THROUGH AND RENDERING VALID ENTITIES //
 	unsigned entityCount = targetScene -> activeEntities;
@@ -109,32 +90,34 @@ void sceneManagement :: renderScene(Scene * targetScene, entityID cameraEntity)
 
 	while(entityCount != 0 && entityIndex < LOBSTER_MAX_ENTITIES)
 	{
+		// READS ENTITY DATA //
+		Entity curEntity = targetScene -> entities[entityIndex];
+
 		// IF ENTITY'S COMPONENT MASK IS 0 (EMPTY/DELETED), CONTINUES //
-		if(targetScene -> entities[entityIndex].mask == 0)
+		if(curEntity.mask == 0)
 		{
 			entityIndex++;
 			continue;
 		}
 
-		// READS ENTITY DATA //
-		Entity curEntity = targetScene -> entities[entityIndex];
-
 		// THEN, DRAWS MESH IF ONE IS EQUIPPED ON THE ENTITY //
 		if((curEntity.mask & (1 << MESH_COMP_ID)) > 0)
 		{
-			// IF ENTITY HAS TRANSFORM COMPONENT, GRABS IT //
-				// OTHERWISE, SETS WORLD MATRIX TO IDENTITY MATRIX //
-			LobMatrix worldMat = math :: identityMatrix();
+			// IF ENTITY HAS TRANSFORM COMPONENT, CONFIGURES MODEL WORLD MATRIX //
+				// BY ITS DATA. OTHERWISE, USES MODEL WORLD MATRIX AS IDENTITY MATRIX //
+			LobMatrix modelWorld = math :: identityMatrix();
 			if((curEntity.mask & (1 << TRANS_COMP_ID)) > 0)
-				worldMat = transformHandler :: getWorldMat
-					((Transform *) targetScene -> components[TRANS_COMP_ID][entityIndex]);
+			{
+				modelWorld = transformHandler :: getModelWorldMatrix
+				(
+					(Transform *) 
+						(targetScene -> components[TRANS_COMP_ID][entityIndex])
+				);
+			}
 
-			// SETS OBJECT WORLD MATRIX //
+			// SETS MODEL-WORLD MATRIX //
 			glUniformMatrix4fv
-			(
-				UNI_WORLD_MATRIX,  // WHAT UNIFORM IT'S SETTING //
-				1, GL_FALSE, worldMat.getData()
-			);
+				(UNI_MODEL_WORLD_MATRIX, 1, GL_FALSE, modelWorld.getData());
 
 			// DRAWS MESH //
 			meshHandler :: drawMesh

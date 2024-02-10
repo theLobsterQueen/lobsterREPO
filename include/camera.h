@@ -67,12 +67,17 @@ namespace cameraHandler
 	Camera * createCamera(float inputAspect, float inputFOV, Pipeline * inputPipeline);
 
 	/// <summary> ///
+	///		Returns the projection matrix for the camera when called.
+	/// </summary> ///
+	LobMatrix getViewProjMatrix(Camera * camera);
+
+	/// <summary> ///
 	///		Returns the view matrix for the camera when called. Can be used in
 	///			combination with the projection matrix to render dynamic
 	///			3D scenes.
 	/// </summary> ///
 	
-	LobMatrix getViewMatrix(Camera * camera, Transform * camTrans);
+	LobMatrix getWorldViewMatrix(Camera * camera, Transform * camTrans);
 };
 
 #endif

@@ -9,24 +9,24 @@ void testFuncs :: processInput(EngineCore * core, entityID inputID)
 	std :: vector<float> deltaRot = { 0.0f, 0.0f, 0.0f };
 	float deltaScale = 0.0f;
 	float moveSpeed = 5.0f;
-	float rotSpeed = 2.5f;
+	float rotSpeed = 40.0f;
 	float scaleSpeed = 0.5f;
 
 	Camera * camera = (Camera * ) 
 		(core -> curSceneRef -> components[CAMERA_COMP_ID][inputID]);
 
 	if(keys['w'])
-		deltaPos[2] -= moveSpeed * (core -> deltaTime);
-	if(keys['s'])
 		deltaPos[2] += moveSpeed * (core -> deltaTime);
+	if(keys['s'])
+		deltaPos[2] -= moveSpeed * (core -> deltaTime);
 	if(keys['a'])
-		deltaPos[0] += moveSpeed * (core -> deltaTime);
-	if(keys['d'])
 		deltaPos[0] -= moveSpeed * (core -> deltaTime);
+	if(keys['d'])
+		deltaPos[0] += moveSpeed * (core -> deltaTime);
 	if(keys[','])
-		deltaPos[1] -= moveSpeed * (core -> deltaTime);
-	if(keys['.'])
 		deltaPos[1] += moveSpeed * (core -> deltaTime);
+	if(keys['.'])
+		deltaPos[1] -= moveSpeed * (core -> deltaTime);
 
 	if(keys['f'])
 		deltaRot[0] += rotSpeed * (core -> deltaTime);
@@ -37,6 +37,11 @@ void testFuncs :: processInput(EngineCore * core, entityID inputID)
 		deltaScale += scaleSpeed * (core -> deltaTime);
 	if(keys['l'])
 		deltaScale -= scaleSpeed * (core -> deltaTime);
+
+	if(keys['z'])
+		deltaRot[2] += rotSpeed * (core -> deltaTime);
+	if(keys['x'])
+		deltaRot[2] -= rotSpeed * (core -> deltaTime);
 
 	if(keys['q'])
 		deltaRot[1] += rotSpeed * (core -> deltaTime);

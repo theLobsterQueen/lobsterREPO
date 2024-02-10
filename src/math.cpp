@@ -35,20 +35,14 @@ LobMatrix math :: inverse(LobMatrix inputMat)
 	return tempMat;
 }
 
-float math :: dot(LobMatrix matY, LobMatrix matX, unsigned int yIndex, unsigned int xIndex)
+float math :: dot
+	(LobMatrix lhs, LobMatrix rhs, unsigned int rowIndex, unsigned int colIndex)
 {
 	// ASSERTS VALID INPUT //
-	if(xIndex > matX.getCols() || yIndex > matY.getRows())
+	if(colIndex > lhs.getCols() || rowIndex > rhs.getRows())
 	{
 		std :: cout << "ERROR! ATTEMPTED TO USE AN INVALID INDEX FOR DOT MULTIPLICATION!"
 			<< std :: endl;
-		return 0;
-	}
-
-	if(matX.getCols() != matY.getRows())
-	{
-		std :: cout << "ERROR! ATTEMPTED DOT CALCULATION BETWEEN TWO VECTORS "
-			<< "BUT VECTORS ARE NOT OF EQUIVALENT SIZE!" << std :: endl;
 		return 0;
 	}
 
@@ -56,8 +50,8 @@ float math :: dot(LobMatrix matY, LobMatrix matX, unsigned int yIndex, unsigned 
 	float totalValue = 0;
 
 	// BEGINS DOT CALCULATION //
-	for(int i = 0; i < matX.getCols(); i++)
-		totalValue += matY.getPoint(yIndex, i) * matX.getPoint(i, xIndex);
+	for(int i = 0; i < lhs.getCols(); i++)
+		totalValue += lhs.getPoint(rowIndex, i) * rhs.getPoint(i, colIndex);
 
 	// RETURNS TOTAL DOT VALUE //
 	return totalValue;
@@ -88,10 +82,11 @@ std :: vector<float> math :: scaleVec(std :: vector<float> x, float s)
 	return scaled;
 }
 
-LobMatrix math :: rotateMatrix(std :: vector<float> axis, float angle)
+LobMatrix math :: rotateMatrix(std :: vector<float> axis, float inputAngle)
 {
 	// VARIABLE INITIALIZATION //
 	LobMatrix tempMat = identityMatrix(); 
+	float angle = math :: toRadians(inputAngle);
 
 	// READS DATA FOR AXIS ROTATION //
 	float ax = abs(axis[0]);
@@ -180,7 +175,8 @@ std :: vector<float> math :: cross(std :: vector<float> x, std :: vector<float> 
 
 float math :: toRadians(float x)
 {
-	x *= 180;
-	x /= 3.14;
-	return x;
+	float temp = x;
+	temp /= 180;
+	temp *= 3.14;
+	return temp;
 }

@@ -6,6 +6,8 @@
 // STD INCLUDES //
 #include <vector>
 #include <cmath>
+#include <fstream>
+#include <stdio.h>
 
 // SDL/GL INCLUDES //
 #include <SDL2/SDL.h>
@@ -25,9 +27,13 @@
 /// </summary> ///
 struct Mesh
 {
-	std :: vector<GLfloat> vertexBuffer = { };
-	std :: vector<GLuint> indexBuffer = { };
-	std :: vector<GLfloat> colorBuffer = { };
+	std :: vector<GLfloat> vertexData = { };
+	std :: vector<GLuint> indexData = { };
+	std :: vector<GLfloat> colorData = { };
+
+	GLuint vertexBuffer;
+	GLuint indexBuffer;
+	GLuint colorBuffer;
 
 	unsigned short int vertexCount = 0;
 	unsigned short int indexCount = 0;
@@ -49,6 +55,10 @@ namespace meshHandler
 	);
 
 	void drawMesh(Mesh * inputMesh);
+
+	Mesh * getMeshFromPLY(std :: string fileName);
+
+	void printMesh(Mesh * inputMesh);
 };
 
 #endif

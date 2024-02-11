@@ -5,12 +5,14 @@
 static entityID testID = 0;
 static entityID camID = 0;
 static bool movingCamera = false;
+static Scene * testScene = nullptr;
 
 // FUNCTION IMPLEMENTATIONS //
 void appManagement :: begin(EngineCore * core)
 {
 	// INITIALIZES CORE VALUES //
-	core -> curSceneRef = sceneManagement :: createScene();
+	testScene = sceneManagement :: createScene("Lobter?");
+	sceneManagement :: changeScene(core, testScene);
 
 	// CREATES BASE RENDER PIPELINE //
 	Pipeline * basePipeline = graphicManagement :: createPipeline();
@@ -40,44 +42,13 @@ void appManagement :: begin(EngineCore * core)
 
 void appManagement :: createTestScene(EngineCore * core)
 {
-	entityID testID = sceneManagement :: newEntityID(core -> curSceneRef);
-	
-	// FISHIES!!! //
-	sceneManagement :: addComp
-	(
-		core -> curSceneRef,
-		testID, MESH_COMP_ID,
-		(compPtr) meshHandler :: getMeshFromPLY("./assets/models/cube.ply")
-	);
-
-	sceneManagement :: addComp
-	(
-		core -> curSceneRef,
-		testID, TRANS_COMP_ID,
-		(compPtr) transformHandler :: createTransform()
-	);
-
-	// OFFSETS FISH //
-	transformHandler :: translate
-	(
-		(Transform *) (core -> curSceneRef -> components[TRANS_COMP_ID][testID]),
-		std :: vector<float> { 0.0f, 0.0f, -10.0f }
-	);
-
-	transformHandler :: rotate
-	(
-		(Transform *) (core -> curSceneRef -> components[TRANS_COMP_ID][testID]),
-		std :: vector<float> { 90.0f, 0.0f, 0.0f }
-	);
-
 	// CREATES CAMERA COMPONENT //
-	camID = sceneManagement :: newEntityID(core -> curSceneRef);
+	camID = sceneManagement :: newEntityID(testScene);
 	float aspect = ((float) core -> winWidth) / ((float) core -> winHeight);
-	std :: cout << "ASPECT RATIO IS: " << aspect << "!" << std :: endl;
 
 	sceneManagement :: addComp
 	(
-		core -> curSceneRef,
+		testScene,
 		camID,
 		CAMERA_COMP_ID,
 		(compPtr) cameraHandler :: createCamera
@@ -86,10 +57,33 @@ void appManagement :: createTestScene(EngineCore * core)
 
 	sceneManagement :: addComp
 	(
-		core -> curSceneRef,
+		testScene,
 		camID,
 		TRANS_COMP_ID,
 		(compPtr) transformHandler :: createTransform()
+	);
+
+	// CREATES LOBSTER //
+	testID = sceneManagement :: newEntityID(testScene);
+	Mesh * lobterMesh = meshHandler :: getMeshFromPLY("./assets/models/lobter.ply");
+
+	// ADDS MESH AND TRANSFORM //
+	sceneManagement :: addComp
+	(
+		testScene, testID, MESH_COMP_ID, 
+		(compPtr) (meshHandler :: copyMesh(lobterMesh))
+	);
+	sceneManagement :: addComp
+	(
+		testScene, testID, TRANS_COMP_ID, 
+		(compPtr) (transformHandler :: createTransform())
+	);
+
+	// OFFSETS TRANSFORM //
+	transformHandler :: translate
+	(
+		(Transform *) (testScene -> components[TRANS_COMP_ID][testID]),
+		std :: vector<float> { 0.0f, -3.0f, -15.0f }
 	);
 }
 
@@ -115,9 +109,8 @@ void appManagement :: run(EngineCore * core)
 		graphicManagement :: beginRenderPass(core);
 
 		// TEST FUNCTIONS //
-		if(movingCamera)
+		if(movingCamera == true)
 			testFuncs :: processInput(core, camID);
-
 		else
 			testFuncs :: processInput(core, testID);
 
@@ -187,11 +180,6 @@ void appManagement :: update(EngineCore * core)
 			{
 				case ' ' :
 					movingCamera = !movingCamera;
-					std :: cout << "CHANGING TO: ";
-					if(movingCamera)
-						std :: cout << "CAMERA!" << std :: endl;
-					else
-						std :: cout << "MESH!" << std :: endl;
 				break;
 			}
 		}

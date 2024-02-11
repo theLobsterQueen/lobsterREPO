@@ -54,6 +54,8 @@ namespace meshHandler
 		std :: vector<GLfloat> inputColors
 	);
 
+	Mesh * copyMesh(Mesh * inputMesh);
+
 	void drawMesh(Mesh * inputMesh);
 
 	Mesh * getMeshFromPLY(std :: string fileName);

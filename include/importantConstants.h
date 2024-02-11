@@ -26,9 +26,6 @@ typedef char *					compPtr;
 #define UNI_WORLD_VIEW_MATRIX			1
 #define UNI_VIEW_PROJ_MATRIX			2
 
-// PRE-DEFINES A FOV //
-#define LOB_FOV						80
-
 // COMPONENT DEFINTIONS //
 #define MESH_COMP_ID				0
 #define TRANS_COMP_ID				1

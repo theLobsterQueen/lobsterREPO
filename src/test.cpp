@@ -9,7 +9,7 @@ void testFuncs :: processInput(EngineCore * core, entityID inputID)
 	std :: vector<float> deltaRot = { 0.0f, 0.0f, 0.0f };
 	float deltaScale = 0.0f;
 	float moveSpeed = 5.0f;
-	float rotSpeed = 40.0f;
+	float rotSpeed = 180.0f;
 	float scaleSpeed = 0.5f;
 
 	Camera * camera = (Camera * ) 

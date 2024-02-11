@@ -76,6 +76,12 @@ Mesh * meshHandler :: createMesh
 	return newMesh;
 }
 
+Mesh * meshHandler :: copyMesh(Mesh * inputMesh)
+{
+	return meshHandler :: createMesh
+		(inputMesh -> vertexData, inputMesh -> indexData, inputMesh -> colorData);
+}
+
 void meshHandler :: drawMesh(Mesh * inputMesh)
 {
 	// PREPARES TO DRAW WITH INPUT MESH'S VAO //

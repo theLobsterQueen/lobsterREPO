@@ -28,6 +28,8 @@ namespace math
 	float dot(std :: vector<float> x, std :: vector<float> y);
 	std :: vector<float> scaleVec(std :: vector<float> x, float s);
 	std :: vector<float> cross(std :: vector<float> x, std :: vector<float> y);
+	std :: vector<float> normalize(std :: vector<float> x);
+	std :: vector<float> vecByMat(std :: vector<float> lhs, LobMatrix rhs);
 	LobMatrix identityMatrix();
 	LobMatrix inverse(LobMatrix inputMat);
 	LobMatrix rotateMatrix(std :: vector<float> axis, float inputAngle);
@@ -106,6 +108,9 @@ class LobMatrix
 		}
 
 		// GET/SET METHODS //
+		std :: vector<float> getVec()
+			{ return data; }
+
 		float * getData()
 			{ return data.data(); }
 

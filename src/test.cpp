@@ -9,7 +9,7 @@ void testFuncs :: processInput(EngineCore * core, entityID inputID)
 	std :: vector<float> deltaRot = { 0.0f, 0.0f, 0.0f };
 	float deltaScale = 0.0f;
 	float moveSpeed = 5.0f;
-	float rotSpeed = 180.0f;
+	float rotSpeed = 60.0f;
 	float scaleSpeed = 0.5f;
 
 	Camera * camera = (Camera * ) 
@@ -20,9 +20,9 @@ void testFuncs :: processInput(EngineCore * core, entityID inputID)
 	if(keys['s'])
 		deltaPos[2] -= moveSpeed * (core -> deltaTime);
 	if(keys['a'])
-		deltaPos[0] -= moveSpeed * (core -> deltaTime);
-	if(keys['d'])
 		deltaPos[0] += moveSpeed * (core -> deltaTime);
+	if(keys['d'])
+		deltaPos[0] -= moveSpeed * (core -> deltaTime);
 	if(keys[','])
 		deltaPos[1] += moveSpeed * (core -> deltaTime);
 	if(keys['.'])

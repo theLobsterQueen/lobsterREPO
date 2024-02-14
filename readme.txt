@@ -14,6 +14,8 @@ Sources :
  	https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html
 	https://www.scratchapixel.com/index.html
 	http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-9-vbo-indexing/
+	https://gamedev.stackexchange.com/questions/190054/how-to-calculate-the-forward-up-
+		right-vectors-using-the-rotation-angles
 
 	https://youtu.be/sXbqwzXtecE?list=PLvv0ScY6vfd9zlZkIIqGDeG5TUWswkMox
 	https://youtu.be/md3jFANT3UM
@@ -39,12 +41,16 @@ Sprint 1 (ENGINE BACKEND FUNDAMENTALS) :
 	[X] Create foundations for entity component system.
 	[X] Create basic file loaders for GLSL shaders.
 	[X] Use uniforms and systems logic to make a scene fully interactable.	
-	[~] Build out base components library for more advanced functionalities.
-		  (Collision detecting component, lighting component.)
 	[~] Create a fully 3D base shader, complete with (probably Phong) lighting system.
 
-Sprint 2-Beyond :
-	????
-	I had stuff for this but, almost as soon as I started developing I realized that the
-		engine backend will be a LOT more time consuming than the frontend. So I would
-		like to talk to you a little bit about this and create a realisitc set of goals.
+Sprint 2 :
+	[~] Build out base components library for more advanced functionalities.
+		  (Collision detecting component, lighting component.)
+	[ ] Base Python Integration 
+		[ ] Communicate with Precompiled Engine Files over Runtime Python Scritps
+	[ ] Start/Update Function Analogs
+	[ ] Create a Python Scripting Library to Interact With ;
+		[ ] Camera Component
+		[ ] Transform Component
+		[ ] Mesh Component
+		[ ] Light Component

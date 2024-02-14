@@ -157,7 +157,6 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 	bool readData = false;
 	while(std :: getline(meshFile, line))
 	{
-		std :: cout << line << std :: endl;
 		if(readData == false)
 		{
 			// ATTEMPTS TO FIND "ply" KEYWORD WHICH MARKS FILE AS .ply FILE //
@@ -177,7 +176,6 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 				int index = 0;
 				while(std :: getline(lineStream, data, ' '))
 				{
-					std :: cout << data << std :: endl;
 					if(index == 2)
 						vertexCount = std :: stoi(data);
 					index++;
@@ -259,9 +257,6 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 		}
 	}
 
-
-
 	std :: cout << "LOADED " << inputName << " SUCCESSFULY!" << std :: endl;
-
 	return meshHandler :: createMesh(vertices, indices, colors);
 }

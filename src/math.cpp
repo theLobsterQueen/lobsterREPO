@@ -35,6 +35,30 @@ LobMatrix math :: inverse(LobMatrix inputMat)
 	return tempMat;
 }
 
+std :: vector<float> math :: vecByMat(std :: vector<float> lhs, LobMatrix rhs)
+{
+	std :: vector<float> temp = lhs;
+	std :: vector<float> outVec;
+
+	int sizeDifference = rhs.getRows() - lhs.size();
+
+	for(; sizeDifference > 0; sizeDifference--)
+		temp.push_back(0.0f);
+
+	for(unsigned char i = 0; i < temp.size(); i++)
+		outVec.push_back(math :: dot(temp, rhs.getCol(i)));
+	return outVec;
+}
+
+std :: vector<float> math :: normalize(std :: vector<float> x)
+{
+	float magnitude = sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2]);
+	std :: vector<float> y = { x[0], x[1], x[2] };
+	for(char i = 0; i < 3; i++)
+		y[i] /= magnitude;
+	return y;
+}
+
 float math :: dot
 	(LobMatrix lhs, LobMatrix rhs, unsigned int rowIndex, unsigned int colIndex)
 {

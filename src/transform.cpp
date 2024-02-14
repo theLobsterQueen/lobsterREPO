@@ -30,29 +30,18 @@ Transform * transformHandler :: createTransform
 LobMatrix transformHandler :: getModelWorldMatrix(Transform * inputTrans)
 {
 	// CREATES ROTATION MATRIX //
-	LobMatrix rotMat = 
-		math :: rotateMatrix
-			(std :: vector<float> { 1, 0, 0 }, inputTrans -> rotation[0]) *
-		math :: rotateMatrix
-			(std :: vector<float> { 0, 1, 0 }, inputTrans -> rotation[1]) *
-		math :: rotateMatrix
-			(std :: vector<float> { 0, 0, 1 }, inputTrans -> rotation[2]);
+	LobMatrix rotMat = transformHandler :: getRotateMatrix(inputTrans);
+	LobMatrix transMat = transformHandler :: getTranslateMatrix(inputTrans);
+	LobMatrix scaleMat = transformHandler :: getScaleMatrix(inputTrans);
 
-	// CREATES SCALED TRANSLATION MATRIX //
-	LobMatrix scaleMat =
-	{
-		std :: vector<float>
-		{
-			(inputTrans -> scale[0]), 0.0f, 0.0f, 0.0f,
-			0.0f, (inputTrans -> scale[1]), 0.0f, 0.0f,
-			0.0f, 0.0f, (inputTrans -> scale[2]), 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f
-		},
-		4, 4
-	};
+	// RETURNS WORLD MATRIX //
+	return scaleMat * rotMat * transMat;
+}
 
-	LobMatrix transMat =
-	{
+LobMatrix transformHandler :: getTranslateMatrix(Transform * inputTrans)
+{
+	return LobMatrix
+	(
 		std :: vector<float>
 		{
 			// COLUMN ONE //
@@ -68,17 +57,42 @@ LobMatrix transformHandler :: getModelWorldMatrix(Transform * inputTrans)
 			0, 0, 0, 1
 		},
 		4, 4 // IS FOUR COLUMNS WIDE AND FOUR ROWS TALL //
-	};
+	);
+}
 
-	// RETURNS WORLD MATRIX //
-	return scaleMat * rotMat * transMat;
+LobMatrix transformHandler :: getScaleMatrix(Transform * inputTrans)
+{
+	return LobMatrix
+	(
+		std :: vector<float>
+		{
+			(inputTrans -> scale[0]), 0.0f, 0.0f, 0.0f,
+			0.0f, (inputTrans -> scale[1]), 0.0f, 0.0f,
+			0.0f, 0.0f, (inputTrans -> scale[2]), 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
+		},
+		4, 4
+	);
+}
+
+LobMatrix transformHandler :: getRotateMatrix(Transform * inputTrans)
+{
+	return math :: identityMatrix() * 
+		math :: rotateMatrix
+			(std :: vector<float> { 1.0f, 0.0f, 0.0f }, inputTrans -> rotation[0]) *
+		math :: rotateMatrix
+			(std :: vector<float> { 0.0f, 1.0f, 0.0f }, inputTrans -> rotation[1]) *
+		math :: rotateMatrix
+			(std :: vector<float> { 0.0f, 0.0f, 1.0f }, inputTrans -> rotation[2]);
 }
 
 void transformHandler :: translate
 	(Transform * inputTrans, std :: vector<float> deltaVector)
 {
+	std :: vector<float> localDelta = math :: vecByMat
+		(deltaVector, transformHandler :: getRotateMatrix(inputTrans));
 	for(int i = 0; i < 3; i++)
-		inputTrans -> position[i] = inputTrans -> position[i] + deltaVector[i];
+		inputTrans -> position[i] = inputTrans -> position[i] + localDelta[i];
 }
 
 void transformHandler :: rotate

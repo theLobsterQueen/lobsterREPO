@@ -45,6 +45,14 @@ namespace transformHandler
 	LobMatrix getModelWorldMatrix(Transform * inputTrans);
 
 	/// <summary> ///
+	///		These functions get the matrices which typically form the model
+	///			world matrix.
+	/// </summary> ///
+	LobMatrix getRotateMatrix(Transform * inputTrans);
+	LobMatrix getTranslateMatrix(Transform * inputTrans);
+	LobMatrix getScaleMatrix(Transform * inputTrans);
+
+	/// <summary> ///
 	/// 	Modifies the position value of input transform by input delta vector.
 	/// </summary> ///
 

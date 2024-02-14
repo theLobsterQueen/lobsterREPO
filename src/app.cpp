@@ -2,16 +2,15 @@
 #include <app.h>
 
 // (TEMP) FILE-GLOBAL VARIABLES //
-static entityID testID = 0;
 static entityID camID = 0;
-static bool movingCamera = false;
+static entityID testID = 0;
 static Scene * testScene = nullptr;
 
 // FUNCTION IMPLEMENTATIONS //
 void appManagement :: begin(EngineCore * core)
 {
 	// INITIALIZES CORE VALUES //
-	testScene = sceneManagement :: createScene("Lobter?");
+	testScene = sceneManagement :: createScene("Lobter Home");
 	sceneManagement :: changeScene(core, testScene);
 
 	// CREATES BASE RENDER PIPELINE //
@@ -63,27 +62,21 @@ void appManagement :: createTestScene(EngineCore * core)
 		(compPtr) transformHandler :: createTransform()
 	);
 
-	// CREATES LOBSTER //
+	// CREATES SCENE //
 	testID = sceneManagement :: newEntityID(testScene);
-	Mesh * lobterMesh = meshHandler :: getMeshFromPLY("./assets/models/lobter.ply");
+	Mesh * sceneMesh = meshHandler :: 
+		getMeshFromPLY("./assets/models/testEnvironment.ply");
 
 	// ADDS MESH AND TRANSFORM //
 	sceneManagement :: addComp
 	(
 		testScene, testID, MESH_COMP_ID, 
-		(compPtr) (meshHandler :: copyMesh(lobterMesh))
+		(compPtr) (meshHandler :: copyMesh(sceneMesh))
 	);
 	sceneManagement :: addComp
 	(
 		testScene, testID, TRANS_COMP_ID, 
 		(compPtr) (transformHandler :: createTransform())
-	);
-
-	// OFFSETS TRANSFORM //
-	transformHandler :: translate
-	(
-		(Transform *) (testScene -> components[TRANS_COMP_ID][testID]),
-		std :: vector<float> { 0.0f, -3.0f, -15.0f }
 	);
 }
 
@@ -109,10 +102,7 @@ void appManagement :: run(EngineCore * core)
 		graphicManagement :: beginRenderPass(core);
 
 		// TEST FUNCTIONS //
-		if(movingCamera == true)
-			testFuncs :: processInput(core, camID);
-		else
-			testFuncs :: processInput(core, testID);
+		testFuncs :: processInput(core, camID);
 
 		// RENDERS CURRENT SCENE //
 		sceneManagement :: renderScene(core -> curSceneRef, camID);
@@ -178,9 +168,6 @@ void appManagement :: update(EngineCore * core)
 		{
 			switch(justPressed[i])
 			{
-				case ' ' :
-					movingCamera = !movingCamera;
-				break;
 			}
 		}
 	}

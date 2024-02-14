@@ -40,22 +40,31 @@ LobMatrix cameraHandler :: getViewProjMatrix(Camera * camera)
 
 LobMatrix cameraHandler :: getWorldViewMatrix(Camera * camera, Transform * camTrans)
 {
-	// CREATES VIEW MATRIX //
+	LobMatrix rotMat = transformHandler :: getRotateMatrix(camTrans);
+	std :: vector<float> look = math :: vecByMat
+		(std :: vector<float> { 0.0f, 0.0f, 1.0f, 0.0f }, rotMat);
+	look.pop_back();
+	std :: vector<float> up = math :: vecByMat
+		(std :: vector<float> { 0.0f, 1.0f, 0.0f, 0.0f }, rotMat);
+	up.pop_back();
+	std :: vector<float> right = math :: cross(look, up);
+	up = math :: cross(right, look);
+
 	LobMatrix worldViewMat = LobMatrix
 	(
 		std :: vector<float>
 		{
 			// FIRST COLUMN //
-			camera -> right[0], camera -> right[1], camera -> right[2], 
-				math :: dot(math :: scaleVec(camTrans -> position, -1), camera -> right),
+			right[0], right[1], right[2], math :: dot
+				(math :: scaleVec(camTrans -> position, -1), right),
 
 			// SECOND COLUMN //
-			camera -> up[0], camera -> up[1], camera -> up[2], 
-				math :: dot(math :: scaleVec(camTrans -> position, -1), camera -> up),
+			up[0], up[1], up[2], math :: dot
+				(math :: scaleVec(camTrans -> position, -1), up),
 
 			// THIRD COLUMN //
-			-(camera -> look[0]), -(camera -> look[1]), -(camera -> look[2]), 
-				math :: dot(camTrans -> position, camera -> look),
+			-look[0], -look[1], -look[2], math :: dot
+				(camTrans -> position, look),
 
 			// FOURTH COLUMN //
 			0, 0, 0, 1

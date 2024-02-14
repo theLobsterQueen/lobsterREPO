@@ -14,6 +14,7 @@ COLOR_VEC	./include/importantConstants.h	/^#define COLOR_VEC	/;"	d
 Camera	./include/camera.h	/^struct Camera$/;"	s
 EngineCore	./include/engineCore.h	/^struct EngineCore$/;"	s
 Entity	./include/entity.h	/^struct Entity$/;"	s
+FOV	./include/camera.h	/^	float FOV;$/;"	m	struct:Camera	typeref:typename:float
 ID	./include/entity.h	/^	entityID ID;$/;"	m	struct:Entity	typeref:typename:entityID
 InputState	./include/input.h	/^struct InputState$/;"	s
 LOBSTER_APP	./include/app.h	/^#define LOBSTER_APP /;"	d
@@ -31,7 +32,6 @@ LOBSTER_SCENE	./include/scene.h	/^#define LOBSTER_SCENE /;"	d
 LOBSTER_TRANSFORM	./include/transform.h	/^#define LOBSTER_TRANSFORM /;"	d
 LOBSTER_UTILS	./include/utilities.h	/^#define LOBSTER_UTILS /;"	d
 LOBSTER_WINDOW_H	./include/window.h	/^#define LOBSTER_WINDOW_H /;"	d
-LOB_FOV	./include/importantConstants.h	/^#define LOB_FOV	/;"	d
 LOB_TEST_H	./include/test.h	/^#define LOB_TEST_H /;"	d
 LobMatrix	./include/math.h	/^		LobMatrix$/;"	f	class:LobMatrix
 LobMatrix	./include/math.h	/^		LobMatrix(unsigned int inputNumCols, unsigned int inputNumRows)$/;"	f	class:LobMatrix
@@ -68,6 +68,7 @@ componentID	./include/importantConstants.h	/^typedef unsigned char 			componentI
 componentMask	./include/importantConstants.h	/^typedef unsigned int 			componentMask;$/;"	t	typeref:typename:unsigned int
 components	./include/scene.h	/^	char * components[LOBSTER_MAX_COMPONENTS][LOBSTER_MAX_ENTITIES] = { };	$/;"	m	struct:Scene	typeref:typename:char * [][]
 constantFile	./include/utilities.h	/^static std :: fstream constantFile$/;"	v	typeref:typename:std::fstream
+copyMesh	./src/mesh.cpp	/^Mesh * meshHandler :: copyMesh(Mesh * inputMesh)$/;"	f	class:meshHandler	typeref:typename:Mesh *
 createCamera	./src/camera.cpp	/^	createCamera(float inputAspect, float inputFOV, Pipeline * inputPipeline)$/;"	f	class:cameraHandler	typeref:typename:Camera *
 createMesh	./src/mesh.cpp	/^Mesh * meshHandler :: createMesh$/;"	f	class:meshHandler	typeref:typename:Mesh *
 createPipeline	./src/graphics.cpp	/^Pipeline * graphicManagement :: createPipeline()$/;"	f	class:graphicManagement	typeref:typename:Pipeline *
@@ -98,13 +99,15 @@ getData	./include/math.h	/^		float * getData()$/;"	f	class:LobMatrix	typeref:typ
 getMeshFromPLY	./src/mesh.cpp	/^Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)$/;"	f	class:meshHandler	typeref:typename:Mesh *
 getModelWorldMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getModelWorldMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
 getPoint	./include/math.h	/^		float getPoint(unsigned int y, unsigned int x)$/;"	f	class:LobMatrix	typeref:typename:float
+getRotateMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getRotateMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
 getRow	./include/math.h	/^		std :: vector<float> getRow(unsigned int rowIndex)$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
 getRows	./include/math.h	/^		unsigned int getRows()$/;"	f	class:LobMatrix	typeref:typename:unsigned int
+getScaleMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getScaleMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
+getTransformMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getTransformMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
 getViewProjMatrix	./src/camera.cpp	/^LobMatrix cameraHandler :: getViewProjMatrix(Camera * camera)$/;"	f	class:cameraHandler	typeref:typename:LobMatrix
 getWorldViewMatrix	./src/camera.cpp	/^LobMatrix cameraHandler :: getWorldViewMatrix(Camera * camera, Transform * camTrans)$/;"	f	class:cameraHandler	typeref:typename:LobMatrix
 glRef	./include/engineCore.h	/^	void * glRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:void *
 graphicManagement	./include/graphics.h	/^namespace graphicManagement$/;"	n
-hozFOV	./include/camera.h	/^	float hozFOV;$/;"	m	struct:Camera	typeref:typename:float
 identityMatrix	./src/math.cpp	/^LobMatrix math :: identityMatrix()$/;"	f	class:math	typeref:typename:LobMatrix
 indexBuffer	./include/mesh.h	/^	GLuint indexBuffer;$/;"	m	struct:Mesh	typeref:typename:GLuint
 indexCount	./include/mesh.h	/^	unsigned short int indexCount = 0;$/;"	m	struct:Mesh	typeref:typename:unsigned short int
@@ -119,7 +122,6 @@ main	./src/main.cpp	/^int main(int argv, char ** args)$/;"	f	typeref:typename:in
 mask	./include/entity.h	/^	componentMask mask = 0;$/;"	m	struct:Entity	typeref:typename:componentMask
 math	./include/math.h	/^namespace math$/;"	n
 meshHandler	./include/mesh.h	/^namespace meshHandler$/;"	n
-movingCamera	./src/app.cpp	/^static bool movingCamera = false;$/;"	v	typeref:typename:bool	file:
 name	./include/scene.h	/^	std :: string name = "";$/;"	m	struct:Scene	typeref:typename:std::string
 name	./makeFile.py	/^name = "LobsterEngine"$/;"	v
 near	./include/camera.h	/^	float near = 1;$/;"	m	struct:Camera	typeref:typename:float
@@ -156,18 +158,18 @@ tempRot	./include/engineCore.h	/^	std :: vector<float> tempRot = { 0, 0, 0 };$/;
 tempScale	./include/engineCore.h	/^	float tempScale = 1.0f;$/;"	m	struct:EngineCore	typeref:typename:float
 testFuncs	./include/test.h	/^namespace testFuncs$/;"	n
 testID	./src/app.cpp	/^static entityID testID = 0;$/;"	v	typeref:typename:entityID	file:
+testScene	./src/app.cpp	/^static Scene * testScene = nullptr;$/;"	v	typeref:typename:Scene *	file:
 toRadians	./src/math.cpp	/^float math :: toRadians(float x)$/;"	f	class:math	typeref:typename:float
 transformHandler	./include/transform.h	/^namespace transformHandler$/;"	n
 translate	./src/transform.cpp	/^void transformHandler :: translate$/;"	f	class:transformHandler	typeref:typename:void
 up	./include/camera.h	/^	std :: vector<float> up = { 0.0f, 1.0f, 0.0f };$/;"	m	struct:Camera	typeref:typename:std::vector<float>
 update	./src/app.cpp	/^void appManagement :: update(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
 usePipeline	./src/graphics.cpp	/^void graphicManagement :: usePipeline(Pipeline * targetPipeline)$/;"	f	class:graphicManagement	typeref:typename:void
-verFOV	./include/camera.h	/^	float verFOV;$/;"	m	struct:Camera	typeref:typename:float
 vertShader	./include/graphics.h	/^	GLuint vertShader;$/;"	m	struct:Pipeline	typeref:typename:GLuint
 vertexBuffer	./include/mesh.h	/^	GLuint vertexBuffer;$/;"	m	struct:Mesh	typeref:typename:GLuint
 vertexCount	./include/mesh.h	/^	unsigned short int vertexCount = 0;$/;"	m	struct:Mesh	typeref:typename:unsigned short int
 vertexData	./include/mesh.h	/^	std :: vector<GLfloat> vertexData = { };$/;"	m	struct:Mesh	typeref:typename:std::vector<GLfloat>
-winHeight	./include/engineCore.h	/^	unsigned short int winHeight = 720;$/;"	m	struct:EngineCore	typeref:typename:unsigned short int
+winHeight	./include/engineCore.h	/^	unsigned short int winHeight = 650;$/;"	m	struct:EngineCore	typeref:typename:unsigned short int
 winRef	./include/engineCore.h	/^	SDL_Window * winRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:SDL_Window *
-winWidth	./include/engineCore.h	/^	unsigned short int winWidth = 1280;$/;"	m	struct:EngineCore	typeref:typename:unsigned short int
+winWidth	./include/engineCore.h	/^	unsigned short int winWidth = 1300;$/;"	m	struct:EngineCore	typeref:typename:unsigned short int
 windowManagement	./include/window.h	/^namespace windowManagement$/;"	n

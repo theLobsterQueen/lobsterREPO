@@ -18,6 +18,7 @@
 // STRUCT PROTOTYPES //
 struct Scene;
 struct Pipeline;
+struct InputState;
 
 /// <summary> ///
 ///		This struct includes value crucial to keeping the engine functional at the most
@@ -63,7 +64,7 @@ struct EngineCore
 	///		This field contains a reference to the general input state
 	///			of the application. 
 	/// </summary> ///
-	InputState * inputState = new InputState;
+	InputState * inputState = nullptr;
 
 	/// <summary> ///
 	///		A collection of all created pipelines within the engine context.

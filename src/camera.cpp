@@ -74,3 +74,14 @@ LobMatrix cameraHandler :: getWorldViewMatrix(Camera * camera, Transform * camTr
 
 	return worldViewMat;
 }
+
+void cameraHandler :: zoom(Camera * camera, float zoomDelta)
+{
+	camera -> FOV += zoomDelta;
+
+	// IF FOV VALUE IS BELOW 1, SETS IT AS THE MINIMUM //
+		// (THE FUNCTION DOES NOT NEED AN UPPER BOUNDS BECAUSE //
+		// IT NATURALLY EXPERINECES DIMINISHING RETURNS) //
+	if(camera -> FOV < 1)
+		camera -> FOV = 1;
+}

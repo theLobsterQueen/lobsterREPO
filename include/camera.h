@@ -1,4 +1,4 @@
-#ifndef LOBSTER_CAMERA
+#ifndef LOBSTER_CAMERA_H
 #define LOBSTER_CAMERA_H 1
 
 // INCLUDES AND INIITALIZATIONS //
@@ -77,6 +77,12 @@ namespace cameraHandler
 	/// </summary> ///
 	
 	LobMatrix getWorldViewMatrix(Camera * camera, Transform * camTrans);
+
+	/// <summary> ///
+	///		Zooms the camera in/out by decreasing/increasing the camera's FOV.
+	/// </summary> ///
+
+	void zoom(Camera * camera, float zoomDelta);
 };
 
 #endif

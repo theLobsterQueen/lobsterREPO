@@ -56,10 +56,11 @@ int main(int argv, char ** args)
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
 	// CREATES WINDOW AND READS OPEN-GL CONTEXT //
+	int SDL_FLAGS = SDL_WINDOW_OPENGL | SDL_WINDOW_MOUSE_CAPTURE;
 	core -> winRef = SDL_CreateWindow
 	(
 		"Lobster Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
-		core -> winWidth, core -> winHeight, SDL_WINDOW_OPENGL
+		core -> winWidth, core -> winHeight, SDL_FLAGS
 	);
 
 	core -> glRef = SDL_GL_CreateContext(core -> winRef);

@@ -32,7 +32,6 @@ LOBSTER_SCENE	./include/scene.h	/^#define LOBSTER_SCENE /;"	d
 LOBSTER_TRANSFORM	./include/transform.h	/^#define LOBSTER_TRANSFORM /;"	d
 LOBSTER_UTILS	./include/utilities.h	/^#define LOBSTER_UTILS /;"	d
 LOBSTER_WINDOW_H	./include/window.h	/^#define LOBSTER_WINDOW_H /;"	d
-LOB_TEST_H	./include/test.h	/^#define LOB_TEST_H /;"	d
 LobMatrix	./include/math.h	/^		LobMatrix$/;"	f	class:LobMatrix
 LobMatrix	./include/math.h	/^		LobMatrix(unsigned int inputNumCols, unsigned int inputNumRows)$/;"	f	class:LobMatrix
 LobMatrix	./include/math.h	/^class LobMatrix$/;"	c
@@ -70,6 +69,7 @@ components	./include/scene.h	/^	char * components[LOBSTER_MAX_COMPONENTS][LOBSTE
 constantFile	./include/utilities.h	/^static std :: fstream constantFile$/;"	v	typeref:typename:std::fstream
 copyMesh	./src/mesh.cpp	/^Mesh * meshHandler :: copyMesh(Mesh * inputMesh)$/;"	f	class:meshHandler	typeref:typename:Mesh *
 createCamera	./src/camera.cpp	/^	createCamera(float inputAspect, float inputFOV, Pipeline * inputPipeline)$/;"	f	class:cameraHandler	typeref:typename:Camera *
+createInputState	./src/input.cpp	/^InputState * inputManagement :: createInputState()$/;"	f	class:inputManagement	typeref:typename:InputState *
 createMesh	./src/mesh.cpp	/^Mesh * meshHandler :: createMesh$/;"	f	class:meshHandler	typeref:typename:Mesh *
 createPipeline	./src/graphics.cpp	/^Pipeline * graphicManagement :: createPipeline()$/;"	f	class:graphicManagement	typeref:typename:Pipeline *
 createScene	./src/scene.cpp	/^Scene * sceneManagement :: createScene(std :: string inputName)$/;"	f	class:sceneManagement	typeref:typename:Scene *
@@ -103,7 +103,8 @@ getRotateMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getRotateMat
 getRow	./include/math.h	/^		std :: vector<float> getRow(unsigned int rowIndex)$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
 getRows	./include/math.h	/^		unsigned int getRows()$/;"	f	class:LobMatrix	typeref:typename:unsigned int
 getScaleMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getScaleMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
-getTransformMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getTransformMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
+getTranslateMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getTranslateMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
+getVec	./include/math.h	/^		std :: vector<float> getVec()$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
 getViewProjMatrix	./src/camera.cpp	/^LobMatrix cameraHandler :: getViewProjMatrix(Camera * camera)$/;"	f	class:cameraHandler	typeref:typename:LobMatrix
 getWorldViewMatrix	./src/camera.cpp	/^LobMatrix cameraHandler :: getWorldViewMatrix(Camera * camera, Transform * camTrans)$/;"	f	class:cameraHandler	typeref:typename:LobMatrix
 glRef	./include/engineCore.h	/^	void * glRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:void *
@@ -113,19 +114,27 @@ indexBuffer	./include/mesh.h	/^	GLuint indexBuffer;$/;"	m	struct:Mesh	typeref:ty
 indexCount	./include/mesh.h	/^	unsigned short int indexCount = 0;$/;"	m	struct:Mesh	typeref:typename:unsigned short int
 indexData	./include/mesh.h	/^	std :: vector<GLuint> indexData = { };$/;"	m	struct:Mesh	typeref:typename:std::vector<GLuint>
 initialized	./include/utilities.h	/^static bool initialized = false;$/;"	v	typeref:typename:bool
-inputState	./include/engineCore.h	/^	InputState * inputState = new InputState;$/;"	m	struct:EngineCore	typeref:typename:InputState *
+inputManagement	./include/input.h	/^namespace inputManagement$/;"	n
+inputState	./include/engineCore.h	/^	InputState * inputState = nullptr;$/;"	m	struct:EngineCore	typeref:typename:InputState *
 inverse	./src/math.cpp	/^LobMatrix math :: inverse(LobMatrix inputMat)$/;"	f	class:math	typeref:typename:LobMatrix
 isRunning	./include/engineCore.h	/^	bool isRunning = true;$/;"	m	struct:EngineCore	typeref:typename:bool
+lmb	./include/input.h	/^	bool mmb = false; bool lmb = false; bool rmb = false;$/;"	m	struct:InputState	typeref:typename:bool
 loadShader	./src/graphics.cpp	/^void graphicManagement :: loadShader$/;"	f	class:graphicManagement	typeref:typename:void
 look	./include/camera.h	/^	std :: vector<float> look = { 0.0f, 0.0f, -1.0f };$/;"	m	struct:Camera	typeref:typename:std::vector<float>
 main	./src/main.cpp	/^int main(int argv, char ** args)$/;"	f	typeref:typename:int
 mask	./include/entity.h	/^	componentMask mask = 0;$/;"	m	struct:Entity	typeref:typename:componentMask
 math	./include/math.h	/^namespace math$/;"	n
 meshHandler	./include/mesh.h	/^namespace meshHandler$/;"	n
+mmb	./include/input.h	/^	bool mmb = false; bool lmb = false; bool rmb = false;$/;"	m	struct:InputState	typeref:typename:bool
+modifierKeyProcess	./src/utilities.cpp	/^void modifierKeyProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue)$/;"	f	typeref:typename:void
+mouseButtonProcess	./src/utilities.cpp	/^void mouseButtonProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue)$/;"	f	typeref:typename:void
+mouseX	./include/input.h	/^	int mouseX = 0; int mouseY = 0; int scroll = 0;$/;"	m	struct:InputState	typeref:typename:int
+mouseY	./include/input.h	/^	int mouseX = 0; int mouseY = 0; int scroll = 0;$/;"	m	struct:InputState	typeref:typename:int
 name	./include/scene.h	/^	std :: string name = "";$/;"	m	struct:Scene	typeref:typename:std::string
 name	./makeFile.py	/^name = "LobsterEngine"$/;"	v
 near	./include/camera.h	/^	float near = 1;$/;"	m	struct:Camera	typeref:typename:float
 newEntityID	./src/scene.cpp	/^entityID sceneManagement :: newEntityID(Scene * targetScene)$/;"	f	class:sceneManagement	typeref:typename:entityID
+normalize	./src/math.cpp	/^std :: vector<float> math :: normalize(std :: vector<float> x)$/;"	f	class:math	typeref:typename:std::vector<float>
 numCols	./include/math.h	/^		unsigned int numCols = 0;$/;"	m	class:LobMatrix	typeref:typename:unsigned int
 numRows	./include/math.h	/^		unsigned int numRows = 0;$/;"	m	class:LobMatrix	typeref:typename:unsigned int
 operator *	./include/math.h	/^		LobMatrix operator *(LobMatrix rhs)$/;"	f	class:LobMatrix	typeref:typename:LobMatrix
@@ -138,11 +147,13 @@ pressedKeys	./include/input.h	/^	std :: bitset<128> pressedKeys = {0};$/;"	m	str
 printMesh	./src/mesh.cpp	/^void meshHandler :: printMesh(Mesh * inputMesh)$/;"	f	class:meshHandler	typeref:typename:void
 printProgramLog	./src/utilities.cpp	/^void printProgramLog(GLuint program)$/;"	f	typeref:typename:void
 printShaderLog	./src/utilities.cpp	/^void printShaderLog(GLuint shader)$/;"	f	typeref:typename:void
-processInput	./src/test.cpp	/^void testFuncs :: processInput(EngineCore * core, entityID inputID)$/;"	f	class:testFuncs	typeref:typename:void
+processInput	./src/input.cpp	/^void inputManagement :: processInput(EngineCore * core, entityID cameraID)$/;"	f	class:inputManagement	typeref:typename:void
 program	./include/graphics.h	/^	GLuint program;$/;"	m	struct:Pipeline	typeref:typename:GLuint
 pushConstant	./include/utilities.h	/^void pushConstant(const char * constantName, T constantValue)$/;"	f	typeref:typename:void
 renderScene	./src/scene.cpp	/^void sceneManagement :: renderScene(Scene * targetScene, entityID cameraEntity)$/;"	f	class:sceneManagement	typeref:typename:void
+resetInput	./src/input.cpp	/^void inputManagement :: resetInput(InputState * input)$/;"	f	class:inputManagement	typeref:typename:void
 right	./include/camera.h	/^	std :: vector<float> right = { 1.0f, 0.0f, 0.0f };$/;"	m	struct:Camera	typeref:typename:std::vector<float>
+rmb	./include/input.h	/^	bool mmb = false; bool lmb = false; bool rmb = false;$/;"	m	struct:InputState	typeref:typename:bool
 rotate	./src/transform.cpp	/^void transformHandler :: rotate$/;"	f	class:transformHandler	typeref:typename:void
 rotateMatrix	./src/math.cpp	/^LobMatrix math :: rotateMatrix(std :: vector<float> axis, float inputAngle)$/;"	f	class:math	typeref:typename:LobMatrix
 rotation	./include/transform.h	/^	std :: vector<float> rotation = { 0.0f, 0.0f, 0.0f };$/;"	m	struct:Transform	typeref:typename:std::vector<float>
@@ -152,11 +163,11 @@ scale	./src/transform.cpp	/^void transformHandler :: scale$/;"	f	class:transform
 scaleVec	./src/math.cpp	/^std :: vector<float> math :: scaleVec(std :: vector<float> x, float s)$/;"	f	class:math	typeref:typename:std::vector<float>
 sceneManagement	./include/scene.h	/^namespace sceneManagement$/;"	n
 sceneView	./src/scene.cpp	/^std :: vector<entityID> sceneManagement :: sceneView$/;"	f	class:sceneManagement	typeref:typename:std::vector<entityID>
+scroll	./include/input.h	/^	int mouseX = 0; int mouseY = 0; int scroll = 0;$/;"	m	struct:InputState	typeref:typename:int
 setPoint	./include/math.h	/^		void setPoint(unsigned int y, unsigned int x, float value)$/;"	f	class:LobMatrix	typeref:typename:void
 shiftPressed	./include/input.h	/^	bool shiftPressed = false;$/;"	m	struct:InputState	typeref:typename:bool
 tempRot	./include/engineCore.h	/^	std :: vector<float> tempRot = { 0, 0, 0 };$/;"	m	struct:EngineCore	typeref:typename:std::vector<float>
 tempScale	./include/engineCore.h	/^	float tempScale = 1.0f;$/;"	m	struct:EngineCore	typeref:typename:float
-testFuncs	./include/test.h	/^namespace testFuncs$/;"	n
 testID	./src/app.cpp	/^static entityID testID = 0;$/;"	v	typeref:typename:entityID	file:
 testScene	./src/app.cpp	/^static Scene * testScene = nullptr;$/;"	v	typeref:typename:Scene *	file:
 toRadians	./src/math.cpp	/^float math :: toRadians(float x)$/;"	f	class:math	typeref:typename:float
@@ -165,6 +176,7 @@ translate	./src/transform.cpp	/^void transformHandler :: translate$/;"	f	class:t
 up	./include/camera.h	/^	std :: vector<float> up = { 0.0f, 1.0f, 0.0f };$/;"	m	struct:Camera	typeref:typename:std::vector<float>
 update	./src/app.cpp	/^void appManagement :: update(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
 usePipeline	./src/graphics.cpp	/^void graphicManagement :: usePipeline(Pipeline * targetPipeline)$/;"	f	class:graphicManagement	typeref:typename:void
+vecByMat	./src/math.cpp	/^std :: vector<float> math :: vecByMat(std :: vector<float> lhs, LobMatrix rhs)$/;"	f	class:math	typeref:typename:std::vector<float>
 vertShader	./include/graphics.h	/^	GLuint vertShader;$/;"	m	struct:Pipeline	typeref:typename:GLuint
 vertexBuffer	./include/mesh.h	/^	GLuint vertexBuffer;$/;"	m	struct:Mesh	typeref:typename:GLuint
 vertexCount	./include/mesh.h	/^	unsigned short int vertexCount = 0;$/;"	m	struct:Mesh	typeref:typename:unsigned short int
@@ -173,3 +185,4 @@ winHeight	./include/engineCore.h	/^	unsigned short int winHeight = 650;$/;"	m	st
 winRef	./include/engineCore.h	/^	SDL_Window * winRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:SDL_Window *
 winWidth	./include/engineCore.h	/^	unsigned short int winWidth = 1300;$/;"	m	struct:EngineCore	typeref:typename:unsigned short int
 windowManagement	./include/window.h	/^namespace windowManagement$/;"	n
+zoom	./src/camera.cpp	/^void cameraHandler :: zoom(Camera * camera, float zoomDelta)$/;"	f	class:cameraHandler	typeref:typename:void

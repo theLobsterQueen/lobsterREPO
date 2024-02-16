@@ -29,8 +29,8 @@ void appManagement :: begin(EngineCore * core)
 	graphicManagement :: compileProgram(basePipeline);
 	core -> pipelineRefs.push_back(basePipeline);
 
-	// CHANGES THE NAME OF THE WINDOW TO THE NEW CURRENT SCENE //
-	windowManagement :: changeTitle(core -> winRef, core -> curSceneRef -> name);
+	// CREATES INPUT STATE //
+	core -> inputState = inputManagement :: createInputState();
 
 	// (TEMP) CREATES TEST SCENE //
 	createTestScene(core);
@@ -98,11 +98,9 @@ void appManagement :: run(EngineCore * core)
 		// UPDATES ENGINE //
 		appManagement :: update(core);
 
+
 		// BEGINS RENDERING PHASE //
 		graphicManagement :: beginRenderPass(core);
-
-		// TEST FUNCTIONS //
-		testFuncs :: processInput(core, camID);
 
 		// RENDERS CURRENT SCENE //
 		sceneManagement :: renderScene(core -> curSceneRef, camID);
@@ -124,6 +122,9 @@ void appManagement :: update(EngineCore * core)
 		switch(event.type)
 		{
 			case SDL_KEYDOWN :
+				// SETS MODIFIER KEYS //
+				modifierKeyProcess(core -> inputState, event, true);
+
 				// IF ABOVE NORMAL ASCII RANGE, IGNORES //
 				if(event.key.keysym.sym > 128)
 					break;
@@ -149,6 +150,9 @@ void appManagement :: update(EngineCore * core)
 			break;
 
 			case SDL_KEYUP :
+				// SETS MODIFIER KEYS //
+				modifierKeyProcess(core -> inputState, event, false);
+
 				// IF ABOVE NORMAL ASCII RANGE, IGNORES //
 				if(event.key.keysym.sym > 128)
 					break;
@@ -157,18 +161,32 @@ void appManagement :: update(EngineCore * core)
 				core -> inputState -> pressedKeys[event.key.keysym.sym] = 0;
 			break;
 
+			case SDL_MOUSEWHEEL :
+				core -> inputState -> scroll = event.wheel.y;
+			break;
+
+			case SDL_MOUSEBUTTONDOWN :
+				mouseButtonProcess(core -> inputState, event, true);	
+			break;
+	
+			case SDL_MOUSEBUTTONUP :
+				mouseButtonProcess(core -> inputState, event, false);	
+			break;
+
+			case SDL_MOUSEMOTION :
+				core -> inputState -> mouseX = event.motion.xrel;
+				core -> inputState -> mouseY = event.motion.yrel;
+			break;
+
 			case SDL_QUIT :
 				core -> isRunning = false;
 			break;
 		};
-
-		// (TODO) CALL USER SCRIPTS' "UPDATE" FUNCTIONS //
-			// FOR NOW, JUST DOES SOME DEBUG WORK //
-		for(char i = 0; i < 16; i++)
-		{
-			switch(justPressed[i])
-			{
-			}
-		}
 	}
+
+	// PROCESSED INPUT //
+	inputManagement :: processInput(core, camID);
+
+	// RESETS RELATIVE INPUT VALUES //
+	inputManagement :: resetInput(core -> inputState);
 }

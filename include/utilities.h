@@ -14,6 +14,12 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+// LOBSTER INCLUDES //
+#include <input.h>
+
+// STRUCT PROTOTYPES //
+struct InputState;
+
 /// <summary> ///
 ///		These classes are used to debug GLSL shaders and OpenGL shader program objects.
 ///			Source: https://lazyfoo.net/tutorials/SDL/51_SDL_and_modern_opengl/index.php
@@ -22,6 +28,14 @@
 void printProgramLog(GLuint program);
 void printShaderLog(GLuint shader);
 void checkErrors();
+
+/// <summary> ///
+///		Functions for reducing the amount of wet code in the input processor
+///			on the update function.
+/// </summary> ///
+
+void mouseButtonProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue);
+void modifierKeyProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue);
 
 /// <summary> ///
 ///		This function adds an entry to the constants file. If this is the first time

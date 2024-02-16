@@ -107,4 +107,47 @@ void checkErrors()
 	}
 }
 
+void mouseButtonProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue)
+{
+	static int mouseX; static int mouseY;
+	auto key = inputEvent.button.button;
+	switch(key)
+	{
+		case SDL_BUTTON_LEFT :
+			inputState -> lmb = setTrue;
+		break;
+
+		case SDL_BUTTON_MIDDLE :
+			inputState -> mmb = setTrue;
+		break;
+
+		case SDL_BUTTON_RIGHT :
+			inputState -> rmb = setTrue;
+			if(setTrue)
+			{
+				SDL_GetMouseState(&mouseX, &mouseY);
+				SDL_SetRelativeMouseMode(SDL_TRUE);
+			}
+
+			else
+			{
+				SDL_WarpMouseInWindow(NULL, mouseX, mouseY);
+				SDL_SetRelativeMouseMode(SDL_FALSE);
+			}
+		break;
+	}
+}
+
+void modifierKeyProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue)
+{
+	auto scanKey = inputEvent.key.keysym.scancode;
+	if(scanKey == SDL_SCANCODE_LSHIFT)
+		inputState -> shiftPressed = setTrue;
+
+	else if(scanKey == SDL_SCANCODE_LALT)
+		inputState -> altPressed = setTrue;
+
+	else if(scanKey == SDL_SCANCODE_LCTRL)
+		inputState -> cntrlPressed = setTrue;
+}
 

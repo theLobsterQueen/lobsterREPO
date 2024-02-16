@@ -64,14 +64,38 @@ void appManagement :: createTestScene(EngineCore * core)
 
 	// CREATES SCENE //
 	testID = sceneManagement :: newEntityID(testScene);
-	Mesh * sceneMesh = meshHandler :: 
-		getMeshFromPLY("./assets/models/testEnvironment.ply");
+	Mesh * sceneMesh = meshHandler :: createMesh
+	(
+		// VERTICES //
+		std :: vector<float> 
+		{
+			-1.0f, -1.0f, 0.0f,
+				0.0f, 0.0f,
+			1.0f, -1.0f, 0.0f,
+				1.0f, 0.0f,
+			1.0f, 1.0f, 0.0f,
+				1.0f, 1.0f,
+			-1.0f, 1.0f, 0.0f,
+				0.0f, 1.0f
+		},
+
+		// INDICES //
+		std :: vector<unsigned>
+		{
+			0, 1, 2,
+			2, 3, 0
+		},
+		
+		// ELEMENTS PER VERTEX
+		5
+	);
+	meshHandler :: loadTexture(sceneMesh, "jinx.png");
 
 	// ADDS MESH AND TRANSFORM //
 	sceneManagement :: addComp
 	(
 		testScene, testID, MESH_COMP_ID, 
-		(compPtr) (meshHandler :: copyMesh(sceneMesh))
+		(compPtr) (sceneMesh)
 	);
 	sceneManagement :: addComp
 	(
@@ -97,7 +121,6 @@ void appManagement :: run(EngineCore * core)
 
 		// UPDATES ENGINE //
 		appManagement :: update(core);
-
 
 		// BEGINS RENDERING PHASE //
 		graphicManagement :: beginRenderPass(core);

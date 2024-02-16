@@ -2,7 +2,7 @@
 #version 460
 
 // INPUT ATTRIBUTES //
-layout(location = 0) in vec4 in_colorVec;
+layout(location = 0) in vec2 in_texCord;
 
 // OUTPUT ATTRIBUTES //
 out vec4 out_colorVec;
@@ -14,5 +14,5 @@ out vec4 out_colorVec;
 void main()
 {
 	// ASSIGNS FINAL COLOR OUTPUT //
-	out_colorVec = in_colorVec;
+	out_colorVec = texture2D(u_2DSampler, in_texCord);
 }

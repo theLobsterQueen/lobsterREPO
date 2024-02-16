@@ -19,12 +19,13 @@ typedef char *					compPtr;
 
 // DEFINES VERTEX ATTRIBUTES //
 #define POSITION_VEC				0
-#define COLOR_VEC					1
+#define CORD_VEC					1
 
 // DEFINES UNIFORMS //
 #define UNI_MODEL_WORLD_MATRIX			0
 #define UNI_WORLD_VIEW_MATRIX			1
 #define UNI_VIEW_PROJ_MATRIX			2
+#define UNI_2D_SAMPLER					3
 
 // COMPONENT DEFINTIONS //
 #define MESH_COMP_ID				0

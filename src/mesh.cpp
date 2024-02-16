@@ -7,8 +7,8 @@ Mesh * meshHandler :: createMesh
 // PARMETERS //
 (
 	std :: vector<GLfloat> inputVertices, 
-	std :: vector<GLuint> inputIndices, 
-	std :: vector<GLfloat> inputColors
+	std :: vector<GLuint> inputIndices,
+	unsigned char elementsPerVertex
 )
 
 // FUNCTION //
@@ -19,10 +19,9 @@ Mesh * meshHandler :: createMesh
 	// LOADS VERTEX DATA INTO CLASS MEMORY //
 	newMesh -> vertexData = inputVertices;
 	newMesh -> indexData = inputIndices;
-	newMesh -> colorData = inputColors;
 
 	// DERIVES VERTEX COUNT FROM INPUT VERTICES //
-	newMesh -> vertexCount = inputVertices.size() / 3;
+	newMesh -> vertexCount = inputVertices.size() / elementsPerVertex;
 	newMesh -> indexCount = inputIndices.size();
 
 	// CREATES A VERTEX BUFFER, ASSINGS ITS VERTEX DATA, AND BINDS TO VERTEX ARRAY //
@@ -46,40 +45,110 @@ Mesh * meshHandler :: createMesh
 		newMesh -> indexData.data(),
 		GL_STATIC_DRAW
 	);
-
-	// CREATES A COLOR BUFFER, ASSIGNS IT COLOR DATA, AND BINDS TO COLOR ARRAY //
-	glGenBuffers(1, &(newMesh -> colorBuffer));
-	glBindBuffer(GL_ARRAY_BUFFER, newMesh -> colorBuffer);
-	glBufferData
-	(
-		GL_ARRAY_BUFFER,
-		newMesh -> colorData.size() * sizeof(GLfloat),
-		newMesh -> colorData.data(),
-		GL_STATIC_DRAW
-	);
-
+	
 	// BINDS THE VERTEX ARRAY OBJECT OF THE MESH //
 	glGenVertexArrays(1, &(newMesh -> VAO));
 	glBindVertexArray(newMesh -> VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, newMesh -> vertexBuffer);
-	glVertexAttribPointer(POSITION_VEC, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	glBindBuffer(GL_ARRAY_BUFFER, newMesh -> colorBuffer);
-	glVertexAttribPointer(COLOR_VEC, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+	glVertexAttribPointer
+	(
+		POSITION_VEC, 3, GL_FLOAT, GL_FALSE, 
+		elementsPerVertex * sizeof(float), 0
+	);
+	glVertexAttribPointer
+	(
+		CORD_VEC, 2, GL_FLOAT, GL_FALSE, 
+		elementsPerVertex * sizeof(float), (void *) (3 * sizeof(float))
+	);
 
 	// ENABLES POSITION/COLOR ATTRIBUTES ON VAO //
 	glEnableVertexAttribArray(POSITION_VEC);
-	glEnableVertexAttribArray(COLOR_VEC);
+	glEnableVertexAttribArray(CORD_VEC);
 
 	// UNBINDS VECTOR BUFFER //
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
 	return newMesh;
 }
 
-Mesh * meshHandler :: copyMesh(Mesh * inputMesh)
+void meshHandler :: loadTexture(Mesh * inputMesh, std :: string texturePath)
 {
-	return meshHandler :: createMesh
-		(inputMesh -> vertexData, inputMesh -> indexData, inputMesh -> colorData);
+	inputMesh -> texSurf = IMG_Load
+		(std :: string("assets/textures/" + texturePath).c_str());
+	if(inputMesh -> texSurf == nullptr)
+		inputMesh -> texSurf = IMG_Load
+			(std :: string("./../../assets/texutres/" + texturePath).c_str());
+	
+	if(inputMesh -> texSurf == nullptr)
+	{
+		std :: cout << "ERROR! COULD NOT FIND " << texturePath << "!" << std :: endl;
+		return;
+	}
+
+	// VERTICALLY FLIPS THE PIXEL DATA //
+
+	// CODE TAKEN FROM USER vvanpelt ON //
+	// https://stackoverflow.com/questions/65815332/ flipping-a-surface-vertically-in-sdl2
+
+    int pitch = inputMesh -> texSurf -> pitch; // row size
+    char* temp = new char[pitch]; // intermediate buffer
+    char* pixels = (char*) inputMesh -> texSurf -> pixels;
+    
+    for(int i = 0; i < inputMesh -> texSurf -> h / 2; ++i) {
+        // get pointers to the two rows to swap
+        char* row1 = pixels + i * pitch;
+        char* row2 = pixels + (inputMesh -> texSurf -> h - i - 1) * pitch;
+        
+        // swap rows
+        memcpy(temp, row1, pitch);
+        memcpy(row1, row2, pitch);
+        memcpy(row2, temp, pitch);
+    }
+    
+    delete[] temp;
+
+	// IF SUCCESSFULLY LOADED, CONFIGURES TEXTURE DATA //
+	glGenTextures(1, &(inputMesh -> textureID));
+	GLenum textureFormat = 0;
+
+	switch(inputMesh -> texSurf -> format -> format)
+	{
+		case SDL_PIXELFORMAT_RGBA32 :
+			textureFormat = GL_RGBA;
+		break;
+
+		case SDL_PIXELFORMAT_RGB444 :
+		case SDL_PIXELFORMAT_RGB24  :
+			textureFormat = GL_RGB;
+		break;
+
+		default :
+			std :: cout << "UNSUPPORTED TEXTURE FORMAT! RETURNING!"
+				" IMAGE FORMAT IS " << 
+				SDL_GetPixelFormatName(inputMesh -> texSurf -> format -> format)
+				<< "." << std :: endl;
+			return;
+		break;
+	}
+
+	// BINDS TEXTURE DATA, IF AVAILABLE //
+	glBindTexture(GL_TEXTURE_2D, inputMesh -> textureID);
+	glTexImage2D
+	(
+		GL_TEXTURE_2D, 0, GL_RGBA8,
+		inputMesh -> texSurf -> w, inputMesh -> texSurf -> h, 
+		0, textureFormat, GL_UNSIGNED_BYTE, inputMesh -> texSurf -> pixels
+	);
+
+	// SETS THE TEXTURE TO USE LINEARL INTERPOLATION //
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// CLAMPS THE TEXTURE IF IT EXTENDS PAST THE U/V BOUNDARIES //
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	// UNBINDS THE TEXTURE OBJECT //
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void meshHandler :: drawMesh(Mesh * inputMesh)
@@ -87,6 +156,11 @@ void meshHandler :: drawMesh(Mesh * inputMesh)
 	// PREPARES TO DRAW WITH INPUT MESH'S VAO //
 	glBindVertexArray(inputMesh -> VAO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, inputMesh -> indexBuffer);
+
+	// BINDS TEXTURE FOR MESH //
+	glActiveTexture(0);
+	glBindTexture(GL_TEXTURE_2D, inputMesh -> textureID);
+	glUniform1i(UNI_2D_SAMPLER, 0);
 
 	// DRAWS MESH //
 	glDrawElements
@@ -111,16 +185,8 @@ void meshHandler :: printMesh(Mesh * inputMesh)
 
 		std :: cout << "VERTEX AT (" << vertex[0] << ", " 
 			<< vertex[1] << ", " << vertex[2] << ")" << std :: endl;
-
-		std :: vector<float> color = 
-		{ 
-			inputMesh -> colorData[i],
-			inputMesh -> colorData[i + 1],
-			inputMesh -> colorData[i + 2]
-		};
-
-		std :: cout << "COLOR OF VERTEX IS (" << color[0] << ", " 
-			<< color[1] << ", " << color[2] << ")" << std :: endl;
+		std :: cout << "TEX CORDS OF VERTEX ARE (" << vertex[3] << ", " 
+			<< vertex[4] << ")" << std :: endl;
 	}
 
 	std :: cout << "INDICES ARE : " << std :: endl;
@@ -135,7 +201,6 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 
 	std :: vector<float> vertices;
 	std :: vector<unsigned int> indices;
-	std :: vector<float> colors;
 	std :: string line; 
 
 	// LOADS FILES //
@@ -222,12 +287,7 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 				if(readingVertex)
 				{
 					// READS X/Y/Z COORDINATES //
-					if(tokensRead < 3)
-						vertices.push_back(std :: stof(data));
-
-					// READS COLOR COORDINATES //
-					else
-						colors.push_back(std :: stoi(data) / 255.0f);
+					vertices.push_back(std :: stof(data));
 				}
 
 				// READS INDEX DATA //
@@ -258,5 +318,5 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 	}
 
 	std :: cout << "LOADED " << inputName << " SUCCESSFULY!" << std :: endl;
-	return meshHandler :: createMesh(vertices, indices, colors);
+	return meshHandler :: createMesh(vertices, indices, vertexCount);
 }

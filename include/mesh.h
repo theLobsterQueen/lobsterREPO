@@ -11,6 +11,7 @@
 
 // SDL/GL INCLUDES //
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -29,15 +30,16 @@ struct Mesh
 {
 	std :: vector<GLfloat> vertexData = { };
 	std :: vector<GLuint> indexData = { };
-	std :: vector<GLfloat> colorData = { };
 
 	GLuint vertexBuffer;
 	GLuint indexBuffer;
-	GLuint colorBuffer;
 
 	unsigned short int vertexCount = 0;
 	unsigned short int indexCount = 0;
 	GLuint VAO = 0;
+
+	GLuint textureID = 0;	
+	SDL_Surface * texSurf;
 };
 
 // FUNCTION DEFINITIONS //
@@ -50,17 +52,22 @@ namespace meshHandler
 	Mesh * createMesh
 	(
 		std :: vector<GLfloat> inputVertices, 
-		std :: vector<GLuint> inputIndices, 
-		std :: vector<GLfloat> inputColors
+		std :: vector<GLuint> inputIndices,
+		unsigned char elementsPerVertex
 	);
-
-	Mesh * copyMesh(Mesh * inputMesh);
 
 	void drawMesh(Mesh * inputMesh);
 
 	Mesh * getMeshFromPLY(std :: string fileName);
 
 	void printMesh(Mesh * inputMesh);
+
+	// <summary> ///
+	///		This function loads a texture image from input file and assigns its
+	///			pixel data to the input mesh struct.
+	/// </summary> ///
+
+	void loadTexture(Mesh * inputMesh, std :: string texturePath);
 };
 
 #endif

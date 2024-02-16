@@ -16,6 +16,7 @@ Sources :
 	http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-9-vbo-indexing/
 	https://gamedev.stackexchange.com/questions/190054/how-to-calculate-the-forward-up-
 		right-vectors-using-the-rotation-angles
+	https://learnopengl.com/Getting-started/Textures
 
 	https://youtu.be/sXbqwzXtecE?list=PLvv0ScY6vfd9zlZkIIqGDeG5TUWswkMox
 	https://youtu.be/md3jFANT3UM

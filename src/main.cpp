@@ -77,6 +77,8 @@ int main(int argv, char ** args)
 
 	// SETS OUT OPEN-GL SETTINGS //
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// PRINTS OUT OPEN-GL VERSION //
 	std :: cout << "GL VENDOR: " << glGetString(GL_VENDOR) << std :: endl;

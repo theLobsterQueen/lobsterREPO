@@ -182,7 +182,7 @@ void graphicManagement :: usePipeline(Pipeline * targetPipeline)
 void graphicManagement :: beginRenderPass(EngineCore * core)
 {
 	// CLEARS SCREEN //
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.1f, 0.1f, 0.4f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

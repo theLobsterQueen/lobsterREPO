@@ -3,10 +3,10 @@
 
 // INPUT ATTRIBUTES //
 layout (location = 0) in vec3 in_vertexPos;
-layout (location = 1) in vec4 in_colorVec;
+layout (location = 1) in vec2 in_texCord;
 
 // OUTPUT ATTRIBUTES //
-layout (location = 0) out vec4 out_colorVec;
+layout (location = 0) out vec2 out_texCord;
 
 // INCLUDES AND INITIALIZATIONS //
 #include<constants>
@@ -20,5 +20,5 @@ void main()
 
 	// APPLIES VERTEX AND COLOR DATA //
 	gl_Position = vertexPos;
-	out_colorVec = vec4(in_colorVec.xyz, 1.0);
+	out_texCord = in_texCord;
 }

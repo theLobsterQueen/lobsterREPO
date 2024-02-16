@@ -64,31 +64,7 @@ void appManagement :: createTestScene(EngineCore * core)
 
 	// CREATES SCENE //
 	testID = sceneManagement :: newEntityID(testScene);
-	Mesh * sceneMesh = meshHandler :: createMesh
-	(
-		// VERTICES //
-		std :: vector<float> 
-		{
-			-1.0f, -1.0f, 0.0f,
-				0.0f, 0.0f,
-			1.0f, -1.0f, 0.0f,
-				1.0f, 0.0f,
-			1.0f, 1.0f, 0.0f,
-				1.0f, 1.0f,
-			-1.0f, 1.0f, 0.0f,
-				0.0f, 1.0f
-		},
-
-		// INDICES //
-		std :: vector<unsigned>
-		{
-			0, 1, 2,
-			2, 3, 0
-		},
-		
-		// ELEMENTS PER VERTEX
-		5
-	);
+	Mesh * sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
 	meshHandler :: loadTexture(sceneMesh, "jinx.png");
 
 	// ADDS MESH AND TRANSFORM //

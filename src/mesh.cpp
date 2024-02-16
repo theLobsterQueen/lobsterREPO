@@ -50,20 +50,35 @@ Mesh * meshHandler :: createMesh
 	glGenVertexArrays(1, &(newMesh -> VAO));
 	glBindVertexArray(newMesh -> VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, newMesh -> vertexBuffer);
+	int vertexSize = elementsPerVertex * sizeof(float);
+
 	glVertexAttribPointer
 	(
 		POSITION_VEC, 3, GL_FLOAT, GL_FALSE, 
-		elementsPerVertex * sizeof(float), 0
+		vertexSize, 0
+	);
+	glVertexAttribPointer
+	(
+		NORMAL_VEC, 3, GL_FLOAT, GL_FALSE,
+		vertexSize, (void *) (3 * sizeof(float))
 	);
 	glVertexAttribPointer
 	(
 		CORD_VEC, 2, GL_FLOAT, GL_FALSE, 
-		elementsPerVertex * sizeof(float), (void *) (3 * sizeof(float))
+		vertexSize, (void *) (6 * sizeof(float))
 	);
+	glVertexAttribPointer
+	(
+		COLOR_VEC, 4, GL_FLOAT, GL_TRUE,
+		vertexSize, (void *) (8 * sizeof(float))
+	);
+
 
 	// ENABLES POSITION/COLOR ATTRIBUTES ON VAO //
 	glEnableVertexAttribArray(POSITION_VEC);
+	glEnableVertexAttribArray(COLOR_VEC);
 	glEnableVertexAttribArray(CORD_VEC);
+	glEnableVertexAttribArray(NORMAL_VEC);
 
 	// UNBINDS VECTOR BUFFER //
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -174,24 +189,37 @@ void meshHandler :: drawMesh(Mesh * inputMesh)
 
 void meshHandler :: printMesh(Mesh * inputMesh)
 {
-	for(int i = 0; i < inputMesh -> vertexData.size(); i += 3)
+	for(int i = 0; i < inputMesh -> vertexData.size(); i += 12)
 	{
 		std :: vector<float> vertex = 
 		{ 
 			inputMesh -> vertexData[i],
 			inputMesh -> vertexData[i + 1],
-			inputMesh -> vertexData[i + 2]
+			inputMesh -> vertexData[i + 2],
+
+			inputMesh -> vertexData[i + 3],
+			inputMesh -> vertexData[i + 4],
+			inputMesh -> vertexData[i + 5],
+
+			inputMesh -> vertexData[i + 6],
+			inputMesh -> vertexData[i + 7],
+
+			inputMesh -> vertexData[i + 8],
+			inputMesh -> vertexData[i + 9],
+			inputMesh -> vertexData[i + 10],
+			inputMesh -> vertexData[i + 11]
 		};
 
 		std :: cout << "VERTEX AT (" << vertex[0] << ", " 
 			<< vertex[1] << ", " << vertex[2] << ")" << std :: endl;
-		std :: cout << "TEX CORDS OF VERTEX ARE (" << vertex[3] << ", " 
-			<< vertex[4] << ")" << std :: endl;
+		std :: cout << "NORMAL CORDS OF VERTEX ARE (" << vertex[3] << ", " 
+			<< vertex[4] << ", " << vertex[5] << ")" << std :: endl;
+		std :: cout << "UV CORDS OF VERTEX ARE (" << vertex[6] << ", "
+			<< vertex[7] << ")" << std :: endl;
+		std :: cout << "COLOR VALUE OF VERTEX IS (" << vertex[8] << ", "
+			<< vertex[9] << ", " << vertex[10] << ", " << vertex[11]
+			<< ")" << std :: endl;
 	}
-
-	std :: cout << "INDICES ARE : " << std :: endl;
-	for(int i = 0; i < inputMesh -> indexData.size(); i++)
-		std :: cout << "\t" << inputMesh -> indexData[i] << std :: endl;
 }
 
 Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
@@ -204,11 +232,11 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 	std :: string line; 
 
 	// LOADS FILES //
-	std :: ifstream meshFile(inputName);
+	std :: ifstream meshFile("assets/models/" + inputName);
 	
 	// IF COULD NOT LOAD, ATTEMPTS TO LAOD FROM PERSPECTIVE OF EXECUTABLE LIBRARY //
 	if(!meshFile.is_open())
-		meshFile.open("./../../" + inputName);
+		meshFile.open("./../../assets/models/" + inputName);
 
 	// IF STILL NOT OPEN, RAISES ERROR //
 	if(!meshFile.is_open())
@@ -286,8 +314,11 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 				// READS VERTEX/COLOR DATA //
 				if(readingVertex)
 				{
-					// READS X/Y/Z COORDINATES //
-					vertices.push_back(std :: stof(data));
+					// READS NON-COLOR COORDINATES //
+					if(tokensRead < 8)
+						vertices.push_back(std :: stof(data));
+					else
+						vertices.push_back(std :: stof(data) / 255.0f);
 				}
 
 				// READS INDEX DATA //
@@ -318,5 +349,5 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 	}
 
 	std :: cout << "LOADED " << inputName << " SUCCESSFULY!" << std :: endl;
-	return meshHandler :: createMesh(vertices, indices, vertexCount);
+	return meshHandler :: createMesh(vertices, indices);
 }

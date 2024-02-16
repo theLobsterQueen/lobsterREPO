@@ -2,10 +2,11 @@
 #version 460
 
 // INPUT ATTRIBUTES //
-layout(location = 0) in vec2 in_texCord;
+layout (location = 0) in vec2 in_texCord;
+layout (location = 1) in vec4 in_colorVal;
 
 // OUTPUT ATTRIBUTES //
-out vec4 out_colorVec;
+out vec4 out_colorVal;
 
 // INCLUDES AND INITIALIZATIONS //
 #include<constants>
@@ -13,6 +14,10 @@ out vec4 out_colorVec;
 
 void main()
 {
-	// ASSIGNS FINAL COLOR OUTPUT //
-	out_colorVec = texture2D(u_2DSampler, in_texCord);
+	// SAMPLES TEXTURE COLOR AND BLENDS WITH VERTEX COLOR //
+	vec4 texColor = texture2D(u_2DSampler, in_texCord);
+	vec3 colorVal = in_colorVal.xyz * (1 - texColor.w);
+
+	// OUTPUTS TO PIXEL //
+	out_colorVal = vec4(texColor.xyz + colorVal, 1.0f);
 }

@@ -85,49 +85,36 @@ void sceneManagement :: renderScene(Scene * targetScene, entityID cameraEntity)
 	glUniformMatrix4fv(UNI_VIEW_PROJ_MATRIX, 1, GL_FALSE, viewProj.getData());
 
 	// BEGINS ITERATING THROUGH AND RENDERING VALID ENTITIES //
-	unsigned entityCount = targetScene -> activeEntities;
-	unsigned entityIndex = 0;
-
-	while(entityCount != 0 && entityIndex < LOBSTER_MAX_ENTITIES)
+	std :: vector<entityID> meshes = sceneManagement :: sceneView
+		(targetScene, MESH_COMP_ID);
+	
+	for(unsigned i = 0; i < meshes.size(); i++)
 	{
+		// READS ENTITY INDEX //
+		unsigned entityIndex = meshes[i];
+
 		// READS ENTITY DATA //
 		Entity curEntity = targetScene -> entities[entityIndex];
 
-		// IF ENTITY'S COMPONENT MASK IS 0 (EMPTY/DELETED), CONTINUES //
-		if(curEntity.mask == 0)
+		// IF ENTITY HAS TRANSFORM COMPONENT, CONFIGURES MODEL WORLD MATRIX //
+			// BY ITS DATA. OTHERWISE, USES MODEL WORLD MATRIX AS IDENTITY MATRIX //
+		LobMatrix modelWorld = math :: identityMatrix();
+		if((curEntity.mask & (1 << TRANS_COMP_ID)) > 0)
 		{
-			entityIndex++;
-			continue;
+			modelWorld = transformHandler :: getModelWorldMatrix
+			(
+				(Transform *) 
+					(targetScene -> components[TRANS_COMP_ID][entityIndex])
+			);
 		}
 
-		// THEN, DRAWS MESH IF ONE IS EQUIPPED ON THE ENTITY //
-		if((curEntity.mask & (1 << MESH_COMP_ID)) > 0)
-		{
-			// IF ENTITY HAS TRANSFORM COMPONENT, CONFIGURES MODEL WORLD MATRIX //
-				// BY ITS DATA. OTHERWISE, USES MODEL WORLD MATRIX AS IDENTITY MATRIX //
-			LobMatrix modelWorld = math :: identityMatrix();
-			if((curEntity.mask & (1 << TRANS_COMP_ID)) > 0)
-			{
-				modelWorld = transformHandler :: getModelWorldMatrix
-				(
-					(Transform *) 
-						(targetScene -> components[TRANS_COMP_ID][entityIndex])
-				);
-			}
+		// SETS MODEL-WORLD MATRIX //
+		glUniformMatrix4fv
+			(UNI_MODEL_WORLD_MATRIX, 1, GL_FALSE, modelWorld.getData());
 
-			// SETS MODEL-WORLD MATRIX //
-			glUniformMatrix4fv
-				(UNI_MODEL_WORLD_MATRIX, 1, GL_FALSE, modelWorld.getData());
-
-			// DRAWS MESH //
-			meshHandler :: drawMesh
-				((Mesh *) targetScene -> components[MESH_COMP_ID][entityIndex]);
-		}
-
-		// REDUCES ACTIVE ENTITY COUNT AND INCREASING ENTITY INDEX //
-			// FOR NEXT ITERATION //
-		entityCount--;
-		entityIndex++;
+		// DRAWS MESH //
+		meshHandler :: drawMesh
+			((Mesh *) targetScene -> components[MESH_COMP_ID][entityIndex]);
 	}
 }
 
@@ -148,10 +135,11 @@ std :: vector<entityID> sceneManagement :: sceneView
 			continue;
 		}
 
-		if(curEnt.mask & (1 << compID) > 0)
+		if((curEnt.mask & (1 << compID)) > 0)
 			newVec.push_back(entityIndex);
 
 		activeLeft--;
+		entityIndex++;
 	}
 
 	return newVec;

@@ -53,7 +53,7 @@ namespace meshHandler
 	(
 		std :: vector<GLfloat> inputVertices, 
 		std :: vector<GLuint> inputIndices,
-		unsigned char elementsPerVertex
+		unsigned char elementsPerVertex = 12
 	);
 
 	void drawMesh(Mesh * inputMesh);

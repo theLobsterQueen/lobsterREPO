@@ -91,7 +91,7 @@ void meshHandler :: loadTexture(Mesh * inputMesh, std :: string texturePath)
 		(std :: string("assets/textures/" + texturePath).c_str());
 	if(inputMesh -> texSurf == nullptr)
 		inputMesh -> texSurf = IMG_Load
-			(std :: string("./../../assets/texutres/" + texturePath).c_str());
+			(std :: string("./../../assets/textures/" + texturePath).c_str());
 	
 	if(inputMesh -> texSurf == nullptr)
 	{

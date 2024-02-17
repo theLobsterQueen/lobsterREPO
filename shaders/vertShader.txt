@@ -10,6 +10,8 @@ layout (location = 3) in vec3 in_normalVec;
 // OUTPUT ATTRIBUTES //
 layout (location = 0) out vec2 out_texCord;
 layout (location = 1) out vec4 out_colorVal;
+layout (location = 2) out vec3 out_normalVec;
+layout (location = 3) out vec3 out_pixelPos;
 
 // INCLUDES AND INITIALIZATIONS //
 #include<constants>
@@ -22,7 +24,11 @@ void main()
 	vertexPos *= (u_modelWorldMatrix * u_worldViewMatrix * u_viewProjMatrix);
 
 	// SETS OUTPUT DATA //
-	gl_Position = vertexPos;
-	out_colorVal = in_colorVal;
+	gl_Position = vertexPos; 
+
+	// SETS OUTPUT ATTRIBUTE DATA //
 	out_texCord = in_texCord;
+	out_colorVal = in_colorVal;
+	out_normalVec = (vec4(in_normalVec, 0.0f) * u_modelWorldMatrix).xyz;
+	out_pixelPos = (vec4(in_vertexPos.xyz, 1.0f) * u_modelWorldMatrix).xyz;
 }

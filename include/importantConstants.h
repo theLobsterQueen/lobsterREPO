@@ -24,14 +24,17 @@ typedef char *					compPtr;
 #define NORMAL_VEC					3
 
 // DEFINES UNIFORMS //
-#define UNI_MODEL_WORLD_MATRIX			0
-#define UNI_WORLD_VIEW_MATRIX			1
-#define UNI_VIEW_PROJ_MATRIX			2
-#define UNI_2D_SAMPLER					3
+#define UNI_MODEL_WORLD_MATRIX		0
+#define UNI_WORLD_VIEW_MATRIX		1
+#define UNI_VIEW_PROJ_MATRIX		2
+#define UNI_2D_SAMPLER				3
+#define UNI_LIGHT_POS				4
+#define UNI_LIGHT_COLOR				5
 
 // COMPONENT DEFINTIONS //
 #define MESH_COMP_ID				0
 #define TRANS_COMP_ID				1
 #define CAMERA_COMP_ID				2
+#define LIGHT_COMP_ID				3
 
 #endif

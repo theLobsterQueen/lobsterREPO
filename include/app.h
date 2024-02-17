@@ -23,6 +23,7 @@
 #include <utilities.h>
 #include <importantConstants.h>
 #include <math.h>
+#include <light.h>
 
 namespace appManagement
 {

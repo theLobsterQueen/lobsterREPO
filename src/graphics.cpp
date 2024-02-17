@@ -86,7 +86,8 @@ void graphicManagement :: loadShader
 				targetFile.open("../../shaders/" + targetString);
 				if(!targetFile.is_open())
 				{
-					std :: cout << "ERROR! COULD NOT FIND UNIFORMS FILE." << std :: endl;
+					std :: cout << "ERROR! COULD NOT FIND " << targetString
+						<< "!" << std :: endl;
 					return;
 				}
 			}

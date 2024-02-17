@@ -4,6 +4,8 @@
 // INPUT ATTRIBUTES //
 layout (location = 0) in vec2 in_texCord;
 layout (location = 1) in vec4 in_colorVal;
+layout (location = 2) in vec3 in_normalVec;
+layout (location = 3) in vec3 in_pixelPos;
 
 // OUTPUT ATTRIBUTES //
 out vec4 out_colorVal;
@@ -18,6 +20,28 @@ void main()
 	vec4 texColor = texture2D(u_2DSampler, in_texCord);
 	vec3 colorVal = in_colorVal.xyz * (1 - texColor.w);
 
+	// DETERMINES BASE COLOR FROM VERTEX COLOR AND TEXTURE ALPHA //
+	vec3 baseColor = texColor.xyz + colorVal;
+	
+	// DETERMINES LIGHT COLOR OF PIXEL //
+
+	// VARIABLE INITIALIZATION //
+	vec3 N = normalize(in_normalVec); // NORMALIZED NORMAL VECTOR //
+	vec3 L = normalize(u_lightPos - in_pixelPos); // NORMALIZED LIGHT VECTOR //
+
+	// APPLIES BASIC AMBIENT LIGHTING //
+	float mappedY = 0.5f * (N.y + 1.0f);
+	vec3 lightColor = mix(c_ambientBelow, c_ambientAbove, mappedY);
+
+	// APPLIES DIFFUSE LIGHTING //
+
+	// FINDS THE DOT PRODUCT BETWEEN THE NORMAL AND LIGHT VECTORS //
+		// THIS VALUE CAN BE USED TO DETERMINE HOW "ILLUMINATED" THE POINT SHOUDLD BE //
+	float dp = dot(N, L);
+	dp = clamp(dp, 0.0f, 1.0f);
+
+	lightColor += (u_lightColor.xyz * u_lightColor.w) * dp;
+
 	// OUTPUTS TO PIXEL //
-	out_colorVal = vec4(texColor.xyz + colorVal, 1.0f);
+	out_colorVal = vec4(baseColor * lightColor, 1.0f);
 }

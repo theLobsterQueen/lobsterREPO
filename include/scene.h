@@ -21,6 +21,7 @@
 #include <window.h>
 #include <transform.h>
 #include <camera.h>
+#include <light.h>
 
 // STRUCT PROTOTYPES //
 struct EngineCore;

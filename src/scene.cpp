@@ -84,6 +84,24 @@ void sceneManagement :: renderScene(Scene * targetScene, entityID cameraEntity)
 	glUniformMatrix4fv(UNI_WORLD_VIEW_MATRIX, 1, GL_FALSE, worldView.getData());
 	glUniformMatrix4fv(UNI_VIEW_PROJ_MATRIX, 1, GL_FALSE, viewProj.getData());
 
+	// GETS ALL LIGHT SOURCES AND PUSHES THEIR POSITIONS TO THE SHADERS //
+		// TODO: ADD SUPPORT FOR MULTIPLE LIGHT SOURCES AND DIFFERENT LIGHT COLORS //
+	entityID lightEnt = sceneManagement :: sceneView(targetScene, LIGHT_COMP_ID)[0];
+	Light light = *((Light *) targetScene ->
+		components[LIGHT_COMP_ID][lightEnt]);
+	glUniform4f
+	(
+		UNI_LIGHT_COLOR,
+		light.color[0], light.color[1], light.color[2], light.color[3]
+	);
+	Transform lightTrans = *((Transform *) targetScene -> 
+		components[TRANS_COMP_ID][lightEnt]);
+	glUniform3f
+	(
+		UNI_LIGHT_POS, 
+		lightTrans.position[0], lightTrans.position[0], lightTrans.position[0]
+	);
+
 	// BEGINS ITERATING THROUGH AND RENDERING VALID ENTITIES //
 	std :: vector<entityID> meshes = sceneManagement :: sceneView
 		(targetScene, MESH_COMP_ID);

@@ -42,11 +42,20 @@ Sprint 1 (ENGINE BACKEND FUNDAMENTALS) :
 	[X] Create foundations for entity component system.
 	[X] Create basic file loaders for GLSL shaders.
 	[X] Use uniforms and systems logic to make a scene fully interactable.	
-	[~] Create a fully 3D base shader, complete with (probably Phong) lighting system.
+	[X] Basic Lighting System
 
 Sprint 2 :
 	[~] Build out base components library for more advanced functionalities.
 		  (Collision detecting component, lighting component.)
+	[ ] Build out Engine Frontend, Complete With
+		[ ] Inspector-Analog
+			[ ] [STRETCH] Allow for "exposed" variables, that could be edited
+				directly from the inspector.
+			[ ] Can add Components to Entities
+		[ ] File Hierarchy
+		[ ] Build Dialog
+		[ ] Scene Tree
+	[ ] Save/Load Scenes on Command
 	[ ] Base Python Integration 
 		[ ] Communicate with Precompiled Engine Files over Runtime Python Scritps
 	[ ] Start/Update Function Analogs

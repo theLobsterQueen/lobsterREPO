@@ -20,6 +20,7 @@ void appManagement :: begin(EngineCore * core)
 		basePipeline, GL_VERTEX_SHADER, 
 		"shaders/vertShader.txt", core -> debug
 	);
+
 	graphicManagement :: loadShader
 	(
 		basePipeline, GL_FRAGMENT_SHADER, 
@@ -60,6 +61,28 @@ void appManagement :: createTestScene(EngineCore * core)
 		camID,
 		TRANS_COMP_ID,
 		(compPtr) transformHandler :: createTransform()
+	);
+
+	// ADDS LIGHT TO SCENE //
+	entityID lightID = sceneManagement :: newEntityID(testScene);
+	Transform * lightTrans = transformHandler :: createTransform();
+	sceneManagement :: addComp
+	(
+		testScene,
+		lightID,
+		TRANS_COMP_ID,
+		(compPtr) lightTrans
+	);
+	transformHandler :: translate
+		(lightTrans, std :: vector<float> { -5.0f, 0.0f, 0.0f });
+
+	sceneManagement :: addComp
+	(
+		testScene,
+		lightID,
+		LIGHT_COMP_ID,
+		(compPtr) lightHandler :: createLight
+			(std :: vector<float> { 1.0f, 0.5f, 0.5f, 0.75f })
 	);
 
 	// CREATES SCENE //

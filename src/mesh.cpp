@@ -85,76 +85,19 @@ Mesh * meshHandler :: createMesh
 	return newMesh;
 }
 
-void meshHandler :: loadTexture(Mesh * inputMesh, std :: string texturePath)
+void meshHandler :: setTexture(Mesh * inputMesh, Texture * inputTexture)
 {
-	inputMesh -> texSurf = IMG_Load
-		(std :: string("assets/textures/" + texturePath).c_str());
-	if(inputMesh -> texSurf == nullptr)
-		inputMesh -> texSurf = IMG_Load
-			(std :: string("./../../assets/textures/" + texturePath).c_str());
 	
-	if(inputMesh -> texSurf == nullptr)
-	{
-		std :: cout << "ERROR! COULD NOT FIND " << texturePath << "!" << std :: endl;
-		return;
-	}
-
-	// VERTICALLY FLIPS THE PIXEL DATA //
-
-	// CODE TAKEN FROM USER vvanpelt ON //
-	// https://stackoverflow.com/questions/65815332/ flipping-a-surface-vertically-in-sdl2
-
-    int pitch = inputMesh -> texSurf -> pitch; // row size
-    char* temp = new char[pitch]; // intermediate buffer
-    char* pixels = (char*) inputMesh -> texSurf -> pixels;
-    
-    for(int i = 0; i < inputMesh -> texSurf -> h / 2; ++i) {
-        // get pointers to the two rows to swap
-        char* row1 = pixels + i * pitch;
-        char* row2 = pixels + (inputMesh -> texSurf -> h - i - 1) * pitch;
-        
-        // swap rows
-        memcpy(temp, row1, pitch);
-        memcpy(row1, row2, pitch);
-        memcpy(row2, temp, pitch);
-    }
-    
-    delete[] temp;
-
-	// IF SUCCESSFULLY LOADED, CONFIGURES TEXTURE DATA //
-	glGenTextures(1, &(inputMesh -> textureID));
-	GLenum textureFormat = 0;
-
-	switch(inputMesh -> texSurf -> format -> format)
-	{
-		case SDL_PIXELFORMAT_RGBA32 :
-			textureFormat = GL_RGBA;
-		break;
-
-		case SDL_PIXELFORMAT_RGB444 :
-		case SDL_PIXELFORMAT_RGB24  :
-			textureFormat = GL_RGB;
-		break;
-
-		default :
-			std :: cout << "UNSUPPORTED TEXTURE FORMAT! RETURNING!"
-				" IMAGE FORMAT IS " << 
-				SDL_GetPixelFormatName(inputMesh -> texSurf -> format -> format)
-				<< "." << std :: endl;
-			return;
-		break;
-	}
-
 	// BINDS TEXTURE DATA, IF AVAILABLE //
 	glBindTexture(GL_TEXTURE_2D, inputMesh -> textureID);
 	glTexImage2D
 	(
-		GL_TEXTURE_2D, 0, GL_RGBA8,
-		inputMesh -> texSurf -> w, inputMesh -> texSurf -> h, 
-		0, textureFormat, GL_UNSIGNED_BYTE, inputMesh -> texSurf -> pixels
+		GL_TEXTURE_2D, 0, GL_RGBA,
+		inputTexture -> width, inputTexture -> height, 
+		0, GL_RGBA, GL_UNSIGNED_BYTE, inputTexture -> pixels
 	);
 
-	// SETS THE TEXTURE TO USE LINEARL INTERPOLATION //
+	// SETS THE TEXTURE TO USE LINEAR INTERPOLATION //
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 

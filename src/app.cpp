@@ -88,7 +88,7 @@ void appManagement :: createTestScene(EngineCore * core)
 	// CREATES SCENE //
 	testID = sceneManagement :: newEntityID(testScene);
 	Mesh * sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
-	meshHandler :: loadTexture(sceneMesh, "jinx.png");
+	meshHandler :: setTexture(sceneMesh, textureHandler :: createTexture("jinx.png"));
 
 	// ADDS MESH AND TRANSFORM //
 	sceneManagement :: addComp

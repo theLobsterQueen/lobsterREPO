@@ -21,6 +21,7 @@
 #include <importantConstants.h>
 #include <scene.h>
 #include <math.h>
+#include <texture.h>
 
 /// <summary> ///
 ///		This class holds the basic vertex/index/texture and other such attributes
@@ -67,7 +68,7 @@ namespace meshHandler
 	///			pixel data to the input mesh struct.
 	/// </summary> ///
 
-	void loadTexture(Mesh * inputMesh, std :: string texturePath);
+	void setTexture(Mesh * inputMesh, Texture * inputTexture);
 };
 
 #endif

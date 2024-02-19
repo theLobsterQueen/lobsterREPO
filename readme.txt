@@ -17,6 +17,8 @@ Sources :
 	https://gamedev.stackexchange.com/questions/190054/how-to-calculate-the-forward-up-
 		right-vectors-using-the-rotation-angles
 	https://learnopengl.com/Getting-started/Textures
+	https://github.com/ocornut/imgui/blob/master/docs/FAQ.md
+	https://github.com/ocornut/imgui/wiki
 
 	https://youtu.be/sXbqwzXtecE?list=PLvv0ScY6vfd9zlZkIIqGDeG5TUWswkMox
 	https://youtu.be/md3jFANT3UM
@@ -45,8 +47,6 @@ Sprint 1 (ENGINE BACKEND FUNDAMENTALS) :
 	[X] Basic Lighting System
 
 Sprint 2 :
-	[~] Build out base components library for more advanced functionalities.
-		  (Collision detecting component, lighting component.)
 	[ ] Build out Engine Frontend, Complete With
 		[ ] Inspector-Analog
 			[ ] [STRETCH] Allow for "exposed" variables, that could be edited

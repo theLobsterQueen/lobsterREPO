@@ -26,6 +26,8 @@ Texture * textureHandler :: createTexture(std :: string textureName)
 
 	// CREATES TEXTURE FROM DATA //
 	Texture * newTex = new Texture;
+
+	newTex -> name = textureName;
 	newTex -> pixels = data;
 	newTex -> width = width; newTex -> height = height;
 	return newTex;

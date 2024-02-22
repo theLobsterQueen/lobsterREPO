@@ -19,9 +19,7 @@
 #include <app.h>
 #include <mesh.h>
 #include <importantConstants.h>
-
-// VENDOR INCLUDES //
-#include <stb_image.h>
+#include <vendorIncludes.h>
 
 int main(int argv, char ** args)
 {
@@ -73,6 +71,22 @@ int main(int argv, char ** args)
 			<< std :: endl;
 		return -1;
 	}
+
+	// CODE TAKEN FROM img_impl_opengl3.h //
+
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	
+	// ENABLES KEYBOARD CONTROLS //
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsLight();
+	// Setup Platform/Renderer backends
+	ImGui_ImplSDL2_InitForOpenGL(core -> winRef, core -> glRef);
+	ImGui_ImplOpenGL3_Init("#version 430");
 
 	// INITIALIZES GLEW //
 	glewExperimental = GL_TRUE;

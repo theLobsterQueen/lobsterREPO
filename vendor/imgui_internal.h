@@ -39,8 +39,8 @@ Index of this file:
 
 */
 
-#ifndef IM_INTERN_H
-#define IM_INTERN_H
+#ifndef IM_INTERNAL_H
+#define IM_INTERNAL_H 1
 
 #ifndef IMGUI_DISABLE
 
@@ -2918,7 +2918,7 @@ struct IMGUI_API ImGuiTableTempData
 {
     int                         TableIndex;                 // Index in g.Tables.Buf[] pool
     float                       LastTimeActive;             // Last timestamp this structure was used
-    float                       AngledheadersExtraWidth;    // Used in EndTable()
+    float                       AngledHeadersExtraWidth;    // Used in EndTable()
 
     ImVec2                      UserOuterSize;              // outer_size.x passed to BeginTable()
     ImDrawListSplitter          DrawSplitter;
@@ -3302,7 +3302,7 @@ namespace ImGui
     IMGUI_API float         TableGetHeaderAngledMaxLabelWidth();
     IMGUI_API void          TablePushBackgroundChannel();
     IMGUI_API void          TablePopBackgroundChannel();
-    IMGUI_API void          TableAngledHeadersRowEx(float angle, float label_width = 0.0f);
+    IMGUI_API void          TableAngledHeadersRowEx(float angle, float max_label_width = 0.0f);
 
     // Tables: Internals
     inline    ImGuiTable*   GetCurrentTable() { ImGuiContext& g = *GImGui; return g.CurrentTable; }
@@ -3582,4 +3582,4 @@ extern const char*  ImGuiTestEngine_FindItemDebugLabel(ImGuiContext* ctx, ImGuiI
 #endif
 
 #endif // #ifndef IMGUI_DISABLE
-#endif // #ifndef IM_INTERN_H
+#endif // #ifndef IM_INTERNAL_H

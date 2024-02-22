@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector> 
 #include <string>
+#include <fstream>
 
 // SDL/GL INCLUDES //
 #include <SDL2/SDL.h>
@@ -62,7 +63,7 @@ namespace sceneManagement
 	///		Returns an index to the entity nearest to Index 0 with a component mask
 	///			equalling 0.
 	/// </summary> ///
-	entityID newEntityID(Scene * targetScene);
+	entityID newEntityID(Scene * targetScene, std :: string entityName);
 
 	/// <summary> ///
 	///		Clears an entity's component mask to 0, effectively deleting it from the
@@ -89,6 +90,16 @@ namespace sceneManagement
 	///		Returns a array of all entities with input component.
 	/// </summary> ///
 	std :: vector<entityID> sceneView(Scene * inputScene, componentID compID);
+
+	/// <summary> ///
+	///		Saves the scene as a .lob file to the input directory.
+	/// </summary> ///
+	void saveScene(Scene * inputScene);
+
+	/// <summary> ///
+	///		Loads a scene from input relative path.
+	/// </summary> ///
+	Scene * loadScene(std :: string scenePath);
 };
 
 #endif

@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =8
+let g:netrw_dirhist_8='/media/layna/WorkDisk/School/Third_Year/Second_Semester/Realtime/lobsterREPO'
+let g:netrw_dirhist_7='/home/layna/Games'
+let g:netrw_dirhist_6='/media/layna/WorkDisk/Work/GGJ_2024'
+let g:netrw_dirhist_5='/media/layna/WorkDisk/School/Third_Year/Second_Semester/Concurrency/lab2'
+let g:netrw_dirhist_4='/media/layna/WorkDisk/Work/solitaire'
+let g:netrw_dirhist_3='/media/layna/WorkDisk/School/Third_Year/Second_Semester/Concurrency/notes'
+let g:netrw_dirhist_2='/media/layna/datapartition/School/Third_Year/First_Semester/Algorithms/GraphCode'
+let g:netrw_dirhist_1='/media/layna/datapartition/Docs/Business-Financials'

@@ -1,6 +1,5 @@
 // INCLUDES DEFINITION AND USES NAMESPACE //
 #include <app.h>
-
 // (TEMP) FILE-GLOBAL VARIABLES //
 static entityID camID = 0;
 static entityID testID = 0;
@@ -10,7 +9,7 @@ static Scene * testScene = nullptr;
 void appManagement :: begin(EngineCore * core)
 {
 	// INITIALIZES CORE VALUES //
-	testScene = sceneManagement :: createScene("Lobter Home");
+	testScene = sceneManagement :: createScene("TEST");
 	sceneManagement :: changeScene(core, testScene);
 
 	// CREATES BASE RENDER PIPELINE //
@@ -43,7 +42,7 @@ void appManagement :: begin(EngineCore * core)
 void appManagement :: createTestScene(EngineCore * core)
 {
 	// CREATES CAMERA COMPONENT //
-	camID = sceneManagement :: newEntityID(testScene);
+	camID = sceneManagement :: newEntityID(testScene, "Camera");
 	float aspect = ((float) core -> winWidth) / ((float) core -> winHeight);
 
 	sceneManagement :: addComp
@@ -64,7 +63,7 @@ void appManagement :: createTestScene(EngineCore * core)
 	);
 
 	// ADDS LIGHT TO SCENE //
-	entityID lightID = sceneManagement :: newEntityID(testScene);
+	entityID lightID = sceneManagement :: newEntityID(testScene, "Light");
 	Transform * lightTrans = transformHandler :: createTransform();
 	sceneManagement :: addComp
 	(
@@ -86,7 +85,7 @@ void appManagement :: createTestScene(EngineCore * core)
 	);
 
 	// CREATES SCENE //
-	testID = sceneManagement :: newEntityID(testScene);
+	testID = sceneManagement :: newEntityID(testScene, "Jinx");
 	Mesh * sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
 	meshHandler :: setTexture(sceneMesh, textureHandler :: createTexture("jinx.png"));
 
@@ -101,6 +100,14 @@ void appManagement :: createTestScene(EngineCore * core)
 		testScene, testID, TRANS_COMP_ID, 
 		(compPtr) (transformHandler :: createTransform())
 	);
+
+	// (TEMP) ATTEMPTS TO SAVE SCENE //
+	sceneManagement :: saveScene(testScene);
+
+	testScene = sceneManagement :: createScene("FAILED");
+	testScene = nullptr;
+	testScene = sceneManagement :: loadScene("TEST");
+	sceneManagement :: changeScene(core, testScene);
 }
 
 void appManagement :: run(EngineCore * core)
@@ -123,6 +130,8 @@ void appManagement :: run(EngineCore * core)
 
 		// BEGINS RENDERING PHASE //
 		graphicManagement :: beginRenderPass(core);
+
+
 
 		// RENDERS CURRENT SCENE //
 		sceneManagement :: renderScene(core -> curSceneRef, camID);

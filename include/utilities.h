@@ -38,5 +38,4 @@ void checkErrors();
 void mouseButtonProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue);
 void modifierKeyProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue);
 
-
 #endif

@@ -24,6 +24,7 @@
 #include <importantConstants.h>
 #include <math.h>
 #include <light.h>
+#include <vendorIncludes.h>
 
 namespace appManagement
 {

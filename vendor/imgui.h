@@ -24,7 +24,7 @@
 // Library Version
 // (Integer encoded as XYYZZ for use in #if preprocessor conditionals, e.g. '#if IMGUI_VERSION_NUM >= 12345')
 #define IMGUI_VERSION       "1.90.4 WIP"
-#define IMGUI_VERSION_NUM   19031
+#define IMGUI_VERSION_NUM   19032
 #define IMGUI_HAS_TABLE
 
 /*
@@ -48,8 +48,8 @@ Index of this file:
 
 */
 
-#ifndef IM_GUI_H
-#define IM_GUI_H 1
+#ifndef IMGUI_H
+#define IMGUI_H 1
 
 // Configuration file with compile-time options
 // (edit imconfig.h or '#define IMGUI_USER_CONFIG "myfilename.h" from your build system)
@@ -3305,4 +3305,4 @@ enum ImGuiModFlags_ { ImGuiModFlags_None = 0, ImGuiModFlags_Ctrl = ImGuiMod_Ctrl
 #endif
 
 #endif // #ifndef IMGUI_DISABLE
-#endif // #ifndef IM_GUI_H
+#endif // #ifndef IMGUI_H

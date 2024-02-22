@@ -47,6 +47,8 @@ Sprint 1 (ENGINE BACKEND FUNDAMENTALS) :
 	[X] Basic Lighting System
 
 Sprint 2 :
+	[ ] Save/Load Scenes on Command
+	[ ] Launcher that can Create/Load Projects
 	[ ] Build out Engine Frontend, Complete With
 		[ ] Inspector-Analog
 			[ ] [STRETCH] Allow for "exposed" variables, that could be edited
@@ -55,7 +57,6 @@ Sprint 2 :
 		[ ] File Hierarchy
 		[ ] Build Dialog
 		[ ] Scene Tree
-	[ ] Save/Load Scenes on Command
 	[ ] Base Python Integration 
 		[ ] Communicate with Precompiled Engine Files over Runtime Python Scritps
 	[ ] Start/Update Function Analogs

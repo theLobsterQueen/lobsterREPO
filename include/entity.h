@@ -7,6 +7,7 @@
 #include <importantConstants.h>
 #include <vector>
 #include <bitset>
+#include <string>
 
 // STRUCT PROTOTYPES //
 struct Scene;
@@ -20,6 +21,7 @@ struct Entity
 {
 	entityID ID;
 	componentMask mask = 0;
+	std :: string name;
 };
 
 #endif

@@ -18,6 +18,7 @@ struct Texture
 {
 	unsigned char * pixels;
 	unsigned width; unsigned height;
+	std :: string name;
 };
 
 // FUNCTION DEFINITIONS //

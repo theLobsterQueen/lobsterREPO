@@ -29,6 +29,9 @@
 /// </summary> ///
 struct Mesh
 {
+	std :: string name;
+	std :: string texName;
+
 	std :: vector<GLfloat> vertexData = { };
 	std :: vector<GLuint> indexData = { };
 
@@ -54,7 +57,7 @@ namespace meshHandler
 	(
 		std :: vector<GLfloat> inputVertices, 
 		std :: vector<GLuint> inputIndices,
-		unsigned char elementsPerVertex = 12
+		std :: string meshName = "mesh"
 	);
 
 	void drawMesh(Mesh * inputMesh);

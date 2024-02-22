@@ -8,20 +8,21 @@ Mesh * meshHandler :: createMesh
 (
 	std :: vector<GLfloat> inputVertices, 
 	std :: vector<GLuint> inputIndices,
-	unsigned char elementsPerVertex
+	std :: string meshName
 )
 
 // FUNCTION //
 {
 	// CREATES NEW MESH STRUCT //
 	Mesh * newMesh = new Mesh;
+	newMesh -> name = meshName;
 
 	// LOADS VERTEX DATA INTO CLASS MEMORY //
 	newMesh -> vertexData = inputVertices;
 	newMesh -> indexData = inputIndices;
 
 	// DERIVES VERTEX COUNT FROM INPUT VERTICES //
-	newMesh -> vertexCount = inputVertices.size() / elementsPerVertex;
+	newMesh -> vertexCount = inputVertices.size() / 12;
 	newMesh -> indexCount = inputIndices.size();
 
 	// CREATES A VERTEX BUFFER, ASSINGS ITS VERTEX DATA, AND BINDS TO VERTEX ARRAY //
@@ -50,7 +51,7 @@ Mesh * meshHandler :: createMesh
 	glGenVertexArrays(1, &(newMesh -> VAO));
 	glBindVertexArray(newMesh -> VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, newMesh -> vertexBuffer);
-	int vertexSize = elementsPerVertex * sizeof(float);
+	int vertexSize = 12 * sizeof(float);
 
 	glVertexAttribPointer
 	(
@@ -87,7 +88,9 @@ Mesh * meshHandler :: createMesh
 
 void meshHandler :: setTexture(Mesh * inputMesh, Texture * inputTexture)
 {
-	
+	// SETS MESH'S TEXTURE NAMES //
+	inputMesh -> texName = inputTexture -> name;
+
 	// BINDS TEXTURE DATA, IF AVAILABLE //
 	glBindTexture(GL_TEXTURE_2D, inputMesh -> textureID);
 	glTexImage2D
@@ -292,5 +295,5 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 	}
 
 	std :: cout << "LOADED " << inputName << " SUCCESSFULY!" << std :: endl;
-	return meshHandler :: createMesh(vertices, indices);
+	return meshHandler :: createMesh(vertices, indices, inputName);
 }

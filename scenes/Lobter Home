@@ -1,0 +1,25 @@
+Lobter Home
+ENT: Camera
+TRANSFORM
+0/0/0
+0/0/0
+1/1/1
+CAMERA
+1.42909
+1
+100
+ENT: Light
+TRANSFORM
+-5/0/0
+0/0/0
+1/1/1
+LIGHT
+1/0.5/0.5/0.75
+ENT: Jinx
+TRANSFORM
+0/0/0
+0/0/0
+1/1/1
+MESH
+portrait.ply
+jinx.png

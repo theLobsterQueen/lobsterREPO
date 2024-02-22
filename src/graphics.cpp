@@ -185,7 +185,18 @@ void graphicManagement :: beginRenderPass(EngineCore * core)
 	// CLEARS SCREEN //
 	glClearColor(0.1f, 0.1f, 0.4f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// PREPARES UI ELEMENTS //
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
 }
 
 void graphicManagement :: present(EngineCore * core)
-	{ SDL_GL_SwapWindow(core -> winRef); }
+{ 
+	// RENDERS UI ELEMENTS //
+	ImGui :: Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	SDL_GL_SwapWindow(core -> winRef); 
+}

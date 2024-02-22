@@ -14,10 +14,11 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-// INTERNAL INCLUDES //
+// LOBSTER INCLUDES //
 #include <utilities.h>
 #include <engineCore.h>
 #include <importantConstants.h>
+#include <vendorIncludes.h>
 
 // STRUCT PROTOTYPE //
 struct EngineCore;

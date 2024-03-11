@@ -21,14 +21,17 @@ void graphicManagement :: loadShader
 {
 	// DETERMINES WHICH SHADER CONTAINER TO ATTACH NEW SHADER TOO //
 	GLuint * targetShader;
+	std :: cout << shaderPath << std :: endl;
 	switch(shaderType)
 	{
 		case GL_VERTEX_SHADER :
 			targetShader = &(targetPipeline -> vertShader);
+			targetPipeline -> vertShaderName = std :: string(shaderPath);
 		break;
 
 		case GL_FRAGMENT_SHADER :
 			targetShader = &(targetPipeline -> fragShader);
+			targetPipeline -> fragShaderName = std :: string(shaderPath);
 		break;
 
 		default :

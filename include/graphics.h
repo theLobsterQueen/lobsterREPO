@@ -31,8 +31,8 @@ struct EngineCore;
 struct Pipeline
 {
 	GLuint program;
-	GLuint vertShader;
-	GLuint fragShader;
+	GLuint vertShader; std :: string vertShaderName;
+	GLuint fragShader; std :: string fragShaderName;
 };
 
 namespace graphicManagement

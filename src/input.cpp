@@ -45,7 +45,8 @@ void inputManagement :: processInput(EngineCore * core, entityID cameraID)
 	}
 
 	// ROTATES THE CAMERA //
-	if(core -> inputState -> rmb == true)
+	if(core -> inputState -> rmb == true || 
+			(core -> inputState -> cntrlPressed && core -> inputState -> lmb == true))
 	{
 		deltaRot[1] += (core -> inputState -> mouseX) * rotScalar;
 		deltaRot[0] -= (core -> inputState -> mouseY) * rotScalar;
@@ -68,9 +69,9 @@ void inputManagement :: processInput(EngineCore * core, entityID cameraID)
 		deltaPos[0] += speedVal;
 	if(keys['d'])
 		deltaPos[0] -= speedVal;
-	if(keys[' '])
+	if(keys['['])
 		deltaPos[1] += speedVal;
-	if(core -> inputState -> cntrlPressed)
+	if(keys[']'])
 		deltaPos[1] -= speedVal;
 
 	// APPLIES TRANSFORMATION //

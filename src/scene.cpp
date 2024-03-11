@@ -224,7 +224,9 @@ void sceneManagement :: saveScene(Scene * inputScene)
 			sceneFile << "CAMERA" << std :: endl
 				<< tempCamera -> FOV << std :: endl
 				<< tempCamera -> near << std :: endl
-				<< tempCamera -> far << std :: endl;
+				<< tempCamera -> far << std :: endl
+				<< tempCamera -> curPipelineRef -> vertShaderName << std :: endl
+				<< tempCamera -> curPipelineRef -> fragShaderName << std :: endl;
 		}
 
 		// SAVES MESHES AND TEXTURES //
@@ -248,12 +250,10 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 	// VARIABLE INITIALIZATION //
 	unsigned linesRead = 0;
 	int compIndex = -1;
-
-	Scene * newScene;
 	
 	// FINDS AND READS SCENE FILE //
 	std :: string sceneString, line;
-	std :: ifstream sceneFile(std :: string("scenes/") + scenePath);
+	std :: ifstream sceneFile(std :: string("./scenes/") + scenePath);
 	if(!sceneFile.is_open())
 	{
 		// ATTEMPTS TO LOAD IT FROM THE PERSEPCTIVE OF AN EXECUTABLE IN DEBUG/RELEASE //
@@ -266,14 +266,12 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 	}
 
 	// GETS SCENE NAME //
-	std :: cout << "LOADED SCENE FILE!" << std :: endl;
 	std :: getline(sceneFile, line);
-	newScene -> name = line;
+	Scene * newScene = sceneManagement :: createScene(line);
 
 	// READS SCENE DATA //
 	entityID newEntity = 0;
 	compPtr newCompPtr = nullptr;
-	std :: string meshName = ""; std :: string texName = "";
 
 	while(std :: getline(sceneFile, line))
 	{
@@ -306,7 +304,10 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 				// SETS POSITION //
 				int index = 0;
 				while(std :: getline(lineStream, data, '/'))
+				{
 					tempTrans -> position[index] = std :: stof(data.c_str());
+					index++;
+				}
 			}
 
 			// SETS ROTATION //
@@ -314,7 +315,10 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			{
 				int index = 0;
 				while(std :: getline(lineStream, data, '/'))
+				{
 					tempTrans -> rotation[index] = std :: stof(data.c_str());
+					index++;
+				}
 			}
 
 			// SETS ROTATION //
@@ -322,7 +326,10 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			{
 				int index = 0;
 				while(std :: getline(lineStream, data, '/'))
+				{
 					tempTrans -> scale[index] = std :: stoi(data.c_str());
+					index++;
+				}
 			}
 		}
 		
@@ -332,16 +339,20 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			int index = 0;
 			if(linesRead == 0)
 				while(std :: getline(lineStream, data, '/'))
+				{
 					lightPtr -> color[index] = std :: stoi(data.c_str());
+					index++;
+				}
 		}
 
 		else if(compIndex == MESH_COMP_ID)
 		{
+			Mesh * meshPtr = ((Mesh *) (newCompPtr));
 			if(linesRead == 0)
-				meshName = line;
+				meshPtr = meshHandler :: getMeshFromPLY(line);
 
 			else if(linesRead == 1)
-				texName = line;
+				meshHandler :: setTexture(meshPtr, textureHandler :: createTexture(line));
 		}
 
 		else if(compIndex == CAMERA_COMP_ID)
@@ -353,6 +364,19 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 				cameraPtr -> near = std :: stoi(line.c_str());
 			if(linesRead == 2)
 				cameraPtr -> far = std :: stoi(line.c_str());
+			if(linesRead == 3)
+			{
+				std :: cout << "LOADING: " << line << std :: endl;
+				graphicManagement :: loadShader
+					(cameraPtr -> curPipelineRef, GL_VERTEX_SHADER, line.c_str());
+			}
+
+			if(linesRead == 4)
+			{
+				std :: cout << "LOADING: " << line << std :: endl;
+				graphicManagement :: loadShader
+					(cameraPtr -> curPipelineRef, GL_FRAGMENT_SHADER, line.c_str());
+			}
 		}
 
 		// CHECKS FOR TRANSFORMS //
@@ -361,25 +385,16 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			// ADDS TRANSFORM COMPONENT //
 			if(compIndex != -1)
 			{
-				compPtr tempPtr = (compPtr) newCompPtr;
-				if(compIndex == MESH_COMP_ID)
-				{
-					tempPtr = (compPtr) 
-						(meshHandler :: getMeshFromPLY(meshName));
-					meshHandler :: setTexture
-						((Mesh *) tempPtr, textureHandler :: createTexture(texName));
-				}
-
 				sceneManagement :: addComp
 				(
 					newScene, newEntity,
-					compIndex, (compPtr) tempPtr
+					compIndex, newCompPtr
 				);
 			}
 
 			newCompPtr = (compPtr) transformHandler :: createTransform();
 			compIndex = TRANS_COMP_ID;
-			linesRead = 0;
+			linesRead = -1;
 		}
 
 		// CHECKS FOR LIGHTS //
@@ -388,25 +403,16 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			// ADDS TRANSFORM COMPONENT //
 			if(compIndex != -1)
 			{
-				compPtr tempPtr = (compPtr) newCompPtr;
-				if(compIndex == MESH_COMP_ID)
-				{
-					tempPtr = (compPtr) 
-						(meshHandler :: getMeshFromPLY(meshName));
-					meshHandler :: setTexture
-						((Mesh *) tempPtr, textureHandler :: createTexture(texName));
-				}
-
 				sceneManagement :: addComp
 				(
 					newScene, newEntity,
-					compIndex, (compPtr) tempPtr
+					compIndex, newCompPtr
 				);
 			}
 
 			newCompPtr = (compPtr) lightHandler :: createLight();
-			unsigned char linesRead = 0;
 			compIndex = LIGHT_COMP_ID;
+			linesRead = -1;
 		}
 
 		// CHECKS FOR CAMERAS //
@@ -414,25 +420,16 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 		{
 			if(compIndex != -1)
 			{
-				compPtr tempPtr = (compPtr) newCompPtr;
-				if(compIndex == MESH_COMP_ID)
-				{
-					tempPtr = (compPtr) 
-						(meshHandler :: getMeshFromPLY(meshName));
-					meshHandler :: setTexture
-						((Mesh *) tempPtr, textureHandler :: createTexture(texName));
-				}
-
 				sceneManagement :: addComp
 				(
 					newScene, newEntity,
-					compIndex, (compPtr) tempPtr
+					compIndex, newCompPtr
 				);
 			}
 
 			newCompPtr = (compPtr) cameraHandler :: createCamera();
-			unsigned char linesRead = 0;
 			compIndex = CAMERA_COMP_ID;
+			linesRead = -1;
 		}
 
 		// SAVES MESHES AND TEXTURES //
@@ -440,28 +437,36 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 		{
 			if(compIndex != -1)
 			{
-				compPtr tempPtr = (compPtr) newCompPtr;
-				if(compIndex == MESH_COMP_ID)
-				{
-					tempPtr = (compPtr) 
-						(meshHandler :: getMeshFromPLY(meshName));
-					meshHandler :: setTexture
-						((Mesh *) tempPtr, textureHandler :: createTexture(texName));
-				}
-
 				sceneManagement :: addComp
 				(
 					newScene, newEntity,
-					compIndex, (compPtr) tempPtr
+					compIndex, newCompPtr
 				);
 			}
 
-			unsigned char linesRead = 0;
+			newCompPtr = nullptr;
 			compIndex = MESH_COMP_ID;
+			linesRead = -1;
 		}
 
 		linesRead++;
 	}
 
 	return newScene;
+}
+
+bool sceneManagement :: getCameraEntityID(Scene * targetScene, entityID * entHolder)
+{
+	for(entityID i = 0; i < LOBSTER_MAX_ENTITIES; i++)
+	{
+		// IF FOUND AN ENTITY HOLDING A CAMERA, GRABS ITS ID AND RETURNS TRUE //
+		if(targetScene -> components[CAMERA_COMP_ID][i] != 0)
+		{
+			(*entHolder) = i;
+			return true;
+		}
+	}
+
+	// IF ONE COULD NOT BE FOUND, RETURNS FALSE //
+	return false;
 }

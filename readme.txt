@@ -35,7 +35,7 @@ Sprint 0 (PRE-PRODUCTION) :
 	Find the Answers to these Questions :
 		[X] How am I going to organize my scene structure?
 		[X] How will I render objects to the screen?
-		[?] How will I organize my main loop?
+		[X] How will I organize my main loop?
 		[X] How will I will take and handle input?
 
 Sprint 1 (ENGINE BACKEND FUNDAMENTALS) :

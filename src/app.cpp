@@ -1,7 +1,7 @@
 // INCLUDES DEFINITION AND USES NAMESPACE //
 #include <app.h>
 // (TEMP) FILE-GLOBAL VARIABLES //
-static entityID camID = 0;
+static entityID camID = 0; 
 static entityID testID = 0;
 static Scene * testScene = nullptr;
 
@@ -17,13 +17,13 @@ void appManagement :: begin(EngineCore * core)
 	graphicManagement :: loadShader
 	(
 		basePipeline, GL_VERTEX_SHADER, 
-		"shaders/vertShader.txt", core -> debug
+		"shaders/vertShader.txt"
 	);
 
 	graphicManagement :: loadShader
 	(
 		basePipeline, GL_FRAGMENT_SHADER, 
-		"shaders/fragShader.txt", core -> debug
+		"shaders/fragShader.txt"
 	);
 
 	graphicManagement :: compileProgram(basePipeline);
@@ -81,7 +81,7 @@ void appManagement :: createTestScene(EngineCore * core)
 		lightID,
 		LIGHT_COMP_ID,
 		(compPtr) lightHandler :: createLight
-			(std :: vector<float> { 1.0f, 0.5f, 0.5f, 0.75f })
+			(std :: vector<float> { 0.0f, 0.5f, 1.0f, 0.9f })
 	);
 
 	// CREATES SCENE //
@@ -103,11 +103,12 @@ void appManagement :: createTestScene(EngineCore * core)
 
 	// (TEMP) ATTEMPTS TO SAVE SCENE //
 	sceneManagement :: saveScene(testScene);
-
 	testScene = sceneManagement :: createScene("FAILED");
-	testScene = nullptr;
+	sceneManagement :: changeScene(core, testScene);
+	std :: cout << "LOADING NEW SCENE!" << std :: endl;
 	testScene = sceneManagement :: loadScene("TEST");
 	sceneManagement :: changeScene(core, testScene);
+	std :: cout << "CHANGED SCENE!" << std :: endl;
 }
 
 void appManagement :: run(EngineCore * core)
@@ -131,10 +132,9 @@ void appManagement :: run(EngineCore * core)
 		// BEGINS RENDERING PHASE //
 		graphicManagement :: beginRenderPass(core);
 
-
-
 		// RENDERS CURRENT SCENE //
-		sceneManagement :: renderScene(core -> curSceneRef, camID);
+		if(sceneManagement :: getCameraEntityID(core -> curSceneRef, &camID))
+			sceneManagement :: renderScene(core -> curSceneRef, camID);
 		
 		// PRESENTS TO SCREEN //
 		graphicManagement :: present(core);
@@ -216,7 +216,8 @@ void appManagement :: update(EngineCore * core)
 	}
 
 	// PROCESSED INPUT //
-	inputManagement :: processInput(core, camID);
+	if(sceneManagement :: getCameraEntityID(core -> curSceneRef, &camID))
+		inputManagement :: processInput(core, camID);
 
 	// RESETS RELATIVE INPUT VALUES //
 	inputManagement :: resetInput(core -> inputState);

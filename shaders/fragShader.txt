@@ -17,7 +17,7 @@ out vec4 out_colorVal;
 void main()
 {
 	// SAMPLES TEXTURE COLOR AND BLENDS WITH VERTEX COLOR //
-	vec4 texColor = texture2D(u_2DSampler, in_texCord);
+	vec4 texColor = texture(u_2DSampler, in_texCord);
 	vec3 colorVal = in_colorVal.xyz * (1 - texColor.w);
 
 	// DETERMINES BASE COLOR FROM VERTEX COLOR AND TEXTURE ALPHA //

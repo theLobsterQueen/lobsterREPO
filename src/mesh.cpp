@@ -16,6 +16,7 @@ Mesh * meshHandler :: createMesh
 	// CREATES NEW MESH STRUCT //
 	Mesh * newMesh = new Mesh;
 	newMesh -> name = meshName;
+	newMesh -> texName = std :: string("");
 
 	// LOADS VERTEX DATA INTO CLASS MEMORY //
 	newMesh -> vertexData = inputVertices;

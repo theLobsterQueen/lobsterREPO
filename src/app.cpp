@@ -1,17 +1,13 @@
 // INCLUDES DEFINITION AND USES NAMESPACE //
 #include <app.h>
+
 // (TEMP) FILE-GLOBAL VARIABLES //
 static entityID camID = 0; 
 static entityID testID = 0;
-static Scene * testScene = nullptr;
 
 // FUNCTION IMPLEMENTATIONS //
 void appManagement :: begin(EngineCore * core)
 {
-	// INITIALIZES CORE VALUES //
-	testScene = sceneManagement :: createScene("TEST");
-	sceneManagement :: changeScene(core, testScene);
-
 	// CREATES BASE RENDER PIPELINE //
 	Pipeline * basePipeline = graphicManagement :: createPipeline();
 	graphicManagement :: loadShader
@@ -42,6 +38,8 @@ void appManagement :: begin(EngineCore * core)
 void appManagement :: createTestScene(EngineCore * core)
 {
 	// CREATES CAMERA COMPONENT //
+	Scene * testScene = sceneManagement :: createScene("TEST");
+
 	camID = sceneManagement :: newEntityID(testScene, "Camera");
 	float aspect = ((float) core -> winWidth) / ((float) core -> winHeight);
 
@@ -81,10 +79,9 @@ void appManagement :: createTestScene(EngineCore * core)
 		lightID,
 		LIGHT_COMP_ID,
 		(compPtr) lightHandler :: createLight
-			(std :: vector<float> { 0.0f, 0.5f, 1.0f, 0.9f })
+			(std :: vector<float> { 1.0f, 1.0f, 1.0f, 0.9f })
 	);
 
-	// CREATES SCENE //
 	testID = sceneManagement :: newEntityID(testScene, "Jinx");
 	Mesh * sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
 	meshHandler :: setTexture(sceneMesh, textureHandler :: createTexture("jinx.png"));
@@ -95,20 +92,86 @@ void appManagement :: createTestScene(EngineCore * core)
 		testScene, testID, MESH_COMP_ID, 
 		(compPtr) (sceneMesh)
 	);
+
+	Transform * meshTrans = transformHandler :: createTransform();
+	transformHandler :: translate
+		(meshTrans, std :: vector<float> { 0.0f, 0.0f, 3.0f });
+
 	sceneManagement :: addComp
 	(
 		testScene, testID, TRANS_COMP_ID, 
-		(compPtr) (transformHandler :: createTransform())
+		(compPtr) (meshTrans)
 	);
 
-	// (TEMP) ATTEMPTS TO SAVE SCENE //
 	sceneManagement :: saveScene(testScene);
-	testScene = sceneManagement :: createScene("FAILED");
 	sceneManagement :: changeScene(core, testScene);
-	std :: cout << "LOADING NEW SCENE!" << std :: endl;
-	testScene = sceneManagement :: loadScene("TEST");
-	sceneManagement :: changeScene(core, testScene);
-	std :: cout << "CHANGED SCENE!" << std :: endl;
+
+	// CREATES SECONDARY TEST SCENE //
+	testScene = sceneManagement :: createScene("TEST 2");
+	camID = sceneManagement :: newEntityID(testScene, "Cammera");
+
+	sceneManagement :: addComp
+	(
+		testScene,
+		camID,
+		CAMERA_COMP_ID,
+		(compPtr) cameraHandler :: createCamera
+			(aspect, 40, core -> pipelineRefs[0])
+	);
+
+	sceneManagement :: addComp
+	(
+		testScene,
+		camID,
+		TRANS_COMP_ID,
+		(compPtr) transformHandler :: createTransform()
+	);
+
+	// ADDS LIGHT TO SCENE //
+	lightID = sceneManagement :: newEntityID(testScene, "Light");
+	lightTrans = transformHandler :: createTransform();
+	sceneManagement :: addComp
+	(
+		testScene,
+		lightID,
+		TRANS_COMP_ID,
+		(compPtr) lightTrans
+	);
+	transformHandler :: translate
+		(lightTrans, std :: vector<float> { -5.0f, 0.0f, 0.0f });
+
+	sceneManagement :: addComp
+	(
+		testScene,
+		lightID,
+		LIGHT_COMP_ID,
+		(compPtr) lightHandler :: createLight
+			(std :: vector<float> { 1.0f, 0.0f, 1.0f, 0.9f })
+	);
+
+	testID = sceneManagement :: newEntityID(testScene, "Jinx");
+	sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
+	meshHandler :: setTexture(sceneMesh, textureHandler :: createTexture("jinx.png"));
+
+	// ADDS MESH AND TRANSFORM //
+	sceneManagement :: addComp
+	(
+		testScene, testID, MESH_COMP_ID, 
+		(compPtr) (sceneMesh)
+	);
+
+	meshTrans = transformHandler :: createTransform();
+	transformHandler :: translate
+		(meshTrans, std :: vector<float> { 0.0f, 0.0f, 6.0f });
+	transformHandler :: scale
+		(meshTrans, std :: vector<float> { 0.75f, 0.75f, 0.75f });
+	sceneManagement :: addComp
+	(
+		testScene, testID, TRANS_COMP_ID, 
+		(compPtr) (meshTrans)
+	);
+
+	sceneManagement :: saveScene(testScene);
 }
 
 void appManagement :: run(EngineCore * core)
@@ -129,11 +192,17 @@ void appManagement :: run(EngineCore * core)
 		// UPDATES ENGINE //
 		appManagement :: update(core);
 
+		// ATTEMPTS TO FIND CAMERA IN SCENE //
+		bool hasCamera = sceneManagement :: getCameraEntityID(core -> curSceneRef, &camID);
+		if(!hasCamera)
+			for(char i = 0; i < 4; i++)
+				core -> clearColor[i] = 0.0f;
+
 		// BEGINS RENDERING PHASE //
 		graphicManagement :: beginRenderPass(core);
 
 		// RENDERS CURRENT SCENE //
-		if(sceneManagement :: getCameraEntityID(core -> curSceneRef, &camID))
+		if(hasCamera)
 			sceneManagement :: renderScene(core -> curSceneRef, camID);
 		
 		// PRESENTS TO SCREEN //
@@ -164,6 +233,18 @@ void appManagement :: update(EngineCore * core)
 				if(event.key.keysym.sym == 27)
 				{
 					core -> isRunning = false;
+					break;
+				}
+
+				if(event.key.keysym.sym == '1')
+				{
+					sceneManagement :: changeScene(core, sceneManagement :: loadScene("TEST"));
+					break;
+				}
+
+				if(event.key.keysym.sym == '2')
+				{
+					sceneManagement :: changeScene(core, sceneManagement :: loadScene("TEST 2"));
 					break;
 				}
 

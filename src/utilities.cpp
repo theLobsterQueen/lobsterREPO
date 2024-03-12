@@ -151,3 +151,14 @@ void modifierKeyProcess(InputState * inputState, SDL_Event inputEvent, bool setT
 		inputState -> cntrlPressed = setTrue;
 }
 
+void printCompID(unsigned compID)
+{
+	if(compID == TRANS_COMP_ID)
+		std :: cout << "TRANSFORM COMPONENT" << std :: endl;
+	if(compID == MESH_COMP_ID)
+		std :: cout << "MESH COMPONENT" << std :: endl;
+	if(compID == LIGHT_COMP_ID)
+		std :: cout << "LIGHT COMPONENT" << std :: endl;
+	if(compID == CAMERA_COMP_ID)
+		std :: cout << "CAMERA COMPONENT" << std :: endl;
+}

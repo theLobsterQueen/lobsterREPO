@@ -20,6 +20,7 @@ struct Camera
 	/// <summary> ///
 	///		The aspect ratio of the target viewport.
 	/// </summary> ///
+
 	float aspectRatio;
 
 	/// <summary> ///
@@ -33,11 +34,13 @@ struct Camera
 	///			value of the horizontal field of view and the aspect ratio
 	///			of the target viewport.
 	/// </summary> ///
+
 	float FOV;
 
 	/// <summary> ///
 	///		The two clipping distance values for the camera.
 	/// </summary> ///
+
 	float near = 1;
 	float far = 100;
 
@@ -53,6 +56,7 @@ struct Camera
 	///		The base pipeline this camera renders with (this can be changed
 	///			if a mesh uses a special pipeline.
 	/// </summary> ///
+
 	Pipeline * curPipelineRef;
 };
 
@@ -72,6 +76,7 @@ namespace cameraHandler
 	/// <summary> ///
 	///		Returns the projection matrix for the camera when called.
 	/// </summary> ///
+
 	LobMatrix getViewProjMatrix(Camera * camera);
 
 	/// <summary> ///

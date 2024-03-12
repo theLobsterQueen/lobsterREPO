@@ -243,12 +243,15 @@ void sceneManagement :: saveScene(Scene * inputScene)
 		i++;
 		activeCount--;
 	}
+
+	// PUTS IN "END" LINE TO DENOTE END OF SAVE FILE //
+	sceneFile << "END" << std :: endl;
 }
 
 Scene * sceneManagement :: loadScene(std :: string scenePath)
 {
 	// VARIABLE INITIALIZATION //
-	unsigned linesRead = 0;
+	int linesRead = 0;
 	int compIndex = -1;
 	
 	// FINDS AND READS SCENE FILE //
@@ -276,20 +279,38 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 	while(std :: getline(sceneFile, line))
 	{
 		// READS ENTITY NAMES //
-		if(line.find(std :: string("Ent")) != std :: string :: npos)
+		if(line.find(std :: string("ENT")) != std :: string :: npos)
 		{
-			compIndex = -1;
-			linesRead = -2;
+			if(compIndex != -1)
+			{
+				sceneManagement :: addComp
+				(
+					newScene, newEntity,
+					compIndex, newCompPtr
+				);
+			}
 
+			compIndex = -1;
 			std :: stringstream lineStream(line);
 			std :: string data;
-
-			int index = 0;
-			while(std :: getline(lineStream, data, ' '))
+			unsigned char index = 0;
+			while(lineStream >> data)
 			{
 				if(index == 1)
 					newEntity = sceneManagement :: newEntityID(newScene, data);
 				index++;
+			}
+		}
+
+		if(line.find(std :: string("END")) != std :: string :: npos)
+		{
+			if(compIndex != -1)
+			{
+				sceneManagement :: addComp
+				(
+					newScene, newEntity,
+					compIndex, newCompPtr
+				);
 			}
 		}
 
@@ -298,11 +319,11 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 		std :: string data;
 		if(compIndex == TRANS_COMP_ID)
 		{
+			int index = 0;
 			Transform * tempTrans = ((Transform *) (newCompPtr));
 			if(linesRead == 0)
 			{
 				// SETS POSITION //
-				int index = 0;
 				while(std :: getline(lineStream, data, '/'))
 				{
 					tempTrans -> position[index] = std :: stof(data.c_str());
@@ -313,7 +334,6 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			// SETS ROTATION //
 			else if(linesRead == 1) 
 			{
-				int index = 0;
 				while(std :: getline(lineStream, data, '/'))
 				{
 					tempTrans -> rotation[index] = std :: stof(data.c_str());
@@ -324,7 +344,6 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			// SETS ROTATION //
 			else if(linesRead == 2)
 			{
-				int index = 0;
 				while(std :: getline(lineStream, data, '/'))
 				{
 					tempTrans -> scale[index] = std :: stoi(data.c_str());
@@ -333,29 +352,31 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			}
 		}
 		
-		else if(compIndex == LIGHT_COMP_ID)
+		if(compIndex == LIGHT_COMP_ID)
 		{
 			Light * lightPtr = ((Light *) (newCompPtr));
 			int index = 0;
 			if(linesRead == 0)
 				while(std :: getline(lineStream, data, '/'))
 				{
-					lightPtr -> color[index] = std :: stoi(data.c_str());
+					lightPtr -> color[index] = std :: stof(data.c_str());
 					index++;
 				}
 		}
 
-		else if(compIndex == MESH_COMP_ID)
+		if(compIndex == MESH_COMP_ID)
 		{
-			Mesh * meshPtr = ((Mesh *) (newCompPtr));
 			if(linesRead == 0)
-				meshPtr = meshHandler :: getMeshFromPLY(line);
+				newCompPtr = ((compPtr) (meshHandler :: getMeshFromPLY(line)));
 
 			else if(linesRead == 1)
+			{
+				Mesh * meshPtr = ((Mesh *) (newCompPtr));
 				meshHandler :: setTexture(meshPtr, textureHandler :: createTexture(line));
+			}
 		}
 
-		else if(compIndex == CAMERA_COMP_ID)
+		if(compIndex == CAMERA_COMP_ID)
 		{
 			Camera * cameraPtr = ((Camera *) (newCompPtr));
 			if(linesRead == 0)
@@ -366,23 +387,23 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 				cameraPtr -> far = std :: stoi(line.c_str());
 			if(linesRead == 3)
 			{
-				std :: cout << "LOADING: " << line << std :: endl;
 				graphicManagement :: loadShader
 					(cameraPtr -> curPipelineRef, GL_VERTEX_SHADER, line.c_str());
 			}
 
 			if(linesRead == 4)
 			{
-				std :: cout << "LOADING: " << line << std :: endl;
 				graphicManagement :: loadShader
 					(cameraPtr -> curPipelineRef, GL_FRAGMENT_SHADER, line.c_str());
 			}
 		}
 
+		// CHECKS FOR LOADING DIFFERENTS COMPONENTS //
+
 		// CHECKS FOR TRANSFORMS //
 		if(line.find(std :: string("TRANSFORM")) != std :: string :: npos)
 		{
-			// ADDS TRANSFORM COMPONENT //
+			// ADDS PREVIOUSLY CONFIGURED COMPONENT, IF ANY //
 			if(compIndex != -1)
 			{
 				sceneManagement :: addComp
@@ -400,7 +421,7 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 		// CHECKS FOR LIGHTS //
 		if(line.find(std :: string("LIGHT")) != std :: string :: npos)
 		{
-			// ADDS TRANSFORM COMPONENT //
+			// ADDS A PREVIOUSLY CONFIGURED COMPONENT, IF ANY //
 			if(compIndex != -1)
 			{
 				sceneManagement :: addComp
@@ -418,6 +439,7 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 		// CHECKS FOR CAMERAS //
 		if(line.find(std :: string("CAMERA")) != std :: string :: npos)
 		{
+			// ADDS PREVIOUSLY CONFIGURED COMPONENT, IF ANY //
 			if(compIndex != -1)
 			{
 				sceneManagement :: addComp
@@ -432,9 +454,10 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			linesRead = -1;
 		}
 
-		// SAVES MESHES AND TEXTURES //
+		// CHECKS FOR MESHES //
 		if(line.find(std :: string("MESH")) != std :: string :: npos)
 		{
+			// ADDS PREVIOUSLY CONFIGURED COMPONENT, IF ANY //
 			if(compIndex != -1)
 			{
 				sceneManagement :: addComp

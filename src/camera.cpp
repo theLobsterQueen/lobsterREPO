@@ -8,6 +8,10 @@ Camera * cameraHandler ::
 	Camera * newCamera = new Camera;
 	newCamera -> aspectRatio = inputAspect;
 	newCamera -> FOV = 1 / tan(math :: toRadians(inputFOV / 2));
+
+	// IF INPUT PIPELINE IS NULLPTR, CREATES AN EMPTY ONE TO BE USED //
+	if(inputPipeline == nullptr)
+		inputPipeline = graphicManagement :: createPipeline();
 	newCamera -> curPipelineRef = inputPipeline;
 
 	return newCamera;

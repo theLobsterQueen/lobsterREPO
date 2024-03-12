@@ -186,7 +186,8 @@ void graphicManagement :: usePipeline(Pipeline * targetPipeline)
 void graphicManagement :: beginRenderPass(EngineCore * core)
 {
 	// CLEARS SCREEN //
-	glClearColor(0.1f, 0.1f, 0.4f, 0.0f);
+	glClearColor
+		(core -> clearColor[0], core -> clearColor[1], core -> clearColor[2], core -> clearColor[3]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// PREPARES UI ELEMENTS //

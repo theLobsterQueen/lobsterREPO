@@ -23,6 +23,7 @@
 #include <transform.h>
 #include <camera.h>
 #include <light.h>
+#include <utilities.h>
 
 // STRUCT PROTOTYPES //
 struct EngineCore;

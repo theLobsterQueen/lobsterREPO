@@ -30,6 +30,7 @@ struct EngineCore
 	/// <summary> ///
 	///		If this boolean is ever set to false, turns off the application.
 	/// </summary> ///
+
 	bool isRunning = true;
 
 	/// <summary> ///
@@ -41,42 +42,55 @@ struct EngineCore
 	/// <summary> ///
 	/// 	This pointer references the main window.
 	/// </summary> ///
+
 	SDL_Window * winRef = nullptr;
 
 	/// <summary> ///
 	///		These values dictate the starting width/height of the engine window.
 	///			(Defaults to standard HD 16:9 resolution.)
 	/// </summary> ///
+
 	unsigned short int winWidth = 1300;
 	unsigned short int winHeight = 650;
 
 	/// <summary> ///
 	///		This pointer references the OpenGL context.
 	/// </summary> ///
+
 	void * glRef = nullptr;
 
 	/// <summary> ///
 	///		This field contains the currently actively scene.
 	/// </summary> ///
+
 	Scene * curSceneRef = nullptr;
 
 	/// <summary> ///
 	///		This field contains a reference to the general input state
 	///			of the application. 
 	/// </summary> ///
+
 	InputState * inputState = nullptr;
 
 	/// <summary> ///
 	///		A collection of all created pipelines within the engine context.
 	/// </summary> ///
+
 	std :: vector<Pipeline *> pipelineRefs;
 
 	/// <summary> ///
 	///		This field holds the time passed since the last time getDeltaTime was
 	///			called. getDeltaTime can be found in the appManagement namespace.
 	/// </summary> ///
+
 	double deltaTime = 0;
 
+	/// <summary> ///
+	///		The color that the screen is automatically cleared to at the beginning
+	///			of each frame.
+	/// </summary> ///
+
+	float clearColor[4] = { 0.1f, 0.1f, 0.4f, 0.0f };
 	float tempScale = 1.0f;
 	std :: vector<float> tempRot = { 0, 0, 0 };
 };

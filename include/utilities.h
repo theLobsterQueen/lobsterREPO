@@ -38,4 +38,10 @@ void checkErrors();
 void mouseButtonProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue);
 void modifierKeyProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue);
 
+/// <summary> ///
+///		Prints out an input component ID.
+/// </summary> ///
+
+void printCompID(unsigned compID);
+
 #endif

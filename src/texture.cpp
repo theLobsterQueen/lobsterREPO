@@ -18,6 +18,7 @@ Texture * textureHandler :: createTexture(std :: string textureName)
 			std :: string("./../../assets/textures/" + textureName).c_str(), 
 			&width, &height, 0, 4
 		);
+
 	if(data == nullptr)
 	{
 		std :: cout << "ERROR! COULD NOT FIND " << textureName << "!" << std :: endl;

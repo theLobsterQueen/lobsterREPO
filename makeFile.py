@@ -2,9 +2,10 @@ import os
 debugPath = "bin/debug"
 name = "LobsterEngine"
 extension = "elf"
-compileLinux = False
+compileLinux = True
+compileBoth = False
 
-if compileLinux :
+if compileLinux or compileBoth :
     os.system\
     (
         f'echo "\n\n"\n'
@@ -16,7 +17,7 @@ if compileLinux :
         f'echo "LINUX COMPILATION COMPLETED!"\n'
     )
 
-else :
+if not compileLinux or compileBoth :
     extension = "exe"
     os.system\
     (

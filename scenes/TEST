@@ -16,12 +16,13 @@ TRANSFORM
 0/0/0
 1/1/1
 LIGHT
-0/0.5/1/0.9
+1/1/1/0.9
 ENT: Jinx
 TRANSFORM
-0/0/0
+0/0/3
 0/0/0
 1/1/1
 MESH
 portrait.ply
 jinx.png
+END

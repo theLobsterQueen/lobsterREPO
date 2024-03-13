@@ -11,7 +11,7 @@ if compileLinux or compileBoth :
         f'echo "\n\n"\n'
         f'g++ src/* vendor/* -I include/ -o {debugPath}/{name}.{extension} '
         f'-I vendor/ -lSDL2'
-        f' -lGL -lGLU -lGLEW -Wno-narrowing -Wfatal-errors\n'
+        f' -lGL -lGLU -lGLEW -Wno-narrowing\n'
         f'chown layna ./{debugPath}/{name}.{extension}\n'
         f'chmod +x ./{debugPath}/{name}.{extension}\n'
         f'echo "LINUX COMPILATION COMPLETED!"\n'

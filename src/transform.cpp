@@ -27,6 +27,15 @@ Transform * transformHandler :: createTransform
 	return newTrans;
 }
 
+Transform * transformHandler :: duplicateTransform(Transform * base)
+{
+	Transform * newTransform = transformHandler :: createTransform();
+	newTransform -> position = base -> position;
+	newTransform -> rotation = base -> rotation;
+	newTransform -> scale = base -> scale;
+	return newTransform;
+}
+
 LobMatrix transformHandler :: getModelWorldMatrix(Transform * inputTrans)
 {
 	// CREATES ROTATION MATRIX //
@@ -89,8 +98,8 @@ LobMatrix transformHandler :: getRotateMatrix(Transform * inputTrans)
 void transformHandler :: translate
 	(Transform * inputTrans, std :: vector<float> deltaVector)
 {
-	std :: vector<float> localDelta = math :: vecByMat
-		(deltaVector, transformHandler :: getRotateMatrix(inputTrans));
+	std :: vector<float> localDelta = 
+		math :: vecByMat(deltaVector, transformHandler :: getRotateMatrix(inputTrans));
 	for(int i = 0; i < 3; i++)
 		inputTrans -> position[i] = inputTrans -> position[i] + localDelta[i];
 }
@@ -107,4 +116,13 @@ void transformHandler :: scale
 {
 	for(int i = 0; i < 3; i++)
 		inputTrans -> scale[i] = inputTrans -> scale[i] + deltaVector[i];
+}
+
+std :: vector<float> transformHandler :: getGlobalPosition(Transform * inputTrans)
+{
+	Transform * tempTransform = transformHandler :: duplicateTransform(inputTrans);
+	LobMatrix invMat = math :: inverse(transformHandler :: getRotateMatrix(inputTrans));
+	std :: vector<float> rotVec = { invMat.getPoint(3, 0), invMat.getPoint(3, 1), invMat.getPoint(3, 2) };
+	transformHandler :: rotate(tempTransform, rotVec);
+	return tempTransform -> position;
 }

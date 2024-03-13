@@ -25,6 +25,8 @@ Sources :
 	https://youtu.be/XnUMm-uNmvY
 	https://youtu.be/W3gAzLwfIP0?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2
 
+	https://pthom.github.io/imgui_manual_online/manual/imgui_manual.html
+
 // KEY //
 X: Done
 ?: "Could" be done.
@@ -47,7 +49,7 @@ Sprint 1 (ENGINE BACKEND FUNDAMENTALS) :
 	[X] Basic Lighting System
 
 Sprint 2 :
-	[ ] Save/Load Scenes on Command
+	[X] Save/Load Scenes on Command
 	[ ] Launcher that can Create/Load Projects
 	[ ] Build out Engine Frontend, Complete With
 		[ ] Inspector-Analog
@@ -59,8 +61,8 @@ Sprint 2 :
 		[ ] Scene Tree
 	[ ] Base Python Integration 
 		[ ] Communicate with Precompiled Engine Files over Runtime Python Scritps
-	[ ] Start/Update Function Analogs
-	[ ] Create a Python Scripting Library to Interact With ;
+	[ ] Start/Update Method Analogs
+	[ ] Create a Python Scripting Library to Interact With
 		[ ] Camera Component
 		[ ] Transform Component
 		[ ] Mesh Component

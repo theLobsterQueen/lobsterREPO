@@ -14,6 +14,7 @@
 
 // LOBSTER INCLUDES //
 #include <input.h>
+#include <editorData.h>
 
 // STRUCT PROTOTYPES //
 struct Scene;
@@ -93,6 +94,12 @@ struct EngineCore
 	float clearColor[4] = { 0.1f, 0.1f, 0.4f, 0.0f };
 	float tempScale = 1.0f;
 	std :: vector<float> tempRot = { 0, 0, 0 };
+
+	/// <summary> ///
+	///		Data for the editor frontend itself.
+	/// </summary> ///
+
+	EditorData * editorDataRef = new EditorData;
 };
 
 #endif

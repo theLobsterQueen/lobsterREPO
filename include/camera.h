@@ -9,6 +9,9 @@
 #include <cmath>
 #include <transform.h>
 
+// PROTOTYPE STRUCTS //
+struct Transform;
+
 /// <summary> ///
 ///		This component is used to render a view of a scene from a specific point
 ///			to a specific target.

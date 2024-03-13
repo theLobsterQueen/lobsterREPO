@@ -25,6 +25,7 @@
 #include <math.h>
 #include <light.h>
 #include <vendorIncludes.h>
+#include <ui.h>
 
 namespace appManagement
 {

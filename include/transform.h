@@ -5,6 +5,7 @@
 
 // LOBSTER INCLUDES //
 #include <math.h>
+#include <engineCore.h>
 
 // STD INCLUDES //
 #include <vector>
@@ -39,6 +40,12 @@ namespace transformHandler
 	);
 
 	/// <summary> ///
+	///		This function deep copies and returns a Transform component.
+	/// </summary> ///
+
+	Transform * duplicateTransform(Transform * base);
+
+	/// <summary> ///
 	///		Returns a "worldMatrix" based on the data inside a target transform
 	///			component.
 	/// </summary> ///
@@ -69,6 +76,12 @@ namespace transformHandler
 	/// </summary> ///
 
 	void scale(Transform * inputTrans, std :: vector<float> deltaVector);
+
+	/// <summary> ///
+	///		Returns the global position of the transform.
+	/// </summary> ///
+
+	std :: vector<float> getGlobalPosition(Transform * inputTrans);
 };
 
 #endif

@@ -71,7 +71,7 @@ void appManagement :: createTestScene(EngineCore * core)
 		(compPtr) lightTrans
 	);
 	transformHandler :: translate
-		(lightTrans, std :: vector<float> { -5.0f, 0.0f, 0.0f });
+		(lightTrans, std :: vector<float> { -5.0f, 0.0f, 3.0f });
 
 	sceneManagement :: addComp
 	(
@@ -201,7 +201,11 @@ void appManagement :: run(EngineCore * core)
 		// BEGINS RENDERING PHASE //
 		graphicManagement :: beginRenderPass(core);
 
-		// RENDERS CURRENT SCENE //
+		// UI WORK //
+		// ImGui :: ShowDemoWindow();
+		uiManagement :: drawEditorUI(core);
+
+		// RENDERS CURRENT 3D SCENE //
 		if(hasCamera)
 			sceneManagement :: renderScene(core -> curSceneRef, camID);
 		
@@ -218,6 +222,9 @@ void appManagement :: update(EngineCore * core)
 	// IF POLLING RETURNS 0, THERE IS NO PENDING EVENT: RETURNS //
 	while(SDL_PollEvent(&event))
 	{
+		// PROCESSES INPUT FOR IMGUI //
+		ImGui_ImplSDL2_ProcessEvent(&event);
+
 		char justPressed[64] = {0};
 		switch(event.type)
 		{

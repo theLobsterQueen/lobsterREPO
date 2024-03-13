@@ -100,7 +100,7 @@ void sceneManagement :: renderScene(Scene * targetScene, entityID cameraEntity)
 	glUniform3f
 	(
 		UNI_LIGHT_POS, 
-		lightTrans.position[0], lightTrans.position[0], lightTrans.position[0]
+		lightTrans.position[0], lightTrans.position[1], lightTrans.position[2]
 	);
 
 	// BEGINS ITERATING THROUGH AND RENDERING VALID ENTITIES //

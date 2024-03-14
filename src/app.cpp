@@ -42,7 +42,6 @@ void appManagement :: createTestScene(EngineCore * core)
 {
 	// CREATES CAMERA COMPONENT //
 	Scene * testScene = sceneManagement :: createScene("TEST");
-
 	camID = sceneManagement :: newEntityID(testScene, "Camera");
 	float aspect = ((float) core -> winWidth) / ((float) core -> winHeight);
 
@@ -106,75 +105,7 @@ void appManagement :: createTestScene(EngineCore * core)
 		(compPtr) (meshTrans)
 	);
 
-	sceneManagement :: saveScene(testScene);
 	sceneManagement :: changeScene(core, testScene);
-
-	// CREATES SECONDARY TEST SCENE //
-	testScene = sceneManagement :: createScene("TEST 2");
-	camID = sceneManagement :: newEntityID(testScene, "Cammera");
-
-	sceneManagement :: addComp
-	(
-		testScene,
-		camID,
-		CAMERA_COMP_ID,
-		(compPtr) cameraHandler :: createCamera
-			(aspect, 40, core -> pipelineRefs[0])
-	);
-
-	sceneManagement :: addComp
-	(
-		testScene,
-		camID,
-		TRANS_COMP_ID,
-		(compPtr) transformHandler :: createTransform()
-	);
-
-	// ADDS LIGHT TO SCENE //
-	lightID = sceneManagement :: newEntityID(testScene, "Light");
-	lightTrans = transformHandler :: createTransform();
-	sceneManagement :: addComp
-	(
-		testScene,
-		lightID,
-		TRANS_COMP_ID,
-		(compPtr) lightTrans
-	);
-	transformHandler :: translate
-		(lightTrans, std :: vector<float> { -5.0f, 0.0f, 0.0f });
-
-	sceneManagement :: addComp
-	(
-		testScene,
-		lightID,
-		LIGHT_COMP_ID,
-		(compPtr) lightHandler :: createLight
-			(std :: vector<float> { 1.0f, 0.0f, 1.0f, 0.9f })
-	);
-
-	testID = sceneManagement :: newEntityID(testScene, "Jinx");
-	sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
-	meshHandler :: setTexture(sceneMesh, textureHandler :: createTexture("jinx.png"));
-
-	// ADDS MESH AND TRANSFORM //
-	sceneManagement :: addComp
-	(
-		testScene, testID, MESH_COMP_ID, 
-		(compPtr) (sceneMesh)
-	);
-
-	meshTrans = transformHandler :: createTransform();
-	transformHandler :: translate
-		(meshTrans, std :: vector<float> { 0.0f, 0.0f, 6.0f });
-	transformHandler :: scale
-		(meshTrans, std :: vector<float> { 0.75f, 0.75f, 0.75f });
-	sceneManagement :: addComp
-	(
-		testScene, testID, TRANS_COMP_ID, 
-		(compPtr) (meshTrans)
-	);
-
-	sceneManagement :: saveScene(testScene);
 }
 
 void appManagement :: run(EngineCore * core)

@@ -3,12 +3,16 @@
 
 // INCLUDES AND INITIALIZATIONS //
 
+// STANDARD INCLUDES //
+#include <filesystem>
+
 // LOBSTER INCLUDES //
 #include <engineCore.h>
 #include <vendorIncludes.h>
 #include <importantConstants.h>
 #include <entity.h>
 #include <transform.h>
+#include <scene.h>
 
 namespace uiManagement
 {

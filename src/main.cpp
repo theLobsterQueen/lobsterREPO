@@ -6,6 +6,9 @@
 // INCLUDES AND INITIALIZATIONS //
 
 // STD INCLUDES //
+#define PY_SSIZE_T_CLEAN
+#include <pybind11/pybind11.h>
+#include <pybind11/embed.h>
 #include <iostream>
 
 // SDL/GL INCLUDES //
@@ -20,6 +23,10 @@
 #include <mesh.h>
 #include <importantConstants.h>
 #include <vendorIncludes.h>
+
+// TEST PYTHON FUNCTIONS //
+void testPrint()
+	{ std :: cout << "Hewwo world!" << std :: endl; }
 
 int main(int argv, char ** args)
 {
@@ -107,6 +114,10 @@ int main(int argv, char ** args)
 	std :: cout << "GLSL VERSION: " 
 		<< glGetString(GL_SHADING_LANGUAGE_VERSION) << std :: endl;
 
+	// ENSURES THAT PYBIND 11 IS WORKING CORRECTLY //
+	pybind11 :: scoped_interpreter guard {};
+	pybind11 :: print("PYTHON INITIALIZED!");
+
 	// BEGINS ENGINE OPERATION //
 	appManagement :: begin(core);
 
@@ -115,4 +126,10 @@ int main(int argv, char ** args)
 	SDL_Quit();
 
 	return 0;
+}
+
+PYBIND11_MODULE(testmodule, m)
+{
+	m.doc() = "Test function.";
+	m.def("test_print", &testPrint, "Prints out a test message.");
 }

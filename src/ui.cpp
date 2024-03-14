@@ -1,13 +1,62 @@
 // FILE DEFINITION INCLUDE //
 #include <ui.h>
 
+// REDUDANT INCLUDES TO APPEASE BILL GATES //
+#include <filesystem>
+
 // FUNCTION IMPLEMENTATIONS //
 void uiManagement :: drawEditorUI(EngineCore * core)
 {
+	// DRAWS MENU BAR //
+	if(ImGui :: BeginMainMenuBar())
+	{
+		if(ImGui :: BeginMenu("Scene"))
+		{
+			if(ImGui :: MenuItem("Save Scene"))
+				sceneManagement :: saveScene(core -> curSceneRef);
+			std :: filesystem :: directory_iterator dirIt;
+			if(ImGui :: BeginMenu("Load Scene"))
+			{
+				try
+				{ 
+					dirIt = std :: filesystem :: begin
+						(std :: filesystem :: directory_iterator("./scenes")); 
+				}
+
+				catch(std :: filesystem :: filesystem_error err)
+				{
+					dirIt = std :: filesystem :: begin
+						(std :: filesystem :: directory_iterator("./../../scenes")); 
+				}
+
+				for(auto& p : dirIt)
+				{
+					std :: string fileName = p.path().stem().string();
+					if(ImGui :: MenuItem(fileName.c_str()))
+					{
+						Scene * newScene = sceneManagement :: loadScene(std :: string(fileName + ".lscn"));
+						sceneManagement :: sceneOut(newScene);
+						sceneManagement :: changeScene(core, newScene);
+					}
+				}
+
+				ImGui :: EndMenu();
+			}
+
+			ImGui :: EndMenu();
+		} 
+	} ImGui :: EndMainMenuBar();
+	float topBarY = 20.0f;
+
 	// DRAWS SCENE TREE //
-	ImGui :: SetNextWindowPos(ImVec2(0, 0));
+	ImGui :: SetNextWindowPos(ImVec2(0, topBarY));
 	ImGui :: SetNextWindowSize
-		(ImVec2(core -> editorDataRef -> sidePanelWidth, core -> editorDataRef -> sidePanelHeight));
+	(ImVec2
+	 	(
+		 	core -> editorDataRef -> sidePanelWidth, 
+			(core -> editorDataRef -> sidePanelHeight) - topBarY
+		)
+	);
 	if(ImGui :: Begin("Scene Tree", NULL, core -> editorDataRef -> windowFlags))
 	{
 		for(entityID i = 0; i < LOBSTER_MAX_ENTITIES; i++)
@@ -34,9 +83,15 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 	} ImGui :: End();
 
 	// DRAWS INSPECTOR //
-	ImGui :: SetNextWindowPos(ImVec2((core -> winWidth) - (core -> editorDataRef -> sidePanelWidth), 0));
+	ImGui :: SetNextWindowPos
+		(ImVec2((core -> winWidth) - (core -> editorDataRef -> sidePanelWidth), topBarY));
 	ImGui :: SetNextWindowSize
-		(ImVec2(core -> editorDataRef -> sidePanelWidth, core -> editorDataRef -> sidePanelHeight));
+	(ImVec2
+	 	(
+		 	core -> editorDataRef -> sidePanelWidth, 
+		 	(core -> editorDataRef -> sidePanelHeight) - topBarY
+		)
+	);
 	if(ImGui :: Begin("Inspector", NULL, core -> editorDataRef -> windowFlags))
 	{
 		// GETS ENTITY CURRENTLY SELECTED IN SCENE TREE //
@@ -80,9 +135,9 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 						{
 							float rotValue = curVec[column];
 							while(rotValue > 180)
-								rotValue -= 180.0f;
+								rotValue -= 360.0f;
 							while(rotValue < -180)
-								rotValue += 180.0f;
+								rotValue += 360.0f;
 							curVec[column] = rotValue;
 						}
 						ImGui :: Text("%f", curVec[column]);

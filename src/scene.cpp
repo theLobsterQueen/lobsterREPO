@@ -168,7 +168,7 @@ void sceneManagement :: saveScene(Scene * inputScene)
 {
 	// ATTEMPTS TO OPEN THE FILE FROM WORKING DIRECTORY //
 	std :: ofstream sceneFile
-		(std :: string("./scenes/" + inputScene -> name).c_str());
+		(std :: string("./scenes/" + inputScene -> name + ".lscn").c_str());
 
 	// PUTS THE NAME OF THE SCENE AT THE TOP OF THE FILE // 
 	sceneFile << inputScene -> name << std :: endl;
@@ -256,11 +256,12 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 	
 	// FINDS AND READS SCENE FILE //
 	std :: string sceneString, line;
-	std :: ifstream sceneFile(std :: string("./scenes/") + scenePath);
+	std :: cout << "LOADING SCENE: " << scenePath << std :: endl;
+	std :: ifstream sceneFile("./scenes/" + scenePath);
 	if(!sceneFile.is_open())
 	{
 		// ATTEMPTS TO LOAD IT FROM THE PERSEPCTIVE OF AN EXECUTABLE IN DEBUG/RELEASE //
-		sceneFile.open(std :: string("../../scenes") + scenePath);
+		sceneFile.open("../../scenes/" + scenePath);
 		if(!sceneFile.is_open())
 		{
 			std :: cout << "COULD NOT LOAD SCENE AT " << scenePath << "!" << std :: endl;
@@ -492,4 +493,24 @@ bool sceneManagement :: getCameraEntityID(Scene * targetScene, entityID * entHol
 
 	// IF ONE COULD NOT BE FOUND, RETURNS FALSE //
 	return false;
+}
+
+void sceneManagement :: sceneOut(Scene * inputScene)
+{
+	for(unsigned i = 0; i < LOBSTER_MAX_ENTITIES; i++)
+	{
+		Entity curEntity = inputScene -> entities[i];
+		if(curEntity.mask == 0)
+			continue;
+
+		std :: cout << "ENTITY NAME: " << curEntity.name << std :: endl;
+		if((curEntity.mask & (1 << TRANS_COMP_ID)) >= 1)
+			std :: cout << "\tHAS TRANSFORM!" << std :: endl;
+		if((curEntity.mask & (1 << MESH_COMP_ID)) >= 1)
+			std :: cout << "\tHAS MESH!" << std :: endl;
+		if((curEntity.mask & (1 << LIGHT_COMP_ID)) >= 1)
+			std :: cout << "\tHAS LIGHT!" << std :: endl;
+		if((curEntity.mask & (1 << CAMERA_COMP_ID)) >= 1)
+			std :: cout << "\tHAS CAMERA!" << std :: endl;
+	}
 }

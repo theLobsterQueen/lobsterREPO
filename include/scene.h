@@ -115,6 +115,13 @@ namespace sceneManagement
 	/// </summary> ///
 
 	Scene * loadScene(std :: string scenePath);
+
+	/// <summary> ///
+	///		The prints the name of every active entity in input scene, and
+	///			list all of its components.
+	/// </summary> ///
+
+	void sceneOut(Scene * inputScene);
 };
 
 #endif

@@ -1,0 +1,5 @@
+Create design for Python Script API
+Create basic framework for Python script integration
+Make UI interactable, introducing hotloading
+Create system for making project directories and manipulating file system through editor
+Fix camera rotation

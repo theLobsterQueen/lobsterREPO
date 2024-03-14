@@ -28,6 +28,9 @@ void appManagement :: begin(EngineCore * core)
 	// CREATES INPUT STATE //
 	core -> inputState = inputManagement :: createInputState();
 
+	// CREATES EDITOR DATA STRUCT //
+	core -> editorDataRef = editorManagement :: createEditorData(core);
+
 	// (TEMP) CREATES TEST SCENE //
 	createTestScene(core);
 
@@ -219,6 +222,9 @@ void appManagement :: update(EngineCore * core)
 	// VARIABLE INITIALIZATION //
 	SDL_Event event;
 
+	// UPDATES MOUSE POSITION VALUE //
+	SDL_GetMouseState(&(core -> inputState -> mouseX), &(core -> inputState -> mouseY));
+
 	// IF POLLING RETURNS 0, THERE IS NO PENDING EVENT: RETURNS //
 	while(SDL_PollEvent(&event))
 	{
@@ -293,8 +299,8 @@ void appManagement :: update(EngineCore * core)
 			break;
 
 			case SDL_MOUSEMOTION :
-				core -> inputState -> mouseX = event.motion.xrel;
-				core -> inputState -> mouseY = event.motion.yrel;
+				core -> inputState -> mouseDeltaX = event.motion.xrel;
+				core -> inputState -> mouseDeltaY = event.motion.yrel;
 			break;
 
 			case SDL_QUIT :

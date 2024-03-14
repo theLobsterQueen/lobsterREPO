@@ -16,6 +16,7 @@
 
 // LOBSTER INCLUDES //
 #include <engineCore.h>
+#include <editorData.h>
 #include <window.h>
 #include <mesh.h>
 #include <scene.h>

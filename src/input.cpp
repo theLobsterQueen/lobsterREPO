@@ -9,8 +9,8 @@ InputState * inputManagement :: createInputState()
 
 void inputManagement :: resetInput(InputState * input)
 {
-	input -> mouseX = 0;
-	input -> mouseY = 0;
+	input -> mouseDeltaX = 0;
+	input -> mouseDeltaY = 0;
 	input -> scroll = 0;
 }
 
@@ -20,44 +20,16 @@ void inputManagement :: processInput(EngineCore * core, entityID cameraID)
 	auto keys = core -> inputState -> pressedKeys;
 	std :: vector<float> deltaPos = { 0.0f, 0.0f, 0.0f };
 	std :: vector<float> deltaRot = { 0.0f, 0.0f, 0.0f };
-	
+	int mouseDeltaX = core -> inputState -> mouseDeltaX;
+	int mouseDeltaY = core -> inputState -> mouseDeltaY;
+	int mousePosX = core -> inputState -> mouseX;
+	int mousePosY = core -> inputState -> mouseY;
+
 	// SCALARS FOR THE DIFFERENT OPERATIONS //
 	static float panScalar = 0.1f;
 	static float rotScalar = 2.0f;
 	static float zoomScalar = 0.05f;
 	static float keyMoveSpeed = 10.0f;
-
-	// IF BOTH LMB AND RMB ARE PRESSED: NO VALID INPUT COMBINATION, RETURNS //
-	if(core -> inputState -> rmb && core -> inputState -> lmb)
-		return;
-	
-	// PANS THE CAMERA/MOVES IT FORWARDS AND BACK //
-	if(core -> inputState -> lmb == true)
-	{
-		if(core -> inputState -> shiftPressed)
-			deltaPos[2] -= (core -> inputState -> mouseY) * panScalar;
-
-		else
-		{
-			deltaPos[0] += (core -> inputState -> mouseX) * panScalar;
-			deltaPos[1] += (core -> inputState -> mouseY) * panScalar;
-		}
-	}
-
-	// ROTATES THE CAMERA //
-	if(core -> inputState -> rmb == true || 
-			(core -> inputState -> cntrlPressed && core -> inputState -> lmb == true))
-	{
-		deltaRot[1] += (core -> inputState -> mouseX) * rotScalar;
-		deltaRot[0] -= (core -> inputState -> mouseY) * rotScalar;
-	}
-
-	// ZOOMS THE CAMERA IN //
-	cameraHandler :: zoom
-	(
-		(Camera *) core -> curSceneRef -> components[CAMERA_COMP_ID][cameraID],
-		(core -> inputState -> scroll) * zoomScalar
-	);
 
 	// MOVES THE CAMERA VIA KEY INPUT //
 	float speedVal = keyMoveSpeed * (core -> deltaTime);
@@ -73,6 +45,44 @@ void inputManagement :: processInput(EngineCore * core, entityID cameraID)
 		deltaPos[1] += speedVal;
 	if(keys[']'])
 		deltaPos[1] -= speedVal;
+
+	// CAMERA INPUT: CHECKS TO ENSURE THAT CAMERA IS ACTUALLY WITHIN VIEWPORT //
+	if(mousePosX >= core -> editorDataRef -> sidePanelWidth 
+			&& mousePosX <= (core -> winWidth) - (core -> editorDataRef -> sidePanelWidth)
+			&& mousePosY <= (core -> winHeight) - (core -> editorDataRef -> bottomPanelHeight))
+	{
+		// IF BOTH LMB AND RMB ARE PRESSED: NO VALID INPUT COMBINATION, RETURNS //
+		if(core -> inputState -> rmb && core -> inputState -> lmb)
+			return;
+		
+		// PANS THE CAMERA/MOVES IT FORWARDS AND BACK //
+		if(core -> inputState -> lmb == true)
+		{
+			if(core -> inputState -> shiftPressed)
+				deltaPos[2] -= mouseDeltaY * panScalar;
+
+			else
+			{
+				deltaPos[0] += mouseDeltaX * panScalar;
+				deltaPos[1] += mouseDeltaY * panScalar;
+			}
+		}
+
+		// ROTATES THE CAMERA //
+		if(core -> inputState -> rmb == true || 
+				(core -> inputState -> cntrlPressed && core -> inputState -> lmb == true))
+		{
+			deltaRot[1] += mouseDeltaX * rotScalar;
+			deltaRot[0] -= mouseDeltaY * rotScalar;
+		}
+
+		// ZOOMS THE CAMERA IN //
+		cameraHandler :: zoom
+		(
+			(Camera *) core -> curSceneRef -> components[CAMERA_COMP_ID][cameraID],
+			(core -> inputState -> scroll) * zoomScalar
+		);
+	}
 
 	// APPLIES TRANSFORMATION //
 	transformHandler :: translate

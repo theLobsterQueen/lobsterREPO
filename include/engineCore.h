@@ -20,6 +20,7 @@
 struct Scene;
 struct Pipeline;
 struct InputState;
+struct EditorData;
 
 /// <summary> ///
 ///		This struct includes value crucial to keeping the engine functional at the most
@@ -99,7 +100,7 @@ struct EngineCore
 	///		Data for the editor frontend itself.
 	/// </summary> ///
 
-	EditorData * editorDataRef = new EditorData;
+	EditorData * editorDataRef = nullptr;
 };
 
 #endif

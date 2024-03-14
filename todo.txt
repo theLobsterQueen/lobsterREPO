@@ -1,3 +1,0 @@
-Set Windowing Proportions so that scene tree/inspector panel occupy set spaces and start
-	at set positions
-Make the engine itself only process mouse input when mouse position is over viewport

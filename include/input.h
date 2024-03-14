@@ -31,8 +31,9 @@ struct InputState
 	std :: bitset<128> pressedKeys = {0};
 
 	// HOLDS THE CURRENT POSITION OF THE MOUSE //
-	int mouseX = 0; int mouseY = 0; int scroll = 0;
-	bool mmb = false; bool lmb = false; bool rmb = false;
+	int mouseDeltaX = 0; int mouseDeltaY = 0; 
+	int mouseX = 0; int mouseY = 0;
+	int scroll = 0; bool mmb = false; bool lmb = false; bool rmb = false;
 
 	// BOOLEANS DESCRIBING THE CURRENT VALUE OF CONTROL KEYS //
 	bool cntrlPressed = false;

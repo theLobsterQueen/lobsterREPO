@@ -5,6 +5,9 @@
 void uiManagement :: drawEditorUI(EngineCore * core)
 {
 	// DRAWS SCENE TREE //
+	ImGui :: SetNextWindowPos(ImVec2(0, 0));
+	ImGui :: SetNextWindowSize
+		(ImVec2(core -> editorDataRef -> sidePanelWidth, core -> editorDataRef -> sidePanelHeight));
 	if(ImGui :: Begin("Scene Tree", NULL, core -> editorDataRef -> windowFlags))
 	{
 		for(entityID i = 0; i < LOBSTER_MAX_ENTITIES; i++)
@@ -31,9 +34,10 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 	} ImGui :: End();
 
 	// DRAWS INSPECTOR //
+	ImGui :: SetNextWindowPos(ImVec2((core -> winWidth) - (core -> editorDataRef -> sidePanelWidth), 0));
 	ImGui :: SetNextWindowSize
-		(ImVec2((core -> winWidth) * 0.3f, (core -> winHeight) * 0.8f), ImGuiCond_FirstUseEver);
-	if(ImGui :: Begin("Inspector"))
+		(ImVec2(core -> editorDataRef -> sidePanelWidth, core -> editorDataRef -> sidePanelHeight));
+	if(ImGui :: Begin("Inspector", NULL, core -> editorDataRef -> windowFlags))
 	{
 		// GETS ENTITY CURRENTLY SELECTED IN SCENE TREE //
 		Entity activeEntity = core -> curSceneRef -> entities[core -> editorDataRef -> curActiveEntity];
@@ -96,9 +100,8 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 			
 			ImGui :: Text
 			(
-			 	"Camera Data\n%f\t%f\n%f\n%s\n%s", 
+			 	"Camera Data\n%f\t%f\n%s\n%s", 
 				curCamera -> near, curCamera -> far, 
-				curCamera -> FOV,
 				curCamera -> curPipelineRef -> vertShaderName.c_str(),
 				curCamera -> curPipelineRef -> fragShaderName.c_str()
 			);
@@ -126,4 +129,7 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 			ImGui :: Text("Mesh Data\n%s", curMesh -> name.c_str());
 		}
 	} ImGui :: End();
+
+	// DRAWS FILE SYSTEM //
+
 }

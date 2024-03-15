@@ -70,11 +70,7 @@ namespace cameraHandler
 	///			When rendered to, it will render objects using input pipeline.
 	/// </summary> ///
 
-	Camera * createCamera
-	(
-		float inputAspect = 1.0f, 
-		float inputFOV = 1.0f, Pipeline * inputPipeline = nullptr
-	);
+	Camera * createCamera(float inputAspect = 0.0f, Pipeline * inputPipeline = nullptr);
 
 	/// <summary> ///
 	///		Returns the projection matrix for the camera when called.

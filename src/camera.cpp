@@ -2,12 +2,11 @@
 #include <camera.h>
 
 // FUNCTION IMPLEMENTATION //
-Camera * cameraHandler :: 
-	createCamera(float inputAspect, float inputFOV, Pipeline * inputPipeline)
+Camera * cameraHandler :: createCamera(float inputAspect, Pipeline * inputPipeline)
 {
 	Camera * newCamera = new Camera;
 	newCamera -> aspectRatio = inputAspect;
-	newCamera -> FOV = 1 / tan(math :: toRadians(inputFOV / 2));
+	newCamera -> FOV = 1;
 
 	// IF INPUT PIPELINE IS NULLPTR, CREATES AN EMPTY ONE TO BE USED //
 	if(inputPipeline == nullptr)

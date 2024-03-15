@@ -10,8 +10,21 @@ Scene * sceneManagement :: createScene(std :: string inputName)
 
 void sceneManagement :: changeScene(EngineCore * core, Scene * targetScene)
 {
-	core -> curSceneRef = targetScene;
-	windowManagement :: changeTitle(core -> winRef, targetScene -> name);
+	entityID camID;
+	if(sceneManagement :: getCameraEntityID(targetScene, &camID))
+	{
+		core -> curSceneRef = targetScene;
+		Camera * temp = (Camera *) targetScene -> components[CAMERA_COMP_ID][camID];
+		temp -> aspectRatio = (((float) (core -> winWidth)) / ((float) (core -> winHeight)));
+		windowManagement :: changeTitle(core -> winRef, targetScene -> name);
+	}
+
+	else
+	{
+		std :: cout << "ATTEMPTED TO SWITCH TO " << targetScene -> name << " BUT COULD NOT FIND"
+			<< " A SUITABLE CAMERA TO RENDER TO!" << std :: endl;
+		return;
+	}
 }
 
 entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entityName)
@@ -222,7 +235,6 @@ void sceneManagement :: saveScene(Scene * inputScene)
 			Camera * tempCamera = (Camera *)
 				inputScene -> components[CAMERA_COMP_ID][i];
 			sceneFile << "CAMERA" << std :: endl
-				<< tempCamera -> FOV << std :: endl
 				<< tempCamera -> near << std :: endl
 				<< tempCamera -> far << std :: endl
 				<< tempCamera -> curPipelineRef -> vertShaderName << std :: endl
@@ -342,12 +354,12 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 				}
 			}
 
-			// SETS ROTATION //
+			// SETS SCALE //
 			else if(linesRead == 2)
 			{
 				while(std :: getline(lineStream, data, '/'))
 				{
-					tempTrans -> scale[index] = std :: stoi(data.c_str());
+					tempTrans -> scale[index] = std :: stof(data.c_str());
 					index++;
 				}
 			}
@@ -381,18 +393,16 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 		{
 			Camera * cameraPtr = ((Camera *) (newCompPtr));
 			if(linesRead == 0)
-				cameraPtr -> FOV = std :: stof(line.c_str());
+				cameraPtr -> near = std :: stof(line.c_str());
 			if(linesRead == 1)
-				cameraPtr -> near = std :: stoi(line.c_str());
-			if(linesRead == 2)
 				cameraPtr -> far = std :: stoi(line.c_str());
-			if(linesRead == 3)
+			if(linesRead == 2)
 			{
 				graphicManagement :: loadShader
 					(cameraPtr -> curPipelineRef, GL_VERTEX_SHADER, line.c_str());
 			}
 
-			if(linesRead == 4)
+			if(linesRead == 3)
 			{
 				graphicManagement :: loadShader
 					(cameraPtr -> curPipelineRef, GL_FRAGMENT_SHADER, line.c_str());

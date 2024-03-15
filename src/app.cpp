@@ -51,7 +51,7 @@ void appManagement :: createTestScene(EngineCore * core)
 		camID,
 		CAMERA_COMP_ID,
 		(compPtr) cameraHandler :: createCamera
-			(aspect, 70, core -> pipelineRefs[0])
+			(aspect, core -> pipelineRefs[0])
 	);
 
 	sceneManagement :: addComp

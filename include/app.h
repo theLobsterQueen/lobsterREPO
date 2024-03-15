@@ -4,9 +4,12 @@
 // INCLUDES AND INITIALIZATIONS //
 
 // STD INCLUDES //
+#include <pybind11/pybind11.h>
+#include <pybind11/embed.h>
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <map>
 
 // SDL/GL INCLUDES //
 #include <SDL2/SDL.h>
@@ -27,6 +30,8 @@
 #include <light.h>
 #include <vendorIncludes.h>
 #include <ui.h>
+#include <script.h>
+#include <globals.h>
 
 namespace appManagement
 {
@@ -37,21 +42,31 @@ namespace appManagement
 	/// </summary> ///
 	void begin(EngineCore * core);
 
+
+	/// <summary> ///
+	///		Iterates through all scripts in the "script" directory, and executes their code.
+	/// </summary> ///
+
+	void compileScripts(EngineCore * core);
+
 	/// <summary> ///
 	///		When called, puts the engine into the "control loop." This loop will
 	///			continually parse input, render meshes, and so on, until the program
 	///			shuts down. 
 	/// </summary> ///
+
 	void run(EngineCore * core);
 
 	/// <summary> ///
 	///		This populates the current scene with test draw meshes.
 	/// </summary> ///
+
 	void createTestScene(EngineCore * core);
 
 	/// <summary> ///
 	///		Updates the general game state by processing SDL2 events.
 	/// </summary> ///
+
 	void update(EngineCore * core);
 };
 

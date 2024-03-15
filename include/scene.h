@@ -96,7 +96,7 @@ namespace sceneManagement
 	///		Iterates through all entities in the scene, and draws them.
 	/// </summary> ///
 
-	void renderScene(Scene * targetScene, entityID targetCamera);
+	void renderScene(Scene * targetScene);
 
 	/// <summary> ///
 	///		Returns a array of all entities with input component.

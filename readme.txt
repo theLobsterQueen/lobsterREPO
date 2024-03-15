@@ -52,14 +52,14 @@ Sprint 1 (ENGINE BACKEND FUNDAMENTALS) :
 Sprint 2 :
 	[X] Save/Load Scenes on Command
 	[ ] Launcher that can Create/Load Projects
-	[ ] Build out Engine Frontend, Complete With
-		[ ] Inspector-Analog
+	[~] Build out Engine Frontend, Complete With
+		[X] Inspector-Analog
 			[ ] [STRETCH] Allow for "exposed" variables, that could be edited
 				directly from the inspector.
 			[ ] Can add Components to Entities
 		[ ] File Hierarchy
 		[ ] Build Dialog
-		[ ] Scene Tree
+		[X] Scene Tree
 	[ ] Base Python Integration 
 		[ ] Communicate with Precompiled Engine Files over Runtime Python Scritps
 	[ ] Start/Update Method Analogs

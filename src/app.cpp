@@ -1,10 +1,6 @@
 // INCLUDES DEFINITION AND USES NAMESPACE //
 #include <app.h>
 
-// (TEMP) FILE-GLOBAL VARIABLES //
-static entityID camID = 0; 
-static entityID testID = 0;
-
 // FUNCTION IMPLEMENTATIONS //
 void appManagement :: begin(EngineCore * core)
 {
@@ -31,18 +27,21 @@ void appManagement :: begin(EngineCore * core)
 	// CREATES EDITOR DATA STRUCT //
 	core -> editorDataRef = editorManagement :: createEditorData(core);
 
+	// COMPILES PYTHON SCRIPTS //
+	appManagement :: compileScripts(core);
+
 	// (TEMP) CREATES TEST SCENE //
-	createTestScene(core);
+	appManagement :: createTestScene(core);
 
 	// BEGINS RUNNING THE ENGINE //
-	run(core);
+	appManagement :: run(core);
 }
 
 void appManagement :: createTestScene(EngineCore * core)
 {
 	// CREATES CAMERA COMPONENT //
 	Scene * testScene = sceneManagement :: createScene("TEST");
-	camID = sceneManagement :: newEntityID(testScene, "Camera");
+	entityID camID = sceneManagement :: newEntityID(testScene, "Camera");
 	float aspect = ((float) core -> winWidth) / ((float) core -> winHeight);
 
 	sceneManagement :: addComp
@@ -84,7 +83,7 @@ void appManagement :: createTestScene(EngineCore * core)
 			(std :: vector<float> { 1.0f, 1.0f, 1.0f, 0.9f })
 	);
 
-	testID = sceneManagement :: newEntityID(testScene, "Jinx");
+	entityID testID = sceneManagement :: newEntityID(testScene, "Jinx");
 	Mesh * sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
 	meshHandler :: setTexture(sceneMesh, textureHandler :: createTexture("jinx.png"));
 
@@ -108,12 +107,54 @@ void appManagement :: createTestScene(EngineCore * core)
 	sceneManagement :: changeScene(core, testScene);
 }
 
+void appManagement :: compileScripts(EngineCore * core)
+{
+	// LOADS ALL SCRIPTS IN THE SCRIPT DIRECTORY //
+	std :: string path = "./scripts/";
+	std :: filesystem :: directory_iterator dirIt;
+	try
+	{ 
+		dirIt = std :: filesystem :: begin
+			(std :: filesystem :: directory_iterator(path.c_str())); 
+	}
+
+	catch(std :: filesystem :: filesystem_error err)
+	{
+		path = "./../../scripts/";
+		dirIt = std :: filesystem :: begin
+			(std :: filesystem :: directory_iterator(path.c_str())); 
+	}
+
+	// RUNS THEM //
+	pybind11 :: scoped_interpreter guard{};
+	for(std :: filesystem :: directory_entry fileEntry : dirIt)
+	{
+		// READS FILE FROM THE DATA //
+		std :: string fileName = fileEntry.path().stem().string() + ".py";
+		std :: ifstream fileStream = std :: ifstream(path + fileName);
+
+		std :: string line; std :: stringstream execStream;
+		while(std :: getline(fileStream, line))
+			execStream << line << std :: endl;
+
+		pybind11 :: exec(execStream.str().c_str());
+		fileStream.close();
+	}
+}
+
 void appManagement :: run(EngineCore * core)
 {
 	// VARIABLE INITIALIZATION //
 	unsigned long int newDelta = SDL_GetTicks();
 	unsigned long int oldDelta = 0;
 	static float timer = 0.0f;
+
+	// STARTS ALL SCRIPTS //
+	for(auto scriptPair : globals :: scripts)
+	{
+		std :: cout << "STARTING " << scriptPair.first << std :: endl;
+		scriptPair.second -> startFunction();
+	}
 
 	while(core -> isRunning)
 	{
@@ -126,22 +167,23 @@ void appManagement :: run(EngineCore * core)
 		// UPDATES ENGINE //
 		appManagement :: update(core);
 
-		// ATTEMPTS TO FIND CAMERA IN SCENE //
-		bool hasCamera = sceneManagement :: getCameraEntityID(core -> curSceneRef, &camID);
-		if(!hasCamera)
-			for(char i = 0; i < 4; i++)
-				core -> clearColor[i] = 0.0f;
+		// PROCESSES ALL SCRIPTS //
+		for(auto scriptPair : globals :: scripts)
+		{
+			std :: cout << "UPDATING " << scriptPair.first << std :: endl;
+			scriptPair.second -> updateFunction();
+		}
 
 		// BEGINS RENDERING PHASE //
 		graphicManagement :: beginRenderPass(core);
 
 		// UI WORK //
+
 		// ImGui :: ShowDemoWindow();
 		uiManagement :: drawEditorUI(core);
 
 		// RENDERS CURRENT 3D SCENE //
-		if(hasCamera)
-			sceneManagement :: renderScene(core -> curSceneRef, camID);
+		sceneManagement :: renderScene(core -> curSceneRef);
 		
 		// PRESENTS TO SCREEN //
 		graphicManagement :: present(core);
@@ -241,6 +283,7 @@ void appManagement :: update(EngineCore * core)
 	}
 
 	// PROCESSED INPUT //
+	entityID camID;
 	if(sceneManagement :: getCameraEntityID(core -> curSceneRef, &camID))
 		inputManagement :: processInput(core, camID);
 

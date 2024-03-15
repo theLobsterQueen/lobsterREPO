@@ -68,18 +68,13 @@ void sceneManagement :: addComp
 	targetScene -> entities[entityIndex].mask |= (1 << compIndex);
 }
 
-void sceneManagement :: renderScene(Scene * targetScene, entityID cameraEntity)
+void sceneManagement :: renderScene(Scene * targetScene)
 {
-	// ESURES THAT THE INPUT ENTITY DOES IN FACT HAVE A CAMERA //
-	if
-	(
-		targetScene -> entities[cameraEntity].mask & (1 << CAMERA_COMP_ID) == 0 || 
-			targetScene -> entities[cameraEntity].mask & (1 << TRANS_COMP_ID) == 0
-	)
-
+	entityID cameraEntity;
+	if(!sceneManagement :: getCameraEntityID(targetScene, &cameraEntity))
 	{
-		std :: cout << "ERROR! ATTEMPTED TO RENDER SCENE BY INPUTTING AN ENTITY "
-			<< "NOT EQUIPPED WITH A CAMERA OR TRANSFORM!" << std :: endl;
+		std :: cout << "ERROR! ATTEMPTED TO RENDER A SCENE THAT DOES NOT HAVE A CAMERA!"
+			<< std :: endl;
 		return;
 	}
 
@@ -182,6 +177,9 @@ void sceneManagement :: saveScene(Scene * inputScene)
 	// ATTEMPTS TO OPEN THE FILE FROM WORKING DIRECTORY //
 	std :: ofstream sceneFile
 		(std :: string("./scenes/" + inputScene -> name + ".lscn").c_str());
+	if(!sceneFile.is_open())
+		sceneFile = std :: ofstream
+			(std :: string("./../../scenes/" + inputScene -> name + ".lscn").c_str());
 
 	// PUTS THE NAME OF THE SCENE AT THE TOP OF THE FILE // 
 	sceneFile << inputScene -> name << std :: endl;
@@ -273,7 +271,7 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 	if(!sceneFile.is_open())
 	{
 		// ATTEMPTS TO LOAD IT FROM THE PERSEPCTIVE OF AN EXECUTABLE IN DEBUG/RELEASE //
-		sceneFile.open("../../scenes/" + scenePath);
+		sceneFile.open("./../../scenes/" + scenePath);
 		if(!sceneFile.is_open())
 		{
 			std :: cout << "COULD NOT LOAD SCENE AT " << scenePath << "!" << std :: endl;

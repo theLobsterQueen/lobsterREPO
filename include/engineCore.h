@@ -8,6 +8,8 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/embed.h>
 
 // STD INCLUDES //
 #include <vector>
@@ -101,6 +103,7 @@ struct EngineCore
 	/// </summary> ///
 
 	EditorData * editorDataRef = nullptr;
+
 };
 
 #endif

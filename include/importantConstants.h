@@ -36,5 +36,6 @@ typedef char *					compPtr;
 #define TRANS_COMP_ID				1
 #define CAMERA_COMP_ID				2
 #define LIGHT_COMP_ID				3
+#define SCRIPT_COMP_ID				4
 
 #endif

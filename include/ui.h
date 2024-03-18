@@ -13,6 +13,7 @@
 #include <entity.h>
 #include <transform.h>
 #include <scene.h>
+#include <app.h>
 
 namespace uiManagement
 {

@@ -16,10 +16,11 @@
 // STANDARD INCLUDES //
 #include <pybind11/pybind11.h>
 #include <pybind11/embed.h>
+#include <pybind11/stl.h>
 #include <iostream>
 
 // LOBSTER INCLUDES //
-#include <script.h>
-
+#include <importantConstants.h>
+#include <globals.h>
 
 #endif

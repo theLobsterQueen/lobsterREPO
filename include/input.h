@@ -35,6 +35,8 @@ struct InputState
 	int mouseX = 0; int mouseY = 0;
 	int scroll = 0; bool mmb = false; bool lmb = false; bool rmb = false;
 
+	bool mouseInput = false;
+
 	// BOOLEANS DESCRIBING THE CURRENT VALUE OF CONTROL KEYS //
 	bool cntrlPressed = false;
 	bool shiftPressed = false;

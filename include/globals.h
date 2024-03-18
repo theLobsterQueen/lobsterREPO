@@ -4,18 +4,18 @@
 // INCLUDES AND INITIALIZATIONS //
 
 // STANDARD INCLUDES //
+#include <pybind11/pybind11.h>
 #include <map>
-
-// LOBSTER INCLUDES //
-#include <script.h>
-
-// STRUCT PROTOTYPES //
-struct Script;
+#include <string>
 
 // DECLARES GLOBAL VALUES //
 namespace globals
 {
-	extern std :: map<std :: string, Script *> scripts;
+	// GLOBAL VARIABLES //
+	extern std :: map<std :: string, std :: map<std :: string, pybind11 :: function>> scripts;
+
+	// GLOBAL UTILITY FUNCTIONS //
+	void globalInit();
 }
 
 #endif

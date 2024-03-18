@@ -14,6 +14,7 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 		{
 			if(ImGui :: MenuItem("Save Scene"))
 				sceneManagement :: saveScene(core -> curSceneRef);
+
 			std :: filesystem :: directory_iterator dirIt;
 			if(ImGui :: BeginMenu("Load Scene"))
 			{
@@ -44,7 +45,15 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 			}
 
 			ImGui :: EndMenu();
-		} 
+		}
+
+		if(ImGui :: BeginMenu("Scripts"))
+		{
+			if(ImGui :: MenuItem("Compile Scene"))
+				appManagement :: compileScripts(core);
+
+			ImGui :: EndMenu();
+		}
 	} ImGui :: EndMainMenuBar();
 	float topBarY = 20.0f;
 

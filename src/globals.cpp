@@ -2,4 +2,10 @@
 #include <globals.h>
 
 // DEFINES GLOBAL VALUES //
-std :: map<std :: string, Script *> globals :: scripts = std :: map<std :: string, Script *> { };
+std :: map<std :: string, std :: map<std :: string, pybind11 :: function>> globals :: scripts;
+
+// INITIALIZES GLOBAL VALUES //
+void globals :: globalInit()
+{
+	globals :: scripts = std :: map<std :: string, std :: map<std :: string, pybind11 :: function>> { };
+}

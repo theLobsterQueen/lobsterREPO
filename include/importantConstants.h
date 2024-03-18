@@ -3,6 +3,10 @@
 
 // INCLUDES AND INITIALIZATIONS //
 
+// STANDARD INCLUDES //
+#include <pybind11/pybind11.h>
+#include <map>
+
 /// <summary> ///
 ///		These constants define the maximum entities and componenets for each
 ///			scene, giving a compile-time constant value for the scene manager to
@@ -16,6 +20,8 @@ typedef unsigned short int  	entityID;
 typedef unsigned char 			componentID;
 typedef unsigned int 			componentMask;
 typedef char *					compPtr;
+typedef std :: map<std :: string, std :: map<std :: string, pybind11 :: function>> 
+	scriptContainer;
 
 // DEFINES VERTEX ATTRIBUTES //
 #define POSITION_VEC				0
@@ -38,4 +44,6 @@ typedef char *					compPtr;
 #define LIGHT_COMP_ID				3
 #define SCRIPT_COMP_ID				4
 
+// WATCHED METHODS //
+#define WATCHED_METHODS				{ "_start", "_update" }
 #endif

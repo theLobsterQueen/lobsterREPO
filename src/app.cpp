@@ -27,7 +27,8 @@ void appManagement :: begin(EngineCore * core)
 	// CREATES EDITOR DATA STRUCT //
 	core -> editorDataRef = editorManagement :: createEditorData(core);
 
-	// COMPILES PYTHON SCRIPTS //
+	// PREPARES PYTHON CONTEXT AND COMPILES THE SCRIPTS //
+	appManagement :: initializeAPI(core);
 	appManagement :: compileScripts(core);
 
 	// (TEMP) CREATES TEST SCENE //
@@ -107,38 +108,65 @@ void appManagement :: createTestScene(EngineCore * core)
 	sceneManagement :: changeScene(core, testScene);
 }
 
-void appManagement :: compileScripts(EngineCore * core)
+void appManagement :: initializeAPI(EngineCore * core)
 {
-	// LOADS ALL SCRIPTS IN THE SCRIPT DIRECTORY //
-	std :: string path = "./scripts/";
-	std :: filesystem :: directory_iterator dirIt;
+	// VARIABLE INITIALIZATION //
+	APIGlobals :: workingPath = "./";
+	std :: filesystem :: directory_iterator testDir;
 	try
-	{ 
-		dirIt = std :: filesystem :: begin
-			(std :: filesystem :: directory_iterator(path.c_str())); 
+	{
+		testDir = std :: filesystem :: begin(std :: filesystem :: directory_iterator
+				(std :: string(APIGlobals :: workingPath + "scripts/").c_str())); 
 	}
 
 	catch(std :: filesystem :: filesystem_error err)
-	{
-		path = "./../../scripts/";
-		dirIt = std :: filesystem :: begin
-			(std :: filesystem :: directory_iterator(path.c_str())); 
-	}
+		{ APIGlobals :: workingPath = "./../../"; }
 
-	// RUNS THEM //
-	pybind11 :: scoped_interpreter guard{};
+	// INITIALIZES THE PYTHON INTERPRETER //
+	pybind11 :: initialize_interpreter();
+
+	// PREPARES THE PYTHON CONTEXT //
+	pybind11 :: exec(std :: string
+		("import sys\nsys.path.append(\"" + APIGlobals :: workingPath + "modulesAPI/\")").c_str());
+	APIGlobals :: coremodule = pybind11 :: module_ :: import("coremodule");
+}
+
+void appManagement :: compileScripts(EngineCore * core)
+{
+	// FINDS SCRIPT DIRECTORY //
+	std :: filesystem :: directory_iterator dirIt = 
+		std :: filesystem :: begin(std :: filesystem :: directory_iterator(std :: string
+		(APIGlobals :: workingPath + "scripts/").c_str())); 
+
+	// RUNS ALL SCRIPTS IN THE SCRIPT DIRECTORY //
 	for(std :: filesystem :: directory_entry fileEntry : dirIt)
 	{
-		// READS FILE FROM THE DATA //
-		std :: string fileName = fileEntry.path().stem().string() + ".py";
-		std :: ifstream fileStream = std :: ifstream(path + fileName);
+		// DETERMINES WHETHER THE CURRENT FILE IS A PYTHON FILE //
+		std :: string fileName = fileEntry.path().string();
+		if(fileName.find(".py") == std :: string :: npos)
+			continue;
 
+		// RECONFIGURES THE FILE NAME TO REFER TO THE FILE ITSELF, WITHOUT FOCUSING ON THE PATH //
+			// THEN CREATES AN INPUT FILE STREAM FOR IT. //
+		fileName = fileEntry.path().stem().string() + ".py";
+		std :: ifstream fileStream = std :: ifstream(APIGlobals :: workingPath + "scripts/" + fileName);
+
+		// READS THE INPUT FILE STREAM AND GENERATES STRING STREAM DATA FROM IT //
 		std :: string line; std :: stringstream execStream;
 		while(std :: getline(fileStream, line))
 			execStream << line << std :: endl;
 
+		// EXECUTES CODE IN STRING STREAM //
 		pybind11 :: exec(execStream.str().c_str());
 		fileStream.close();
+	}
+
+	globals :: scripts = APIGlobals :: coremodule.attr("scripts").cast<scriptContainer>();
+	for(auto pair : globals :: scripts)
+	{
+		std :: cout << "Script " << pair.first << " has: " << std :: endl;
+		for(auto secondPair : pair.second)
+			std :: cout << "\t" << secondPair.first << std :: endl;
 	}
 }
 
@@ -152,8 +180,8 @@ void appManagement :: run(EngineCore * core)
 	// STARTS ALL SCRIPTS //
 	for(auto scriptPair : globals :: scripts)
 	{
-		std :: cout << "STARTING " << scriptPair.first << std :: endl;
-		scriptPair.second -> startFunction();
+		if(scriptPair.second.count("_start") >= 1)
+			scriptPair.second["_start"]();
 	}
 
 	while(core -> isRunning)
@@ -170,8 +198,12 @@ void appManagement :: run(EngineCore * core)
 		// PROCESSES ALL SCRIPTS //
 		for(auto scriptPair : globals :: scripts)
 		{
-			std :: cout << "UPDATING " << scriptPair.first << std :: endl;
-			scriptPair.second -> updateFunction();
+			for(auto secondPair : scriptPair.second)
+			{
+				std :: string scriptName = secondPair.first;
+				if(scriptName == "_update")
+					scriptPair.second[scriptName](core -> deltaTime);
+			}
 		}
 
 		// BEGINS RENDERING PHASE //

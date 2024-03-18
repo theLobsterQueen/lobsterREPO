@@ -30,8 +30,8 @@
 #include <light.h>
 #include <vendorIncludes.h>
 #include <ui.h>
-#include <script.h>
 #include <globals.h>
+#include <APIUtils.h>
 
 namespace appManagement
 {
@@ -42,6 +42,12 @@ namespace appManagement
 	/// </summary> ///
 	void begin(EngineCore * core);
 
+	/// <summary> ///
+	///		Sets up the working directory, initializes the pybind11 interpreter, and
+	///			prepares the Python context.
+	/// </summary> ///
+
+	void initializeAPI(EngineCore * core);
 
 	/// <summary> ///
 	///		Iterates through all scripts in the "script" directory, and executes their code.

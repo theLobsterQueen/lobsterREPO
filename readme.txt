@@ -27,6 +27,7 @@ Sources :
 	https://youtu.be/fvvWr1jaLyw?si=K1bEC0nxx06WJcc2
 
 	https://pthom.github.io/imgui_manual_online/manual/imgui_manual.html
+	https://pybind11.readthedocs.io/en/stable/
 
 // KEY //
 X: Done

@@ -1,19 +1,34 @@
 // INCLUDES DEFINITION FILE //
 #include <coreModule.h>
 
-// FUNCTION IMPLEMENTATIONS //
-void APIStart()
-{
-	std :: cout << "Script started!" << std :: endl;
+// STATIC FILE-GLOBAL VARIABLES //
+const static std :: vector<std :: string> watchedMethods = WATCHED_METHODS;
+
+// MAKES THE SCRIPT MAP OPAQUE //
+PYBIND11_MAKE_OPAQUE(scriptContainer);
+
+// FUNCTIONS FOR HANDLING SCRIPT MANAGEMENT //
+void addScript(scriptContainer& scripts, std :: string scriptName)
+	{ scripts[scriptName] = { }; }
+void addScriptFunc
+	(scriptContainer& scripts, std :: string scriptName, std :: string funcName, pybind11 :: function func)
+{ 
+	scripts[scriptName][funcName] = func; 
 }
 
-void APIUpdate(float deltaTime)
+void printScriptContainer(scriptContainer scripts)
 {
-	std :: cout << "Script updating! Current delta time is: " << deltaTime << std :: endl;
+	std :: cout << "Print out script container!" << std :: endl;
+	for(auto pair : scripts)
+	{
+		std :: cout << "\tScript " << pair.first << " has: " << std :: endl;
+		for(auto secondPair : pair.second)
+			std :: cout << "\t\t" << secondPair.first << std :: endl;
+	}
 }
 
 // CREATES THE CORE MODULE //
-PYBIND11_MODULE(coremodule, m)
+PYBIND11_MODULE(_coremodule, m)
 {
 	// MODULE DOCSTRING //
 	m.doc() = std :: string
@@ -23,9 +38,12 @@ PYBIND11_MODULE(coremodule, m)
 		+ std :: string("\tdata found in the Lobster Engine backend.")
 	).c_str();
 
-	// FUNCTION IMPLEMENTATION//
-	m.def("initialize", &(scriptManagement :: initializeScript), 
-		std :: string("Initializes the script and creates data for use on the engine backend.").c_str());
-	m.def("set_start", &(scriptManagement :: setStart), "Sets the start function of the script.");
-	m.def("set_update", &(scriptManagement :: setUpdate), "Sets the update function of the script.");
+	pybind11 :: class_<scriptContainer>(m, "ScriptContainer")
+		.def("add_script", &addScript)
+		.def("add_script_func", &addScriptFunc)
+ 		.def("out", &printScriptContainer);
+
+	// VARIABLE EXPORTS //
+	m.attr("scripts") = new scriptContainer;
+	m.attr("watched_methods") = watchedMethods;
 }

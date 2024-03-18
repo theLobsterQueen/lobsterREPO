@@ -47,17 +47,29 @@ void inputManagement :: processInput(EngineCore * core, entityID cameraID)
 		deltaPos[1] -= speedVal;
 
 	// CAMERA INPUT: CHECKS TO ENSURE THAT CAMERA IS ACTUALLY WITHIN VIEWPORT //
-	if(mousePosX >= core -> editorDataRef -> sidePanelWidth 
+	bool processMouse = true;
+	if(!(core -> inputState -> mouseInput))
+	{
+		processMouse = false;
+		if(mousePosX >= core -> editorDataRef -> sidePanelWidth
 			&& mousePosX <= (core -> winWidth) - (core -> editorDataRef -> sidePanelWidth)
 			&& mousePosY <= (core -> winHeight) - (core -> editorDataRef -> bottomPanelHeight))
+		{
+			processMouse = true;
+		}
+	}
+
+	if(processMouse)
 	{
 		// IF BOTH LMB AND RMB ARE PRESSED: NO VALID INPUT COMBINATION, RETURNS //
 		if(core -> inputState -> rmb && core -> inputState -> lmb)
 			return;
 		
 		// PANS THE CAMERA/MOVES IT FORWARDS AND BACK //
+		core -> inputState -> mouseInput = false;
 		if(core -> inputState -> lmb == true)
 		{
+			core -> inputState -> mouseInput = true;
 			if(core -> inputState -> shiftPressed)
 				deltaPos[2] -= mouseDeltaY * panScalar;
 
@@ -72,6 +84,7 @@ void inputManagement :: processInput(EngineCore * core, entityID cameraID)
 		if(core -> inputState -> rmb == true || 
 				(core -> inputState -> cntrlPressed && core -> inputState -> lmb == true))
 		{
+			core -> inputState -> mouseInput = true;
 			deltaRot[1] += mouseDeltaX * rotScalar;
 			deltaRot[0] -= mouseDeltaY * rotScalar;
 		}

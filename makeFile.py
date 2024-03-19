@@ -1,16 +1,47 @@
 import os
+import datetime
+
 debugPath = "bin/debug"
 name = "LobsterEngine"
 extension = "elf"
 
+def compileDir(dirPath) :
+    toCompile = []
+
+    # FINDS ALL FILES IN THE SOURCE DIRECTORY, DETERMINES WHETHER OR NOT #
+        # THEY HAVE BEEN MODIFIED SINCE LAST COMPILATION. #
+        # ADDS FILES TO COMPILE ARRAY IF VALID #
+    for file in os.listdir(dirPath) :
+        if file.endswith(".cpp") :
+            fileName = os.path.splitext(file)[0] + ".o"
+            try :
+                if(os.path.getmtime(dirPath + file) >= os.path.getmtime(f"./bin/prec/{fileName}")) :
+                    toCompile.append(file)
+
+            except OSError :
+                toCompile.append(file)
+
+    # COMPILES SRC FILES INTO BINARY FILES #
+    for srcFile in toCompile :
+        fileName = os.path.splitext(srcFile)[0] + ".o"
+        os.system\
+        (
+            f'g++ -c {dirPath + srcFile} -I ./include/ -I ./vendor/ -I /usr/include/python3.10 -lSDL2'
+            f' -lGL -lGLU -lGLEW -lpython3.10 -Wno-narrowing -Wno-attributes'
+            f' `python3.10 -m pybind11 --includes` `python3.10-config --ldflags` -o ./bin/prec/{fileName}'
+        )
+        print(f"Compiled {srcFile}...")
+
+compileDir("./src/")
+compileDir("./vendor/")
+print("Compilation done!")
+
+# LINKS ALL OBJECTS INTO A SINGLE EXECUTABLE #
 os.system\
 (
-    f'echo "\n\n"\n'
-    f'g++ ./src/* ./vendor/* -I ./include/ -o {debugPath}/{name}.{extension}'
-    f' -I ./vendor/ -I /usr/include/python3.10 -lSDL2'
-    f' -lGL -lGLU -lGLEW -lpython3.10 -Wno-narrowing -Wno-attributes'
-    f' `python3.10 -m pybind11 --includes` `python3.10-config --ldflags`\n'
-    f'chown layna ./{debugPath}/{name}.{extension}\n'
-    f'chmod +x ./{debugPath}/{name}.{extension}\n'
-    f'echo "LINUX COMPILATION COMPLETED!"\n'
+    f'g++ ./bin/prec/*.o -lSDL2 -lGL -lGLU -lGLEW -lpython3.10'
+    f'  -Wno-narrowing -Wno-attributes `python3.10 -m pybind11 --includes`'
+    f'  `python3.10-config --ldflags` -o bin/debug/LobsterEngine.{extension}'
 )
+print("Linking done!")
+

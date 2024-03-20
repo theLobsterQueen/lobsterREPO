@@ -55,6 +55,13 @@ namespace appManagement
 	void compileScripts();
 
 	/// <summary> ///
+	///		Calls the "_start" function on all scripts currently in
+	///			the scene.
+	/// </summary> ///
+
+	void startScripts();
+
+	/// <summary> ///
 	///		When called, puts the engine into the "control loop." This loop will
 	///			continually parse input, render meshes, and so on, until the program
 	///			shuts down. 

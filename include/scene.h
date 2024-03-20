@@ -27,6 +27,7 @@
 #include <script.h>
 #include <script.h>
 #include <APIUtils.h>
+#include <app.h>
 
 // STRUCT PROTOTYPES //
 struct EngineCore;

@@ -165,19 +165,21 @@ void appManagement :: compileScripts()
 	}
 }
 
+void appManagement :: startScripts()
+{
+	for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
+	{
+		((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt])) 
+			-> code.attr("_start")();
+	}
+}
+
 void appManagement :: run()
 {
 	// VARIABLE INITIALIZATION //
 	unsigned long int newDelta = SDL_GetTicks();
 	unsigned long int oldDelta = 0;
 	static float timer = 0.0f;
-
-	// STARTS ALL SCRIPTS //
-	for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
-	{
-		Script * script = ((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]));
-		script -> code.attr("_start")();
-	}
 
 	while(globals :: isRunning)
 	{

@@ -28,6 +28,9 @@ void sceneManagement :: changeScene(Scene * targetScene)
 			<< " A SUITABLE CAMERA TO RENDER TO!" << std :: endl;
 		return;
 	}
+
+	// STARTS ALL THE SCRIPTS IN THE NEW SCENE //
+	appManagement :: startScripts();
 }
 
 entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entityName)

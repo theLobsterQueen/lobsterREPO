@@ -50,7 +50,10 @@ void uiManagement :: drawEditorUI()
 		if(ImGui :: BeginMenu("Scripts"))
 		{
 			if(ImGui :: MenuItem("Compile Scene"))
+			{
 				appManagement :: compileScripts();
+				appManagement :: startScripts();
+			}
 
 			ImGui :: EndMenu();
 		}

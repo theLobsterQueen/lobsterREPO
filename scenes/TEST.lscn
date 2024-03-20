@@ -1,15 +1,15 @@
 TEST
 ENT: Camera
 TRANSFORM
--4.83162/1.10368/-0.198265
--10/-44/0
+5.73784/0.519253/4.13839
+-8/100/0
 1/1/1
 CAMERA
 1
 100
 shaders/vertShader.txt
 shaders/fragShader.txt
-ENT: Light
+ENT: Bingus
 TRANSFORM
 -5/0/3
 0/0/0

@@ -19,9 +19,10 @@ struct Scene;
 /// </summary> ///
 struct Entity
 {
-	entityID ID;
-	componentMask mask = 0;
-	std :: string name;
+	public :
+		entityID ID;
+		componentMask mask = 0;
+		std :: string name;
 };
 
 #endif

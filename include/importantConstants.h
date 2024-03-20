@@ -44,6 +44,4 @@ typedef std :: map<std :: string, std :: map<std :: string, pybind11 :: function
 #define LIGHT_COMP_ID				3
 #define SCRIPT_COMP_ID				4
 
-// WATCHED METHODS //
-#define WATCHED_METHODS				{ "_start", "_update" }
 #endif

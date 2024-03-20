@@ -84,6 +84,13 @@ void appManagement :: createTestScene(EngineCore * core)
 			(std :: vector<float> { 1.0f, 1.0f, 1.0f, 0.9f })
 	);
 
+	// GIVES LIGHT A TEST SCRIPT //
+	sceneManagement :: addComp
+	(
+		testScene, lightID, SCRIPT_COMP_ID,
+		(compPtr) (scriptHandler :: createScript("testFile"))
+	);
+
 	entityID testID = sceneManagement :: newEntityID(testScene, "Jinx");
 	Mesh * sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
 	meshHandler :: setTexture(sceneMesh, textureHandler :: createTexture("jinx.png"));
@@ -105,6 +112,12 @@ void appManagement :: createTestScene(EngineCore * core)
 		(compPtr) (meshTrans)
 	);
 
+	// GIVES MESH A TEST SCRIPT //
+	sceneManagement :: addComp
+	(
+		testScene, testID, SCRIPT_COMP_ID,
+		(compPtr) (scriptHandler :: createScript("testFile"))
+	);
 	sceneManagement :: changeScene(core, testScene);
 }
 
@@ -160,14 +173,6 @@ void appManagement :: compileScripts(EngineCore * core)
 		pybind11 :: exec(execStream.str().c_str());
 		fileStream.close();
 	}
-
-	globals :: scripts = APIGlobals :: coremodule.attr("scripts").cast<scriptContainer>();
-	for(auto pair : globals :: scripts)
-	{
-		std :: cout << "Script " << pair.first << " has: " << std :: endl;
-		for(auto secondPair : pair.second)
-			std :: cout << "\t" << secondPair.first << std :: endl;
-	}
 }
 
 void appManagement :: run(EngineCore * core)
@@ -178,10 +183,10 @@ void appManagement :: run(EngineCore * core)
 	static float timer = 0.0f;
 
 	// STARTS ALL SCRIPTS //
-	for(auto scriptPair : globals :: scripts)
+	for(entityID curEnt : sceneManagement :: sceneView(core -> curSceneRef, SCRIPT_COMP_ID))
 	{
-		if(scriptPair.second.count("_start") >= 1)
-			scriptPair.second["_start"]();
+		Script * script = ((Script *) (core -> curSceneRef -> components[SCRIPT_COMP_ID][curEnt]));
+		script -> code.attr("_start")();
 	}
 
 	while(core -> isRunning)
@@ -195,23 +200,13 @@ void appManagement :: run(EngineCore * core)
 		// UPDATES ENGINE //
 		appManagement :: update(core);
 
-		// PROCESSES ALL SCRIPTS //
-		for(auto scriptPair : globals :: scripts)
-		{
-			for(auto secondPair : scriptPair.second)
-			{
-				std :: string scriptName = secondPair.first;
-				if(scriptName == "_update")
-					scriptPair.second[scriptName](core -> deltaTime);
-			}
-		}
+		// UPDATES SCENE THROUGH SCRIPTS //
+		sceneManagement :: updateScene(core -> curSceneRef, core -> deltaTime);
 
 		// BEGINS RENDERING PHASE //
 		graphicManagement :: beginRenderPass(core);
 
 		// UI WORK //
-
-		// ImGui :: ShowDemoWindow();
 		uiManagement :: drawEditorUI(core);
 
 		// RENDERS CURRENT 3D SCENE //

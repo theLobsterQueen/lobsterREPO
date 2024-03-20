@@ -111,9 +111,6 @@ int main(int argv, char ** args)
 	std :: cout << "GLSL VERSION: " 
 		<< glGetString(GL_SHADING_LANGUAGE_VERSION) << std :: endl;
 
-	// CREATES GLOBAL VARIABLES //
-	globals :: globalInit();
-
 	// BEGINS ENGINE OPERATION //
 	appManagement :: begin(core);
 

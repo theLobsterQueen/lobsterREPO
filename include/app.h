@@ -30,8 +30,8 @@
 #include <light.h>
 #include <vendorIncludes.h>
 #include <ui.h>
-#include <globals.h>
 #include <APIUtils.h>
+#include <script.h>
 
 namespace appManagement
 {

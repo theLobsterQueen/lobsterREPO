@@ -1,8 +1,14 @@
-// INCLUDES DEFINITION FILE //
-#include <coreModule.h>
+// INCLUDES AND INITIALIZATIONS //
 
-// STATIC FILE-GLOBAL VARIABLES //
-const static std :: vector<std :: string> watchedMethods = WATCHED_METHODS;
+// STANDARD INCLUDES //
+#include <pybind11/pybind11.h>
+#include <pybind11/embed.h>
+#include <pybind11/stl.h>
+#include <iostream>
+
+// LOBSTER INCLUDES //
+#include <importantConstants.h>
+#include <entity.h>
 
 // MAKES THE SCRIPT MAP OPAQUE //
 PYBIND11_MAKE_OPAQUE(scriptContainer);
@@ -21,7 +27,6 @@ void printScriptContainer(scriptContainer scripts)
 	std :: cout << "Print out script container!" << std :: endl;
 	for(auto pair : scripts)
 	{
-		std :: cout << "\tScript " << pair.first << " has: " << std :: endl;
 		for(auto secondPair : pair.second)
 			std :: cout << "\t\t" << secondPair.first << std :: endl;
 	}
@@ -37,13 +42,4 @@ PYBIND11_MODULE(_coremodule, m)
 		+ std :: string("\tIt has all key functions necesarry for communicating with the fundamental\n")
 		+ std :: string("\tdata found in the Lobster Engine backend.")
 	).c_str();
-
-	pybind11 :: class_<scriptContainer>(m, "ScriptContainer")
-		.def("add_script", &addScript)
-		.def("add_script_func", &addScriptFunc)
- 		.def("out", &printScriptContainer);
-
-	// VARIABLE EXPORTS //
-	m.attr("scripts") = new scriptContainer;
-	m.attr("watched_methods") = watchedMethods;
 }

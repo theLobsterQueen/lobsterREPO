@@ -4,6 +4,7 @@ import datetime
 debugPath = "bin/debug"
 name = "LobsterEngine"
 extension = "elf"
+compileAll = False
 
 def compileDir(dirPath) :
     toCompile = []
@@ -13,6 +14,10 @@ def compileDir(dirPath) :
         # ADDS FILES TO COMPILE ARRAY IF VALID #
     for file in os.listdir(dirPath) :
         if file.endswith(".cpp") :
+            if compileAll :
+                toCompile.append(file)
+                continue
+
             fileName = os.path.splitext(file)[0] + ".o"
             try :
                 if(os.path.getmtime(dirPath + file) >= os.path.getmtime(f"./bin/prec/{fileName}")) :

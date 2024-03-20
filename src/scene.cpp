@@ -148,24 +148,11 @@ void sceneManagement :: renderScene(Scene * targetScene)
 std :: vector<entityID> sceneManagement :: sceneView
 	(Scene * inputScene, componentID compID)
 {
-	std :: vector<entityID> newVec;
-	unsigned int activeLeft = inputScene -> activeEntities;
-	unsigned short int entityIndex = 0;
-	Entity curEnt;
-	while(activeLeft > 0 && entityIndex < LOBSTER_MAX_ENTITIES)
+	std :: vector<entityID> newVec = { }; unsigned entityIndex = 0;
+	for(Entity curEnt : inputScene -> entities)
 	{
-		curEnt = inputScene -> entities[entityIndex];
-
-		if(curEnt.mask == 0)
-		{
-			entityIndex++;
-			continue;
-		}
-
 		if((curEnt.mask & (1 << compID)) > 0)
 			newVec.push_back(entityIndex);
-
-		activeLeft--;
 		entityIndex++;
 	}
 
@@ -520,5 +507,21 @@ void sceneManagement :: sceneOut(Scene * inputScene)
 			std :: cout << "\tHAS LIGHT!" << std :: endl;
 		if((curEntity.mask & (1 << CAMERA_COMP_ID)) >= 1)
 			std :: cout << "\tHAS CAMERA!" << std :: endl;
+	}
+}
+
+void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
+{
+	// CALLS THE UPDATE FUNCTION //
+	for(entityID curEnt : sceneManagement :: sceneView(inputScene, SCRIPT_COMP_ID))
+	{
+		Script * script = ((Script *) (inputScene -> components[SCRIPT_COMP_ID][curEnt]));
+		script -> code.attr("_update")(deltaTime);
+
+		// GETS DATA FROM SCRIPT AND APPLIES IT //
+		pybind11 :: dict retValue = script -> code.attr("_push_data")();
+		Entity entRef = inputScene -> entities[curEnt];
+		sceneManagement :: setData<std :: string>(retValue, entRef.name, "parent_name");
+		inputScene -> entities[curEnt] = entRef;
 	}
 }

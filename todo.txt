@@ -1,4 +1,3 @@
-Create basic framework for Python script integration
 Allow Python scripts to change component data
 Make UI interactable, introducing hotloading
 Create system for making project directories and manipulating file system through editor

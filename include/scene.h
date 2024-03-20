@@ -24,6 +24,9 @@
 #include <camera.h>
 #include <light.h>
 #include <utilities.h>
+#include <script.h>
+#include <APIUtils.h>
+#include <script.h>
 
 // STRUCT PROTOTYPES //
 struct EngineCore;
@@ -122,6 +125,25 @@ namespace sceneManagement
 	/// </summary> ///
 
 	void sceneOut(Scene * inputScene);
+
+	/// <summary> ///
+	///		Calls the update function on all scripts existing in the scene.
+	/// </summary> ///
+
+	void updateScene(Scene * inputScene, float deltaTime);
+
+	/// <summary> ///
+	///		This sets the value of a given item by a given entry in returned data dictionarys.
+	/// </summary> ///
+
+	template <class T>
+	void setData(pybind11 :: dict retValue, T& data, std :: string entryName)
+	{
+		try
+			{ data = retValue[entryName.c_str()].cast<T>(); }
+		catch(pybind11 :: error_already_set error)
+			{;}
+	}
 };
 
 #endif

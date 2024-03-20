@@ -192,6 +192,14 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 
 			ImGui :: Text("Mesh Data\n%s", curMesh -> name.c_str());
 		}
+
+		// RELAYS SCRIPT DATA //
+		if((activeEntity.mask & (1 << SCRIPT_COMP_ID)) >= 1)
+		{
+			Script * curScript = (Script *) (core -> curSceneRef -> components[SCRIPT_COMP_ID]
+				[core -> editorDataRef -> curActiveEntity]);
+			ImGui :: Text("Script Data\n%s", curScript -> name.c_str());
+		}
 	} ImGui :: End();
 
 	// DRAWS FILE SYSTEM //

@@ -13,6 +13,14 @@
 #include <APIUtils.h>
 
 // FUNCTIONS FOR THE COMPONENT //
+void setPosition(Transform& self, std :: vector<float> newVec)
+	{ self.position = newVec; }
+void translate(Transform& self, std :: vector<float> deltaVec)
+{
+	for(unsigned char i = 0; i < 3; i++)
+		self.rotation[i] += deltaVec[i];
+}
+
 void setRotation(Transform& self, std :: vector<float> newVec)
 	{ self.rotation = newVec; }
 void rotate(Transform& self, std :: vector<float> deltaVec)
@@ -26,6 +34,8 @@ PYBIND11_MODULE(_transformapi, m)
 {
 	pybind11 :: class_<Transform>(m, "Transform")
 		// BINDS FUNCTIONS //
+		.def("set_position", &setPosition)
+		.def("translate", &translate)
 		.def("set_rotation", &setRotation)
 		.def("rotate", &rotate)
 

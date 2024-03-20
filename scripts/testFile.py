@@ -11,7 +11,7 @@ class testFile(coremodule.BaseScript) :
         self.transRef.rotation = [ 0.0, 0.0, 0.0 ]
 
     def _update(self, delta_time) :
-        self.transRef.rotate([ 0, 90 * delta_time, 0 ])
+        self.transRef.rotate([ 0, 40 * delta_time, 0 ])
 
     # ATTRIBUTES #
     transRef = None

@@ -136,6 +136,9 @@ void appManagement :: initializeAPI()
 
 void appManagement :: compileScripts()
 {
+	// VARIABLE INITIALIZATION //
+	static bool firstTimeCompile = true;
+
 	// FINDS SCRIPT DIRECTORY //
 	std :: filesystem :: directory_iterator dirIt = 
 		std :: filesystem :: begin(std :: filesystem :: directory_iterator(std :: string
@@ -163,6 +166,16 @@ void appManagement :: compileScripts()
 		pybind11 :: exec(execStream.str().c_str());
 		fileStream.close();
 	}
+
+	// GOES THROUGH ALL ACTIVE SCRIPTS AND RELOADS THEM //
+	if(!firstTimeCompile)
+		for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
+		{
+			Script * script = ((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]));
+			globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt] = (compPtr) 
+				scriptHandler :: createScript(script -> name, curEnt); 
+		}
+	firstTimeCompile = false;
 }
 
 void appManagement :: startScripts()

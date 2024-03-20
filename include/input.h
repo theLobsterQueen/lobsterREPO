@@ -8,7 +8,7 @@
 
 // LOBSTER INCLUDES //
 #include <importantConstants.h>
-#include <engineCore.h>
+#include <globals.h>
 #include <entity.h>
 #include <camera.h>
 #include <utilities.h>
@@ -16,9 +16,6 @@
 
 // SDL/GL INCLUDES //
 #include <SDL2/SDL.h>
-
-// STRUCT PROTOTYPES //
-struct EngineCore;
 
 /// <summary> ///
 ///		This struct controls the state of what buttons are pressed, the state of
@@ -65,7 +62,7 @@ namespace inputManagement
 	///		TODO: Add support for selecting entities, using shortcuts, etc.
 	/// </summary> ///
 
-	void processInput(EngineCore * core, entityID cameraID);
+	void processInput(entityID cameraID);
 };
 
 #endif

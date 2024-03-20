@@ -183,11 +183,14 @@ void graphicManagement :: usePipeline(Pipeline * targetPipeline)
 	glUseProgram(targetPipeline -> program); 
 }
 
-void graphicManagement :: beginRenderPass(EngineCore * core)
+void graphicManagement :: beginRenderPass()
 {
 	// CLEARS SCREEN //
 	glClearColor
-		(core -> clearColor[0], core -> clearColor[1], core -> clearColor[2], core -> clearColor[3]);
+	(
+	 	globals :: clearColor[0], globals :: clearColor[1], 
+		globals :: clearColor[2], globals :: clearColor[3]
+	);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// PREPARES UI ELEMENTS //
@@ -196,11 +199,11 @@ void graphicManagement :: beginRenderPass(EngineCore * core)
 	ImGui::NewFrame();
 }
 
-void graphicManagement :: present(EngineCore * core)
+void graphicManagement :: present()
 { 
 	// RENDERS UI ELEMENTS //
 	ImGui :: Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-	SDL_GL_SwapWindow(core -> winRef); 
+	SDL_GL_SwapWindow(globals :: winRef); 
 }

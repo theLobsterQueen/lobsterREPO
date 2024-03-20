@@ -575,7 +575,6 @@ Data	./vendor/imgui.h	/^    T*                  Data;$/;"	m	struct:ImVector	type
 Data	./vendor/imgui.h	/^    void*           Data;               \/\/ Data (copied and owned by dear imgui)$/;"	m	struct:ImGuiPayload	typeref:typename:void *
 Data	./vendor/imgui_internal.h	/^    ImU8        Data[8];        \/\/ Can fit any data up to ImGuiDataType_COUNT$/;"	m	struct:ImGuiDataTypeTempStorage	typeref:typename:ImU8[8]
 Data	./vendor/imgui_internal.h	/^    T*                  Data;$/;"	m	struct:ImSpan	typeref:typename:T *
-DataBus	./include/dataBus.h	/^struct DataBus$/;"	s
 DataEnd	./vendor/imgui_internal.h	/^    T*                  DataEnd;$/;"	m	struct:ImSpan	typeref:typename:T *
 DataFrameCount	./vendor/imgui.h	/^    int             DataFrameCount;     \/\/ Data timestamp$/;"	m	struct:ImGuiPayload	typeref:typename:int
 DataSize	./vendor/imgui.h	/^    int             DataSize;           \/\/ Data size$/;"	m	struct:ImGuiPayload	typeref:typename:int
@@ -786,7 +785,6 @@ DummyDrawChannel	./vendor/imgui_internal.h	/^    ImGuiTableDrawChannelIdx    Dum
 EditTableColumnsFlags	./vendor/imgui_demo.cpp	/^static void EditTableColumnsFlags(ImGuiTableColumnFlags* p_flags)$/;"	f	typeref:typename:void	file:
 EditTableSizingFlags	./vendor/imgui_demo.cpp	/^static void EditTableSizingFlags(ImGuiTableFlags* p_flags)$/;"	f	typeref:typename:void	file:
 Edited	./vendor/imgui_internal.h	/^    bool                    Edited;                 \/\/ edited this frame$/;"	m	struct:ImGuiInputTextState	typeref:typename:bool
-EditorData	./include/editorData.h	/^struct EditorData$/;"	s
 ElemCount	./vendor/imgui.h	/^    unsigned int    ElemCount;          \/\/ 4    \/\/ Number of indices (multiple of 3) to be r/;"	m	struct:ImDrawCmd	typeref:typename:unsigned int
 Element	./vendor/imgui_demo.cpp	/^            enum Element { Element_Fire, Element_Earth, Element_Air, Element_Water, Element_COUN/;"	g	function:ShowDemoWindowWidgets	file:
 Element_Air	./vendor/imgui_demo.cpp	/^            enum Element { Element_Fire, Element_Earth, Element_Air, Element_Water, Element_COUN/;"	e	enum:ShowDemoWindowWidgets::Element	file:
@@ -830,7 +828,6 @@ EndTabBar	./vendor/imgui_widgets.cpp	/^void    ImGui::EndTabBar()$/;"	f	class:Im
 EndTabItem	./vendor/imgui_widgets.cpp	/^void    ImGui::EndTabItem()$/;"	f	class:ImGui	typeref:typename:void
 EndTable	./vendor/imgui_tables.cpp	/^void    ImGui::EndTable()$/;"	f	class:ImGui	typeref:typename:void
 EndTooltip	./vendor/imgui.cpp	/^void ImGui::EndTooltip()$/;"	f	class:ImGui	typeref:typename:void
-EngineCore	./include/engineCore.h	/^struct EngineCore$/;"	s
 Entity	./include/entity.h	/^struct Entity$/;"	s
 Entries	./vendor/imgui_internal.h	/^    ImVector<ImGuiKeyRoutingData>   Entries;$/;"	m	struct:ImGuiKeyRoutingTable	typeref:typename:ImVector<ImGuiKeyRoutingData>
 EntriesNext	./vendor/imgui_internal.h	/^    ImVector<ImGuiKeyRoutingData>   EntriesNext;                    \/\/ Double-buffer to avoid /;"	m	struct:ImGuiKeyRoutingTable	typeref:typename:ImVector<ImGuiKeyRoutingData>
@@ -1402,7 +1399,7 @@ HoveredRowLast	./vendor/imgui_internal.h	/^    int                         Hover
 HoveredRowNext	./vendor/imgui_internal.h	/^    int                         HoveredRowNext;             \/\/ Index of row hovered this frame/;"	m	struct:ImGuiTableInstanceData	typeref:typename:int
 HoveredWindow	./vendor/imgui_internal.h	/^    ImGuiWindow*            HoveredWindow;                      \/\/ Window the mouse is hoverin/;"	m	struct:ImGuiContext	typeref:typename:ImGuiWindow *
 HoveredWindowUnderMovingWindow	./vendor/imgui_internal.h	/^    ImGuiWindow*            HoveredWindowUnderMovingWindow;     \/\/ Hovered window ignoring Mov/;"	m	struct:ImGuiContext	typeref:typename:ImGuiWindow *
-ID	./include/entity.h	/^	entityID ID;$/;"	m	struct:Entity	typeref:typename:entityID
+ID	./include/entity.h	/^		entityID ID;$/;"	m	struct:Entity	typeref:typename:entityID
 ID	./vendor/imgui.h	/^    ImGuiID             ID;                     \/\/ Unique identifier for the viewport$/;"	m	struct:ImGuiViewport	typeref:typename:ImGuiID
 ID	./vendor/imgui_demo.cpp	/^    int         ID;$/;"	m	struct:__anon840594cf0211::MyItem	typeref:typename:int	file:
 ID	./vendor/imgui_internal.h	/^    ImGuiID                     ID;                     \/\/ Set to 0 to invalidate\/delete the /;"	m	struct:ImGuiTableSettings	typeref:typename:ImGuiID
@@ -3278,11 +3275,8 @@ LOBSTER_API_UTILS	./include/APIUtils.h	/^#define LOBSTER_API_UTILS /;"	d
 LOBSTER_APP	./include/app.h	/^#define LOBSTER_APP /;"	d
 LOBSTER_CAMERA_H	./include/camera.h	/^#define LOBSTER_CAMERA_H /;"	d
 LOBSTER_CONSTANTS	./include/importantConstants.h	/^#define LOBSTER_CONSTANTS /;"	d
-LOBSTER_DATA_H	./include/dataBus.h	/^#define LOBSTER_DATA_H$/;"	d
-LOBSTER_EDITOR_DATA_H	./include/editorData.h	/^#define LOBSTER_EDITOR_DATA_H /;"	d
-LOBSTER_ENGINE_CORE	./include/engineCore.h	/^#define LOBSTER_ENGINE_CORE /;"	d
+LOBSTER_ENGINE_CORE	./include/globals.h	/^#define LOBSTER_ENGINE_CORE /;"	d
 LOBSTER_ENTITY	./include/entity.h	/^#define LOBSTER_ENTITY /;"	d
-LOBSTER_GLOBALS_H	./include/globals.h	/^#define LOBSTER_GLOBALS_H /;"	d
 LOBSTER_INPUT	./include/input.h	/^#define LOBSTER_INPUT /;"	d
 LOBSTER_LIGHT_H	./include/light.h	/^#define LOBSTER_LIGHT_H /;"	d
 LOBSTER_MATH_H	./include/math.h	/^#define LOBSTER_MATH_H /;"	d
@@ -3486,6 +3480,7 @@ NAV_WINDOWING_HIGHLIGHT_DELAY	./vendor/imgui.cpp	/^static const float NAV_WINDOW
 NAV_WINDOWING_LIST_APPEAR_DELAY	./vendor/imgui.cpp	/^static const float NAV_WINDOWING_LIST_APPEAR_DELAY          = 0.15f;    \/\/ Time before the win/;"	v	typeref:typename:const float	file:
 NOMINMAX	./vendor/imgui.cpp	/^#define NOMINMAX$/;"	d	file:
 NORMAL_VEC	./include/importantConstants.h	/^#define NORMAL_VEC	/;"	d
+NULL_COMP_ID	./include/importantConstants.h	/^#define NULL_COMP_ID	/;"	d
 Name	./vendor/imgui.h	/^    char            Name[40];               \/\/ Name (strictly to ease debugging)$/;"	m	struct:ImFontConfig	typeref:typename:char[40]
 Name	./vendor/imgui_demo.cpp	/^                const char*     Name;$/;"	m	struct:ShowDemoWindowTables::MyTreeNode	typeref:typename:const char *	file:
 Name	./vendor/imgui_demo.cpp	/^    const char* Name;       \/\/ Document title$/;"	m	struct:MyDocument	typeref:typename:const char *	file:
@@ -3727,8 +3722,9 @@ POSITION_VEC	./include/importantConstants.h	/^#define POSITION_VEC	/;"	d
 PRId64	./vendor/imgui_demo.cpp	/^#define PRId64 /;"	d	file:
 PRIu64	./vendor/imgui_demo.cpp	/^#define PRIu64 /;"	d	file:
 PYBIND11_MODULE	./srcAPI/coreModule.cpp	/^PYBIND11_MODULE(_coremodule, m)$/;"	f
-PYBIND11_MODULE	./srcAPI/dataBusAPI.cpp	/^PYBIND11_MODULE(_databusapi, m)$/;"	f
 PYBIND11_MODULE	./srcAPI/entityAPI.cpp	/^PYBIND11_MODULE(_entityapi, m)$/;"	f
+PYBIND11_MODULE	./srcAPI/sceneAPI.cpp	/^PYBIND11_MODULE(_sceneapi, m)$/;"	f
+PYBIND11_MODULE	./srcAPI/transformAPI.cpp	/^PYBIND11_MODULE(_transformapi, m)$/;"	f
 PY_SSIZE_T_CLEAN	./src/main.cpp	/^#define PY_SSIZE_T_CLEAN$/;"	d	file:
 PackIdLines	./vendor/imgui.h	/^    int                         PackIdLines;        \/\/ Custom texture rectangle ID for baked a/;"	m	struct:ImFontAtlas	typeref:typename:int
 PackIdMouseCursors	./vendor/imgui.h	/^    int                         PackIdMouseCursors; \/\/ Custom texture rectangle ID for white p/;"	m	struct:ImFontAtlas	typeref:typename:int
@@ -4859,7 +4855,6 @@ VisibleTabWasSubmitted	./vendor/imgui_internal.h	/^    bool                Visib
 VtxBuffer	./vendor/imgui.h	/^    ImVector<ImDrawVert>    VtxBuffer;          \/\/ Vertex buffer.$/;"	m	struct:ImDrawList	typeref:typename:ImVector<ImDrawVert>
 VtxOffset	./vendor/imgui.h	/^    unsigned int    VtxOffset;          \/\/ 4    \/\/ Start offset in vertex buffer. ImGuiBacke/;"	m	struct:ImDrawCmd	typeref:typename:unsigned int
 VtxOffset	./vendor/imgui.h	/^    unsigned int    VtxOffset;$/;"	m	struct:ImDrawCmdHeader	typeref:typename:unsigned int
-WATCHED_METHODS	./include/importantConstants.h	/^#define WATCHED_METHODS	/;"	d
 WIN32_LEAN_AND_MEAN	./vendor/imgui.cpp	/^#define WIN32_LEAN_AND_MEAN$/;"	d	file:
 WIN32_LEAN_AND_MEAN	./vendor/imgui_impl_opengl3_loader.h	/^#define WIN32_LEAN_AND_MEAN /;"	d
 WINDOWS_HOVER_PADDING	./vendor/imgui.cpp	/^static const float WINDOWS_HOVER_PADDING                    = 4.0f;     \/\/ Extend outside wind/;"	v	typeref:typename:const float	file:
@@ -5068,21 +5063,19 @@ __anonecd446350f08	./vendor/imstb_truetype.h	/^{$/;"	s
 __anonecd446351008	./vendor/imstb_truetype.h	/^{$/;"	s
 __anonecd446351108	./vendor/imstb_truetype.h	/^{$/;"	s
 __anonecd446351208	./vendor/imstb_truetype.h	/^{$/;"	s
-__del__	./modulesAPI/coremodule.py	/^    def __del__(self) :$/;"	m	class:BaseScript
 __gl3w_h_	./vendor/imgui_impl_opengl3_loader.h	/^#define __gl3w_h_$/;"	d
 __gl_glcorearb_h_	./vendor/imgui_impl_opengl3_loader.h	/^#define __gl_glcorearb_h_ /;"	d
 __gl_h_	./vendor/imgui_impl_opengl3_loader.h	/^#define __gl_h_$/;"	d
-__init__	./modulesAPI/coremodule.py	/^    def __init__(self) :$/;"	m	class:BaseScript
+__init__	./modulesAPI/coremodule.py	/^    def __init__(self, entity_id) :$/;"	m	class:BaseScript
+_get_component	./modulesAPI/coremodule.py	/^    def _get_component(self, comp) :$/;"	m	class:BaseScript
 _grow_capacity	./vendor/imgui.h	/^    inline int          _grow_capacity(int sz) const        { int new_capacity = Capacity ? (Cap/;"	f	struct:ImVector	typeref:typename:int
 _push_data	./modulesAPI/coremodule.py	/^    def _push_data(self) :$/;"	m	class:BaseScript
-_set_parent	./modulesAPI/coremodule.py	/^    def _set_parent(self, inputParent) :$/;"	m	class:BaseScript
+_set_data	./modulesAPI/coremodule.py	/^    def _set_data(self, name, item) :$/;"	m	class:BaseScript
 _start	./scripts/testFile.py	/^    def _start(self) :$/;"	m	class:testFile
 _update	./scripts/testFile.py	/^    def _update(self, delta_time) :$/;"	m	class:testFile
 activeEntities	./include/scene.h	/^	unsigned short int activeEntities = 0;$/;"	m	struct:Scene	typeref:typename:unsigned short int
 active_head	./vendor/imstb_rectpack.h	/^   stbrp_node *active_head;$/;"	m	struct:stbrp_context	typeref:typename:stbrp_node *
 addComp	./src/scene.cpp	/^void sceneManagement :: addComp$/;"	f	class:sceneManagement	typeref:typename:void
-addScript	./srcAPI/coreModule.cpp	/^void addScript(scriptContainer& scripts, std :: string scriptName)$/;"	f	typeref:typename:void
-addScriptFunc	./srcAPI/coreModule.cpp	/^void addScriptFunc$/;"	f	typeref:typename:void
 advance	./vendor/imstb_truetype.h	/^   int advance;$/;"	m	struct:stbtt_kerningentry	typeref:typename:int
 align	./vendor/imstb_rectpack.h	/^   int align;$/;"	m	struct:stbrp_context	typeref:typename:int
 all_a	./vendor/stb_image.h	/^   unsigned int mr,mg,mb,ma, all_a;$/;"	m	struct:__anon212c1e401008	typeref:typename:unsigned int
@@ -5096,24 +5089,25 @@ appendf	./vendor/imgui.cpp	/^void ImGuiTextBuffer::appendf(const char* fmt, ...)
 appendfv	./vendor/imgui.cpp	/^void ImGuiTextBuffer::appendfv(const char* fmt, va_list args)$/;"	f	class:ImGuiTextBuffer	typeref:typename:void
 array_of_unicode_codepoints	./vendor/imstb_truetype.h	/^   int *array_of_unicode_codepoints;       \/\/ if non-zero, then this is an array of unicode co/;"	m	struct:__anonecd446350508	typeref:typename:int *
 aspectRatio	./include/camera.h	/^	float aspectRatio;$/;"	m	struct:Camera	typeref:typename:float
-attachedEntity	./include/script.h	/^	Entity * attachedEntity;$/;"	m	struct:Script	typeref:typename:Entity *
 b	./vendor/imgui.h	/^        const char*     b;$/;"	m	struct:ImGuiTextFilter::ImGuiTextRange	typeref:typename:const char *
 back	./vendor/imgui.h	/^    inline T&           back()                              { IM_ASSERT(Size > 0); return Data[S/;"	f	struct:ImVector	typeref:typename:T &
 back	./vendor/imgui.h	/^    inline const T&     back() const                        { IM_ASSERT(Size > 0); return Data[S/;"	f	struct:ImVector	typeref:typename:const T &
 background	./vendor/stb_image.h	/^   stbi_uc *background;          \/\/ The current "background" as far as a gif is concerned$/;"	m	struct:__anon212c1e401308	typeref:typename:stbi_uc *
 baseline_y_delta	./vendor/imstb_textedit.h	/^   float baseline_y_delta;  \/\/ position of baseline relative to previous row's baseline$/;"	m	struct:__anon25749c3e0408	typeref:typename:float
-begin	./src/app.cpp	/^void appManagement :: begin(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
+begin	./src/app.cpp	/^void appManagement :: begin()$/;"	f	class:appManagement	typeref:typename:void
 begin	./vendor/imgui.h	/^    const char*         begin() const           { return Buf.Data ? &Buf.front() : EmptyString; /;"	f	struct:ImGuiTextBuffer	typeref:typename:const char *
 begin	./vendor/imgui.h	/^    inline T*           begin()                             { return Data; }$/;"	f	struct:ImVector	typeref:typename:T *
 begin	./vendor/imgui.h	/^    inline const T*     begin() const                       { return Data; }$/;"	f	struct:ImVector	typeref:typename:const T *
 begin	./vendor/imgui_internal.h	/^    T*      begin()                     { size_t HDR_SZ = 4; if (!Buf.Data) return NULL; return /;"	f	struct:ImChunkStream	typeref:typename:T *
 begin	./vendor/imgui_internal.h	/^    inline T*           begin()                     { return Data; }$/;"	f	struct:ImSpan	typeref:typename:T *
 begin	./vendor/imgui_internal.h	/^    inline const T*     begin() const               { return Data; }$/;"	f	struct:ImSpan	typeref:typename:const T *
-beginRenderPass	./src/graphics.cpp	/^void graphicManagement :: beginRenderPass(EngineCore * core)$/;"	f	class:graphicManagement	typeref:typename:void
+beginRenderPass	./src/graphics.cpp	/^void graphicManagement :: beginRenderPass()$/;"	f	class:graphicManagement	typeref:typename:void
 bgindex	./vendor/stb_image.h	/^   int flags, bgindex, ratio, transparent, eflags;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 bits_per_channel	./vendor/stb_image.h	/^   int bits_per_channel;$/;"	m	struct:__anon212c1e400508	typeref:typename:int
-bottomPanelHeight	./include/editorData.h	/^	float bottomPanelHeight = 0;$/;"	m	struct:EditorData	typeref:typename:float
-bottomPanelWidth	./include/editorData.h	/^	float bottomPanelWidth = 0;$/;"	m	struct:EditorData	typeref:typename:float
+bottomPanelHeight	./globals.cpp	/^float editorGlobals :: bottomPanelHeight;$/;"	m	class:editorGlobals 	typeref:typename:float
+bottomPanelHeight	./src/globals.cpp	/^float editorGlobals :: bottomPanelHeight;$/;"	m	class:editorGlobals 	typeref:typename:float
+bottomPanelWidth	./globals.cpp	/^float editorGlobals :: bottomPanelWidth;$/;"	m	class:editorGlobals 	typeref:typename:float
+bottomPanelWidth	./src/globals.cpp	/^float editorGlobals :: bottomPanelWidth;$/;"	m	class:editorGlobals 	typeref:typename:float
 bottom_y	./vendor/imstb_truetype.h	/^   int x,y,bottom_y;$/;"	m	struct:__anonecd446351108	typeref:typename:int
 bounds	./vendor/imstb_truetype.h	/^   int bounds;$/;"	m	struct:__anonecd446350f08	typeref:typename:int
 bpp	./vendor/stb_image.h	/^   int bpp, offset, hsz;$/;"	m	struct:__anon212c1e401008	typeref:typename:int
@@ -5124,7 +5118,7 @@ callback_already_read	./vendor/stb_image.h	/^   int callback_already_read;$/;"	m
 cameraHandler	./include/camera.h	/^namespace cameraHandler$/;"	n
 capacity	./vendor/imgui.h	/^    inline int          capacity() const                    { return Capacity; }$/;"	f	struct:ImVector	typeref:typename:int
 cff	./vendor/imstb_truetype.h	/^   stbtt__buf cff;                    \/\/ cff font data$/;"	m	struct:stbtt_fontinfo	typeref:typename:stbtt__buf
-changeScene	./src/scene.cpp	/^void sceneManagement :: changeScene(EngineCore * core, Scene * targetScene)$/;"	f	class:sceneManagement	typeref:typename:void
+changeScene	./src/scene.cpp	/^void sceneManagement :: changeScene(Scene * targetScene)$/;"	f	class:sceneManagement	typeref:typename:void
 changeTitle	./src/window.cpp	/^void windowManagement :: changeTitle(SDL_Window * window, std :: string windowName)$/;"	f	class:windowManagement	typeref:typename:void
 channel	./vendor/stb_image.h	/^   stbi_uc size,type,channel;$/;"	m	struct:__anon212c1e401108	typeref:typename:stbi_uc
 channel_order	./vendor/stb_image.h	/^   int channel_order;$/;"	m	struct:__anon212c1e400508	typeref:typename:int
@@ -5137,11 +5131,13 @@ clear	./vendor/imgui.h	/^    inline void         clear()                        
 clear	./vendor/imgui.h	/^    void                clear()                 { Buf.clear(); }$/;"	f	struct:ImGuiTextBuffer	typeref:typename:void
 clear	./vendor/imgui_internal.h	/^    void            clear()                                 { LineOffsets.clear(); EndOffset = 0/;"	f	struct:ImGuiTextIndex	typeref:typename:void
 clear	./vendor/imgui_internal.h	/^    void    clear()                     { Buf.clear(); }$/;"	f	struct:ImChunkStream	typeref:typename:void
-clearColor	./include/engineCore.h	/^	float clearColor[4] = { 0.1f, 0.1f, 0.4f, 0.0f };$/;"	m	struct:EngineCore	typeref:typename:float[4]
+clearColor	./globals.cpp	/^float globals :: clearColor[4];$/;"	m	class:globals 	typeref:typename:float[4]
+clearColor	./src/globals.cpp	/^float globals :: clearColor[4];$/;"	m	class:globals 	typeref:typename:float[4]
 clear_delete	./vendor/imgui.h	/^    inline void         clear_delete()                      { for (int n = 0; n < Size; n++) IM_/;"	f	struct:ImVector	typeref:typename:void
 clear_destruct	./vendor/imgui.h	/^    inline void         clear_destruct()                    { for (int n = 0; n < Size; n++) Dat/;"	f	struct:ImVector	typeref:typename:void
 close_libgl	./vendor/imgui_impl_opengl3_loader.h	/^static void close_libgl(void) { FreeLibrary(libgl); }$/;"	f	typeref:typename:void
 cntrlPressed	./include/input.h	/^	bool cntrlPressed = false;$/;"	m	struct:InputState	typeref:typename:bool
+code	./include/script.h	/^	pybind11 :: object code;$/;"	m	struct:Script	typeref:typename:pybind11::object
 code	./vendor/stb_image.h	/^   stbi__uint16 code[256];$/;"	m	struct:__anon212c1e400708	typeref:typename:stbi__uint16[256]
 code_bits	./vendor/stb_image.h	/^   int            code_bits;   \/\/ number of valid bits$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 code_buffer	./vendor/stb_image.h	/^   stbi__uint32   code_buffer; \/\/ jpeg entropy-coded buffer$/;"	m	struct:__anon212c1e400808	typeref:typename:stbi__uint32
@@ -5158,7 +5154,7 @@ compileAll	./makeFile.py	/^compileAll = False$/;"	v
 compileAll	./scriptFile.py	/^compileAll = False$/;"	v
 compileDir	./makeFile.py	/^def compileDir(dirPath) :$/;"	f
 compileProgram	./src/graphics.cpp	/^void graphicManagement :: compileProgram(Pipeline * targetPipeline)$/;"	f	class:graphicManagement	typeref:typename:void
-compileScripts	./src/app.cpp	/^void appManagement :: compileScripts(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
+compileScripts	./src/app.cpp	/^void appManagement :: compileScripts()$/;"	f	class:appManagement	typeref:typename:void
 componentID	./include/importantConstants.h	/^typedef unsigned char 			componentID;$/;"	t	typeref:typename:unsigned char
 componentMask	./include/importantConstants.h	/^typedef unsigned int 			componentMask;$/;"	t	typeref:typename:unsigned int
 components	./include/scene.h	/^	char * components[LOBSTER_MAX_COMPONENTS][LOBSTER_MAX_ENTITIES] = { };	$/;"	m	struct:Scene	typeref:typename:char * [][]
@@ -5166,21 +5162,22 @@ const_iterator	./vendor/imgui.h	/^    typedef const value_type*   const_iterator
 contains	./vendor/imgui.h	/^    inline bool         contains(const T& v) const          { const T* data = Data;  const T* da/;"	f	struct:ImVector	typeref:typename:bool
 coremodule	./src/APIUtils.cpp	/^pybind11 :: module APIGlobals :: coremodule;$/;"	m	class:APIGlobals 	typeref:typename:pybind11::module
 createCamera	./src/camera.cpp	/^Camera * cameraHandler :: createCamera(float inputAspect, Pipeline * inputPipeline)$/;"	f	class:cameraHandler	typeref:typename:Camera *
-createEditorData	./src/editorData.cpp	/^EditorData * editorManagement :: createEditorData(EngineCore * core)$/;"	f	class:editorManagement	typeref:typename:EditorData *
 createInputState	./src/input.cpp	/^InputState * inputManagement :: createInputState()$/;"	f	class:inputManagement	typeref:typename:InputState *
 createLight	./src/light.cpp	/^Light * lightHandler :: createLight(std :: vector<float> lightColor)$/;"	f	class:lightHandler	typeref:typename:Light *
 createMesh	./src/mesh.cpp	/^Mesh * meshHandler :: createMesh$/;"	f	class:meshHandler	typeref:typename:Mesh *
 createPipeline	./src/graphics.cpp	/^Pipeline * graphicManagement :: createPipeline()$/;"	f	class:graphicManagement	typeref:typename:Pipeline *
 createScene	./src/scene.cpp	/^Scene * sceneManagement :: createScene(std :: string inputName)$/;"	f	class:sceneManagement	typeref:typename:Scene *
-createScript	./src/script.cpp	/^Script * scriptHandler :: createScript(std :: string scriptName)$/;"	f	class:scriptHandler	typeref:typename:Script *
-createTestScene	./src/app.cpp	/^void appManagement :: createTestScene(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
+createScript	./src/script.cpp	/^Script * scriptHandler :: createScript(std :: string scriptName, entityID entRef)$/;"	f	class:scriptHandler	typeref:typename:Script *
+createTestScene	./src/app.cpp	/^void appManagement :: createTestScene()$/;"	f	class:appManagement	typeref:typename:void
 createTexture	./src/texture.cpp	/^Texture * textureHandler :: createTexture(std :: string textureName)$/;"	f	class:textureHandler	typeref:typename:Texture *
 createTransform	./src/transform.cpp	/^Transform * transformHandler :: createTransform$/;"	f	class:transformHandler	typeref:typename:Transform *
 createTransform	./src/transform.cpp	/^Transform * transformHandler :: createTransform()$/;"	f	class:transformHandler	typeref:typename:Transform *
 cross	./src/math.cpp	/^std :: vector<float> math :: cross(std :: vector<float> x, std :: vector<float> y)$/;"	f	class:math	typeref:typename:std::vector<float>
-curActiveEntity	./include/editorData.h	/^	entityID curActiveEntity;$/;"	m	struct:EditorData	typeref:typename:entityID
+curActiveEntity	./globals.cpp	/^entityID editorGlobals :: curActiveEntity;$/;"	m	class:editorGlobals 	typeref:typename:entityID
+curActiveEntity	./src/globals.cpp	/^entityID editorGlobals :: curActiveEntity;$/;"	m	class:editorGlobals 	typeref:typename:entityID
 curPipelineRef	./include/camera.h	/^	Pipeline * curPipelineRef;$/;"	m	struct:Camera	typeref:typename:Pipeline *
-curSceneRef	./include/engineCore.h	/^	Scene * curSceneRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:Scene *
+curSceneRef	./globals.cpp	/^Scene * globals :: curSceneRef;$/;"	m	class:globals 	typeref:typename:Scene *
+curSceneRef	./src/globals.cpp	/^Scene * globals :: curSceneRef;$/;"	m	class:globals 	typeref:typename:Scene *
 cur_x	./vendor/stb_image.h	/^   int cur_x, cur_y;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 cur_y	./vendor/stb_image.h	/^   int cur_x, cur_y;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 cursor	./vendor/imstb_textedit.h	/^   int cursor;$/;"	m	struct:__anon25749c3e0308	typeref:typename:int
@@ -5217,26 +5214,25 @@ dct_widen	./vendor/stb_image.h	/^   #define dct_widen(/;"	d
 dct_widen	./vendor/stb_image.h	/^#define dct_widen(/;"	d
 dct_wsub	./vendor/stb_image.h	/^   #define dct_wsub(/;"	d
 dct_wsub	./vendor/stb_image.h	/^#define dct_wsub(/;"	d
-debug	./include/engineCore.h	/^	bool debug = true;$/;"	m	struct:EngineCore	typeref:typename:bool
 debugPath	./makeFile.py	/^debugPath = "bin\/debug"$/;"	v
 delay	./vendor/stb_image.h	/^   int delay;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 deleteEntity	./src/scene.cpp	/^void sceneManagement :: deleteEntity(Scene * targetScene, entityID entityIndex)$/;"	f	class:sceneManagement	typeref:typename:void
 delete_length	./vendor/imstb_textedit.h	/^   IMSTB_TEXTEDIT_POSITIONTYPE  delete_length;$/;"	m	struct:__anon25749c3e0108	typeref:typename:IMSTB_TEXTEDIT_POSITIONTYPE
 delta	./vendor/stb_image.h	/^   int    delta[17];   \/\/ old 'firstsymbol' - old 'firstcode'$/;"	m	struct:__anon212c1e400708	typeref:typename:int[17]
-deltaTime	./include/engineCore.h	/^	double deltaTime = 0;$/;"	m	struct:EngineCore	typeref:typename:double
+deltaTime	./globals.cpp	/^double globals :: deltaTime;$/;"	m	class:globals 	typeref:typename:double
+deltaTime	./src/globals.cpp	/^double globals :: deltaTime;$/;"	m	class:globals 	typeref:typename:double
 depth	./vendor/stb_image.h	/^   int depth;$/;"	m	struct:__anon212c1e400e08	typeref:typename:int
 dequant	./vendor/stb_image.h	/^   stbi__uint16 dequant[4][64];$/;"	m	struct:__anon212c1e400808	typeref:typename:stbi__uint16[4][64]
 direction	./vendor/imstb_truetype.h	/^   float direction;$/;"	m	struct:stbtt__active_edge	typeref:typename:float
 direction	./vendor/imstb_truetype.h	/^   int direction;$/;"	m	struct:stbtt__active_edge	typeref:typename:int
 dot	./src/math.cpp	/^float math :: dot$/;"	f	class:math	typeref:typename:float
 dot	./src/math.cpp	/^float math :: dot(std :: vector<float> x, std :: vector<float> y)$/;"	f	class:math	typeref:typename:float
-drawEditorUI	./src/ui.cpp	/^void uiManagement :: drawEditorUI(EngineCore * core)$/;"	f	class:uiManagement	typeref:typename:void
+drawEditorUI	./src/ui.cpp	/^void uiManagement :: drawEditorUI()$/;"	f	class:uiManagement	typeref:typename:void
 drawMesh	./src/mesh.cpp	/^void meshHandler :: drawMesh(Mesh * inputMesh)$/;"	f	class:meshHandler	typeref:typename:void
 duplicateTransform	./src/transform.cpp	/^Transform * transformHandler :: duplicateTransform(Transform * base)$/;"	f	class:transformHandler	typeref:typename:Transform *
 dx	./vendor/imstb_truetype.h	/^   int x,dx;$/;"	m	struct:stbtt__active_edge	typeref:typename:int
 e	./vendor/imgui.h	/^        const char*     e;$/;"	m	struct:ImGuiTextFilter::ImGuiTextRange	typeref:typename:const char *
-editorDataRef	./include/engineCore.h	/^	EditorData * editorDataRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:EditorData *
-editorManagement	./include/editorData.h	/^namespace editorManagement$/;"	n
+editorGlobals	./include/globals.h	/^namespace editorGlobals$/;"	n
 eflags	./vendor/stb_image.h	/^   int flags, bgindex, ratio, transparent, eflags;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 empty	./vendor/imgui.h	/^        bool            empty() const                   { return b == e; }$/;"	f	struct:ImGuiTextFilter::ImGuiTextRange	typeref:typename:bool
 empty	./vendor/imgui.h	/^    bool                empty() const           { return Buf.Size <= 1; }$/;"	f	struct:ImGuiTextBuffer	typeref:typename:bool
@@ -5249,9 +5245,9 @@ end	./vendor/imgui_internal.h	/^    T*      end()                       { return
 end	./vendor/imgui_internal.h	/^    inline T*           end()                       { return DataEnd; }$/;"	f	struct:ImSpan	typeref:typename:T *
 end	./vendor/imgui_internal.h	/^    inline const T*     end() const                 { return DataEnd; }$/;"	f	struct:ImSpan	typeref:typename:const T *
 entities	./include/scene.h	/^	Entity entities[LOBSTER_MAX_ENTITIES] = { };$/;"	m	struct:Scene	typeref:typename:Entity[]
-entity	./include/dataBus.h	/^	Entity entity;$/;"	m	struct:DataBus	typeref:typename:Entity
 entityID	./include/importantConstants.h	/^typedef unsigned short int  	entityID;$/;"	t	typeref:typename:unsigned short int
-entitySelected	./include/editorData.h	/^	bool entitySelected = false;$/;"	m	struct:EditorData	typeref:typename:bool
+entitySelected	./globals.cpp	/^bool editorGlobals :: entitySelected;$/;"	m	class:editorGlobals 	typeref:typename:bool
+entitySelected	./src/globals.cpp	/^bool editorGlobals :: entitySelected;$/;"	m	class:editorGlobals 	typeref:typename:bool
 eob_run	./vendor/stb_image.h	/^   int            eob_run;$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 eof	./vendor/stb_image.h	/^   int      (*eof)   (void *user);                       \/\/ returns nonzero if we are at end o/;"	m	struct:__anon212c1e400208	typeref:typename:int (*)(void * user)
 equal	./vendor/imstb_truetype.h	/^static int equal(float *a, float *b)$/;"	f	typeref:typename:int
@@ -5301,11 +5297,12 @@ fx	./vendor/imstb_truetype.h	/^   float fx,fdx,fdy;$/;"	m	struct:stbtt__active_e
 getCameraEntityID	./src/scene.cpp	/^bool sceneManagement :: getCameraEntityID(Scene * targetScene, entityID * entHolder)$/;"	f	class:sceneManagement	typeref:typename:bool
 getCol	./include/math.h	/^		std :: vector<float> getCol(unsigned int colIndex)$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
 getCols	./include/math.h	/^		unsigned int getCols()$/;"	f	class:LobMatrix	typeref:typename:unsigned int
+getComponent	./srcAPI/sceneAPI.cpp	/^Transform getComponent(Scene inputScene, entityID id, std :: string name)$/;"	f	typeref:typename:Transform
 getData	./include/math.h	/^		float * getData()$/;"	f	class:LobMatrix	typeref:typename:float *
+getEntity	./srcAPI/sceneAPI.cpp	/^pybind11 :: object getEntity(Scene inputScene, entityID id)$/;"	f	typeref:typename:pybind11::object
 getGlobalPosition	./src/transform.cpp	/^std :: vector<float> transformHandler :: getGlobalPosition(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:std::vector<float>
 getMeshFromPLY	./src/mesh.cpp	/^Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)$/;"	f	class:meshHandler	typeref:typename:Mesh *
 getModelWorldMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getModelWorldMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
-getName	./srcAPI/entityAPI.cpp	/^std :: string getName(Entity * targetEntity)$/;"	f	typeref:typename:std::string
 getPoint	./include/math.h	/^		float getPoint(unsigned int y, unsigned int x)$/;"	f	class:LobMatrix	typeref:typename:float
 getRotateMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getRotateMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
 getRow	./include/math.h	/^		std :: vector<float> getRow(unsigned int rowIndex)$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
@@ -5372,7 +5369,8 @@ glLinkProgram	./vendor/imgui_impl_opengl3_loader.h	/^#define glLinkProgram /;"	d
 glPixelStorei	./vendor/imgui_impl_opengl3_loader.h	/^#define glPixelStorei /;"	d
 glPolygonMode	./vendor/imgui_impl_opengl3_loader.h	/^#define glPolygonMode /;"	d
 glReadPixels	./vendor/imgui_impl_opengl3_loader.h	/^#define glReadPixels /;"	d
-glRef	./include/engineCore.h	/^	void * glRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:void *
+glRef	./globals.cpp	/^void * globals :: glRef;$/;"	m	class:globals 	typeref:typename:void *
+glRef	./src/globals.cpp	/^void * globals :: glRef;$/;"	m	class:globals 	typeref:typename:void *
 glScissor	./vendor/imgui_impl_opengl3_loader.h	/^#define glScissor /;"	d
 glShaderSource	./vendor/imgui_impl_opengl3_loader.h	/^#define glShaderSource /;"	d
 glTexImage2D	./vendor/imgui_impl_opengl3_loader.h	/^#define glTexImage2D /;"	d
@@ -5382,7 +5380,6 @@ glUniformMatrix4fv	./vendor/imgui_impl_opengl3_loader.h	/^#define glUniformMatri
 glUseProgram	./vendor/imgui_impl_opengl3_loader.h	/^#define glUseProgram /;"	d
 glVertexAttribPointer	./vendor/imgui_impl_opengl3_loader.h	/^#define glVertexAttribPointer /;"	d
 glViewport	./vendor/imgui_impl_opengl3_loader.h	/^#define glViewport /;"	d
-globalInit	./src/globals.cpp	/^void globals :: globalInit()$/;"	f	class:globals	typeref:typename:void
 globals	./include/globals.h	/^namespace globals$/;"	n
 glyf	./vendor/imstb_truetype.h	/^   int loca,head,glyf,hhea,hmtx,kern,gpos,svg; \/\/ table locations as offset from start of .ttf$/;"	m	struct:stbtt_fontinfo	typeref:typename:int
 glyph1	./vendor/imstb_truetype.h	/^   int glyph1; \/\/ use stbtt_FindGlyphIndex$/;"	m	struct:stbtt_kerningentry	typeref:typename:int
@@ -5451,10 +5448,11 @@ index_from_ptr	./vendor/imgui.h	/^    inline int          index_from_ptr(const T
 index_from_ptr	./vendor/imgui_internal.h	/^    inline int  index_from_ptr(const T* it) const   { IM_ASSERT(it >= Data && it < DataEnd); con/;"	f	struct:ImSpan	typeref:typename:int
 index_map	./vendor/imstb_truetype.h	/^   int index_map;                     \/\/ a cmap mapping for our chosen character encoding$/;"	m	struct:stbtt_fontinfo	typeref:typename:int
 init_mode	./vendor/imstb_rectpack.h	/^   int init_mode;$/;"	m	struct:stbrp_context	typeref:typename:int
-initializeAPI	./src/app.cpp	/^void appManagement :: initializeAPI(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
+initializeAPI	./src/app.cpp	/^void appManagement :: initializeAPI()$/;"	f	class:appManagement	typeref:typename:void
 initialized	./vendor/imstb_textedit.h	/^   unsigned char initialized;$/;"	m	struct:__anon25749c3e0308	typeref:typename:unsigned char
 inputManagement	./include/input.h	/^namespace inputManagement$/;"	n
-inputState	./include/engineCore.h	/^	InputState * inputState = nullptr;$/;"	m	struct:EngineCore	typeref:typename:InputState *
+inputState	./globals.cpp	/^InputState * globals :: inputState;$/;"	m	class:globals 	typeref:typename:InputState *
+inputState	./src/globals.cpp	/^InputState * globals :: inputState;$/;"	m	class:globals 	typeref:typename:InputState *
 insert	./vendor/imgui.h	/^    inline T*           insert(const T* it, const T& v)     { IM_ASSERT(it >= Data && it <= Data/;"	f	struct:ImVector	typeref:typename:T *
 insert_length	./vendor/imstb_textedit.h	/^   IMSTB_TEXTEDIT_POSITIONTYPE  insert_length;$/;"	m	struct:__anon25749c3e0108	typeref:typename:IMSTB_TEXTEDIT_POSITIONTYPE
 insert_mode	./vendor/imstb_textedit.h	/^   unsigned char insert_mode;$/;"	m	struct:__anon25749c3e0308	typeref:typename:unsigned char
@@ -5463,7 +5461,8 @@ inverse	./src/math.cpp	/^LobMatrix math :: inverse(LobMatrix inputMat)$/;"	f	cla
 invert	./vendor/imstb_truetype.h	/^   int invert;$/;"	m	struct:stbtt__edge	typeref:typename:int
 io	./vendor/stb_image.h	/^   stbi_io_callbacks io;$/;"	m	struct:__anon212c1e400308	typeref:typename:stbi_io_callbacks
 io_user_data	./vendor/stb_image.h	/^   void *io_user_data;$/;"	m	struct:__anon212c1e400308	typeref:typename:void *
-isRunning	./include/engineCore.h	/^	bool isRunning = true;$/;"	m	struct:EngineCore	typeref:typename:bool
+isRunning	./globals.cpp	/^bool globals :: isRunning;$/;"	m	class:globals 	typeref:typename:bool
+isRunning	./src/globals.cpp	/^bool globals :: isRunning;$/;"	m	class:globals 	typeref:typename:bool
 is_separator	./vendor/imgui_widgets.cpp	/^static bool is_separator(unsigned int c)$/;"	f	namespace:ImStb	typeref:typename:bool	file:
 is_word_boundary	./vendor/imstb_textedit.h	/^static int is_word_boundary( IMSTB_TEXTEDIT_STRING *str, int idx )$/;"	f	typeref:typename:int
 is_word_boundary_from_left	./vendor/imgui_widgets.cpp	/^static int is_word_boundary_from_left(ImGuiInputTextState* obj, int idx)$/;"	f	namespace:ImStb	typeref:typename:int	file:
@@ -5509,7 +5508,7 @@ main	./src/main.cpp	/^int main(int argv, char ** args)$/;"	f	typeref:typename:in
 main_clipboard	./vendor/imgui.cpp	/^static PasteboardRef main_clipboard = 0;$/;"	v	typeref:typename:PasteboardRef	file:
 major	./vendor/imgui_impl_opengl3_loader.h	/^static struct { int major, minor; } version;$/;"	m	struct:__anon9d96c34e0208	typeref:typename:int
 marker	./vendor/stb_image.h	/^   unsigned char  marker;      \/\/ marker seen while filling entropy buffer$/;"	m	struct:__anon212c1e400808	typeref:typename:unsigned char
-mask	./include/entity.h	/^	componentMask mask = 0;$/;"	m	struct:Entity	typeref:typename:componentMask
+mask	./include/entity.h	/^		componentMask mask = 0;$/;"	m	struct:Entity	typeref:typename:componentMask
 math	./include/math.h	/^namespace math$/;"	n
 max_size	./vendor/imgui.h	/^    inline int          max_size() const                    { return 0x7FFFFFFF \/ (int)sizeof(T/;"	f	struct:ImVector	typeref:typename:int
 max_x	./vendor/imstb_truetype.h	/^   stbtt_int32 min_x, max_x, min_y, max_y;$/;"	m	struct:__anonecd446350f08	typeref:typename:stbtt_int32
@@ -5534,13 +5533,12 @@ mouseInput	./include/input.h	/^	bool mouseInput = false;$/;"	m	struct:InputState
 mouseX	./include/input.h	/^	int mouseX = 0; int mouseY = 0;$/;"	m	struct:InputState	typeref:typename:int
 mouseY	./include/input.h	/^	int mouseX = 0; int mouseY = 0;$/;"	m	struct:InputState	typeref:typename:int
 mr	./vendor/stb_image.h	/^   unsigned int mr,mg,mb,ma, all_a;$/;"	m	struct:__anon212c1e401008	typeref:typename:unsigned int
-name	./include/entity.h	/^	std :: string name;$/;"	m	struct:Entity	typeref:typename:std::string
+name	./include/entity.h	/^		std :: string name;$/;"	m	struct:Entity	typeref:typename:std::string
 name	./include/mesh.h	/^	std :: string name;$/;"	m	struct:Mesh	typeref:typename:std::string
 name	./include/scene.h	/^	std :: string name = "";$/;"	m	struct:Scene	typeref:typename:std::string
 name	./include/script.h	/^	std :: string name;$/;"	m	struct:Script	typeref:typename:std::string
 name	./include/texture.h	/^	std :: string name;$/;"	m	struct:Texture	typeref:typename:std::string
 name	./makeFile.py	/^name = "LobsterEngine"$/;"	v
-name	./modulesAPI/coremodule.py	/^    name = ""$/;"	v	class:BaseScript
 near	./include/camera.h	/^	float near = 1;$/;"	m	struct:Camera	typeref:typename:float
 newEntityID	./src/scene.cpp	/^entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entityName)$/;"	f	class:sceneManagement	typeref:typename:entityID
 next	./vendor/imstb_rectpack.h	/^   stbrp_node  *next;$/;"	m	struct:stbrp_node	typeref:typename:stbrp_node *
@@ -5610,10 +5608,10 @@ padding1	./vendor/imstb_textedit.h	/^   unsigned char padding1, padding2, paddin
 padding2	./vendor/imstb_textedit.h	/^   unsigned char padding1, padding2, padding3;$/;"	m	struct:__anon25749c3e0308	typeref:typename:unsigned char
 padding3	./vendor/imstb_textedit.h	/^   unsigned char padding1, padding2, padding3;$/;"	m	struct:__anon25749c3e0308	typeref:typename:unsigned char
 pal	./vendor/stb_image.h	/^   stbi_uc  pal[256][4];$/;"	m	struct:__anon212c1e401308	typeref:typename:stbi_uc[256][4]
-parent	./modulesAPI/coremodule.py	/^    parent = None$/;"	v	class:BaseScript
 parse	./vendor/stb_image.h	/^   int parse, step;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 parse_version	./vendor/imgui_impl_opengl3_loader.h	/^static int parse_version(void)$/;"	f	typeref:typename:int
-pipelineRefs	./include/engineCore.h	/^	std :: vector<Pipeline *> pipelineRefs;$/;"	m	struct:EngineCore	typeref:typename:std::vector<Pipeline * >
+pipelineRefs	./globals.cpp	/^std :: vector<Pipeline *> globals :: pipelineRefs;$/;"	m	class:globals 	typeref:typename:std::vector<Pipeline * >
+pipelineRefs	./src/globals.cpp	/^std :: vector<Pipeline *> globals :: pipelineRefs;$/;"	m	class:globals 	typeref:typename:std::vector<Pipeline * >
 pixels	./include/texture.h	/^	unsigned char * pixels;$/;"	m	struct:Texture	typeref:typename:unsigned char *
 pixels	./vendor/imstb_truetype.h	/^   unsigned char *pixels;$/;"	m	struct:__anonecd446350808	typeref:typename:unsigned char *
 pixels	./vendor/imstb_truetype.h	/^   unsigned char *pixels;$/;"	m	struct:stbtt_pack_context	typeref:typename:unsigned char *
@@ -5622,17 +5620,16 @@ pos	./vendor/imgui.h	/^    ImVec2  pos;$/;"	m	struct:ImDrawVert	typeref:typename
 position	./include/transform.h	/^	std :: vector<float> position = { 0.0f, 0.0f, 0.0f };$/;"	m	struct:Transform	typeref:typename:std::vector<float>
 preferred_x	./vendor/imstb_textedit.h	/^   float preferred_x; \/\/ this determines where the cursor up\/down tries to seek to along x$/;"	m	struct:__anon25749c3e0308	typeref:typename:float
 prefix	./vendor/stb_image.h	/^   stbi__int16 prefix;$/;"	m	struct:__anon212c1e401208	typeref:typename:stbi__int16
-present	./src/graphics.cpp	/^void graphicManagement :: present(EngineCore * core)$/;"	f	class:graphicManagement	typeref:typename:void
+present	./src/graphics.cpp	/^void graphicManagement :: present()$/;"	f	class:graphicManagement	typeref:typename:void
 pressedKeys	./include/input.h	/^	std :: bitset<128> pressedKeys = {0};$/;"	m	struct:InputState	typeref:typename:std::bitset<128>
 prev_first	./vendor/imstb_textedit.h	/^   int prev_first;  \/\/ first char of previous row$/;"	m	struct:__anon25749c3e0508	typeref:typename:int
 prev_link	./vendor/imstb_rectpack.h	/^   stbrp_node **prev_link;$/;"	m	struct:__anond56808600308	typeref:typename:stbrp_node **
 printCompID	./src/utilities.cpp	/^void printCompID(unsigned compID)$/;"	f	typeref:typename:void
 printMesh	./src/mesh.cpp	/^void meshHandler :: printMesh(Mesh * inputMesh)$/;"	f	class:meshHandler	typeref:typename:void
 printProgramLog	./src/utilities.cpp	/^void printProgramLog(GLuint program)$/;"	f	typeref:typename:void
-printScriptContainer	./srcAPI/coreModule.cpp	/^void printScriptContainer(scriptContainer scripts)$/;"	f	typeref:typename:void
 printShaderLog	./src/utilities.cpp	/^void printShaderLog(GLuint shader)$/;"	f	typeref:typename:void
 proc_names	./vendor/imgui_impl_opengl3_loader.h	/^static const char *proc_names[] = {$/;"	v	typeref:typename:const char * []
-processInput	./src/input.cpp	/^void inputManagement :: processInput(EngineCore * core, entityID cameraID)$/;"	f	class:inputManagement	typeref:typename:void
+processInput	./src/input.cpp	/^void inputManagement :: processInput(entityID cameraID)$/;"	f	class:inputManagement	typeref:typename:void
 proggy_clean_ttf_compressed_data_base85	./vendor/imgui_draw.cpp	/^static const char proggy_clean_ttf_compressed_data_base85[11980 + 1] =$/;"	v	typeref:typename:const char[]	file:
 program	./include/graphics.h	/^	GLuint program;$/;"	m	struct:Pipeline	typeref:typename:GLuint
 progressive	./vendor/stb_image.h	/^   int            progressive;$/;"	m	struct:__anon212c1e400808	typeref:typename:int
@@ -5668,11 +5665,12 @@ restart_interval	./vendor/stb_image.h	/^   int restart_interval, todo;$/;"	m	str
 rgb	./vendor/stb_image.h	/^   int            rgb;$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 right	./include/camera.h	/^	std :: vector<float> right = { 1.0f, 0.0f, 0.0f };$/;"	m	struct:Camera	typeref:typename:std::vector<float>
 rmb	./include/input.h	/^	int scroll = 0; bool mmb = false; bool lmb = false; bool rmb = false;$/;"	m	struct:InputState	typeref:typename:bool
+rotate	./modulesAPI/coremodule.py	/^def rotate(self, delta_list) :$/;"	f
 rotate	./src/transform.cpp	/^void transformHandler :: rotate$/;"	f	class:transformHandler	typeref:typename:void
 rotateMatrix	./src/math.cpp	/^LobMatrix math :: rotateMatrix(std :: vector<float> axis, float inputAngle)$/;"	f	class:math	typeref:typename:LobMatrix
 rotation	./include/transform.h	/^	std :: vector<float> rotation = { 0.0f, 0.0f, 0.0f };$/;"	m	struct:Transform	typeref:typename:std::vector<float>
 row_count_per_page	./vendor/imstb_textedit.h	/^   int row_count_per_page;$/;"	m	struct:__anon25749c3e0308	typeref:typename:int
-run	./src/app.cpp	/^void appManagement :: run(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
+run	./src/app.cpp	/^void appManagement :: run()$/;"	f	class:appManagement	typeref:typename:void
 s	./vendor/stb_image.h	/^   stbi__context *s;$/;"	m	struct:__anon212c1e400808	typeref:typename:stbi__context *
 s	./vendor/stb_image.h	/^   stbi__context *s;$/;"	m	struct:__anon212c1e400e08	typeref:typename:stbi__context *
 s0	./vendor/imstb_truetype.h	/^   float x0,y0,s0,t0; \/\/ top-left$/;"	m	struct:__anonecd446350308	typeref:typename:float
@@ -5686,23 +5684,26 @@ scaleVec	./src/math.cpp	/^std :: vector<float> math :: scaleVec(std :: vector<fl
 scan_n	./vendor/stb_image.h	/^   int scan_n, order[4];$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 sceneManagement	./include/scene.h	/^namespace sceneManagement$/;"	n
 sceneOut	./src/scene.cpp	/^void sceneManagement :: sceneOut(Scene * inputScene)$/;"	f	class:sceneManagement	typeref:typename:void
-sceneTreeFlags	./include/editorData.h	/^	ImGuiTreeNodeFlags sceneTreeFlags = ImGuiTreeNodeFlags_DefaultOpen;$/;"	m	struct:EditorData	typeref:typename:ImGuiTreeNodeFlags
+sceneOut	./srcAPI/sceneAPI.cpp	/^void sceneOut(Scene inputScene)$/;"	f	typeref:typename:void
+sceneRef	./srcAPI/sceneAPI.cpp	/^static Scene sceneRef;$/;"	v	typeref:typename:Scene	file:
+sceneTreeFlags	./globals.cpp	/^ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiTreeNodeFlags
+sceneTreeFlags	./src/globals.cpp	/^ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiTreeNodeFlags
 sceneView	./src/scene.cpp	/^std :: vector<entityID> sceneManagement :: sceneView$/;"	f	class:sceneManagement	typeref:typename:std::vector<entityID>
-scriptContainer	./include/importantConstants.h	/^	scriptContainer;$/;"	t	typeref:typename:std::map<std::string,std::map<std::string,pybind11::function>>
 scriptHandler	./include/script.h	/^namespace scriptHandler$/;"	n
-scripts	./src/globals.cpp	/^std :: map<std :: string, std :: map<std :: string, pybind11 :: function>> globals :: scripts;$/;"	m	class:globals 	typeref:typename:std::map<std::string,std::map<std::string,pybind11::function>>
 scroll	./include/input.h	/^	int scroll = 0; bool mmb = false; bool lmb = false; bool rmb = false;$/;"	m	struct:InputState	typeref:typename:int
 select_end	./vendor/imstb_textedit.h	/^   int select_end;$/;"	m	struct:__anon25749c3e0308	typeref:typename:int
 select_start	./vendor/imstb_textedit.h	/^   int select_start;          \/\/ selection start point$/;"	m	struct:__anon25749c3e0308	typeref:typename:int
 set	./vendor/imgui_internal.h	/^    inline void         set(T* data, T* data_end)   { Data = data; DataEnd = data_end; }$/;"	f	struct:ImSpan	typeref:typename:void
 set	./vendor/imgui_internal.h	/^    inline void         set(T* data, int size)      { Data = data; DataEnd = data + size; }$/;"	f	struct:ImSpan	typeref:typename:void
-setName	./srcAPI/entityAPI.cpp	/^void setName(Entity * targetEntity, std :: string inputName)$/;"	f	typeref:typename:void
+setData	./include/scene.h	/^	void setData(pybind11 :: dict retValue, T& data, std :: string entryName)$/;"	f	namespace:sceneManagement	typeref:typename:void
 setPoint	./include/math.h	/^		void setPoint(unsigned int y, unsigned int x, float value)$/;"	f	class:LobMatrix	typeref:typename:void
 setTexture	./src/mesh.cpp	/^void meshHandler :: setTexture(Mesh * inputMesh, Texture * inputTexture)$/;"	f	class:meshHandler	typeref:typename:void
 shiftPressed	./include/input.h	/^	bool shiftPressed = false;$/;"	m	struct:InputState	typeref:typename:bool
 shrink	./vendor/imgui.h	/^    inline void         shrink(int new_size)                { IM_ASSERT(new_size <= Size); Size /;"	f	struct:ImVector	typeref:typename:void
-sidePanelHeight	./include/editorData.h	/^	float sidePanelHeight = 0;$/;"	m	struct:EditorData	typeref:typename:float
-sidePanelWidth	./include/editorData.h	/^	float sidePanelWidth = 0;$/;"	m	struct:EditorData	typeref:typename:float
+sidePanelHeight	./globals.cpp	/^float editorGlobals :: sidePanelHeight;$/;"	m	class:editorGlobals 	typeref:typename:float
+sidePanelHeight	./src/globals.cpp	/^float editorGlobals :: sidePanelHeight;$/;"	m	class:editorGlobals 	typeref:typename:float
+sidePanelWidth	./globals.cpp	/^float editorGlobals :: sidePanelWidth;$/;"	m	class:editorGlobals 	typeref:typename:float
+sidePanelWidth	./src/globals.cpp	/^float editorGlobals :: sidePanelWidth;$/;"	m	class:editorGlobals 	typeref:typename:float
 single_line	./vendor/imstb_textedit.h	/^   unsigned char single_line;$/;"	m	struct:__anon25749c3e0308	typeref:typename:unsigned char
 size	./vendor/imgui.h	/^    inline int          size() const                        { return Size; }$/;"	f	struct:ImVector	typeref:typename:int
 size	./vendor/imgui.h	/^    int                 size() const            { return Buf.Size ? Buf.Size - 1 : 0; }$/;"	f	struct:ImGuiTextBuffer	typeref:typename:int
@@ -6257,8 +6258,9 @@ swap	./vendor/imgui_internal.h	/^    void    swap(ImChunkStream<T>& rhs) { rhs.B
 sy	./vendor/imstb_truetype.h	/^   float sy;$/;"	m	struct:stbtt__active_edge	typeref:typename:float
 t0	./vendor/imstb_truetype.h	/^   float x0,y0,s0,t0; \/\/ top-left$/;"	m	struct:__anonecd446350308	typeref:typename:float
 t1	./vendor/imstb_truetype.h	/^   float x1,y1,s1,t1; \/\/ bottom-right$/;"	m	struct:__anonecd446350308	typeref:typename:float
-tempRot	./include/engineCore.h	/^	std :: vector<float> tempRot = { 0, 0, 0 };$/;"	m	struct:EngineCore	typeref:typename:std::vector<float>
-tempScale	./include/engineCore.h	/^	float tempScale = 1.0f;$/;"	m	struct:EngineCore	typeref:typename:float
+tempRot	./globals.cpp	/^std :: vector<float> globals :: tempRot;$/;"	m	class:globals 	typeref:typename:std::vector<float>
+tempRot	./src/globals.cpp	/^std :: vector<float> globals :: tempRot;$/;"	m	class:globals 	typeref:typename:std::vector<float>
+tempScale	./src/globals.cpp	/^float globals :: tempScale;$/;"	m	class:globals 	typeref:typename:float
 testFile	./scripts/testFile.py	/^class testFile(coremodule.BaseScript) :$/;"	c
 texName	./include/mesh.h	/^	std :: string texName;$/;"	m	struct:Mesh	typeref:typename:std::string
 texSurf	./include/mesh.h	/^	SDL_Surface * texSurf;$/;"	m	struct:Mesh	typeref:typename:SDL_Surface *
@@ -6270,6 +6272,7 @@ toCompile	./scriptFile.py	/^        toCompile = False$/;"	v
 toRadians	./src/math.cpp	/^float math :: toRadians(float x)$/;"	f	class:math	typeref:typename:float
 todo	./vendor/stb_image.h	/^   int restart_interval, todo;$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 tq	./vendor/stb_image.h	/^      int tq;$/;"	m	struct:__anon212c1e400808::__anon212c1e400908	typeref:typename:int
+transRef	./scripts/testFile.py	/^    transRef = None$/;"	v	class:testFile
 transformHandler	./include/transform.h	/^namespace transformHandler$/;"	n
 translate	./src/transform.cpp	/^void transformHandler :: translate$/;"	f	class:transformHandler	typeref:typename:void
 transparent	./vendor/stb_image.h	/^   int flags, bgindex, ratio, transparent, eflags;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
@@ -6290,7 +6293,7 @@ undo_point	./vendor/imstb_textedit.h	/^   short undo_point, redo_point;$/;"	m	st
 undo_rec	./vendor/imstb_textedit.h	/^   StbUndoRecord          undo_rec [IMSTB_TEXTEDIT_UNDOSTATECOUNT];$/;"	m	struct:__anon25749c3e0208	typeref:typename:StbUndoRecord[]
 undostate	./vendor/imstb_textedit.h	/^   StbUndoState undostate;$/;"	m	struct:__anon25749c3e0308	typeref:typename:StbUndoState
 up	./include/camera.h	/^	std :: vector<float> up = { 0.0f, 1.0f, 0.0f };$/;"	m	struct:Camera	typeref:typename:std::vector<float>
-update	./src/app.cpp	/^void appManagement :: update(EngineCore * core)$/;"	f	class:appManagement	typeref:typename:void
+update	./src/app.cpp	/^void appManagement :: update()$/;"	f	class:appManagement	typeref:typename:void
 updateScene	./src/scene.cpp	/^void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)$/;"	f	class:sceneManagement	typeref:typename:void
 usePipeline	./src/graphics.cpp	/^void graphicManagement :: usePipeline(Pipeline * targetPipeline)$/;"	f	class:graphicManagement	typeref:typename:void
 user_allocator_context	./vendor/imstb_truetype.h	/^   void *user_allocator_context;$/;"	m	struct:stbtt_pack_context	typeref:typename:void *
@@ -6326,17 +6329,20 @@ w2	./vendor/stb_image.h	/^      int x,y,w2,h2;$/;"	m	struct:__anon212c1e400808::
 w_lores	./vendor/stb_image.h	/^   int w_lores; \/\/ horizontal pixels pre-expansion$/;"	m	struct:__anon212c1e400a08	typeref:typename:int
 was_packed	./vendor/imstb_rectpack.h	/^   int            was_packed;  \/\/ non-zero if valid packing$/;"	m	struct:stbrp_rect	typeref:typename:int
 was_packed	./vendor/imstb_truetype.h	/^   int id,w,h,was_packed;$/;"	m	struct:stbrp_rect	typeref:typename:int
-watchedMethods	./srcAPI/coreModule.cpp	/^const static std :: vector<std :: string> watchedMethods = WATCHED_METHODS;$/;"	v	typeref:typename:const std::vector<std::string>	file:
 wgl_get_proc_address	./vendor/imgui_impl_opengl3_loader.h	/^static GL3WglGetProcAddr wgl_get_proc_address;$/;"	v	typeref:typename:GL3WglGetProcAddr
 where	./vendor/imstb_textedit.h	/^   IMSTB_TEXTEDIT_POSITIONTYPE  where;$/;"	m	struct:__anon25749c3e0108	typeref:typename:IMSTB_TEXTEDIT_POSITIONTYPE
 width	./include/texture.h	/^	unsigned width; unsigned height;$/;"	m	struct:Texture	typeref:typename:unsigned
 width	./vendor/imstb_rectpack.h	/^   int width;$/;"	m	struct:stbrp_context	typeref:typename:int
 width	./vendor/imstb_truetype.h	/^   int   width;$/;"	m	struct:stbtt_pack_context	typeref:typename:int
 width	./vendor/imstb_truetype.h	/^   int width,height;$/;"	m	struct:__anonecd446351108	typeref:typename:int
-winHeight	./include/engineCore.h	/^	unsigned short int winHeight = 650;$/;"	m	struct:EngineCore	typeref:typename:unsigned short int
-winRef	./include/engineCore.h	/^	SDL_Window * winRef = nullptr;$/;"	m	struct:EngineCore	typeref:typename:SDL_Window *
-winWidth	./include/engineCore.h	/^	unsigned short int winWidth = 1300;$/;"	m	struct:EngineCore	typeref:typename:unsigned short int
-windowFlags	./include/editorData.h	/^	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse;$/;"	m	struct:EditorData	typeref:typename:ImGuiWindowFlags
+winHeight	./globals.cpp	/^unsigned short int globals :: winHeight;$/;"	m	class:globals 	typeref:typename:unsigned short int
+winHeight	./src/globals.cpp	/^unsigned short int globals :: winHeight;$/;"	m	class:globals 	typeref:typename:unsigned short int
+winRef	./globals.cpp	/^SDL_Window * globals :: winRef;$/;"	m	class:globals 	typeref:typename:SDL_Window *
+winRef	./src/globals.cpp	/^SDL_Window * globals :: winRef;$/;"	m	class:globals 	typeref:typename:SDL_Window *
+winWidth	./globals.cpp	/^unsigned short int globals :: winWidth;$/;"	m	class:globals 	typeref:typename:unsigned short int
+winWidth	./src/globals.cpp	/^unsigned short int globals :: winWidth;$/;"	m	class:globals 	typeref:typename:unsigned short int
+windowFlags	./globals.cpp	/^ImGuiWindowFlags editorGlobals :: windowFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiWindowFlags
+windowFlags	./src/globals.cpp	/^ImGuiWindowFlags editorGlobals :: windowFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiWindowFlags
 windowManagement	./include/window.h	/^namespace windowManagement$/;"	n
 workingPath	./src/APIUtils.cpp	/^std :: string APIGlobals :: workingPath;$/;"	m	class:APIGlobals 	typeref:typename:std::string
 x	./vendor/imgui.h	/^    float                                                     x, y, z, w;$/;"	m	struct:ImVec4	typeref:typename:float

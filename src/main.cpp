@@ -19,20 +19,34 @@
 #include <GL/glu.h>
 
 // LOBSTER INCLUDES //
-#include <engineCore.h>
+#include <globals.h>
 #include <app.h>
 #include <mesh.h>
 #include <importantConstants.h>
 #include <vendorIncludes.h>
+#include <APIUtils.h>
 
 int main(int argv, char ** args)
 {
-	// CREATES ENGINE CORE REFERENCE //
-	EngineCore * core = new EngineCore;
+	// INITIALIZES GLOBALS //
+	globals :: isRunning = true;
+	globals :: winWidth = 1300;
+	globals :: winHeight = 650;
+	globals :: deltaTime = 0;
 
-	// IF DEBUG IS ENABLED, PRINTS OUT MESSAGE //
-	if(core -> debug)
-		std :: cout << "[DEBUG ENABLED]" << std :: endl;
+	globals :: clearColor[0] = 0.1f;
+	globals :: clearColor[1] = 0.1f;
+	globals :: clearColor[2] = 0.4f;
+	globals :: clearColor[3] = 0.0f;
+
+	std :: vector<float> tempRot;
+	editorGlobals :: windowFlags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse;
+	editorGlobals :: sceneTreeFlags = ImGuiTreeNodeFlags_DefaultOpen;
+	editorGlobals :: entitySelected = false;
+	editorGlobals :: sidePanelWidth = (globals :: winWidth) * 0.2f;
+	editorGlobals :: sidePanelHeight = (globals :: winHeight) * 0.8f;
+	editorGlobals :: bottomPanelWidth = (globals :: winWidth);
+	editorGlobals :: bottomPanelHeight = (globals :: winHeight) * 0.2f;
 
 	// INITIALIZES SDL //
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -62,14 +76,14 @@ int main(int argv, char ** args)
 
 	// CREATES WINDOW AND READS OPEN-GL CONTEXT //
 	int SDL_FLAGS = SDL_WINDOW_OPENGL | SDL_WINDOW_MOUSE_CAPTURE;
-	core -> winRef = SDL_CreateWindow
+	globals :: winRef = SDL_CreateWindow
 	(
 		"Lobster Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
-		core -> winWidth, core -> winHeight, SDL_FLAGS
+		globals :: winWidth, globals :: winHeight, SDL_FLAGS
 	);
 
-	core -> glRef = SDL_GL_CreateContext(core -> winRef);
-	if(core -> glRef == nullptr)
+	globals :: glRef = SDL_GL_CreateContext(globals :: winRef);
+	if(globals :: glRef == nullptr)
 	{
 		std :: cout << "ERROR! OPEN-GL CONTEXT COULD NOT BE CREATED: " << SDL_GetError()
 			<< std :: endl;
@@ -89,7 +103,7 @@ int main(int argv, char ** args)
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsLight();
 	// Setup Platform/Renderer backends
-	ImGui_ImplSDL2_InitForOpenGL(core -> winRef, core -> glRef);
+	ImGui_ImplSDL2_InitForOpenGL(globals :: winRef, globals :: glRef);
 	ImGui_ImplOpenGL3_Init("#version 430");
 
 	// INITIALIZES GLEW //
@@ -112,10 +126,10 @@ int main(int argv, char ** args)
 		<< glGetString(GL_SHADING_LANGUAGE_VERSION) << std :: endl;
 
 	// BEGINS ENGINE OPERATION //
-	appManagement :: begin(core);
+	appManagement :: begin();
 
 	// CLEAN UP APPPLICATION //
-	SDL_DestroyWindow(core -> winRef);
+	SDL_DestroyWindow(globals :: winRef);
 	SDL_Quit();
 	pybind11 :: finalize_interpreter();
 

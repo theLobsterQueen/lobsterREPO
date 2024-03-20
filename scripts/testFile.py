@@ -6,7 +6,11 @@ import coremodule
 class testFile(coremodule.BaseScript) :
     # INTRINSIC METHODS #
     def _start(self) :
-        self.data["parent_name"] = "Bingus"
+        self._set_data("parent_name", "Bingus Ascendant")
+        self.transRef = self.get_component("Transform")
 
     def _update(self, delta_time) :
-        pass
+        self.transRef.rotate([ 0, 90 * delta_time, 0 ])
+
+    # ATTRIBUTES #
+    transRef = None

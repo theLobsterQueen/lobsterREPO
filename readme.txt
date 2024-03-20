@@ -8,7 +8,6 @@ Sources :
 	Hudson, James. "Lecture4: OpenGL Textures." Computer Graphics 1, 9/13/2023, 
 		Shawnee State University.
 
-	https://www.libsdl.org/
 	https://antongerdelan.net/opengl/index.html
 	https://lazyfoo.net/tutorials/SDL/51_SDL_and_modern_opengl/index.php
  	https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html
@@ -19,6 +18,7 @@ Sources :
 	https://learnopengl.com/Getting-started/Textures
 	https://github.com/ocornut/imgui/blob/master/docs/FAQ.md
 	https://github.com/ocornut/imgui/wiki
+	https://github.com/pybind/pybind11/issues/1201
 
 	https://youtu.be/sXbqwzXtecE?list=PLvv0ScY6vfd9zlZkIIqGDeG5TUWswkMox
 	https://youtu.be/md3jFANT3UM
@@ -26,12 +26,13 @@ Sources :
 	https://youtu.be/W3gAzLwfIP0?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2
 	https://youtu.be/fvvWr1jaLyw?si=K1bEC0nxx06WJcc2
 
+	https://www.libsdl.org/
 	https://pthom.github.io/imgui_manual_online/manual/imgui_manual.html
 	https://pybind11.readthedocs.io/en/stable/
+	https://docs.python.org/3/
 
 // KEY //
 X: Done
-?: "Could" be done.
 ~: Working on it.
 
 // GOALS //
@@ -65,8 +66,7 @@ Sprint 2 :
 		[ ] Communicate with Precompiled Engine Files over Runtime Python Scritps
 		[X] Start/Update Method Analogs
 	[ ] Create a Python Scripting Library to Interact With
-		[~] Entity Base
 		[ ] Camera Component
-		[ ] Transform Component
+		[X] Transform Component
 		[ ] Mesh Component
 		[ ] Light Component

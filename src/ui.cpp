@@ -5,7 +5,7 @@
 #include <filesystem>
 
 // FUNCTION IMPLEMENTATIONS //
-void uiManagement :: drawEditorUI(EngineCore * core)
+void uiManagement :: drawEditorUI()
 {
 	// DRAWS MENU BAR //
 	if(ImGui :: BeginMainMenuBar())
@@ -13,7 +13,7 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 		if(ImGui :: BeginMenu("Scene"))
 		{
 			if(ImGui :: MenuItem("Save Scene"))
-				sceneManagement :: saveScene(core -> curSceneRef);
+				sceneManagement :: saveScene(globals :: curSceneRef);
 
 			std :: filesystem :: directory_iterator dirIt;
 			if(ImGui :: BeginMenu("Load Scene"))
@@ -37,7 +37,7 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 					{
 						Scene * newScene = sceneManagement :: loadScene(std :: string(fileName + ".lscn"));
 						sceneManagement :: sceneOut(newScene);
-						sceneManagement :: changeScene(core, newScene);
+						sceneManagement :: changeScene(newScene);
 					}
 				}
 
@@ -50,7 +50,7 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 		if(ImGui :: BeginMenu("Scripts"))
 		{
 			if(ImGui :: MenuItem("Compile Scene"))
-				appManagement :: compileScripts(core);
+				appManagement :: compileScripts();
 
 			ImGui :: EndMenu();
 		}
@@ -62,49 +62,49 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 	ImGui :: SetNextWindowSize
 	(ImVec2
 	 	(
-		 	core -> editorDataRef -> sidePanelWidth, 
-			(core -> editorDataRef -> sidePanelHeight) - topBarY
+		 	editorGlobals :: sidePanelWidth, 
+			(editorGlobals :: sidePanelHeight) - topBarY
 		)
 	);
-	if(ImGui :: Begin("Scene Tree", NULL, core -> editorDataRef -> windowFlags))
+	if(ImGui :: Begin("Scene Tree", NULL, editorGlobals :: windowFlags))
 	{
 		for(entityID i = 0; i < LOBSTER_MAX_ENTITIES; i++)
 		{
-			Entity tempEntity = core -> curSceneRef -> entities[i];
+			Entity tempEntity = globals :: curSceneRef -> entities[i];
 			if(tempEntity.mask == 0)
 				continue;
 
-			if(core -> editorDataRef -> entitySelected == false)
+			if(editorGlobals :: entitySelected == false)
 			{
-				core -> editorDataRef -> entitySelected = true;
-				core -> editorDataRef -> curActiveEntity = i;
+				editorGlobals :: entitySelected = true;
+				editorGlobals :: curActiveEntity = i;
 			}
 
 			ImGui :: TreeNodeEx
 			(
 				tempEntity.name.c_str(), 
-				core -> editorDataRef -> sceneTreeFlags |= ImGuiTreeNodeFlags_Leaf
+				editorGlobals :: sceneTreeFlags |= ImGuiTreeNodeFlags_Leaf
 			);
 			if(ImGui :: IsItemClicked())
-				core -> editorDataRef -> curActiveEntity = i;
+				editorGlobals :: curActiveEntity = i;
 			ImGui :: TreePop();
 		}
 	} ImGui :: End();
 
 	// DRAWS INSPECTOR //
 	ImGui :: SetNextWindowPos
-		(ImVec2((core -> winWidth) - (core -> editorDataRef -> sidePanelWidth), topBarY));
+		(ImVec2((globals :: winWidth) - (editorGlobals :: sidePanelWidth), topBarY));
 	ImGui :: SetNextWindowSize
 	(ImVec2
 	 	(
-		 	core -> editorDataRef -> sidePanelWidth, 
-		 	(core -> editorDataRef -> sidePanelHeight) - topBarY
+		 	editorGlobals :: sidePanelWidth, 
+		 	(editorGlobals :: sidePanelHeight) - topBarY
 		)
 	);
-	if(ImGui :: Begin("Inspector", NULL, core -> editorDataRef -> windowFlags))
+	if(ImGui :: Begin("Inspector", NULL, editorGlobals :: windowFlags))
 	{
 		// GETS ENTITY CURRENTLY SELECTED IN SCENE TREE //
-		Entity activeEntity = core -> curSceneRef -> entities[core -> editorDataRef -> curActiveEntity];
+		Entity activeEntity = globals :: curSceneRef -> entities[editorGlobals :: curActiveEntity];
 
 		// WRITES OUT ENTITY DATA //
 		ImGui :: Text("Name: %s", activeEntity.name.c_str());
@@ -112,8 +112,8 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 		// RELAYS TRANSFORM COMPONENT DATA //
 		if((activeEntity.mask & (1 << TRANS_COMP_ID)) >= 1)
 		{
-			Transform * curTrans = (Transform *) core -> curSceneRef -> components[TRANS_COMP_ID]
-				[core -> editorDataRef -> curActiveEntity];
+			Transform * curTrans = (Transform *) globals :: curSceneRef -> components[TRANS_COMP_ID]
+				[editorGlobals :: curActiveEntity];
 			
 			ImGui :: Text("Transform Data\n");
 			if(ImGui :: BeginTable("TransformTable", 3))
@@ -159,8 +159,8 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 		// RELAYS CAMERA DATA //
 		if((activeEntity.mask & (1 << CAMERA_COMP_ID)) >= 1)
 		{
-			Camera * curCamera = (Camera *) core -> curSceneRef -> components[CAMERA_COMP_ID]
-				[core -> editorDataRef -> curActiveEntity];
+			Camera * curCamera = (Camera *) globals :: curSceneRef -> components[CAMERA_COMP_ID]
+				[editorGlobals :: curActiveEntity];
 			
 			ImGui :: Text
 			(
@@ -174,8 +174,8 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 		// RELAYS LIGHT DATA //
 		if((activeEntity.mask & (1 << LIGHT_COMP_ID)) >= 1)
 		{
-			Light * curLight = (Light *) core -> curSceneRef -> components[LIGHT_COMP_ID]
-				[core -> editorDataRef -> curActiveEntity];
+			Light * curLight = (Light *) globals :: curSceneRef -> components[LIGHT_COMP_ID]
+				[editorGlobals :: curActiveEntity];
 			
 			ImGui :: Text
 			(
@@ -187,8 +187,8 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 		// RELAYS MESH DATA //
 		if((activeEntity.mask & (1 << MESH_COMP_ID)) >= 1)
 		{
-			Mesh * curMesh = (Mesh *) core -> curSceneRef -> components[MESH_COMP_ID]
-				[core -> editorDataRef -> curActiveEntity];
+			Mesh * curMesh = (Mesh *) globals :: curSceneRef -> components[MESH_COMP_ID]
+				[editorGlobals :: curActiveEntity];
 
 			ImGui :: Text("Mesh Data\n%s", curMesh -> name.c_str());
 		}
@@ -196,8 +196,8 @@ void uiManagement :: drawEditorUI(EngineCore * core)
 		// RELAYS SCRIPT DATA //
 		if((activeEntity.mask & (1 << SCRIPT_COMP_ID)) >= 1)
 		{
-			Script * curScript = (Script *) (core -> curSceneRef -> components[SCRIPT_COMP_ID]
-				[core -> editorDataRef -> curActiveEntity]);
+			Script * curScript = (Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID]
+				[editorGlobals :: curActiveEntity]);
 			ImGui :: Text("Script Data\n%s", curScript -> name.c_str());
 		}
 	} ImGui :: End();

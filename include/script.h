@@ -24,7 +24,7 @@ struct Script
 
 namespace scriptHandler
 {
-	Script * createScript(std :: string scriptName);
+	Script * createScript(std :: string scriptName, entityID entRef);
 }
 
 #endif

@@ -9,28 +9,8 @@
 // LOBSTER INCLUDES //
 #include <importantConstants.h>
 #include <entity.h>
-
-// MAKES THE SCRIPT MAP OPAQUE //
-PYBIND11_MAKE_OPAQUE(scriptContainer);
-
-// FUNCTIONS FOR HANDLING SCRIPT MANAGEMENT //
-void addScript(scriptContainer& scripts, std :: string scriptName)
-	{ scripts[scriptName] = { }; }
-void addScriptFunc
-	(scriptContainer& scripts, std :: string scriptName, std :: string funcName, pybind11 :: function func)
-{ 
-	scripts[scriptName][funcName] = func; 
-}
-
-void printScriptContainer(scriptContainer scripts)
-{
-	std :: cout << "Print out script container!" << std :: endl;
-	for(auto pair : scripts)
-	{
-		for(auto secondPair : pair.second)
-			std :: cout << "\t\t" << secondPair.first << std :: endl;
-	}
-}
+#include <scene.h>
+#include <APIUtils.h>
 
 // CREATES THE CORE MODULE //
 PYBIND11_MODULE(_coremodule, m)

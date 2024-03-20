@@ -5,7 +5,7 @@
 
 // LOBSTER INCLUDES //
 #include <math.h>
-#include <engineCore.h>
+#include <globals.h>
 
 // STD INCLUDES //
 #include <vector>

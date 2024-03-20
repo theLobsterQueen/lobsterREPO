@@ -20,8 +20,6 @@ typedef unsigned short int  	entityID;
 typedef unsigned char 			componentID;
 typedef unsigned int 			componentMask;
 typedef char *					compPtr;
-typedef std :: map<std :: string, std :: map<std :: string, pybind11 :: function>> 
-	scriptContainer;
 
 // DEFINES VERTEX ATTRIBUTES //
 #define POSITION_VEC				0
@@ -44,4 +42,5 @@ typedef std :: map<std :: string, std :: map<std :: string, pybind11 :: function
 #define LIGHT_COMP_ID				3
 #define SCRIPT_COMP_ID				4
 
+#define NULL_COMP_ID				LOBSTER_MAX_COMPONENTS + 1
 #endif

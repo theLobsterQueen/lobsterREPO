@@ -14,16 +14,16 @@ void inputManagement :: resetInput(InputState * input)
 	input -> scroll = 0;
 }
 
-void inputManagement :: processInput(EngineCore * core, entityID cameraID)
+void inputManagement :: processInput(entityID cameraID)
 {
 	// VARIABLE INITIALIZATION //
-	auto keys = core -> inputState -> pressedKeys;
+	auto keys = globals :: inputState -> pressedKeys;
 	std :: vector<float> deltaPos = { 0.0f, 0.0f, 0.0f };
 	std :: vector<float> deltaRot = { 0.0f, 0.0f, 0.0f };
-	int mouseDeltaX = core -> inputState -> mouseDeltaX;
-	int mouseDeltaY = core -> inputState -> mouseDeltaY;
-	int mousePosX = core -> inputState -> mouseX;
-	int mousePosY = core -> inputState -> mouseY;
+	int mouseDeltaX = globals :: inputState -> mouseDeltaX;
+	int mouseDeltaY = globals :: inputState -> mouseDeltaY;
+	int mousePosX = globals :: inputState -> mouseX;
+	int mousePosY = globals :: inputState -> mouseY;
 
 	// SCALARS FOR THE DIFFERENT OPERATIONS //
 	static float panScalar = 0.1f;
@@ -32,7 +32,7 @@ void inputManagement :: processInput(EngineCore * core, entityID cameraID)
 	static float keyMoveSpeed = 10.0f;
 
 	// MOVES THE CAMERA VIA KEY INPUT //
-	float speedVal = keyMoveSpeed * (core -> deltaTime);
+	float speedVal = keyMoveSpeed * (globals :: deltaTime);
 	if(keys['w'])
 		deltaPos[2] += speedVal;
 	if(keys['s'])
@@ -48,12 +48,12 @@ void inputManagement :: processInput(EngineCore * core, entityID cameraID)
 
 	// CAMERA INPUT: CHECKS TO ENSURE THAT CAMERA IS ACTUALLY WITHIN VIEWPORT //
 	bool processMouse = true;
-	if(!(core -> inputState -> mouseInput))
+	if(!(globals :: inputState -> mouseInput))
 	{
 		processMouse = false;
-		if(mousePosX >= core -> editorDataRef -> sidePanelWidth
-			&& mousePosX <= (core -> winWidth) - (core -> editorDataRef -> sidePanelWidth)
-			&& mousePosY <= (core -> winHeight) - (core -> editorDataRef -> bottomPanelHeight))
+		if(mousePosX >= editorGlobals :: sidePanelWidth
+			&& mousePosX <= (globals :: winWidth) - (editorGlobals :: sidePanelWidth)
+			&& mousePosY <= (globals :: winHeight) - (editorGlobals :: bottomPanelHeight))
 		{
 			processMouse = true;
 		}
@@ -62,15 +62,15 @@ void inputManagement :: processInput(EngineCore * core, entityID cameraID)
 	if(processMouse)
 	{
 		// IF BOTH LMB AND RMB ARE PRESSED: NO VALID INPUT COMBINATION, RETURNS //
-		if(core -> inputState -> rmb && core -> inputState -> lmb)
+		if(globals :: inputState -> rmb && globals :: inputState -> lmb)
 			return;
 		
 		// PANS THE CAMERA/MOVES IT FORWARDS AND BACK //
-		core -> inputState -> mouseInput = false;
-		if(core -> inputState -> lmb == true)
+		globals :: inputState -> mouseInput = false;
+		if(globals :: inputState -> lmb == true)
 		{
-			core -> inputState -> mouseInput = true;
-			if(core -> inputState -> shiftPressed)
+			globals :: inputState -> mouseInput = true;
+			if(globals :: inputState -> shiftPressed)
 				deltaPos[2] -= mouseDeltaY * panScalar;
 
 			else
@@ -81,10 +81,10 @@ void inputManagement :: processInput(EngineCore * core, entityID cameraID)
 		}
 
 		// ROTATES THE CAMERA //
-		if(core -> inputState -> rmb == true || 
-				(core -> inputState -> cntrlPressed && core -> inputState -> lmb == true))
+		if(globals :: inputState -> rmb == true || 
+				(globals :: inputState -> cntrlPressed && globals :: inputState -> lmb == true))
 		{
-			core -> inputState -> mouseInput = true;
+			globals :: inputState -> mouseInput = true;
 			deltaRot[1] += mouseDeltaX * rotScalar;
 			deltaRot[0] -= mouseDeltaY * rotScalar;
 		}
@@ -92,21 +92,21 @@ void inputManagement :: processInput(EngineCore * core, entityID cameraID)
 		// ZOOMS THE CAMERA IN //
 		cameraHandler :: zoom
 		(
-			(Camera *) core -> curSceneRef -> components[CAMERA_COMP_ID][cameraID],
-			(core -> inputState -> scroll) * zoomScalar
+			(Camera *) globals :: curSceneRef -> components[CAMERA_COMP_ID][cameraID],
+			(globals :: inputState -> scroll) * zoomScalar
 		);
 	}
 
 	// APPLIES TRANSFORMATION //
 	transformHandler :: translate
 	(
-		(Transform *) core -> curSceneRef -> components[TRANS_COMP_ID][cameraID],
+		(Transform *) globals :: curSceneRef -> components[TRANS_COMP_ID][cameraID],
 		deltaPos
 	);
 
 	transformHandler :: rotate
 	(
-		(Transform *) core -> curSceneRef -> components[TRANS_COMP_ID][cameraID],
+		(Transform *) globals :: curSceneRef -> components[TRANS_COMP_ID][cameraID],
 		deltaRot
 	);
 }

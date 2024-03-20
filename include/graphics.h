@@ -16,12 +16,9 @@
 
 // LOBSTER INCLUDES //
 #include <utilities.h>
-#include <engineCore.h>
+#include <globals.h>
 #include <importantConstants.h>
 #include <vendorIncludes.h>
-
-// STRUCT PROTOTYPE //
-struct EngineCore;
 
 /// <summary> ///
 ///		This struct holds an OpenGL program, and containers for the latest loaded shaders
@@ -70,13 +67,13 @@ namespace graphicManagement
 	///		This function clears the screen a specific color, and prepares the
 	///			engine for another render pass.
 	/// </summary> ///
-	void beginRenderPass(EngineCore * core);
+	void beginRenderPass();
 
 	/// <summary> ///
 	///		Flips the buffers over using a more engine-friendly function
 	///			than the lower level SDL2 function.
 	/// </summary> ///
-	void present(EngineCore * core);
+	void present();
 };
 
 #endif

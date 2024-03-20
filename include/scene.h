@@ -25,8 +25,8 @@
 #include <light.h>
 #include <utilities.h>
 #include <script.h>
-#include <APIUtils.h>
 #include <script.h>
+#include <APIUtils.h>
 
 // STRUCT PROTOTYPES //
 struct EngineCore;
@@ -63,7 +63,7 @@ namespace sceneManagement
 	///		This function sets the engine's current scene to input target scene.
 	/// </summary> ///
 
-	void changeScene(EngineCore * core, Scene * targetScene);
+	void changeScene(Scene * targetScene);
 
 	/// <summary> ///
 	/// 	Grabs and returns the first camera entity found in the scene.
@@ -137,10 +137,10 @@ namespace sceneManagement
 	/// </summary> ///
 
 	template <class T>
-	void setData(pybind11 :: dict retValue, T& data, std :: string entryName)
+	void setData(pybind11 :: dict retValue, std :: string entryName, T * data)
 	{
 		try
-			{ data = retValue[entryName.c_str()].cast<T>(); }
+			{ (*data) = retValue[entryName.c_str()].cast<T>(); }
 		catch(pybind11 :: error_already_set error)
 			{;}
 	}

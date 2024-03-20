@@ -2,21 +2,31 @@
 
 // STANDARD INCLUDES //
 #include <pybind11/pybind11.h>
-#include <vector>
+#include <pybind11/embed.h>
+#include <pybind11/stl.h>
+#include <iostream>
 
 // LOBSTER INCLUDES //
-#include <transform.h>
+#include <importantConstants.h>
+#include <entity.h>
+#include <scene.h>
+#include <APIUtils.h>
 
-// DEFINES FUNCTIONS FOR THIS MODULE //
-/*
-	void rotateTransform(Transform inputTransform, std :: vector<float> rotDelta)
-		{ transformHandler :: rotate(&inputTransform, rotDelta); }
-*/
+// FUNCTIONS FOR THE COMPONENT //
+void rotate(Transform& self, std :: vector<float> deltaVec)
+{
+	for(unsigned char i = 0; i < 3; i++)
+		self.rotation[i] += deltaVec[i];
+}
 
-// BINDS THE MODULE //
+// BINDS THE COMPONENT //
 PYBIND11_MODULE(_transformapi, m)
 {
 	pybind11 :: class_<Transform>(m, "Transform")
+		// BINDS FUNCTIONS //
+		.def("rotate", &rotate)
+
+		// BINDS ATTRIBUTES //
 		.def_readwrite("position", &Transform :: position)
 		.def_readwrite("rotation", &Transform :: rotation)
 		.def_readwrite("scale", &Transform :: scale);

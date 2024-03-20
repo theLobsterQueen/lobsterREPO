@@ -3,106 +3,119 @@
 
 // INCLUDES AND INITIALIZATIONS //
 
-// SDL/GL INCLUDES //
+// STANDARD INCLUDES //
+#include <pybind11/pybind11.h>
+#include <pybind11/embed.h>
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/embed.h>
-
-// STD INCLUDES //
 #include <vector>
 
 // LOBSTER INCLUDES //
 #include <input.h>
-#include <editorData.h>
+#include <vendorIncludes.h>
 
 // STRUCT PROTOTYPES //
 struct Scene;
 struct Pipeline;
 struct InputState;
-struct EditorData;
 
 /// <summary> ///
-///		This struct includes value crucial to keeping the engine functional at the most
+///		This namespace includes value crucial to keeping the engine functional at the most
 ///			fundamental level. 
 /// </summary> ///
 
-struct EngineCore
+namespace globals
 {
 	/// <summary> ///
 	///		If this boolean is ever set to false, turns off the application.
 	/// </summary> ///
 
-	bool isRunning = true;
-
-	/// <summary> ///
-	///		This boolean describes whether the engine should give verbose
-	///			debug statements during its operation.
-	// </summary> ///
-	bool debug = true;
+	extern bool isRunning;
 
 	/// <summary> ///
 	/// 	This pointer references the main window.
 	/// </summary> ///
 
-	SDL_Window * winRef = nullptr;
+	extern SDL_Window * winRef;
 
 	/// <summary> ///
 	///		These values dictate the starting width/height of the engine window.
 	///			(Defaults to standard HD 16:9 resolution.)
 	/// </summary> ///
 
-	unsigned short int winWidth = 1300;
-	unsigned short int winHeight = 650;
+	extern unsigned short int winWidth;
+	extern unsigned short int winHeight;
 
 	/// <summary> ///
 	///		This pointer references the OpenGL context.
 	/// </summary> ///
 
-	void * glRef = nullptr;
+	extern void * glRef;
 
 	/// <summary> ///
 	///		This field contains the currently actively scene.
 	/// </summary> ///
 
-	Scene * curSceneRef = nullptr;
+	extern Scene * curSceneRef;
 
 	/// <summary> ///
 	///		This field contains a reference to the general input state
 	///			of the application. 
 	/// </summary> ///
 
-	InputState * inputState = nullptr;
+	extern InputState * inputState;
 
 	/// <summary> ///
 	///		A collection of all created pipelines within the engine context.
 	/// </summary> ///
 
-	std :: vector<Pipeline *> pipelineRefs;
+	extern std :: vector<Pipeline *> pipelineRefs;
 
 	/// <summary> ///
 	///		This field holds the time passed since the last time getDeltaTime was
 	///			called. getDeltaTime can be found in the appManagement namespace.
 	/// </summary> ///
 
-	double deltaTime = 0;
+	extern double deltaTime;
 
 	/// <summary> ///
 	///		The color that the screen is automatically cleared to at the beginning
 	///			of each frame.
 	/// </summary> ///
 
-	float clearColor[4] = { 0.1f, 0.1f, 0.4f, 0.0f };
-	float tempScale = 1.0f;
-	std :: vector<float> tempRot = { 0, 0, 0 };
+	extern float clearColor[4];
+	extern float tempScale;
+	extern std :: vector<float> tempRot;
+};
 
+namespace editorGlobals
+{
 	/// <summary> ///
-	///		Data for the editor frontend itself.
+	///		These flags define the baseline behavior for different types of UI
+	///			objects. 
 	/// </summary> ///
 
-	EditorData * editorDataRef = nullptr;
+	extern ImGuiWindowFlags windowFlags;
+	extern ImGuiTreeNodeFlags sceneTreeFlags;
+
+	/// <summary> ///
+	///		This ID represents the entity currently selected within the scene hiearchy.
+	/// </summary> ///
+
+	extern entityID curActiveEntity;
+	extern bool entitySelected;
+
+	/// <summary> ///
+	///		These values describe the parameters in which the editor frontend is organized.
+	/// </summary> ///
+
+	extern float sidePanelWidth;
+	extern float sidePanelHeight;
+
+	extern float bottomPanelWidth;
+	extern float bottomPanelHeight;
 
 };
 

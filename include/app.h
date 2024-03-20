@@ -18,8 +18,7 @@
 #include <GL/glu.h>
 
 // LOBSTER INCLUDES //
-#include <engineCore.h>
-#include <editorData.h>
+#include <globals.h>
 #include <window.h>
 #include <mesh.h>
 #include <scene.h>
@@ -40,20 +39,20 @@ namespace appManagement
 	/// <summary> ///
 	///		This setups a base empty scene.
 	/// </summary> ///
-	void begin(EngineCore * core);
+	void begin();
 
 	/// <summary> ///
 	///		Sets up the working directory, initializes the pybind11 interpreter, and
 	///			prepares the Python context.
 	/// </summary> ///
 
-	void initializeAPI(EngineCore * core);
+	void initializeAPI();
 
 	/// <summary> ///
 	///		Iterates through all scripts in the "script" directory, and executes their code.
 	/// </summary> ///
 
-	void compileScripts(EngineCore * core);
+	void compileScripts();
 
 	/// <summary> ///
 	///		When called, puts the engine into the "control loop." This loop will
@@ -61,19 +60,19 @@ namespace appManagement
 	///			shuts down. 
 	/// </summary> ///
 
-	void run(EngineCore * core);
+	void run();
 
 	/// <summary> ///
 	///		This populates the current scene with test draw meshes.
 	/// </summary> ///
 
-	void createTestScene(EngineCore * core);
+	void createTestScene();
 
 	/// <summary> ///
 	///		Updates the general game state by processing SDL2 events.
 	/// </summary> ///
 
-	void update(EngineCore * core);
+	void update();
 };
 
 #endif

@@ -7,7 +7,7 @@
 #include <filesystem>
 
 // LOBSTER INCLUDES //
-#include <engineCore.h>
+#include <globals.h>
 #include <vendorIncludes.h>
 #include <importantConstants.h>
 #include <entity.h>
@@ -22,7 +22,7 @@ namespace uiManagement
 	///			data from the current scene.
 	/// </summary> ///
 
-	void drawEditorUI(EngineCore * core);
+	void drawEditorUI();
 };
 
 

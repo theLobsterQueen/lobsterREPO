@@ -2,7 +2,7 @@
 #include <app.h>
 
 // FUNCTION IMPLEMENTATIONS //
-void appManagement :: begin(EngineCore * core)
+void appManagement :: begin()
 {
 	// CREATES BASE RENDER PIPELINE //
 	Pipeline * basePipeline = graphicManagement :: createPipeline();
@@ -19,31 +19,28 @@ void appManagement :: begin(EngineCore * core)
 	);
 
 	graphicManagement :: compileProgram(basePipeline);
-	core -> pipelineRefs.push_back(basePipeline);
+	globals :: pipelineRefs.push_back(basePipeline);
 
 	// CREATES INPUT STATE //
-	core -> inputState = inputManagement :: createInputState();
-
-	// CREATES EDITOR DATA STRUCT //
-	core -> editorDataRef = editorManagement :: createEditorData(core);
+	globals :: inputState = inputManagement :: createInputState();
 
 	// PREPARES PYTHON CONTEXT AND COMPILES THE SCRIPTS //
-	appManagement :: initializeAPI(core);
-	appManagement :: compileScripts(core);
+	appManagement :: initializeAPI();
+	appManagement :: compileScripts();
 
 	// (TEMP) CREATES TEST SCENE //
-	appManagement :: createTestScene(core);
+	appManagement :: createTestScene();
 
 	// BEGINS RUNNING THE ENGINE //
-	appManagement :: run(core);
+	appManagement :: run();
 }
 
-void appManagement :: createTestScene(EngineCore * core)
+void appManagement :: createTestScene()
 {
 	// CREATES CAMERA COMPONENT //
 	Scene * testScene = sceneManagement :: createScene("TEST");
 	entityID camID = sceneManagement :: newEntityID(testScene, "Camera");
-	float aspect = ((float) core -> winWidth) / ((float) core -> winHeight);
+	float aspect = ((float) globals :: winWidth) / ((float) globals :: winHeight);
 
 	sceneManagement :: addComp
 	(
@@ -51,7 +48,7 @@ void appManagement :: createTestScene(EngineCore * core)
 		camID,
 		CAMERA_COMP_ID,
 		(compPtr) cameraHandler :: createCamera
-			(aspect, core -> pipelineRefs[0])
+			(aspect, globals :: pipelineRefs[0])
 	);
 
 	sceneManagement :: addComp
@@ -84,13 +81,6 @@ void appManagement :: createTestScene(EngineCore * core)
 			(std :: vector<float> { 1.0f, 1.0f, 1.0f, 0.9f })
 	);
 
-	// GIVES LIGHT A TEST SCRIPT //
-	sceneManagement :: addComp
-	(
-		testScene, lightID, SCRIPT_COMP_ID,
-		(compPtr) (scriptHandler :: createScript("testFile"))
-	);
-
 	entityID testID = sceneManagement :: newEntityID(testScene, "Jinx");
 	Mesh * sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
 	meshHandler :: setTexture(sceneMesh, textureHandler :: createTexture("jinx.png"));
@@ -116,12 +106,12 @@ void appManagement :: createTestScene(EngineCore * core)
 	sceneManagement :: addComp
 	(
 		testScene, testID, SCRIPT_COMP_ID,
-		(compPtr) (scriptHandler :: createScript("testFile"))
+		(compPtr) (scriptHandler :: createScript("testFile", testID))
 	);
-	sceneManagement :: changeScene(core, testScene);
+	sceneManagement :: changeScene(testScene);
 }
 
-void appManagement :: initializeAPI(EngineCore * core)
+void appManagement :: initializeAPI()
 {
 	// VARIABLE INITIALIZATION //
 	APIGlobals :: workingPath = "./";
@@ -144,7 +134,7 @@ void appManagement :: initializeAPI(EngineCore * core)
 	APIGlobals :: coremodule = pybind11 :: module_ :: import("coremodule");
 }
 
-void appManagement :: compileScripts(EngineCore * core)
+void appManagement :: compileScripts()
 {
 	// FINDS SCRIPT DIRECTORY //
 	std :: filesystem :: directory_iterator dirIt = 
@@ -175,7 +165,7 @@ void appManagement :: compileScripts(EngineCore * core)
 	}
 }
 
-void appManagement :: run(EngineCore * core)
+void appManagement :: run()
 {
 	// VARIABLE INITIALIZATION //
 	unsigned long int newDelta = SDL_GetTicks();
@@ -183,47 +173,47 @@ void appManagement :: run(EngineCore * core)
 	static float timer = 0.0f;
 
 	// STARTS ALL SCRIPTS //
-	for(entityID curEnt : sceneManagement :: sceneView(core -> curSceneRef, SCRIPT_COMP_ID))
+	for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
 	{
-		Script * script = ((Script *) (core -> curSceneRef -> components[SCRIPT_COMP_ID][curEnt]));
+		Script * script = ((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]));
 		script -> code.attr("_start")();
 	}
 
-	while(core -> isRunning)
+	while(globals :: isRunning)
 	{
 		// UPDATES DELTA TIME //
 		oldDelta = newDelta;
 		newDelta = SDL_GetTicks();
 		
-		core -> deltaTime = (newDelta - oldDelta) / 1000.0f;
+		globals :: deltaTime = (newDelta - oldDelta) / 1000.0f;
 
 		// UPDATES ENGINE //
-		appManagement :: update(core);
+		appManagement :: update();
 
 		// UPDATES SCENE THROUGH SCRIPTS //
-		sceneManagement :: updateScene(core -> curSceneRef, core -> deltaTime);
+		sceneManagement :: updateScene(globals :: curSceneRef, globals :: deltaTime);
 
 		// BEGINS RENDERING PHASE //
-		graphicManagement :: beginRenderPass(core);
+		graphicManagement :: beginRenderPass();
 
 		// UI WORK //
-		uiManagement :: drawEditorUI(core);
+		uiManagement :: drawEditorUI();
 
 		// RENDERS CURRENT 3D SCENE //
-		sceneManagement :: renderScene(core -> curSceneRef);
+		sceneManagement :: renderScene(globals :: curSceneRef);
 		
 		// PRESENTS TO SCREEN //
-		graphicManagement :: present(core);
+		graphicManagement :: present();
 	}
 }
 
-void appManagement :: update(EngineCore * core)
+void appManagement :: update()
 {
 	// VARIABLE INITIALIZATION //
 	SDL_Event event;
 
 	// UPDATES MOUSE POSITION VALUE //
-	SDL_GetMouseState(&(core -> inputState -> mouseX), &(core -> inputState -> mouseY));
+	SDL_GetMouseState(&(globals :: inputState -> mouseX), &(globals :: inputState -> mouseY));
 
 	// IF POLLING RETURNS 0, THERE IS NO PENDING EVENT: RETURNS //
 	while(SDL_PollEvent(&event))
@@ -236,7 +226,7 @@ void appManagement :: update(EngineCore * core)
 		{
 			case SDL_KEYDOWN :
 				// SETS MODIFIER KEYS //
-				modifierKeyProcess(core -> inputState, event, true);
+				modifierKeyProcess(globals :: inputState, event, true);
 
 				// IF ABOVE NORMAL ASCII RANGE, IGNORES //
 				if(event.key.keysym.sym > 128)
@@ -245,24 +235,24 @@ void appManagement :: update(EngineCore * core)
 				// IF READING ESCAPE KEY, QUITS //
 				if(event.key.keysym.sym == 27)
 				{
-					core -> isRunning = false;
+					globals :: isRunning = false;
 					break;
 				}
 
 				if(event.key.keysym.sym == '1')
 				{
-					sceneManagement :: changeScene(core, sceneManagement :: loadScene("TEST"));
+					sceneManagement :: changeScene(sceneManagement :: loadScene("TEST"));
 					break;
 				}
 
 				if(event.key.keysym.sym == '2')
 				{
-					sceneManagement :: changeScene(core, sceneManagement :: loadScene("TEST 2"));
+					sceneManagement :: changeScene(sceneManagement :: loadScene("TEST 2"));
 					break;
 				}
 
 				// ADDS THE KEY TO THE PRESSED KEYS BITMASK //
-				core -> inputState -> pressedKeys[event.key.keysym.sym] = 1;
+				globals :: inputState -> pressedKeys[event.key.keysym.sym] = 1;
 
 				// ADDS THE KEY TO THE NEXT AVAILABLE ENTRY IN "justPressed" //
 				if(event.key.repeat == 0)
@@ -276,44 +266,44 @@ void appManagement :: update(EngineCore * core)
 
 			case SDL_KEYUP :
 				// SETS MODIFIER KEYS //
-				modifierKeyProcess(core -> inputState, event, false);
+				modifierKeyProcess(globals :: inputState, event, false);
 
 				// IF ABOVE NORMAL ASCII RANGE, IGNORES //
 				if(event.key.keysym.sym > 128)
 					break;
 
 				// REMOVES THE KEY FROM THE PRESSED KEYS BITMASK //
-				core -> inputState -> pressedKeys[event.key.keysym.sym] = 0;
+				globals :: inputState -> pressedKeys[event.key.keysym.sym] = 0;
 			break;
 
 			case SDL_MOUSEWHEEL :
-				core -> inputState -> scroll = event.wheel.y;
+				globals :: inputState -> scroll = event.wheel.y;
 			break;
 
 			case SDL_MOUSEBUTTONDOWN :
-				mouseButtonProcess(core -> inputState, event, true);	
+				mouseButtonProcess(globals :: inputState, event, true);	
 			break;
 	
 			case SDL_MOUSEBUTTONUP :
-				mouseButtonProcess(core -> inputState, event, false);	
+				mouseButtonProcess(globals :: inputState, event, false);	
 			break;
 
 			case SDL_MOUSEMOTION :
-				core -> inputState -> mouseDeltaX = event.motion.xrel;
-				core -> inputState -> mouseDeltaY = event.motion.yrel;
+				globals :: inputState -> mouseDeltaX = event.motion.xrel;
+				globals :: inputState -> mouseDeltaY = event.motion.yrel;
 			break;
 
 			case SDL_QUIT :
-				core -> isRunning = false;
+				globals :: isRunning = false;
 			break;
 		};
 	}
 
 	// PROCESSED INPUT //
 	entityID camID;
-	if(sceneManagement :: getCameraEntityID(core -> curSceneRef, &camID))
-		inputManagement :: processInput(core, camID);
+	if(sceneManagement :: getCameraEntityID(globals :: curSceneRef, &camID))
+		inputManagement :: processInput(camID);
 
 	// RESETS RELATIVE INPUT VALUES //
-	inputManagement :: resetInput(core -> inputState);
+	inputManagement :: resetInput(globals :: inputState);
 }

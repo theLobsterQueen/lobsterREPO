@@ -13,7 +13,7 @@
 #include <GL/glu.h>
 
 // LOBSTER INCLUDES //
-#include <engineCore.h>
+#include <globals.h>
 
 /// <summary> ///
 ///		This file defines functions that change the appearence of the engine in some way,

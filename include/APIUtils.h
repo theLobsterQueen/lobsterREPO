@@ -7,6 +7,14 @@
 #include <pybind11/pybind11.h>
 #include <string>
 
+// LOBSTER INCLUDES //
+#include <importantConstants.h>
+#include <scene.h>
+
+// HOLDS ALL OPAQUE DECLARATIONS //
+PYBIND11_MAKE_OPAQUE(Scene);
+PYBIND11_MAKE_OPAQUE(Transform);
+
 // DECLARES NAMESPACE-GLOBAL VARIABLES //
 namespace APIGlobals
 {

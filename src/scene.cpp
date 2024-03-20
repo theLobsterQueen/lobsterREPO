@@ -8,15 +8,18 @@ Scene * sceneManagement :: createScene(std :: string inputName)
 	return newScene;
 }
 
-void sceneManagement :: changeScene(EngineCore * core, Scene * targetScene)
+void sceneManagement :: changeScene(Scene * targetScene)
 {
+	// ASSIGNS SCENE TO ATTRIBUTE IN COREMODULE //
+	APIGlobals :: coremodule.attr("scene_ref") = (*targetScene);
+
 	entityID camID;
 	if(sceneManagement :: getCameraEntityID(targetScene, &camID))
 	{
-		core -> curSceneRef = targetScene;
+		globals :: curSceneRef = targetScene;
 		Camera * temp = (Camera *) targetScene -> components[CAMERA_COMP_ID][camID];
-		temp -> aspectRatio = (((float) (core -> winWidth)) / ((float) (core -> winHeight)));
-		windowManagement :: changeTitle(core -> winRef, targetScene -> name);
+		temp -> aspectRatio = (((float) (globals :: winWidth)) / ((float) (globals :: winHeight)));
+		windowManagement :: changeTitle(globals :: winRef, targetScene -> name);
 	}
 
 	else
@@ -521,7 +524,14 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 		// GETS DATA FROM SCRIPT AND APPLIES IT //
 		pybind11 :: dict retValue = script -> code.attr("_push_data")();
 		Entity entRef = inputScene -> entities[curEnt];
-		sceneManagement :: setData<std :: string>(retValue, entRef.name, "parent_name");
+		sceneManagement :: setData<std :: string>(retValue, "parent_name", &(entRef.name));
+		sceneManagement :: setData<Transform>
+		(
+		 	retValue, "transform",
+			(Transform *) (inputScene -> components[TRANS_COMP_ID][curEnt])
+		);
 		inputScene -> entities[curEnt] = entRef;
 	}
 }
+
+

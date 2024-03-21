@@ -80,6 +80,11 @@ void appManagement :: createTestScene()
 		(compPtr) lightHandler :: createLight
 			(std :: vector<float> { 1.0f, 1.0f, 1.0f, 0.9f })
 	);
+	sceneManagement :: addComp
+	(
+		testScene, lightID, SCRIPT_COMP_ID,
+		(compPtr) (scriptHandler :: createScript("lightScript", lightID))
+	);
 
 	entityID testID = sceneManagement :: newEntityID(testScene, "Jinx");
 	Mesh * sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
@@ -108,9 +113,6 @@ void appManagement :: createTestScene()
 		testScene, testID, SCRIPT_COMP_ID,
 		(compPtr) (scriptHandler :: createScript("testFile", testID))
 	);
-	sceneManagement :: changeScene(testScene);
-	Scene * loadedScene = sceneManagement :: loadScene("TEST.lscn");
-	sceneManagement :: changeScene(loadedScene);
 	sceneManagement :: changeScene(testScene);
 }
 
@@ -181,12 +183,14 @@ void appManagement :: compileScripts()
 	firstTimeCompile = false;
 }
 
-void appManagement :: startScripts()
+void appManagement :: startScripts(bool initialize)
 {
 	for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
 	{
-		((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt])) 
-			-> code.attr("_start")();
+		Script * scriptRef = ((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]));
+		if(initialize)
+			scriptRef -> code.attr("_initialize")(curEnt);
+		scriptRef -> code.attr("_start")();
 	}
 }
 

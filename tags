@@ -3723,6 +3723,7 @@ PRId64	./vendor/imgui_demo.cpp	/^#define PRId64 /;"	d	file:
 PRIu64	./vendor/imgui_demo.cpp	/^#define PRIu64 /;"	d	file:
 PYBIND11_MODULE	./srcAPI/coreModule.cpp	/^PYBIND11_MODULE(_coremodule, m)$/;"	f
 PYBIND11_MODULE	./srcAPI/entityAPI.cpp	/^PYBIND11_MODULE(_entityapi, m)$/;"	f
+PYBIND11_MODULE	./srcAPI/lightAPI.cpp	/^PYBIND11_MODULE(_lightapi, m)$/;"	f
 PYBIND11_MODULE	./srcAPI/sceneAPI.cpp	/^PYBIND11_MODULE(_sceneapi, m)$/;"	f
 PYBIND11_MODULE	./srcAPI/transformAPI.cpp	/^PYBIND11_MODULE(_transformapi, m)$/;"	f
 PY_SSIZE_T_CLEAN	./src/main.cpp	/^#define PY_SSIZE_T_CLEAN$/;"	d	file:
@@ -5066,11 +5067,14 @@ __anonecd446351208	./vendor/imstb_truetype.h	/^{$/;"	s
 __gl3w_h_	./vendor/imgui_impl_opengl3_loader.h	/^#define __gl3w_h_$/;"	d
 __gl_glcorearb_h_	./vendor/imgui_impl_opengl3_loader.h	/^#define __gl_glcorearb_h_ /;"	d
 __gl_h_	./vendor/imgui_impl_opengl3_loader.h	/^#define __gl_h_$/;"	d
-__init__	./modulesAPI/coremodule.py	/^    def __init__(self, entity_id) :$/;"	m	class:BaseScript
+__init__	./modulesAPI/coremodule.py	/^    def __init__(self) :$/;"	m	class:BaseScript
 _grow_capacity	./vendor/imgui.h	/^    inline int          _grow_capacity(int sz) const        { int new_capacity = Capacity ? (Cap/;"	f	struct:ImVector	typeref:typename:int
+_initialize	./modulesAPI/coremodule.py	/^    def _initialize(self, entity_id) :$/;"	m	class:BaseScript
 _push_data	./modulesAPI/coremodule.py	/^    def _push_data(self) :$/;"	m	class:BaseScript
 _set_data	./modulesAPI/coremodule.py	/^    def _set_data(self, name, item) :$/;"	m	class:BaseScript
+_start	./scripts/lightScript.py	/^    def _start(self) :$/;"	m	class:lightScript
 _start	./scripts/testFile.py	/^    def _start(self) :$/;"	m	class:testFile
+_update	./scripts/lightScript.py	/^    def _update(self, delta_time) :$/;"	m	class:lightScript
 _update	./scripts/testFile.py	/^    def _update(self, delta_time) :$/;"	m	class:testFile
 activeEntities	./include/scene.h	/^	unsigned short int activeEntities = 0;$/;"	m	struct:Scene	typeref:typename:unsigned short int
 active_head	./vendor/imstb_rectpack.h	/^   stbrp_node *active_head;$/;"	m	struct:stbrp_context	typeref:typename:stbrp_node *
@@ -5153,6 +5157,7 @@ compileAll	./makeFile.py	/^compileAll = False$/;"	v
 compileAll	./scriptFile.py	/^compileAll = False$/;"	v
 compileDir	./makeFile.py	/^def compileDir(dirPath) :$/;"	f
 compileProgram	./src/graphics.cpp	/^void graphicManagement :: compileProgram(Pipeline * targetPipeline)$/;"	f	class:graphicManagement	typeref:typename:void
+compileScripts	./src/app.cpp	/^void appManagement :: compileScripts()$/;"	f	class:appManagement	typeref:typename:void
 componentID	./include/importantConstants.h	/^typedef unsigned char 			componentID;$/;"	t	typeref:typename:unsigned char
 componentMask	./include/importantConstants.h	/^typedef unsigned int 			componentMask;$/;"	t	typeref:typename:unsigned int
 components	./include/scene.h	/^	char * components[LOBSTER_MAX_COMPONENTS][LOBSTER_MAX_ENTITIES] = { };	$/;"	m	struct:Scene	typeref:typename:char * [][]
@@ -5298,14 +5303,15 @@ getCols	./include/math.h	/^		unsigned int getCols()$/;"	f	class:LobMatrix	typere
 getData	./include/math.h	/^		float * getData()$/;"	f	class:LobMatrix	typeref:typename:float *
 getEntity	./srcAPI/sceneAPI.cpp	/^pybind11 :: object getEntity(Scene inputScene, entityID id)$/;"	f	typeref:typename:pybind11::object
 getGlobalPosition	./src/transform.cpp	/^std :: vector<float> transformHandler :: getGlobalPosition(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:std::vector<float>
-getMeshFromPLY	./src/mesh.cpp	/^Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)$/;"	f	class:meshHandler	typeref:typename:Mesh *
+getLightComp	./srcAPI/sceneAPI.cpp	/^bool getLightComp(Scene inputScene, entityID id, Light& lightOut)$/;"	f	typeref:typename:bool
+getMeshFromPLY	./src/mesh.cpp	/^Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)$/;"	f	class:meshHandler	typeref:typename:Mesh *
 getModelWorldMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getModelWorldMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
 getPoint	./include/math.h	/^		float getPoint(unsigned int y, unsigned int x)$/;"	f	class:LobMatrix	typeref:typename:float
 getRotateMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getRotateMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
 getRow	./include/math.h	/^		std :: vector<float> getRow(unsigned int rowIndex)$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
 getRows	./include/math.h	/^		unsigned int getRows()$/;"	f	class:LobMatrix	typeref:typename:unsigned int
 getScaleMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getScaleMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
-getTransComp	./srcAPI/sceneAPI.cpp	/^Transform getTransComp(Scene inputScene, entityID id)$/;"	f	typeref:typename:Transform
+getTransComp	./srcAPI/sceneAPI.cpp	/^bool getTransComp(Scene inputScene, entityID id, Transform& transOut)$/;"	f	typeref:typename:bool
 getTranslateMatrix	./src/transform.cpp	/^LobMatrix transformHandler :: getTranslateMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:LobMatrix
 getVec	./include/math.h	/^		std :: vector<float> getVec()$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
 getViewProjMatrix	./src/camera.cpp	/^LobMatrix cameraHandler :: getViewProjMatrix(Camera * camera)$/;"	f	class:cameraHandler	typeref:typename:LobMatrix
@@ -5447,6 +5453,7 @@ index_from_ptr	./vendor/imgui.h	/^    inline int          index_from_ptr(const T
 index_from_ptr	./vendor/imgui_internal.h	/^    inline int  index_from_ptr(const T* it) const   { IM_ASSERT(it >= Data && it < DataEnd); con/;"	f	struct:ImSpan	typeref:typename:int
 index_map	./vendor/imstb_truetype.h	/^   int index_map;                     \/\/ a cmap mapping for our chosen character encoding$/;"	m	struct:stbtt_fontinfo	typeref:typename:int
 init_mode	./vendor/imstb_rectpack.h	/^   int init_mode;$/;"	m	struct:stbrp_context	typeref:typename:int
+initializeAPI	./src/app.cpp	/^void appManagement :: initializeAPI()$/;"	f	class:appManagement	typeref:typename:void
 initialized	./vendor/imstb_textedit.h	/^   unsigned char initialized;$/;"	m	struct:__anon25749c3e0308	typeref:typename:unsigned char
 inputManagement	./include/input.h	/^namespace inputManagement$/;"	n
 inputState	./globals.cpp	/^InputState * globals :: inputState;$/;"	m	class:globals 	typeref:typename:InputState *
@@ -5489,6 +5496,7 @@ length	./vendor/stb_image.h	/^   stbi__uint32 length;$/;"	m	struct:__anon212c1e4
 lflags	./vendor/stb_image.h	/^   int lflags;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 libgl	./vendor/imgui_impl_opengl3_loader.h	/^static HMODULE libgl;$/;"	v	typeref:typename:HMODULE
 lightHandler	./include/light.h	/^namespace lightHandler$/;"	n
+lightScript	./scripts/lightScript.py	/^class lightScript(coremodule.BaseScript) :$/;"	c
 line0	./vendor/stb_image.h	/^   stbi_uc *line0,*line1;$/;"	m	struct:__anon212c1e400a08	typeref:typename:stbi_uc *
 line1	./vendor/stb_image.h	/^   stbi_uc *line0,*line1;$/;"	m	struct:__anon212c1e400a08	typeref:typename:stbi_uc *
 line_size	./vendor/stb_image.h	/^   int line_size;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
@@ -5668,6 +5676,7 @@ rotate	./srcAPI/transformAPI.cpp	/^void rotate(Transform& self, std :: vector<fl
 rotateMatrix	./src/math.cpp	/^LobMatrix math :: rotateMatrix(std :: vector<float> axis, float inputAngle)$/;"	f	class:math	typeref:typename:LobMatrix
 rotation	./include/transform.h	/^	std :: vector<float> rotation = { 0.0f, 0.0f, 0.0f };$/;"	m	struct:Transform	typeref:typename:std::vector<float>
 row_count_per_page	./vendor/imstb_textedit.h	/^   int row_count_per_page;$/;"	m	struct:__anon25749c3e0308	typeref:typename:int
+run	./src/app.cpp	/^void appManagement :: run()$/;"	f	class:appManagement	typeref:typename:void
 s	./vendor/stb_image.h	/^   stbi__context *s;$/;"	m	struct:__anon212c1e400808	typeref:typename:stbi__context *
 s	./vendor/stb_image.h	/^   stbi__context *s;$/;"	m	struct:__anon212c1e400e08	typeref:typename:stbi__context *
 s0	./vendor/imstb_truetype.h	/^   float x0,y0,s0,t0; \/\/ top-left$/;"	m	struct:__anonecd446350308	typeref:typename:float
@@ -5693,6 +5702,7 @@ select_end	./vendor/imstb_textedit.h	/^   int select_end;$/;"	m	struct:__anon257
 select_start	./vendor/imstb_textedit.h	/^   int select_start;          \/\/ selection start point$/;"	m	struct:__anon25749c3e0308	typeref:typename:int
 set	./vendor/imgui_internal.h	/^    inline void         set(T* data, T* data_end)   { Data = data; DataEnd = data_end; }$/;"	f	struct:ImSpan	typeref:typename:void
 set	./vendor/imgui_internal.h	/^    inline void         set(T* data, int size)      { Data = data; DataEnd = data + size; }$/;"	f	struct:ImSpan	typeref:typename:void
+setColor	./srcAPI/lightAPI.cpp	/^void setColor(Light& self, std :: vector<float> newVec)$/;"	f	typeref:typename:void
 setData	./include/scene.h	/^	void setData(pybind11 :: dict retValue, std :: string entryName, T * data)$/;"	f	namespace:sceneManagement	typeref:typename:void
 setPoint	./include/math.h	/^		void setPoint(unsigned int y, unsigned int x, float value)$/;"	f	class:LobMatrix	typeref:typename:void
 setPosition	./srcAPI/transformAPI.cpp	/^void setPosition(Transform& self, std :: vector<float> newVec)$/;"	f	typeref:typename:void
@@ -5723,6 +5733,7 @@ snprintf	./vendor/imgui_demo.cpp	/^#define snprintf /;"	d	file:
 spec_end	./vendor/stb_image.h	/^   int            spec_end;$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 spec_start	./vendor/stb_image.h	/^   int            spec_start;$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 split	./vendor/imgui.cpp	/^void ImGuiTextFilter::ImGuiTextRange::split(char separator, ImVector<ImGuiTextRange>* out) const$/;"	f	class:ImGuiTextFilter::ImGuiTextRange	typeref:typename:void
+startScripts	./src/app.cpp	/^void appManagement :: startScripts(bool initialize)$/;"	f	class:appManagement	typeref:typename:void
 start_x	./vendor/stb_image.h	/^   int start_x, start_y;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 start_y	./vendor/stb_image.h	/^   int start_x, start_y;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 started	./vendor/imstb_truetype.h	/^   int started;$/;"	m	struct:__anonecd446350f08	typeref:typename:int
@@ -6273,7 +6284,6 @@ toCompile	./scriptFile.py	/^        toCompile = False$/;"	v
 toRadians	./src/math.cpp	/^float math :: toRadians(float x)$/;"	f	class:math	typeref:typename:float
 todo	./vendor/stb_image.h	/^   int restart_interval, todo;$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 tq	./vendor/stb_image.h	/^      int tq;$/;"	m	struct:__anon212c1e400808::__anon212c1e400908	typeref:typename:int
-transRef	./scripts/testFile.py	/^    transRef = None$/;"	v	class:testFile
 transformHandler	./include/transform.h	/^namespace transformHandler$/;"	n
 translate	./src/transform.cpp	/^void transformHandler :: translate$/;"	f	class:transformHandler	typeref:typename:void
 translate	./srcAPI/transformAPI.cpp	/^void translate(Transform& self, std :: vector<float> deltaVec)$/;"	f	typeref:typename:void
@@ -6295,6 +6305,7 @@ undo_point	./vendor/imstb_textedit.h	/^   short undo_point, redo_point;$/;"	m	st
 undo_rec	./vendor/imstb_textedit.h	/^   StbUndoRecord          undo_rec [IMSTB_TEXTEDIT_UNDOSTATECOUNT];$/;"	m	struct:__anon25749c3e0208	typeref:typename:StbUndoRecord[]
 undostate	./vendor/imstb_textedit.h	/^   StbUndoState undostate;$/;"	m	struct:__anon25749c3e0308	typeref:typename:StbUndoState
 up	./include/camera.h	/^	std :: vector<float> up = { 0.0f, 1.0f, 0.0f };$/;"	m	struct:Camera	typeref:typename:std::vector<float>
+update	./src/app.cpp	/^void appManagement :: update()$/;"	f	class:appManagement	typeref:typename:void
 updateScene	./src/scene.cpp	/^void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)$/;"	f	class:sceneManagement	typeref:typename:void
 usePipeline	./src/graphics.cpp	/^void graphicManagement :: usePipeline(Pipeline * targetPipeline)$/;"	f	class:graphicManagement	typeref:typename:void
 user_allocator_context	./vendor/imstb_truetype.h	/^   void *user_allocator_context;$/;"	m	struct:stbtt_pack_context	typeref:typename:void *

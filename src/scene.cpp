@@ -15,8 +15,8 @@ void sceneManagement :: changeScene(Scene * targetScene)
 	globals :: curSceneRef = targetScene;
 	windowManagement :: changeTitle(globals :: winRef, globals :: curSceneRef -> name);
 
-	// STARTS ALL THE SCRIPTS IN THE NEW SCENE //
-	appManagement :: startScripts();
+	// STARTS AND INITIALIZES ALL THE SCRIPTS IN THE NEW SCENE //
+	appManagement :: startScripts(true);
 }
 
 entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entityName)
@@ -246,6 +246,9 @@ void sceneManagement :: saveScene(Scene * inputScene)
 
 	// PUTS IN "END" LINE TO DENOTE END OF SAVE FILE //
 	sceneFile << "END" << std :: endl;
+
+	// PRINTS CONFIRMATION OF SCENE SAVING //
+	std :: cout << "SCENE SAVED!" << std :: endl;
 }
 
 Scene * sceneManagement :: loadScene(std :: string scenePath)
@@ -294,7 +297,7 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			compIndex = -1;
 			std :: stringstream lineStream(line);
 			std :: string data;
-			unsigned char index = 1;
+			unsigned char index = 0;
 			while(lineStream >> data)
 			{
 				if(index == 1)
@@ -367,8 +370,9 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 
 		if(compIndex == MESH_COMP_ID)
 		{
+
 			if(linesRead == 0)
-				newCompPtr = ((compPtr) (meshHandler :: getMeshFromPLY(line.c_str(), true)));
+				newCompPtr = ((compPtr) (meshHandler :: getMeshFromPLY(line.c_str())));
 
 			if(linesRead == 1)
 			{
@@ -386,16 +390,15 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 				cameraPtr -> far = std :: stof(line.c_str());
 			if(linesRead == 2)
 			{
-				std :: cout << "LOADING " << line << " AS VERTEX SHADER!" << std :: endl;
 				graphicManagement :: loadShader
 					(cameraPtr -> curPipelineRef, GL_VERTEX_SHADER, "shaders/vertShader.txt");
 			}
 
 			if(linesRead == 3)
 			{
-				std :: cout << "LOADING " << line << " AS FRAGMENT SHADER!" << std :: endl;
 				graphicManagement :: loadShader
-					(cameraPtr -> curPipelineRef, GL_FRAGMENT_SHADER, "shaders/vertShader.txt");
+					(cameraPtr -> curPipelineRef, GL_FRAGMENT_SHADER, "shaders/fragShader.txt");
+				graphicManagement :: compileProgram(cameraPtr -> curPipelineRef);
 			}
 		}
 
@@ -554,6 +557,11 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 		(
 		 	retValue, "transform",
 			(Transform *) (inputScene -> components[TRANS_COMP_ID][curEnt])
+		);
+		sceneManagement :: setData<Light>
+		(
+		 	retValue, "light",
+			(Light *) (inputScene -> components[LIGHT_COMP_ID][curEnt])
 		);
 		inputScene -> entities[curEnt] = entRef;
 	}

@@ -1,7 +1,5 @@
-Allow Python scripts to change component data
 Allow Python scripts to add data to entities
 Allow Python scripts to create entities
-Fix Saving
 Make UI interactable, introducing hotloading
 Create system for making project directories and manipulating file system through editor
 Fix camera rotation

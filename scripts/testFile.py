@@ -8,14 +8,9 @@ class testFile(coremodule.BaseScript) :
     def _start(self) :
         # READS AND SETS DATA #
         self._set_data("parent_name", "Bingus Ascendant")
-        self.transRef = self.get_component("Transform")
-
-        # SCALES THE TRANSFORM #
-        self.transRef.scale([ 0.5, 1.1, 0.5 ])
+        self.transRef = self.get_component("transform")
+        self.transRef.rotate([0, -90, 0])
 
     def _update(self, delta_time) :
         # MOVES THE TRANSFORM UP AND ROTATES IT #
-        self.transRef.rotate([ 0, 90 * delta_time, 0 ])
-
-    # ATTRIBUTES #
-    transRef = None
+        self.transRef.rotate([ 0, 20 * delta_time, 0 ])

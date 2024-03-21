@@ -12,6 +12,14 @@ void uiManagement :: drawEditorUI()
 	{
 		if(ImGui :: BeginMenu("Scene"))
 		{
+			if(ImGui :: MenuItem("Compile Scene"))
+			{
+				appManagement :: compileScripts();
+				appManagement :: startScripts(true);
+			}
+
+			ImGui :: Separator();
+
 			if(ImGui :: MenuItem("Save Scene"))
 				sceneManagement :: saveScene(globals :: curSceneRef);
 
@@ -32,13 +40,17 @@ void uiManagement :: drawEditorUI()
 
 				for(auto& p : dirIt)
 				{
+					std :: string pathName = p.path().string();
+					if(pathName.find(".lscn") == std :: string :: npos 
+						|| pathName.find(".swp") != std :: string ::npos)
+					{
+						continue;
+					}
+
 					std :: string fileName = p.path().stem().string();
 					if(ImGui :: MenuItem(fileName.c_str()))
-					{
-						Scene * newScene = sceneManagement :: loadScene(std :: string(fileName + ".lscn"));
-						sceneManagement :: sceneOut(newScene);
-						sceneManagement :: changeScene(newScene);
-					}
+						sceneManagement :: changeScene(sceneManagement :: loadScene
+								(std :: string(fileName + ".lscn")));
 				}
 
 				ImGui :: EndMenu();
@@ -47,16 +59,6 @@ void uiManagement :: drawEditorUI()
 			ImGui :: EndMenu();
 		}
 
-		if(ImGui :: BeginMenu("Scripts"))
-		{
-			if(ImGui :: MenuItem("Compile Scene"))
-			{
-				appManagement :: compileScripts();
-				appManagement :: startScripts();
-			}
-
-			ImGui :: EndMenu();
-		}
 	} ImGui :: EndMainMenuBar();
 	float topBarY = 20.0f;
 
@@ -152,7 +154,7 @@ void uiManagement :: drawEditorUI()
 								rotValue += 360.0f;
 							curVec[column] = rotValue;
 						}
-						ImGui :: Text("%f", curVec[column]);
+						ImGui :: Text("%.2f", curVec[column]);
 					}
 				}
 				ImGui :: EndTable();			
@@ -167,7 +169,7 @@ void uiManagement :: drawEditorUI()
 			
 			ImGui :: Text
 			(
-			 	"Camera Data\n%f\t%f\n%f\n%s\n%s", 
+			 	"Camera Data\n%.2f\t%.2f\n%.2f\n%s\n%s", 
 				curCamera -> near, curCamera -> far, 
 				curCamera -> aspectRatio,
 				curCamera -> curPipelineRef -> vertShaderName.c_str(),
@@ -183,7 +185,7 @@ void uiManagement :: drawEditorUI()
 			
 			ImGui :: Text
 			(
-			 	"Light Data\n%f, %f, %f, %f", 
+			 	"Light Data\n%.2f, %.2f, %.2f, %.2f", 
 				curLight -> color[0], curLight -> color[1], curLight -> color[2], curLight -> color[3]
 			);
 		}

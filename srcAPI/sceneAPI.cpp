@@ -9,6 +9,8 @@
 // LOBSTER INCLUDES //
 #include <importantConstants.h>
 #include <scene.h>
+#include <transform.h>
+#include <light.h>
 #include <APIUtils.h>
 
 // STATIC TEST FUNCTIONS //
@@ -39,14 +41,31 @@ pybind11 :: object getEntity(Scene inputScene, entityID id)
 	{ return pybind11 :: cast(inputScene.entities[id]); }
 
 // RETURNS COMPONENT REFERENCES //
-Transform getTransComp(Scene inputScene, entityID id)
-	{ return (*((Transform *) (inputScene.components[TRANS_COMP_ID][id]))); }
+bool getTransComp(Scene inputScene, entityID id, Transform& transOut)
+{
+	if((inputScene.entities[id].mask & (1 << TRANS_COMP_ID)) == 0)
+		return false;
+
+	transOut = (*((Transform *) (inputScene.components[TRANS_COMP_ID][id])));
+	return true; 
+}
+
+bool getLightComp(Scene inputScene, entityID id, Light& lightOut)
+{
+	if((inputScene.entities[id].mask & (1 << LIGHT_COMP_ID)) == 0)
+		return false;
+
+	lightOut = (*((Light *) (inputScene.components[LIGHT_COMP_ID][id])));
+	return true; 
+}
 
 // BINDS SCENE CLASS //
 PYBIND11_MODULE(_sceneapi, m)
 {
 	pybind11 :: class_<Scene>(m, "Scene")
 		.def("get_entity", &getEntity)
-		.def("get_trans_comp", &getTransComp)
-		.def("scene_out", &sceneOut);
+		.def("scene_out", &sceneOut)
+
+		.def("get_transform_comp", &getTransComp)
+		.def("get_light_comp", &getLightComp);
 }

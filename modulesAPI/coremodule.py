@@ -5,6 +5,7 @@ from _coremodule import *
 from _entityapi import *
 from _sceneapi import *
 from _transformapi import *
+from _lightapi import *
 
 class BaseScript :
     """
@@ -13,17 +14,29 @@ class BaseScript :
     """
 
     # CONSTRUCTOR/DESTRUCTOR ARGUMENTS #
-    def __init__(self, entity_id) :
+    def __init__(self) :
         self.name = self.__class__.__name__
         self.data = { }
-        self.entity_id = entity_id
+        self.comp_dict = { }
+
+    def _initialize(self, entity_id) :
+        # LISTS ALL COMPONENTS THAT THE SCRIPT WILL SEARCH FOR #
+        componentList = [ "transform", "light" ]
+
+        # SEARCHES FOR THEM #
+        for comp in componentList :
+            func = getattr(scene_ref, f"get_{comp}_comp")
+            temp = globals()[comp.title()]()
+            valid = func(entity_id, temp)
+            if valid is True :
+                self.comp_dict[comp] = temp
 
     # INTRINSIC METHODS #
     def _push_data(self) :
         for item in dir(self) :
-            itemRef = getattr(self, item)
-            if type(itemRef) == Transform :
-                self.data["transform"] = itemRef
+            comp = type(getattr(self, item)).__name__.lower()
+            if comp in self.comp_dict :
+                self.data[comp] = getattr(self, item)
         dataCopy = dict(self.data)
         self.data = { }
         return dataCopy
@@ -33,6 +46,6 @@ class BaseScript :
         self.data[name] = item
 
     def get_component(self, comp) :
-        if comp == "Transform" :
-            return scene_ref.get_trans_comp(self.entity_id)
-        raise ValueError("Invalid comp name!")
+        if not self.comp_dict.get(comp) :
+            raise ValueError(f"Entity does not have component of type {comp}!")
+        return self.comp_dict[comp]

@@ -41,6 +41,9 @@ void scale(Transform& self, std :: vector<float> deltaVec)
 PYBIND11_MODULE(_transformapi, m)
 {
 	pybind11 :: class_<Transform>(m, "Transform")
+		// BASE CONSTRUCTOR //
+		.def(pybind11 :: init<>())
+
 		// BINDS FUNCTIONS //
 
 		// GETTERS AND SETTERS FOR TRANSFORM DATA //
@@ -51,10 +54,5 @@ PYBIND11_MODULE(_transformapi, m)
 		.def("rotate", &rotate)
 
 		.def("set_scale", &setScale)
-		.def("scale", &scale)
-
-		// BINDS ATTRIBUTES //
-		.def_readwrite("position_val", &Transform :: position)
-		.def_readwrite("rotation_val", &Transform :: rotation)
-		.def_readwrite("scale_val", &Transform :: scale);
+		.def("scale", &scale);
 }

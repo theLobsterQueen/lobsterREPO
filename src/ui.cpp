@@ -10,18 +10,12 @@ void uiManagement :: drawEditorUI()
 	// DRAWS MENU BAR //
 	if(ImGui :: BeginMainMenuBar())
 	{
-		if(ImGui :: BeginMenu("Scene"))
+		if(ImGui :: BeginMenu("File"))
 		{
-			if(ImGui :: MenuItem("Compile Scene"))
-			{
-				appManagement :: compileScripts();
-				appManagement :: startScripts(true);
-			}
-
-			ImGui :: Separator();
-
 			if(ImGui :: MenuItem("Save Scene"))
 				sceneManagement :: saveScene(globals :: curSceneRef);
+			if(ImGui :: MenuItem("Save Scene As..."))
+				editorGlobals :: savingScene = true;
 
 			std :: filesystem :: directory_iterator dirIt;
 			if(ImGui :: BeginMenu("Load Scene"))
@@ -52,15 +46,45 @@ void uiManagement :: drawEditorUI()
 						sceneManagement :: changeScene(sceneManagement :: loadScene
 								(std :: string(fileName + ".lscn")));
 				}
-
 				ImGui :: EndMenu();
 			}
+			ImGui :: EndMenu();
+		}
 
+		if(ImGui :: BeginMenu("Scene"))
+		{
+			if(ImGui :: MenuItem("Compile Scene"))
+			{
+				appManagement :: compileScripts();
+				appManagement :: startScripts(true);
+			}
+			if(ImGui :: MenuItem("Play Scene"))
+				globals :: isPlaying = true;
+			if(ImGui :: MenuItem("Stop Scene"))
+				globals :: isPlaying = false;
 			ImGui :: EndMenu();
 		}
 
 	} ImGui :: EndMainMenuBar();
 	float topBarY = 20.0f;
+
+	// DRAWS THE SAVE SCENE AS MODAL, IF IT'S ACTIVE //
+	if(editorGlobals :: savingScene)
+	{
+		ImGui :: OpenPopup("Save Scene As...");
+		ImGui :: SetNextWindowSize(ImVec2(globals :: winWidth * 0.4f, globals :: winHeight * 0.3f));
+		if(ImGui :: BeginPopupModal("Save Scene As..."), NULL, editorGlobals :: windowFlags)
+		{
+			static char inputString[LOB_FILE_NAME_MAX] = "";
+			if(ImGui :: InputText
+					("File Name", inputString, LOB_FILE_NAME_MAX, ImGuiInputTextFlags_EnterReturnsTrue))
+			{
+				sceneManagement :: saveScene(globals :: curSceneRef, std :: string(inputString));
+				editorGlobals :: savingScene = false;
+			}
+		}
+		ImGui :: EndPopup();
+	}
 
 	// DRAWS SCENE TREE //
 	ImGui :: SetNextWindowPos(ImVec2(0, topBarY));
@@ -120,44 +144,26 @@ void uiManagement :: drawEditorUI()
 			Transform * curTrans = (Transform *) globals :: curSceneRef -> components[TRANS_COMP_ID]
 				[editorGlobals :: curActiveEntity];
 			
+			std :: string columnNames[3] = { "X", "Y", "Z" };
+			std :: string rowNames[3] = { "_p", "_r", "_s" };
 			ImGui :: Text("Transform Data\n");
-			if(ImGui :: BeginTable("TransformTable", 3))
+			std :: vector<float> * transVecIndices[3] = 
+				{ &(curTrans -> position), &(curTrans -> rotation), &(curTrans -> scale) };
+			for(int row = 0; row < 3; row++)
 			{
-				for(int row = 0; row < 3; row++)
+				ImGui :: PushItemWidth(editorGlobals :: sidePanelWidth * 0.2f);
+				for(int column = 0; column < 3; column++)
 				{
-					ImGui :: TableNextRow();
-					std :: vector<float> curVec;
-					switch(row)
-					{
-						case 0 :
-							curVec = transformHandler :: getGlobalPosition(curTrans);
-						break;
-
-						case 1 :
-							curVec = curTrans -> rotation;
-						break;
-
-						case 2 :
-							curVec = curTrans -> scale;
-						break;
-					};
-
-					for(int column = 0; column < 3; column++)
-					{
-						ImGui :: TableSetColumnIndex(column);
-						if(row == 1)
-						{
-							float rotValue = curVec[column];
-							while(rotValue > 180)
-								rotValue -= 360.0f;
-							while(rotValue < -180)
-								rotValue += 360.0f;
-							curVec[column] = rotValue;
-						}
-						ImGui :: Text("%.2f", curVec[column]);
-					}
+					ImGui :: InputFloat
+					(
+					 	std :: string(columnNames[column] + rowNames[row]).c_str(), 
+						&((*transVecIndices[row])[column]),
+						-0.01f, -1.0f, "%.2f"
+					);
+					if(column != 2)
+						ImGui :: SameLine();
 				}
-				ImGui :: EndTable();			
+				ImGui :: PopItemWidth();
 			}
 		}
 
@@ -182,12 +188,16 @@ void uiManagement :: drawEditorUI()
 		{
 			Light * curLight = (Light *) globals :: curSceneRef -> components[LIGHT_COMP_ID]
 				[editorGlobals :: curActiveEntity];
-			
-			ImGui :: Text
-			(
-			 	"Light Data\n%.2f, %.2f, %.2f, %.2f", 
-				curLight -> color[0], curLight -> color[1], curLight -> color[2], curLight -> color[3]
-			);
+			ImGui :: Text("Light Data");
+			static const char * colorNames[4] = { "r", "g", "b", "a" };
+			for(int i = 0; i < 4; i++)
+			{
+				ImGui :: InputFloat
+				(
+					colorNames[i], &(curLight -> color[i]),
+					-0.01f, -1.0f, "%.2f"
+				);
+			}
 		}
 
 		// RELAYS MESH DATA //

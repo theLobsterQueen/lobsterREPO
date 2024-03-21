@@ -33,6 +33,7 @@ namespace globals
 	/// </summary> ///
 
 	extern bool isRunning;
+	extern bool isPlaying;
 
 	/// <summary> ///
 	/// 	This pointer references the main window.
@@ -99,6 +100,14 @@ namespace editorGlobals
 
 	extern ImGuiWindowFlags windowFlags;
 	extern ImGuiTreeNodeFlags sceneTreeFlags;
+
+	/// <summary> ///
+	///		This bool describes whether or not the user is currently entering key
+	///			input to a UI item. If so, it disables camera movement.
+	/// </summary> ///
+
+	extern bool keyInput;
+	extern bool savingScene;
 
 	/// <summary> ///
 	///		This ID represents the entity currently selected within the scene hiearchy.

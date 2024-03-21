@@ -41,6 +41,9 @@ typedef char *					compPtr;
 #define CAMERA_COMP_ID				2
 #define LIGHT_COMP_ID				3
 #define SCRIPT_COMP_ID				4
-
 #define NULL_COMP_ID				LOBSTER_MAX_COMPONENTS + 1
+
+// TOOLS FOR IMGUI //
+#define LOB_FILE_NAME_MAX 64
+
 #endif

@@ -1,8 +1,8 @@
-TEST
+RED
 ENT: Camera
 TRANSFORM
-0/0/0
-0/0/0
+-8.33182/0.4/-0.152194
+-4/-74/0
 1/1/1
 CAMERA
 1
@@ -15,13 +15,13 @@ TRANSFORM
 0/0/0
 1/1/1
 LIGHT
-1/1/1/0.9
+1/0/0/0.9
 SCRIPT
 lightScript
 ENT: Jinx
 TRANSFORM
 0/0/3
-0/0/0
+0/180/0
 1/1/1
 MESH
 portrait.ply

@@ -32,34 +32,25 @@ void inputManagement :: processInput(entityID cameraID)
 	static float keyMoveSpeed = 10.0f;
 
 	// MOVES THE CAMERA VIA KEY INPUT //
-	float speedVal = keyMoveSpeed * (globals :: deltaTime);
-	if(keys['w'])
-		deltaPos[2] += speedVal;
-	if(keys['s'])
-		deltaPos[2] -= speedVal;
-	if(keys['a'])
-		deltaPos[0] += speedVal;
-	if(keys['d'])
-		deltaPos[0] -= speedVal;
-	if(keys['['])
-		deltaPos[1] += speedVal;
-	if(keys[']'])
-		deltaPos[1] -= speedVal;
-
-	// CAMERA INPUT: CHECKS TO ENSURE THAT CAMERA IS ACTUALLY WITHIN VIEWPORT //
-	bool processMouse = true;
-	if(!(globals :: inputState -> mouseInput))
+	if(!(editorGlobals :: keyInput))
 	{
-		processMouse = false;
-		if(mousePosX >= editorGlobals :: sidePanelWidth
-			&& mousePosX <= (globals :: winWidth) - (editorGlobals :: sidePanelWidth)
-			&& mousePosY <= (globals :: winHeight) - (editorGlobals :: bottomPanelHeight))
-		{
-			processMouse = true;
-		}
+		float speedVal = keyMoveSpeed * (globals :: deltaTime);
+		if(keys['w'])
+			deltaPos[2] += speedVal;
+		if(keys['s'])
+			deltaPos[2] -= speedVal;
+		if(keys['a'])
+			deltaPos[0] += speedVal;
+		if(keys['d'])
+			deltaPos[0] -= speedVal;
+		if(keys['['])
+			deltaPos[1] += speedVal;
+		if(keys[']'])
+			deltaPos[1] -= speedVal;
 	}
 
-	if(processMouse)
+	// CAMERA INPUT: CHECKS TO ENSURE THAT CAMERA IS ACTUALLY WITHIN VIEWPORT //
+	if(!ImGui :: GetIO().WantCaptureMouse)
 	{
 		// IF BOTH LMB AND RMB ARE PRESSED: NO VALID INPUT COMBINATION, RETURNS //
 		if(globals :: inputState -> rmb && globals :: inputState -> lmb)

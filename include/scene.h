@@ -112,7 +112,7 @@ namespace sceneManagement
 	///		Saves the scene as a .lob file to the input directory.
 	/// </summary> ///
 
-	void saveScene(Scene * inputScene);
+	void saveScene(Scene * inputScene, std :: string alternateName = "");
 
 	/// <summary> ///
 	///		Loads a scene from input relative path.

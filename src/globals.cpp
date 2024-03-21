@@ -2,6 +2,7 @@
 #include <globals.h>
 
 bool globals :: isRunning;
+bool globals :: isPlaying;
 SDL_Window * globals :: winRef;
 unsigned short int globals :: winWidth;
 unsigned short int globals :: winHeight;
@@ -18,6 +19,8 @@ ImGuiWindowFlags editorGlobals :: windowFlags;
 ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;
 entityID editorGlobals :: curActiveEntity;
 bool editorGlobals :: entitySelected;
+bool editorGlobals :: keyInput;
+bool editorGlobals :: savingScene;
 float editorGlobals :: sidePanelWidth;
 float editorGlobals :: sidePanelHeight;
 float editorGlobals :: bottomPanelWidth;

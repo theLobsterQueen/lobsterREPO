@@ -30,6 +30,7 @@ int main(int argv, char ** args)
 {
 	// INITIALIZES GLOBALS //
 	globals :: isRunning = true;
+	globals :: isPlaying = false;
 	globals :: winWidth = 1300;
 	globals :: winHeight = 650;
 	globals :: deltaTime = 0;
@@ -39,7 +40,8 @@ int main(int argv, char ** args)
 	globals :: clearColor[2] = 0.4f;
 	globals :: clearColor[3] = 0.0f;
 
-	std :: vector<float> tempRot;
+	editorGlobals :: keyInput = false;
+	editorGlobals :: savingScene = false;
 	editorGlobals :: windowFlags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse;
 	editorGlobals :: sceneTreeFlags = ImGuiTreeNodeFlags_DefaultOpen;
 	editorGlobals :: entitySelected = false;

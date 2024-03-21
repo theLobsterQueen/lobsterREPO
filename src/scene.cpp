@@ -153,17 +153,22 @@ std :: vector<entityID> sceneManagement :: sceneView
 	return newVec;
 }
 
-void sceneManagement :: saveScene(Scene * inputScene)
+void sceneManagement :: saveScene(Scene * inputScene, std :: string alternateName)
 {
+	// VARIABLE INITIALIZATION //
+	std :: string savePath = inputScene -> name;
+	if(alternateName != "")
+		savePath = alternateName;
+
 	// ATTEMPTS TO OPEN THE FILE FROM WORKING DIRECTORY //
 	std :: ofstream sceneFile
-		(std :: string("./scenes/" + inputScene -> name + ".lscn").c_str());
+		(std :: string("./scenes/" + savePath + ".lscn").c_str());
 	if(!sceneFile.is_open())
 		sceneFile = std :: ofstream
-			(std :: string("./../../scenes/" + inputScene -> name + ".lscn").c_str());
+			(std :: string("./../../scenes/" + savePath + ".lscn").c_str());
 
 	// PUTS THE NAME OF THE SCENE AT THE TOP OF THE FILE // 
-	sceneFile << inputScene -> name << std :: endl;
+	sceneFile << savePath << std :: endl;
 
 	// IF SCENE FILE DIRECTORY WAS FOUND SUCCESSFULLY, BEGINS WRITING FILE. //
 	unsigned short int activeCount = inputScene -> activeEntities;

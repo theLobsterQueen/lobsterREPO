@@ -200,7 +200,7 @@ void appManagement :: run()
 	unsigned long int newDelta = SDL_GetTicks();
 	unsigned long int oldDelta = 0;
 	static float timer = 0.0f;
-
+	
 	while(globals :: isRunning)
 	{
 		// UPDATES DELTA TIME //
@@ -213,7 +213,8 @@ void appManagement :: run()
 		appManagement :: update();
 
 		// UPDATES SCENE THROUGH SCRIPTS //
-		sceneManagement :: updateScene(globals :: curSceneRef, globals :: deltaTime);
+		if(globals :: isPlaying)
+			sceneManagement :: updateScene(globals :: curSceneRef, globals :: deltaTime);
 
 		// BEGINS RENDERING PHASE //
 		graphicManagement :: beginRenderPass();
@@ -231,6 +232,10 @@ void appManagement :: run()
 
 void appManagement :: update()
 {
+	// DETERMINES WHETHER OR NOT THE ENGINE SHOULD YIELD //
+		// KEY INPUT TO THE IMGUI LAYER //
+	editorGlobals :: keyInput = ImGui :: GetIO().WantCaptureKeyboard;
+
 	// VARIABLE INITIALIZATION //
 	SDL_Event event;
 
@@ -258,18 +263,6 @@ void appManagement :: update()
 				if(event.key.keysym.sym == 27)
 				{
 					globals :: isRunning = false;
-					break;
-				}
-
-				if(event.key.keysym.sym == '1')
-				{
-					sceneManagement :: changeScene(sceneManagement :: loadScene("TEST"));
-					break;
-				}
-
-				if(event.key.keysym.sym == '2')
-				{
-					sceneManagement :: changeScene(sceneManagement :: loadScene("TEST 2"));
 					break;
 				}
 

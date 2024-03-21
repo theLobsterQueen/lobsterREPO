@@ -167,8 +167,9 @@ void uiManagement :: drawEditorUI()
 			
 			ImGui :: Text
 			(
-			 	"Camera Data\n%f\t%f\n%s\n%s", 
+			 	"Camera Data\n%f\t%f\n%f\n%s\n%s", 
 				curCamera -> near, curCamera -> far, 
+				curCamera -> aspectRatio,
 				curCamera -> curPipelineRef -> vertShaderName.c_str(),
 				curCamera -> curPipelineRef -> fragShaderName.c_str()
 			);
@@ -193,7 +194,7 @@ void uiManagement :: drawEditorUI()
 			Mesh * curMesh = (Mesh *) globals :: curSceneRef -> components[MESH_COMP_ID]
 				[editorGlobals :: curActiveEntity];
 
-			ImGui :: Text("Mesh Data\n%s", curMesh -> name.c_str());
+			ImGui :: Text("Mesh Data\n%s\n%s", curMesh -> name.c_str(), curMesh -> texName.c_str());
 		}
 
 		// RELAYS SCRIPT DATA //

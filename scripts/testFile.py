@@ -6,12 +6,16 @@ import coremodule
 class testFile(coremodule.BaseScript) :
     # INTRINSIC METHODS #
     def _start(self) :
+        # READS AND SETS DATA #
         self._set_data("parent_name", "Bingus Ascendant")
         self.transRef = self.get_component("Transform")
-        self.transRef.rotation = [ 0.0, 0.0, 0.0 ]
+
+        # SCALES THE TRANSFORM #
+        self.transRef.scale([ 0.5, 1.1, 0.5 ])
 
     def _update(self, delta_time) :
-        self.transRef.rotate([ 0, 40 * delta_time, 0 ])
+        # MOVES THE TRANSFORM UP AND ROTATES IT #
+        self.transRef.rotate([ 0, 90 * delta_time, 0 ])
 
     # ATTRIBUTES #
     transRef = None

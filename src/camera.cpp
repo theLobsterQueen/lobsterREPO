@@ -5,7 +5,12 @@
 Camera * cameraHandler :: createCamera(float inputAspect, Pipeline * inputPipeline)
 {
 	Camera * newCamera = new Camera;
-	newCamera -> aspectRatio = inputAspect;
+
+	// IF INPUT ASPECT RATIO IS NULL, DETERMINES INPUT ASPECT RATIO OF VIEWPORT //
+	if(inputAspect != 0.0f)
+		newCamera -> aspectRatio = inputAspect;
+	else
+		newCamera -> aspectRatio = ((float) (globals :: winWidth)) / ((float) (globals :: winHeight));
 	newCamera -> FOV = 1;
 
 	// IF INPUT PIPELINE IS NULLPTR, CREATES AN EMPTY ONE TO BE USED //
@@ -23,10 +28,10 @@ LobMatrix cameraHandler :: getViewProjMatrix(Camera * camera)
 		std :: vector<float>
 		{
 			// FIRST COLUMN //
-			camera -> FOV / camera -> aspectRatio, 0, 0, 0,
+			1 / camera -> aspectRatio, 0, 0, 0,
 
 			// SECOND COLUMN //
-			0, camera -> FOV, 0, 0,
+			0, 1, 0, 0,
 
 			// THIRD COLUMN //
 			0, 0, camera -> far / (camera -> near - camera -> far), -1,
@@ -80,6 +85,6 @@ LobMatrix cameraHandler :: getWorldViewMatrix(Camera * camera, Transform * camTr
 
 void cameraHandler :: zoom(Camera * camera, float zoomDelta)
 {
-	// (TODO) REDO THIS VALUE: THE LAST IMPLEMENTATION WAS NO PROPERLY CONFIGURED //
+	// (TODO) REDO THIS VALUE: THE LAST IMPLEMENTATION WAS NOT PROPERLY CONFIGURED //
 		// IT RESULTED IN MASSIVE PERSPECTIVE SHEARING //
 }

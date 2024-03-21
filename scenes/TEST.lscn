@@ -1,27 +1,29 @@
 TEST
 ENT: Camera
 TRANSFORM
-5.73784/0.519253/4.13839
--8/100/0
+0/0/0
+0/0/0
 1/1/1
 CAMERA
 1
 100
 shaders/vertShader.txt
 shaders/fragShader.txt
-ENT: Bingus
+ENT: Light
 TRANSFORM
 -5/0/3
 0/0/0
 1/1/1
 LIGHT
 1/1/1/0.9
-ENT: Jinx
+ENT: Bingus Ascendant
 TRANSFORM
 0/0/3
-0/0/0
-1/1/1
+0/253.079/0
+0.5/1.1/0.5
 MESH
 portrait.ply
 jinx.png
+SCRIPT
+testFile
 END

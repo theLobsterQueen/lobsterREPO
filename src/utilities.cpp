@@ -68,7 +68,7 @@ void printShaderLog(GLuint shader)
 void checkErrors()
 {
 	GLenum err;
-	while((err = glGetError()) != GL_NO_ERROR)
+	while(err = glGetError() != GL_NO_ERROR)
 	{
 		switch(err)
 		{
@@ -106,6 +106,7 @@ void checkErrors()
 		}
 	}
 }
+
 
 void mouseButtonProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue)
 {

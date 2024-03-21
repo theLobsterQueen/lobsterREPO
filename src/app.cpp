@@ -109,6 +109,9 @@ void appManagement :: createTestScene()
 		(compPtr) (scriptHandler :: createScript("testFile", testID))
 	);
 	sceneManagement :: changeScene(testScene);
+	Scene * loadedScene = sceneManagement :: loadScene("TEST.lscn");
+	sceneManagement :: changeScene(loadedScene);
+	sceneManagement :: changeScene(testScene);
 }
 
 void appManagement :: initializeAPI()

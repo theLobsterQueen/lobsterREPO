@@ -11,23 +11,9 @@ Scene * sceneManagement :: createScene(std :: string inputName)
 void sceneManagement :: changeScene(Scene * targetScene)
 {
 	// ASSIGNS SCENE TO ATTRIBUTE IN COREMODULE //
-	APIGlobals :: coremodule.attr("scene_ref") = (*targetScene);
-
-	entityID camID;
-	if(sceneManagement :: getCameraEntityID(targetScene, &camID))
-	{
-		globals :: curSceneRef = targetScene;
-		Camera * temp = (Camera *) targetScene -> components[CAMERA_COMP_ID][camID];
-		temp -> aspectRatio = (((float) (globals :: winWidth)) / ((float) (globals :: winHeight)));
-		windowManagement :: changeTitle(globals :: winRef, targetScene -> name);
-	}
-
-	else
-	{
-		std :: cout << "ATTEMPTED TO SWITCH TO " << targetScene -> name << " BUT COULD NOT FIND"
-			<< " A SUITABLE CAMERA TO RENDER TO!" << std :: endl;
-		return;
-	}
+	APIGlobals :: coremodule.attr("scene_ref") = targetScene;
+	globals :: curSceneRef = targetScene;
+	windowManagement :: changeTitle(globals :: winRef, globals :: curSceneRef -> name);
 
 	// STARTS ALL THE SCRIPTS IN THE NEW SCENE //
 	appManagement :: startScripts();
@@ -76,13 +62,8 @@ void sceneManagement :: addComp
 
 void sceneManagement :: renderScene(Scene * targetScene)
 {
-	entityID cameraEntity;
-	if(!sceneManagement :: getCameraEntityID(targetScene, &cameraEntity))
-	{
-		std :: cout << "ERROR! ATTEMPTED TO RENDER A SCENE THAT DOES NOT HAVE A CAMERA!"
-			<< std :: endl;
-		return;
-	}
+	// READS CAMERA ENTITY DATA //
+	entityID cameraEntity = sceneManagement :: sceneView(targetScene, CAMERA_COMP_ID)[0];
 
 	// READS COMPONENTS FROM CAMERA ENTITY //
 	Camera * camera = (Camera *) 
@@ -102,8 +83,7 @@ void sceneManagement :: renderScene(Scene * targetScene)
 	// GETS ALL LIGHT SOURCES AND PUSHES THEIR POSITIONS TO THE SHADERS //
 		// TODO: ADD SUPPORT FOR MULTIPLE LIGHT SOURCES AND DIFFERENT LIGHT COLORS //
 	entityID lightEnt = sceneManagement :: sceneView(targetScene, LIGHT_COMP_ID)[0];
-	Light light = *((Light *) targetScene ->
-		components[LIGHT_COMP_ID][lightEnt]);
+	Light light = *((Light *) targetScene -> components[LIGHT_COMP_ID][lightEnt]);
 	glUniform4f
 	(
 		UNI_LIGHT_COLOR,
@@ -120,11 +100,10 @@ void sceneManagement :: renderScene(Scene * targetScene)
 	// BEGINS ITERATING THROUGH AND RENDERING VALID ENTITIES //
 	std :: vector<entityID> meshes = sceneManagement :: sceneView
 		(targetScene, MESH_COMP_ID);
-	
 	for(unsigned i = 0; i < meshes.size(); i++)
 	{
 		// READS ENTITY INDEX //
-		unsigned entityIndex = meshes[i];
+		entityID entityIndex = meshes[i];
 
 		// READS ENTITY DATA //
 		Entity curEntity = targetScene -> entities[entityIndex];
@@ -149,17 +128,26 @@ void sceneManagement :: renderScene(Scene * targetScene)
 		meshHandler :: drawMesh
 			((Mesh *) targetScene -> components[MESH_COMP_ID][entityIndex]);
 	}
+
+	checkErrors();
 }
 
 std :: vector<entityID> sceneManagement :: sceneView
 	(Scene * inputScene, componentID compID)
 {
 	std :: vector<entityID> newVec = { }; unsigned entityIndex = 0;
+	unsigned entitiesLeft = inputScene -> activeEntities;
 	for(Entity curEnt : inputScene -> entities)
 	{
+		if(curEnt.mask != 0)
+			entitiesLeft--;
+
 		if((curEnt.mask & (1 << compID)) > 0)
 			newVec.push_back(entityIndex);
 		entityIndex++;
+
+		if(entitiesLeft == 0)
+			break;
 	}
 
 	return newVec;
@@ -242,6 +230,15 @@ void sceneManagement :: saveScene(Scene * inputScene)
 				<< tempMesh -> texName << std :: endl;
 		}
 
+		// SAVES SCRIPTS //
+		if((curEnt.mask & (1 << SCRIPT_COMP_ID)) > 0)
+		{
+			Script * tempScript = (Script *)
+				inputScene -> components[SCRIPT_COMP_ID][i];
+			sceneFile << "SCRIPT" << std :: endl
+				<< tempScript -> name << std :: endl;
+		}
+
 		// INCREMENTS INDEX AND REDUCES ACTIVE COUNT //
 		i++;
 		activeCount--;
@@ -254,7 +251,7 @@ void sceneManagement :: saveScene(Scene * inputScene)
 Scene * sceneManagement :: loadScene(std :: string scenePath)
 {
 	// VARIABLE INITIALIZATION //
-	int linesRead = 0;
+	int linesRead = -1;
 	int compIndex = -1;
 	
 	// FINDS AND READS SCENE FILE //
@@ -297,7 +294,7 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			compIndex = -1;
 			std :: stringstream lineStream(line);
 			std :: string data;
-			unsigned char index = 0;
+			unsigned char index = 1;
 			while(lineStream >> data)
 			{
 				if(index == 1)
@@ -371,12 +368,12 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 		if(compIndex == MESH_COMP_ID)
 		{
 			if(linesRead == 0)
-				newCompPtr = ((compPtr) (meshHandler :: getMeshFromPLY(line)));
+				newCompPtr = ((compPtr) (meshHandler :: getMeshFromPLY(line.c_str(), true)));
 
-			else if(linesRead == 1)
+			if(linesRead == 1)
 			{
 				Mesh * meshPtr = ((Mesh *) (newCompPtr));
-				meshHandler :: setTexture(meshPtr, textureHandler :: createTexture(line));
+				meshHandler :: setTexture(meshPtr, textureHandler :: createTexture(line.c_str()));
 			}
 		}
 
@@ -386,18 +383,26 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			if(linesRead == 0)
 				cameraPtr -> near = std :: stof(line.c_str());
 			if(linesRead == 1)
-				cameraPtr -> far = std :: stoi(line.c_str());
+				cameraPtr -> far = std :: stof(line.c_str());
 			if(linesRead == 2)
 			{
+				std :: cout << "LOADING " << line << " AS VERTEX SHADER!" << std :: endl;
 				graphicManagement :: loadShader
-					(cameraPtr -> curPipelineRef, GL_VERTEX_SHADER, line.c_str());
+					(cameraPtr -> curPipelineRef, GL_VERTEX_SHADER, "shaders/vertShader.txt");
 			}
 
 			if(linesRead == 3)
 			{
+				std :: cout << "LOADING " << line << " AS FRAGMENT SHADER!" << std :: endl;
 				graphicManagement :: loadShader
-					(cameraPtr -> curPipelineRef, GL_FRAGMENT_SHADER, line.c_str());
+					(cameraPtr -> curPipelineRef, GL_FRAGMENT_SHADER, "shaders/vertShader.txt");
 			}
+		}
+
+		if(compIndex == SCRIPT_COMP_ID)
+		{
+			if(linesRead == 0)
+				newCompPtr = ((compPtr) (scriptHandler :: createScript(line, newEntity)));
 		}
 
 		// CHECKS FOR LOADING DIFFERENTS COMPONENTS //
@@ -471,6 +476,23 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 
 			newCompPtr = nullptr;
 			compIndex = MESH_COMP_ID;
+			linesRead = -1;
+		}
+
+		if(line.find(std :: string("SCRIPT")) != std :: string :: npos)
+		{
+			// ADDS PREVIOUSLY CONFIGURED COMPONENT, IF ANY //
+			if(compIndex != -1)
+			{
+				sceneManagement :: addComp
+				(
+					newScene, newEntity,
+					compIndex, newCompPtr
+				);
+			}
+
+			newCompPtr = nullptr;
+			compIndex = SCRIPT_COMP_ID;
 			linesRead = -1;
 		}
 

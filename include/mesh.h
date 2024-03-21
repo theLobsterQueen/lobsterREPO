@@ -61,7 +61,7 @@ namespace meshHandler
 
 	void drawMesh(Mesh * inputMesh);
 
-	Mesh * getMeshFromPLY(std :: string fileName);
+	Mesh * getMeshFromPLY(std :: string fileName, bool debugPrint = false);
 
 	void printMesh(Mesh * inputMesh);
 

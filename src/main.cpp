@@ -114,7 +114,7 @@ int main(int argv, char ** args)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+	
 	// SETS OUT STB SETTINGS //
 	stbi_set_flip_vertically_on_load(true);
 

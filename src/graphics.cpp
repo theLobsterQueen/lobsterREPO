@@ -7,6 +7,7 @@ Pipeline * graphicManagement :: createPipeline()
 	newPipeline -> program = glCreateProgram(); 
 	newPipeline -> vertShader = glCreateShader(GL_VERTEX_SHADER);
 	newPipeline -> fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+	checkErrors();
 	return newPipeline;
 }
 
@@ -99,7 +100,8 @@ void graphicManagement :: loadShader
 			std :: string tempLine;
 			while(std :: getline(targetFile, tempLine))
 				shaderString += tempLine + "\n";
-			
+			targetFile.close();
+
 			// AFTER DATA IS COPIED, ADDS AN ADDITIONAL NEWLINE FOR READABILITY //
 			shaderString += "\n";
 			continue;

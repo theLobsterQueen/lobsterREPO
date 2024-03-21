@@ -132,6 +132,9 @@ void meshHandler :: drawMesh(Mesh * inputMesh)
 		GL_UNSIGNED_INT,
 		nullptr
 	);
+
+	// CHECKS FOR ERRORS //
+	checkErrors();
 }
 
 void meshHandler :: printMesh(Mesh * inputMesh)
@@ -169,7 +172,7 @@ void meshHandler :: printMesh(Mesh * inputMesh)
 	}
 }
 
-Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
+Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)
 {
 	// VARIABLE INITIALIZATION //
 	unsigned int vertexCount;
@@ -179,7 +182,7 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 	std :: string line; 
 
 	// LOADS FILES //
-	std :: ifstream meshFile("assets/models/" + inputName);
+	std :: ifstream meshFile("./assets/models/" + inputName);
 	
 	// IF COULD NOT LOAD, ATTEMPTS TO LAOD FROM PERSPECTIVE OF EXECUTABLE LIBRARY //
 	if(!meshFile.is_open())
@@ -195,8 +198,13 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName)
 	// IF FILE WAS SUCCESSFULLY OPENED, FILLES VERTEX/INDEX/COLOR DATA //
 	bool foundPly = false; bool isASCII = false;
 	bool readData = false;
+	if(debugPrint)
+		std :: cout << "DEBUG PRINT ENABLED!" << std :: endl;
 	while(std :: getline(meshFile, line))
 	{
+		if(debugPrint)
+			std :: cout << line << std :: endl;
+
 		if(readData == false)
 		{
 			// ATTEMPTS TO FIND "ply" KEYWORD WHICH MARKS FILE AS .ply FILE //

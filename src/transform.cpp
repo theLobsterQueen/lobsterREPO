@@ -36,72 +36,54 @@ Transform * transformHandler :: duplicateTransform(Transform * base)
 	return newTransform;
 }
 
-LobMatrix transformHandler :: getModelWorldMatrix(Transform * inputTrans)
+glm :: mat4x4 transformHandler :: getObjectWorldMatrix(Transform * inputTrans)
 {
 	// CREATES ROTATION MATRIX //
-	LobMatrix rotMat = transformHandler :: getRotateMatrix(inputTrans);
-	LobMatrix transMat = transformHandler :: getTranslateMatrix(inputTrans);
-	LobMatrix scaleMat = transformHandler :: getScaleMatrix(inputTrans);
+	glm :: mat4x4 rotMat = transformHandler :: getRotateMatrix(inputTrans);
+	glm :: mat4x4 transMat = transformHandler :: getTranslateMatrix(inputTrans);
+	glm :: mat4x4 scaleMat = transformHandler :: getScaleMatrix(inputTrans);
 
 	// RETURNS WORLD MATRIX //
-	return scaleMat * rotMat * transMat;
+	return transMat * rotMat * scaleMat;
 }
 
-LobMatrix transformHandler :: getTranslateMatrix(Transform * inputTrans)
+glm :: mat4x4 transformHandler :: getTranslateMatrix(Transform * inputTrans)
 {
-	return LobMatrix
-	(
-		std :: vector<float>
-		{
-			// COLUMN ONE //
-			1, 0, 0, inputTrans -> position[0],
-
-			// COLUMN TWO //
-			0, 1, 0, inputTrans -> position[1],
-
-			// COLUMN THREE //
-			0, 0, 1, inputTrans -> position[2],
-
-			// COLUMN FOUR //
-			0, 0, 0, 1
-		},
-		4, 4 // IS FOUR COLUMNS WIDE AND FOUR ROWS TALL //
-	);
+	glm :: vec3 data(inputTrans -> position[0], inputTrans -> position[1], inputTrans -> position[2]);
+	return glm :: translate(glm :: mat4x4(1.0f), data); 
 }
 
-LobMatrix transformHandler :: getScaleMatrix(Transform * inputTrans)
+glm :: mat4x4 transformHandler :: getScaleMatrix(Transform * inputTrans)
 {
-	return LobMatrix
-	(
-		std :: vector<float>
-		{
-			(inputTrans -> scale[0]), 0.0f, 0.0f, 0.0f,
-			0.0f, (inputTrans -> scale[1]), 0.0f, 0.0f,
-			0.0f, 0.0f, (inputTrans -> scale[2]), 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f
-		},
-		4, 4
-	);
+	glm :: vec3 data(inputTrans -> scale[0], inputTrans -> scale[1], inputTrans -> scale[2]);
+	return glm :: scale(glm :: mat4x4(1.0f), data); 
 }
 
-LobMatrix transformHandler :: getRotateMatrix(Transform * inputTrans)
+glm :: mat4x4 transformHandler :: getRotateMatrix(Transform * inputTrans)
 {
-	return math :: identityMatrix() * 
-		math :: rotateMatrix
-			(std :: vector<float> { 1.0f, 0.0f, 0.0f }, inputTrans -> rotation[0]) *
-		math :: rotateMatrix
-			(std :: vector<float> { 0.0f, 1.0f, 0.0f }, inputTrans -> rotation[1]) *
-		math :: rotateMatrix
-			(std :: vector<float> { 0.0f, 0.0f, 1.0f }, inputTrans -> rotation[2]);
+	glm :: mat4x4 rotMatrix = glm :: mat4x4(1.0f);
+	for(char i = 2; i >= 0; i--)
+	{
+		glm :: vec3 axis(0.0f, 0.0f, 0.0f);
+		axis[i] = 1.0f;
+		rotMatrix *= glm :: rotate(rotMatrix, glm :: radians(inputTrans -> rotation[i]), axis);
+	}
+
+	return rotMatrix;
 }
 
 void transformHandler :: translate
-	(Transform * inputTrans, std :: vector<float> deltaVector)
+	(Transform * inputTrans, std :: vector<float> deltaVector, bool applyGlobal)
 {
-	std :: vector<float> localDelta = 
-		math :: vecByMat(deltaVector, transformHandler :: getRotateMatrix(inputTrans));
+	glm :: vec3 delta(deltaVector[0], deltaVector[1], deltaVector[2]);
+	if(!applyGlobal)
+	{
+		glm :: mat4x4 rotMat = getRotateMatrix(inputTrans);
+		delta = glm :: vec4(delta.x, delta.y, delta.z, 1.0f) * rotMat;
+	}
+
 	for(int i = 0; i < 3; i++)
-		inputTrans -> position[i] = inputTrans -> position[i] + localDelta[i];
+		inputTrans -> position[i] = inputTrans -> position[i] + delta[i];
 }
 
 void transformHandler :: rotate
@@ -118,11 +100,3 @@ void transformHandler :: scale
 		inputTrans -> scale[i] = inputTrans -> scale[i] + deltaVector[i];
 }
 
-std :: vector<float> transformHandler :: getGlobalPosition(Transform * inputTrans)
-{
-	Transform * tempTransform = transformHandler :: duplicateTransform(inputTrans);
-	LobMatrix invMat = math :: inverse(transformHandler :: getRotateMatrix(inputTrans));
-	std :: vector<float> rotVec = { invMat.getPoint(3, 0), invMat.getPoint(3, 1), invMat.getPoint(3, 2) };
-	transformHandler :: rotate(tempTransform, rotVec);
-	return tempTransform -> position;
-}

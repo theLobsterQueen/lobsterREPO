@@ -30,6 +30,7 @@ struct Pipeline
 	GLuint program;
 	GLuint vertShader; std :: string vertShaderName;
 	GLuint fragShader; std :: string fragShaderName;
+	bool isCompiled = false;
 };
 
 namespace graphicManagement

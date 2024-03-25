@@ -19,6 +19,7 @@ layout (location = 3) out vec3 out_pixelPos;
 
 void main()
 {
+
 	// TRANSFORMS VERTEX ATTRIBUTE INTO 4D OBJECT //
 	vec4 vertexPos = vec4(in_vertexPos, 1.0);
 	vertexPos *= (u_modelWorldMatrix * u_worldViewMatrix * u_viewProjMatrix);

@@ -99,7 +99,7 @@ void appManagement :: createTestScene()
 
 	Transform * meshTrans = transformHandler :: createTransform();
 	transformHandler :: translate
-		(meshTrans, std :: vector<float> { 0.0f, 0.0f, 3.0f });
+		(meshTrans, std :: vector<float> { 0.0f, 0.0f, -3.0f });
 
 	sceneManagement :: addComp
 	(
@@ -113,6 +113,7 @@ void appManagement :: createTestScene()
 		testScene, testID, SCRIPT_COMP_ID,
 		(compPtr) (scriptHandler :: createScript("testFile", testID))
 	);
+
 	sceneManagement :: changeScene(testScene);
 }
 

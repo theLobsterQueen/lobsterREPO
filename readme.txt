@@ -5,7 +5,9 @@ DevBlog link: https://sites.google.com/view/lobsterenginedevblog/home?authuser=0
 The dev blog is updated regularly, so be sure to tune in from time to time!
 
 Sources :
-	Hudson, James. "Lecture4: OpenGL Textures." Computer Graphics 1, 9/13/2023, 
+	Hudson, James. "Lecture3: Transforms." Computer Graphics 1, 9/13/2022, 
+		Shawnee State University.
+	Hudson, James. "Lecture4: OpenGL Textures." Computer Graphics 1, 9/13/2022, 
 		Shawnee State University.
 
 	https://antongerdelan.net/opengl/index.html
@@ -55,21 +57,22 @@ Sprint 2 :
 	[X] Save/Load Scenes on Command
 	[~] Build out Engine Frontend, Complete With
 		[X] Inspector-Analog
-			[ ] Can Move Entities
-			[ ] Can change select values of Components
+			[X] Can Move Entities
+			[X] Can change select values of Components
 			[ ] Can add Components to Entities
 		[X] Scene Tree
-	[ ] Base Python Integration 
+			[ ] Can add Entities
+	[~] Base Python Integration 
 		[ ] Communicate with Precompiled Engine Files over Runtime Python Scritps
 		[X] Start/Update Method Analogs
-	[ ] Create a Python Scripting Library to Interact With
+	[~] Create a Python Scripting Library to Interact With
 		[ ] Camera Component
 		[X] Transform Component
 		[ ] Mesh Component
 		[X] Light Component
 		[ ] [STRETCH] Allow for "exposed" variables, that could be edited
 			directly from the inspector.
-	[ ] Separate Scene Editing from Running
+	[~] Separate Scene Editing from Running
 
 Sprint 3 :
 	[ ] Give the Scripting API Additional Capabilities

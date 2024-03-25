@@ -53,13 +53,12 @@ void uiManagement :: drawEditorUI()
 
 		if(ImGui :: BeginMenu("Scene"))
 		{
-			if(ImGui :: MenuItem("Compile Scene"))
+			if(ImGui :: MenuItem("Play Scene"))
 			{
 				appManagement :: compileScripts();
 				appManagement :: startScripts(true);
-			}
-			if(ImGui :: MenuItem("Play Scene"))
 				globals :: isPlaying = true;
+			}
 			if(ImGui :: MenuItem("Stop Scene"))
 				globals :: isPlaying = false;
 			ImGui :: EndMenu();
@@ -82,6 +81,9 @@ void uiManagement :: drawEditorUI()
 				sceneManagement :: saveScene(globals :: curSceneRef, std :: string(inputString));
 				editorGlobals :: savingScene = false;
 			}
+
+			if(ImGui :: Button("Cancel"))
+				editorGlobals :: savingScene = false;
 		}
 		ImGui :: EndPopup();
 	}
@@ -170,6 +172,7 @@ void uiManagement :: drawEditorUI()
 		// RELAYS CAMERA DATA //
 		if((activeEntity.mask & (1 << CAMERA_COMP_ID)) >= 1)
 		{
+			ImGui :: Separator();
 			Camera * curCamera = (Camera *) globals :: curSceneRef -> components[CAMERA_COMP_ID]
 				[editorGlobals :: curActiveEntity];
 			
@@ -186,6 +189,7 @@ void uiManagement :: drawEditorUI()
 		// RELAYS LIGHT DATA //
 		if((activeEntity.mask & (1 << LIGHT_COMP_ID)) >= 1)
 		{
+			ImGui :: Separator();
 			Light * curLight = (Light *) globals :: curSceneRef -> components[LIGHT_COMP_ID]
 				[editorGlobals :: curActiveEntity];
 			ImGui :: Text("Light Data");
@@ -203,6 +207,7 @@ void uiManagement :: drawEditorUI()
 		// RELAYS MESH DATA //
 		if((activeEntity.mask & (1 << MESH_COMP_ID)) >= 1)
 		{
+			ImGui :: Separator();
 			Mesh * curMesh = (Mesh *) globals :: curSceneRef -> components[MESH_COMP_ID]
 				[editorGlobals :: curActiveEntity];
 
@@ -212,6 +217,7 @@ void uiManagement :: drawEditorUI()
 		// RELAYS SCRIPT DATA //
 		if((activeEntity.mask & (1 << SCRIPT_COMP_ID)) >= 1)
 		{
+			ImGui :: Separator();
 			Script * curScript = (Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID]
 				[editorGlobals :: curActiveEntity]);
 			ImGui :: Text("Script Data\n%s", curScript -> name.c_str());

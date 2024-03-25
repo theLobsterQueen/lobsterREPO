@@ -29,6 +29,14 @@
 #include <APIUtils.h>
 #include <app.h>
 
+// VENDOR INCLUDES //
+#include <glm/glm.hpp>
+#include <glm/ext/matrix_clip_space.hpp> 	// glm :: perspective
+#include <glm/ext/matrix_transform.hpp> 	// glm :: translate/rotate/scale/lookAt
+#include <glm/gtc/type_ptr.hpp> 			// glm :: value_ptr
+#define GLM_ENABLE_EXPERIMENTAL 1
+#include <glm/gtx/string_cast.hpp>			// glm :: to_string
+
 // STRUCT PROTOTYPES //
 struct EngineCore;
 

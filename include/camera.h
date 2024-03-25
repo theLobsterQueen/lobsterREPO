@@ -9,6 +9,11 @@
 #include <cmath>
 #include <transform.h>
 
+// VENDOR INCLUDES //
+#include <glm/glm.hpp>
+#include <glm/ext/matrix_clip_space.hpp> 	// glm :: perspective
+#include <glm/ext/matrix_transform.hpp> 	// glm :: translate/rotate/scale/lookAt
+
 // PROTOTYPE STRUCTS //
 struct Transform;
 
@@ -44,8 +49,8 @@ struct Camera
 	///		The two clipping distance values for the camera.
 	/// </summary> ///
 
-	float near = 1;
-	float far = 100;
+	float near = 0.1f;
+	float far = 100.0f;
 
 	/// <summary> ///
 	///		Unit vectors used for calculating the view matrix of the camera.
@@ -74,18 +79,12 @@ namespace cameraHandler
 		(float inputAspect = 0.0f, Pipeline * inputPipeline = nullptr);
 
 	/// <summary> ///
-	///		Returns the projection matrix for the camera when called.
-	/// </summary> ///
-
-	LobMatrix getViewProjMatrix(Camera * camera);
-
-	/// <summary> ///
 	///		Returns the view matrix for the camera when called. Can be used in
 	///			combination with the projection matrix to render dynamic
 	///			3D scenes.
 	/// </summary> ///
 	
-	LobMatrix getWorldViewMatrix(Camera * camera, Transform * camTrans);
+	glm :: mat4x4 getWorldViewMatrix(Camera * camera, Transform * camTrans);
 
 	/// <summary> ///
 	///		Zooms the camera in/out by decreasing/increasing the camera's FOV.

@@ -30,23 +30,33 @@ void inputManagement :: processInput(entityID cameraID)
 	static float rotScalar = 2.0f;
 	static float zoomScalar = 0.05f;
 	static float keyMoveSpeed = 10.0f;
+	static float keyRotSpeed = 30.0f;
 
 	// MOVES THE CAMERA VIA KEY INPUT //
 	if(!(editorGlobals :: keyInput))
 	{
 		float speedVal = keyMoveSpeed * (globals :: deltaTime);
+		float rotVal = keyRotSpeed * (globals :: deltaTime);
 		if(keys['w'])
-			deltaPos[2] += speedVal;
-		if(keys['s'])
 			deltaPos[2] -= speedVal;
+		if(keys['s'])
+			deltaPos[2] += speedVal;
+		if(keys['q'])
+			deltaRot[1] -= rotVal;
+		if(keys['e'])
+			deltaRot[1] += rotVal;
+		if(keys['r'])
+			deltaRot[0] += rotVal;
+		if(keys['t'])
+			deltaRot[0] -= rotVal;
 		if(keys['a'])
-			deltaPos[0] += speedVal;
-		if(keys['d'])
 			deltaPos[0] -= speedVal;
+		if(keys['d'])
+			deltaPos[0] += speedVal;
 		if(keys['['])
-			deltaPos[1] += speedVal;
-		if(keys[']'])
 			deltaPos[1] -= speedVal;
+		if(keys[']'])
+			deltaPos[1] += speedVal;
 	}
 
 	// CAMERA INPUT: CHECKS TO ENSURE THAT CAMERA IS ACTUALLY WITHIN VIEWPORT //
@@ -62,11 +72,11 @@ void inputManagement :: processInput(entityID cameraID)
 		{
 			globals :: inputState -> mouseInput = true;
 			if(globals :: inputState -> shiftPressed)
-				deltaPos[2] -= mouseDeltaY * panScalar;
+				deltaPos[2] += mouseDeltaY * panScalar;
 
 			else
 			{
-				deltaPos[0] += mouseDeltaX * panScalar;
+				deltaPos[0] -= mouseDeltaX * panScalar;
 				deltaPos[1] += mouseDeltaY * panScalar;
 			}
 		}
@@ -76,7 +86,7 @@ void inputManagement :: processInput(entityID cameraID)
 				(globals :: inputState -> cntrlPressed && globals :: inputState -> lmb == true))
 		{
 			globals :: inputState -> mouseInput = true;
-			deltaRot[1] += mouseDeltaX * rotScalar;
+			deltaRot[1] -= mouseDeltaX * rotScalar;
 			deltaRot[0] -= mouseDeltaY * rotScalar;
 		}
 

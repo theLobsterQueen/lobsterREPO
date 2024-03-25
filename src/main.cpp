@@ -31,8 +31,8 @@ int main(int argv, char ** args)
 	// INITIALIZES GLOBALS //
 	globals :: isRunning = true;
 	globals :: isPlaying = false;
-	globals :: winWidth = 1300;
-	globals :: winHeight = 650;
+	globals :: winWidth = 1600;
+	globals :: winHeight = 900;
 	globals :: deltaTime = 0;
 
 	globals :: clearColor[0] = 0.1f;

@@ -140,6 +140,10 @@ void graphicManagement :: loadShader
 
 void graphicManagement :: compileProgram(Pipeline * targetPipeline)
 {
+	// CHECKS TO ENSURE THAT PIPELINE IS NOT ALREADY COMPILED //
+	if(targetPipeline -> isCompiled)
+		return;
+	
 	// VARIABLE INITIALIZATION //
 	GLuint prog = targetPipeline -> program;
 	GLuint vert = targetPipeline -> vertShader;
@@ -178,6 +182,9 @@ void graphicManagement :: compileProgram(Pipeline * targetPipeline)
 		std :: cout << std :: endl;
 		return;
 	}
+
+	// MARKS THE PIEPLINE AS COMPILED //
+	targetPipeline -> isCompiled = true;
 }
 
 void graphicManagement :: usePipeline(Pipeline * targetPipeline)

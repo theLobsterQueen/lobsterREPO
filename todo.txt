@@ -1,5 +1,5 @@
+Fix Projective Shearing
+Fix camera rotation
 Allow Python scripts to add data to entities
 Allow Python scripts to create entities
-Make UI interactable, introducing hotloading
 Create system for making project directories and manipulating file system through editor
-Fix camera rotation

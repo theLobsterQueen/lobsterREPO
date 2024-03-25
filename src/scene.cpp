@@ -62,32 +62,54 @@ void sceneManagement :: addComp
 
 void sceneManagement :: renderScene(Scene * targetScene)
 {
+	// VARIABLE INITIALIZATION //
+
 	// READS CAMERA ENTITY DATA //
 	entityID cameraEntity = sceneManagement :: sceneView(targetScene, CAMERA_COMP_ID)[0];
 
 	// READS COMPONENTS FROM CAMERA ENTITY //
 	Camera * camera = (Camera *) 
 		(targetScene -> components[CAMERA_COMP_ID][cameraEntity]);
+	if(!(camera -> curPipelineRef -> isCompiled))
+	{
+		std :: cout << "ERROR! ATTEMPTING TO REDER SCENE, BUT TARGET CAMERA'S "
+			<< std :: endl << "RENDER PIPELINE IS UNCOMPILED!" << std :: endl;
+		return;
+	}
+
 	Transform * transform = (Transform *)
 		(targetScene -> components[TRANS_COMP_ID][cameraEntity]);
 	graphicManagement :: usePipeline(camera -> curPipelineRef);
 
 	// GETS MODEL-WORLD AND WORLD-VIEW MATRICES //
-	LobMatrix worldView = cameraHandler :: getWorldViewMatrix(camera, transform);
-	LobMatrix viewProj = cameraHandler :: getViewProjMatrix(camera);
+	glm :: mat4x4 worldView = cameraHandler :: getWorldViewMatrix(camera, transform);
+	glm :: mat4x4 viewProj = glm :: infinitePerspective
+	(
+		glm :: radians(camera -> FOV), camera -> aspectRatio,
+		camera -> near
+	);
 
 	// PUSHES MATRICES TO SHADER //
-	glUniformMatrix4fv(UNI_WORLD_VIEW_MATRIX, 1, GL_FALSE, worldView.getData());
-	glUniformMatrix4fv(UNI_VIEW_PROJ_MATRIX, 1, GL_FALSE, viewProj.getData());
+	glUniformMatrix4fv
+		(UNI_WORLD_VIEW_MATRIX, 1, GL_FALSE, glm :: value_ptr(glm :: transpose(worldView)));
+	glUniformMatrix4fv
+		(UNI_VIEW_PROJ_MATRIX, 1, GL_FALSE, glm :: value_ptr(glm :: transpose(viewProj)));
 
 	// GETS ALL LIGHT SOURCES AND PUSHES THEIR POSITIONS TO THE SHADERS //
-		// TODO: ADD SUPPORT FOR MULTIPLE LIGHT SOURCES AND DIFFERENT LIGHT COLORS //
+		// TODO: ADD SUPPORT FOR MULTIPLE LIGHT SOURCES //
 	entityID lightEnt = sceneManagement :: sceneView(targetScene, LIGHT_COMP_ID)[0];
 	Light light = *((Light *) targetScene -> components[LIGHT_COMP_ID][lightEnt]);
+
+	// DETERMINES LUMINOSITY OF LIGHT SOURCE //
+		// (ADDS A SMALL CONSTANT VALUE TO ENSURE THAT LUMINOSITY IS NEVER ZERO) //
+	float luminosity = ((light.color[0] + light.color[1] + light.color[2]) / 3) + 0.001f;
+
+	// SETS COLOR UNIFORM //
 	glUniform4f
 	(
 		UNI_LIGHT_COLOR,
-		light.color[0], light.color[1], light.color[2], light.color[3]
+		light.color[0] / luminosity, light.color[1] / luminosity, 
+		light.color[2] / luminosity, light.color[3]
 	);
 	Transform lightTrans = *((Transform *) targetScene -> 
 		components[TRANS_COMP_ID][lightEnt]);
@@ -110,10 +132,10 @@ void sceneManagement :: renderScene(Scene * targetScene)
 
 		// IF ENTITY HAS TRANSFORM COMPONENT, CONFIGURES MODEL WORLD MATRIX //
 			// BY ITS DATA. OTHERWISE, USES MODEL WORLD MATRIX AS IDENTITY MATRIX //
-		LobMatrix modelWorld = math :: identityMatrix();
+		glm :: mat4x4 modelWorld = glm :: mat4x4();
 		if((curEntity.mask & (1 << TRANS_COMP_ID)) > 0)
 		{
-			modelWorld = transformHandler :: getModelWorldMatrix
+			modelWorld = transformHandler :: getObjectWorldMatrix
 			(
 				(Transform *) 
 					(targetScene -> components[TRANS_COMP_ID][entityIndex])
@@ -122,7 +144,7 @@ void sceneManagement :: renderScene(Scene * targetScene)
 
 		// SETS MODEL-WORLD MATRIX //
 		glUniformMatrix4fv
-			(UNI_MODEL_WORLD_MATRIX, 1, GL_FALSE, modelWorld.getData());
+			(UNI_MODEL_WORLD_MATRIX, 1, GL_FALSE, glm :: value_ptr(glm :: transpose(modelWorld)));
 
 		// DRAWS MESH //
 		meshHandler :: drawMesh
@@ -159,6 +181,7 @@ void sceneManagement :: saveScene(Scene * inputScene, std :: string alternateNam
 	std :: string savePath = inputScene -> name;
 	if(alternateName != "")
 		savePath = alternateName;
+
 
 	// ATTEMPTS TO OPEN THE FILE FROM WORKING DIRECTORY //
 	std :: ofstream sceneFile

@@ -10,6 +10,14 @@
 // STD INCLUDES //
 #include <vector>
 
+// VENDOR INCLUDES //
+#include <glm/glm.hpp>
+#include <glm/geometric.hpp> 				// glm :: normalize
+#include <glm/ext/matrix_transform.hpp> 	// glm :: translate/rotate/scale/lookAt
+
+#define GLM_ENABLE_EXPERIMENTAL 1
+#include <glm/gtx/string_cast.hpp>			// glm :: to_string
+
 // STRUCT DEFINITIONS //
 
 /// <summary> ///
@@ -49,21 +57,21 @@ namespace transformHandler
 	///		Returns a "worldMatrix" based on the data inside a target transform
 	///			component.
 	/// </summary> ///
-	LobMatrix getModelWorldMatrix(Transform * inputTrans);
+	glm :: mat4x4 getObjectWorldMatrix(Transform * inputTrans);
 
 	/// <summary> ///
 	///		These functions get the matrices which typically form the model
 	///			world matrix.
 	/// </summary> ///
-	LobMatrix getRotateMatrix(Transform * inputTrans);
-	LobMatrix getTranslateMatrix(Transform * inputTrans);
-	LobMatrix getScaleMatrix(Transform * inputTrans);
+	glm :: mat4x4 getRotateMatrix(Transform * inputTrans);
+	glm :: mat4x4 getTranslateMatrix(Transform * inputTrans);
+	glm :: mat4x4 getScaleMatrix(Transform * inputTrans);
 
 	/// <summary> ///
 	/// 	Modifies the position value of input transform by input delta vector.
 	/// </summary> ///
 
-	void translate(Transform * inputTrans, std :: vector<float> deltaVector);
+	void translate(Transform * inputTrans, std :: vector<float> deltaVector, bool applyGlobal=false);
 
 	/// <summary> ///
 	/// 	Modifies the rotation value of input transform by input delta vector.
@@ -76,12 +84,6 @@ namespace transformHandler
 	/// </summary> ///
 
 	void scale(Transform * inputTrans, std :: vector<float> deltaVector);
-
-	/// <summary> ///
-	///		Returns the global position of the transform.
-	/// </summary> ///
-
-	std :: vector<float> getGlobalPosition(Transform * inputTrans);
 };
 
 #endif

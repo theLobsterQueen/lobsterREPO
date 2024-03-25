@@ -83,10 +83,10 @@ void sceneManagement :: renderScene(Scene * targetScene)
 
 	// GETS MODEL-WORLD AND WORLD-VIEW MATRICES //
 	glm :: mat4x4 worldView = cameraHandler :: getWorldViewMatrix(camera, transform);
-	glm :: mat4x4 viewProj = glm :: infinitePerspective
+	glm :: mat4x4 viewProj = glm :: perspective
 	(
 		glm :: radians(camera -> FOV), camera -> aspectRatio,
-		camera -> near
+		camera -> near, camera -> far
 	);
 
 	// PUSHES MATRICES TO SHADER //
@@ -180,8 +180,11 @@ void sceneManagement :: saveScene(Scene * inputScene, std :: string alternateNam
 	// VARIABLE INITIALIZATION //
 	std :: string savePath = inputScene -> name;
 	if(alternateName != "")
+	{
 		savePath = alternateName;
-
+		inputScene -> name = alternateName;
+		sceneManagement :: changeScene(inputScene);
+	}
 
 	// ATTEMPTS TO OPEN THE FILE FROM WORKING DIRECTORY //
 	std :: ofstream sceneFile

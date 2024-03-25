@@ -1,0 +1,31 @@
+TEST
+ENT: Camera
+TRANSFORM
+2.61/0/3.99
+0/0/0
+1/1/1
+CAMERA
+0.1
+100
+shaders/vertShader.txt
+shaders/fragShader.txt
+ENT: Light
+TRANSFORM
+-5/0/3
+0/0/0
+1/1/1
+LIGHT
+1/1/1/0.9
+SCRIPT
+lightScript
+ENT: Jinx
+TRANSFORM
+0/0/-3
+0/0/0
+1/1/1
+MESH
+portrait.ply
+jinx.png
+SCRIPT
+testFile
+END

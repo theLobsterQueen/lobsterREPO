@@ -29,18 +29,12 @@ void cameraHandler :: zoom(Camera * camera, float zoomDelta)
 
 glm :: mat4x4 cameraHandler :: getWorldViewMatrix(Camera * camera, Transform * transform)
 {
-	glm :: vec3 up(0.0f, -1.0f, 0.0f);
-	glm :: vec3 look(0.0f, 0.0f, -1.0f);
-	look = glm :: vec4(look[0], look[1], look[2], 1.0f) * transformHandler :: getRotateMatrix(transform);
-	glm :: vec3 right = glm :: cross(up, look);
-	up = glm :: cross(right, look);
-	glm :: vec3 eye(transform -> position[0], transform -> position[1], transform -> position [2]);
-	return glm :: transpose(glm :: mat4x4
+	glm :: vec3 position(transform -> position[0], transform -> position[1], transform -> position[2]);
+	return glm :: lookAt
 	(
-		right[0], right[1], right[2], glm :: dot(-eye, right), 
-		up[0], up[1], up[2], glm :: dot(-eye, up), 
-		-look[0], -look[1], -look[2], glm :: dot(eye, look),
-		0.0f, 0.0f, 0.0f, 1.0f
-	));
+	 	position, position + glm :: vec3
+			(glm :: vec4(0.0f, 0.0f, -1.0f, 1.0f) * transformHandler :: getRotateMatrix(transform)),
+		glm :: vec3(0.0f, 1.0f, 0.0f)
+	);
 }
 

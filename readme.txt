@@ -63,7 +63,7 @@ Sprint 2 :
 		[X] Scene Tree
 			[ ] Can add Entities
 	[~] Base Python Integration 
-		[ ] Communicate with Precompiled Engine Files over Runtime Python Scritps
+		[ ] Communicate with Precompiled Engine Files over Runtime Python Scripts
 		[X] Start/Update Method Analogs
 	[~] Create a Python Scripting Library to Interact With
 		[ ] Camera Component

@@ -5,6 +5,7 @@
 
 // STANDARD INCLUDES //
 #include <stdio.h>
+#include <string>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -17,6 +18,7 @@
 
 // LOBSTER INCLUDES //
 #include <input.h>
+#include <importantConstants.h>
 
 // STRUCT PROTOTYPES //
 struct InputState;
@@ -38,10 +40,6 @@ void checkErrors();
 void mouseButtonProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue);
 void modifierKeyProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue);
 
-/// <summary> ///
-///		Prints out an input component ID.
-/// </summary> ///
-
-void printCompID(unsigned compID);
+std :: string compToString(componentID compID);
 
 #endif

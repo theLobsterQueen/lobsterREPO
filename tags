@@ -1215,6 +1215,7 @@ GLM_DEPRECATED	./vendor/glm/detail/setup.hpp	/^#	define GLM_DEPRECATED$/;"	d
 GLM_DISABLE	./vendor/glm/detail/setup.hpp	/^#define GLM_DISABLE	/;"	d
 GLM_ENABLE	./vendor/glm/detail/setup.hpp	/^#define GLM_ENABLE	/;"	d
 GLM_ENABLE_EXPERIMENTAL	./include/scene.h	/^#define GLM_ENABLE_EXPERIMENTAL /;"	d
+GLM_ENABLE_EXPERIMENTAL	./include/transform.h	/^#define GLM_ENABLE_EXPERIMENTAL /;"	d
 GLM_ENABLE_EXPERIMENTAL	./vendor/glm/detail/glm.cpp	/^#define GLM_ENABLE_EXPERIMENTAL$/;"	d	file:
 GLM_EXPLICIT	./vendor/glm/detail/setup.hpp	/^#	define GLM_EXPLICIT /;"	d
 GLM_EXPLICIT	./vendor/glm/detail/setup.hpp	/^#	define GLM_EXPLICIT$/;"	d
@@ -6387,6 +6388,7 @@ compMul	./vendor/glm/gtx/component_wise.inl	/^	GLM_FUNC_QUALIFIER T compMul(vec<
 compNormalize	./vendor/glm/gtx/component_wise.inl	/^	GLM_FUNC_QUALIFIER vec<L, floatType, Q> compNormalize(vec<L, T, Q> const& v)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,floatType,Q>
 compPtr	./include/importantConstants.h	/^typedef char *					compPtr;$/;"	t	typeref:typename:char *
 compScale	./vendor/glm/gtx/component_wise.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> compScale(vec<L, floatType, Q> const& v)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
+compToString	./src/utilities.cpp	/^std :: string compToString(componentID compID)$/;"	f	typeref:typename:std::string
 compileAll	./makeFile.py	/^compileAll = False$/;"	v
 compileAll	./scriptFile.py	/^compileAll = False$/;"	v
 compileDir	./makeFile.py	/^def compileDir(dirPath) :$/;"	f
@@ -7217,7 +7219,7 @@ factorial	./vendor/glm/gtx/integer.inl	/^	GLM_FUNC_QUALIFIER vec<4, T, Q> factor
 fade	./vendor/glm/detail/_noise.hpp	/^	GLM_FUNC_QUALIFIER vec<2, T, Q> fade(vec<2, T, Q> const& t)$/;"	f	namespace:glm::detail	typeref:typename:GLM_FUNC_QUALIFIER vec<2,T,Q>
 fade	./vendor/glm/detail/_noise.hpp	/^	GLM_FUNC_QUALIFIER vec<3, T, Q> fade(vec<3, T, Q> const& t)$/;"	f	namespace:glm::detail	typeref:typename:GLM_FUNC_QUALIFIER vec<3,T,Q>
 fade	./vendor/glm/detail/_noise.hpp	/^	GLM_FUNC_QUALIFIER vec<4, T, Q> fade(vec<4, T, Q> const& t)$/;"	f	namespace:glm::detail	typeref:typename:GLM_FUNC_QUALIFIER vec<4,T,Q>
-far	./include/camera.h	/^	float far = 100;$/;"	m	struct:Camera	typeref:typename:float
+far	./include/camera.h	/^	float far = 100.0f;$/;"	m	struct:Camera	typeref:typename:float
 fast	./vendor/stb_image.h	/^   stbi__uint16 fast[1 << STBI__ZFAST_BITS];$/;"	m	struct:__anon212c1e400b08	typeref:typename:stbi__uint16[]
 fast	./vendor/stb_image.h	/^   stbi_uc  fast[1 << FAST_BITS];$/;"	m	struct:__anon212c1e400708	typeref:typename:stbi_uc[]
 fastAcos	./vendor/glm/gtx/fast_trigonometry.inl	/^	GLM_FUNC_QUALIFIER T fastAcos(T x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER T
@@ -10289,7 +10291,7 @@ name	./include/scene.h	/^	std :: string name = "";$/;"	m	struct:Scene	typeref:ty
 name	./include/script.h	/^	std :: string name;$/;"	m	struct:Script	typeref:typename:std::string
 name	./include/texture.h	/^	std :: string name;$/;"	m	struct:Texture	typeref:typename:std::string
 name	./makeFile.py	/^name = "LobsterEngine"$/;"	v
-near	./include/camera.h	/^	float near = 1;$/;"	m	struct:Camera	typeref:typename:float
+near	./include/camera.h	/^	float near = 0.1f;$/;"	m	struct:Camera	typeref:typename:float
 negative	./vendor/glm/detail/type_float.hpp	/^		GLM_CONSTEXPR bool negative() const { return i < 0; }$/;"	f	union:glm::detail::float_t	typeref:typename:GLM_CONSTEXPR bool
 neon	./vendor/glm/simd/neon.h	/^	namespace neon {$/;"	n	namespace:glm
 newEntityID	./src/scene.cpp	/^entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entityName)$/;"	f	class:sceneManagement	typeref:typename:entityID
@@ -11598,7 +11600,6 @@ prev_float	./vendor/glm/gtc/ulp.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> prev_floa
 prev_float	./vendor/glm/gtc/ulp.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> prev_float(vec<L, T, Q> const& x, int ULPs)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
 prev_float	./vendor/glm/gtc/ulp.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> prev_float(vec<L, T, Q> const& x, vec<L, int, Q> const& ULPs)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
 prev_link	./vendor/imstb_rectpack.h	/^   stbrp_node **prev_link;$/;"	m	struct:__anond56808600308	typeref:typename:stbrp_node **
-printCompID	./src/utilities.cpp	/^void printCompID(unsigned compID)$/;"	f	typeref:typename:void
 printMesh	./src/mesh.cpp	/^void meshHandler :: printMesh(Mesh * inputMesh)$/;"	f	class:meshHandler	typeref:typename:void
 printProgramLog	./src/utilities.cpp	/^void printProgramLog(GLuint program)$/;"	f	typeref:typename:void
 printShaderLog	./src/utilities.cpp	/^void printShaderLog(GLuint shader)$/;"	f	typeref:typename:void

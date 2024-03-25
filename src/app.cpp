@@ -186,12 +186,17 @@ void appManagement :: compileScripts()
 
 void appManagement :: startScripts(bool initialize)
 {
+	if(initialize)
+		for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
+		{ 
+			((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt])) 
+				-> code.attr("_initialize")(curEnt); 
+		}
+
 	for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
-	{
-		Script * scriptRef = ((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]));
-		if(initialize)
-			scriptRef -> code.attr("_initialize")(curEnt);
-		scriptRef -> code.attr("_start")();
+	{ 
+		((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]))
+			-> code.attr("_start")(); 
 	}
 }
 

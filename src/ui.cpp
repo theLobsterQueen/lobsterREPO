@@ -57,10 +57,17 @@ void uiManagement :: drawEditorUI()
 			{
 				appManagement :: compileScripts();
 				appManagement :: startScripts(true);
+				sceneManagement :: saveScene(globals :: curSceneRef);
 				globals :: isPlaying = true;
 			}
 			if(ImGui :: MenuItem("Stop Scene"))
 				globals :: isPlaying = false;
+			if(ImGui :: MenuItem("Reset Scene"))
+			{
+				globals :: isPlaying = false;
+				sceneManagement :: changeScene(sceneManagement :: loadScene
+						(std :: string(globals :: curSceneRef -> name + ".lscn")));
+			}
 			ImGui :: EndMenu();
 		}
 
@@ -87,6 +94,10 @@ void uiManagement :: drawEditorUI()
 		}
 		ImGui :: EndPopup();
 	}
+
+	// DRAWS ACTIVE USER INTERFACE, IF IN DEVELOPMENT MODE //
+	if(globals :: isPlaying)
+		return;
 
 	// DRAWS SCENE TREE //
 	ImGui :: SetNextWindowPos(ImVec2(0, topBarY));

@@ -152,14 +152,30 @@ void modifierKeyProcess(InputState * inputState, SDL_Event inputEvent, bool setT
 		inputState -> cntrlPressed = setTrue;
 }
 
-void printCompID(unsigned compID)
+std :: string compToString(componentID compID)
 {
-	if(compID == TRANS_COMP_ID)
-		std :: cout << "TRANSFORM COMPONENT" << std :: endl;
-	if(compID == MESH_COMP_ID)
-		std :: cout << "MESH COMPONENT" << std :: endl;
-	if(compID == LIGHT_COMP_ID)
-		std :: cout << "LIGHT COMPONENT" << std :: endl;
-	if(compID == CAMERA_COMP_ID)
-		std :: cout << "CAMERA COMPONENT" << std :: endl;
+	switch(compID)
+	{
+		case TRANS_COMP_ID :
+			return std :: string("Transform");
+		break;
+
+		case MESH_COMP_ID :
+			return std :: string("Mesh");
+		break;
+
+		case LIGHT_COMP_ID :
+			return std :: string("Light");
+		break;
+
+		case CAMERA_COMP_ID :
+			return std :: string("Camera");
+		break;
+
+		case SCRIPT_COMP_ID :
+			return std :: string("Script");
+		break;
+	}
+	return std :: string("NULL");
 }
+

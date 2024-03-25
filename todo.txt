@@ -1,4 +1,3 @@
-Fix Projective Shearing
 Fix camera rotation
 Allow Python scripts to add data to entities
 Allow Python scripts to create entities

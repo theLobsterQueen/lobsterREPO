@@ -41,7 +41,6 @@ int main(int argv, char ** args)
 	globals :: clearColor[3] = 0.0f;
 
 	editorGlobals :: keyInput = false;
-	editorGlobals :: savingScene = false;
 	editorGlobals :: windowFlags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse;
 	editorGlobals :: sceneTreeFlags = ImGuiTreeNodeFlags_DefaultOpen;
 	editorGlobals :: entitySelected = false;

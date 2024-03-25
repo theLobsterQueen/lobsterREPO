@@ -5,6 +5,7 @@
 
 // STANDARD INCLUDES //
 #include <filesystem>
+#include <cstdio>
 
 // LOBSTER INCLUDES //
 #include <globals.h>

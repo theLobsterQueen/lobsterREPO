@@ -1,7 +1,5 @@
-# IMPORTS PYBIND11 CODE AND TOOLS #
+# IMPORTS API MODULES #
 from _coremodule import *
-
-# IMPORTS OTHER MODULES TAHT SHOULD BE PACKAGED INTO THIS ONE #
 from _entityapi import *
 from _sceneapi import *
 from _transformapi import *

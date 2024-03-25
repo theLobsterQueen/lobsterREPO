@@ -10,16 +10,19 @@
 // LOBSTER INCLUDES //
 #include <importantConstants.h>
 #include <scene.h>
+#include <input.h>
 
 // HOLDS ALL OPAQUE DECLARATIONS //
 PYBIND11_MAKE_OPAQUE(Scene);
 PYBIND11_MAKE_OPAQUE(Transform);
 PYBIND11_MAKE_OPAQUE(Light);
+PYBIND11_MAKE_OPAQUE(InputState);
 
 // DECLARES NAMESPACE-GLOBAL VARIABLES //
 namespace APIGlobals
 {
 	extern pybind11 :: module coremodule;
+	extern pybind11 :: module inputmodule;
 	extern std :: string workingPath;
 }
 

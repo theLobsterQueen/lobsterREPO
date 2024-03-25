@@ -107,7 +107,6 @@ namespace editorGlobals
 	/// </summary> ///
 
 	extern bool keyInput;
-	extern bool savingScene;
 
 	/// <summary> ///
 	///		This ID represents the entity currently selected within the scene hiearchy.

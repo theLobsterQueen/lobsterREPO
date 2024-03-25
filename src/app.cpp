@@ -86,11 +86,31 @@ void appManagement :: createTestScene()
 		(compPtr) (scriptHandler :: createScript("lightScript", lightID))
 	);
 
+	// ADDS LIGHT TO SCENE //
+	lightID = sceneManagement :: newEntityID(testScene, "Light2");
+	lightTrans = transformHandler :: createTransform();
+	sceneManagement :: addComp
+	(
+		testScene,
+		lightID,
+		TRANS_COMP_ID,
+		(compPtr) lightTrans
+	);
+
+	sceneManagement :: addComp
+	(
+		testScene,
+		lightID,
+		LIGHT_COMP_ID,
+		(compPtr) lightHandler :: createLight
+			(std :: vector<float> { 1.0f, 0.0f, 1.0f, 0.9f })
+	);
+
+	// ADDS MESH AND TRANSFORM //
 	entityID testID = sceneManagement :: newEntityID(testScene, "Jinx");
 	Mesh * sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
 	meshHandler :: setTexture(sceneMesh, textureHandler :: createTexture("jinx.png"));
 
-	// ADDS MESH AND TRANSFORM //
 	sceneManagement :: addComp
 	(
 		testScene, testID, MESH_COMP_ID, 
@@ -138,6 +158,8 @@ void appManagement :: initializeAPI()
 	pybind11 :: exec(std :: string
 		("import sys\nsys.path.append(\"" + APIGlobals :: workingPath + "modulesAPI/\")").c_str());
 	APIGlobals :: coremodule = pybind11 :: module_ :: import("coremodule");
+	APIGlobals :: inputmodule = pybind11 :: module_ :: import("inputmodule");
+
 }
 
 void appManagement :: compileScripts()
@@ -186,6 +208,7 @@ void appManagement :: compileScripts()
 
 void appManagement :: startScripts(bool initialize)
 {
+	APIGlobals :: inputmodule.attr("input_ref") = (*globals :: inputState);
 	if(initialize)
 		for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
 		{ 

@@ -1,4 +1,5 @@
 
 // DEFINES CONSTANTS //
-vec3 c_ambientAbove = vec3 (0.3f, 0.3f, 0.3f);
-vec3 c_ambientBelow = vec3 (0.1f, 0.1f, 0.1f);
+vec3 c_ambientAbove 	= vec3 (0.3f, 0.3f, 0.3f);
+vec3 c_ambientBelow 	= vec3 (0.1f, 0.1f, 0.1f);
+const int c_maxLights	= 32;

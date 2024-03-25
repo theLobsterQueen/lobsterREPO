@@ -4124,6 +4124,7 @@ PRId64	./vendor/imgui_demo.cpp	/^#define PRId64 /;"	d	file:
 PRIu64	./vendor/imgui_demo.cpp	/^#define PRIu64 /;"	d	file:
 PYBIND11_MODULE	./srcAPI/coreModule.cpp	/^PYBIND11_MODULE(_coremodule, m)$/;"	f
 PYBIND11_MODULE	./srcAPI/entityAPI.cpp	/^PYBIND11_MODULE(_entityapi, m)$/;"	f
+PYBIND11_MODULE	./srcAPI/inputModule.cpp	/^PYBIND11_MODULE(_inputmodule, m)$/;"	f
 PYBIND11_MODULE	./srcAPI/lightAPI.cpp	/^PYBIND11_MODULE(_lightapi, m)$/;"	f
 PYBIND11_MODULE	./srcAPI/sceneAPI.cpp	/^PYBIND11_MODULE(_sceneapi, m)$/;"	f
 PYBIND11_MODULE	./srcAPI/transformAPI.cpp	/^PYBIND11_MODULE(_transformapi, m)$/;"	f

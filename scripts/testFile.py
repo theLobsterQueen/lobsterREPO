@@ -2,6 +2,7 @@
 
 # LOBSTER API IMPORTS #
 import coremodule
+import inputmodule
 
 class testFile(coremodule.BaseScript) :
     # INTRINSIC METHODS #
@@ -12,4 +13,15 @@ class testFile(coremodule.BaseScript) :
 
     def _update(self, delta_time) :
         # MOVES THE TRANSFORM UP AND ROTATES IT #
-        self.transRef.rotate([ 20 * delta_time, 40 * delta_time, -15 * delta_time ])
+        deltaPos = [ 0.0, 0.0, 0.0 ]
+        speed = 20
+
+        if inputmodule.is_key_pressed("w") :
+            deltaPos[1] += speed * delta_time
+        if inputmodule.is_key_pressed("s") :
+            deltaPos[1] -= speed * delta_time
+        if inputmodule.is_key_pressed("d") :
+            deltaPos[0] += speed * delta_time
+        if inputmodule.is_key_pressed("a") :
+            deltaPos[0] -= speed * delta_time
+        self.transRef.translate(deltaPos)

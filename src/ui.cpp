@@ -7,6 +7,12 @@
 // FUNCTION IMPLEMENTATIONS //
 void uiManagement :: drawEditorUI()
 {
+	// VARIABLE INITIALIZATION //
+	static bool savingScene = false;
+
+	static bool deleteSceneConfirmation = false;
+	static std :: string deleteSceneTarget = "";
+
 	// DRAWS MENU BAR //
 	if(ImGui :: BeginMainMenuBar())
 	{
@@ -15,7 +21,7 @@ void uiManagement :: drawEditorUI()
 			if(ImGui :: MenuItem("Save Scene"))
 				sceneManagement :: saveScene(globals :: curSceneRef);
 			if(ImGui :: MenuItem("Save Scene As..."))
-				editorGlobals :: savingScene = true;
+				savingScene = true;
 
 			std :: filesystem :: directory_iterator dirIt;
 			if(ImGui :: BeginMenu("Load Scene"))
@@ -48,6 +54,40 @@ void uiManagement :: drawEditorUI()
 				}
 				ImGui :: EndMenu();
 			}
+			
+			if(ImGui :: BeginMenu("Delete Scene"))
+			{
+				try
+				{ 
+					dirIt = std :: filesystem :: begin
+						(std :: filesystem :: directory_iterator("./scenes")); 
+				}
+
+				catch(std :: filesystem :: filesystem_error err)
+				{
+					dirIt = std :: filesystem :: begin
+						(std :: filesystem :: directory_iterator("./../../scenes")); 
+				}
+
+				for(auto& p : dirIt)
+				{
+					std :: string pathName = p.path().string();
+					if(pathName.find(".lscn") == std :: string :: npos 
+						|| pathName.find(".swp") != std :: string ::npos)
+					{
+						continue;
+					}
+
+					std :: string fileName = p.path().stem().string();
+					if(ImGui :: MenuItem(fileName.c_str()))
+					{
+						deleteSceneTarget = fileName;
+						deleteSceneConfirmation = true;
+					}
+				}
+				ImGui :: EndMenu();
+			}
+
 			ImGui :: EndMenu();
 		}
 
@@ -74,8 +114,8 @@ void uiManagement :: drawEditorUI()
 	} ImGui :: EndMainMenuBar();
 	float topBarY = 20.0f;
 
-	// DRAWS THE SAVE SCENE AS MODAL, IF IT'S ACTIVE //
-	if(editorGlobals :: savingScene)
+	// DRAWS THE "SAVE SCENE AS" MODAL, IF IT'S ACTIVE //
+	if(savingScene)
 	{
 		ImGui :: OpenPopup("Save Scene As...");
 		ImGui :: SetNextWindowSize(ImVec2(globals :: winWidth * 0.4f, globals :: winHeight * 0.3f));
@@ -86,11 +126,32 @@ void uiManagement :: drawEditorUI()
 					("File Name", inputString, LOB_FILE_NAME_MAX, ImGuiInputTextFlags_EnterReturnsTrue))
 			{
 				sceneManagement :: saveScene(globals :: curSceneRef, std :: string(inputString));
-				editorGlobals :: savingScene = false;
+				savingScene = false;
 			}
 
 			if(ImGui :: Button("Cancel"))
-				editorGlobals :: savingScene = false;
+				savingScene = false;
+		}
+		ImGui :: EndPopup();
+	}
+
+	// DRAWS THE "DELETE SCENE" MODAL, IF IT'S ACTIVE //
+	if(deleteSceneConfirmation)
+	{
+		ImGui :: OpenPopup("Delete Scene...");
+		ImGui :: SetNextWindowSize(ImVec2(globals :: winWidth * 0.3f, globals :: winHeight * 0.1f));
+		if(ImGui :: BeginPopupModal("Delete Scene..."), NULL, editorGlobals :: windowFlags)
+		{
+			ImGui :: Text("Are you sure you want to delete %s?", deleteSceneTarget.c_str());
+			if(ImGui :: Button("Yes"))
+			{
+				std :: remove(std :: string
+					(APIGlobals :: workingPath + "./scenes/" + deleteSceneTarget + ".lscn").c_str());
+				deleteSceneConfirmation = false;
+			}
+			ImGui :: SameLine();
+			if(ImGui :: Button("No"))
+				deleteSceneConfirmation = false;
 		}
 		ImGui :: EndPopup();
 	}

@@ -33,6 +33,9 @@ void inputManagement :: processInput(entityID cameraID)
 	static float keyRotSpeed = 30.0f;
 
 	// MOVES THE CAMERA VIA KEY INPUT //
+	if(globals :: isPlaying)
+		return;
+
 	if(!(editorGlobals :: keyInput))
 	{
 		float speedVal = keyMoveSpeed * (globals :: deltaTime);

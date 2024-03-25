@@ -14,6 +14,8 @@
 // FUNCTIONS FOR THE COMPONENT //
 void setColor(Light& self, std :: vector<float> newVec)
 	{ self.color = newVec; }
+std :: vector<float> getColor(Light& self)
+	{ return self.color; }
 
 // BINDS THE COMPONENT //
 PYBIND11_MODULE(_lightapi, m)
@@ -23,5 +25,6 @@ PYBIND11_MODULE(_lightapi, m)
 		.def(pybind11 :: init<>())
 
 		// GETTERS AND SETTERS FOR TRANSFORM DATA //
-		.def("set_color", &setColor);
+		.def("set_color", &setColor)
+		.def("get_color", &getColor);
 }

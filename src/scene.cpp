@@ -97,27 +97,35 @@ void sceneManagement :: renderScene(Scene * targetScene)
 
 	// GETS ALL LIGHT SOURCES AND PUSHES THEIR POSITIONS TO THE SHADERS //
 		// TODO: ADD SUPPORT FOR MULTIPLE LIGHT SOURCES //
-	entityID lightEnt = sceneManagement :: sceneView(targetScene, LIGHT_COMP_ID)[0];
-	Light light = *((Light *) targetScene -> components[LIGHT_COMP_ID][lightEnt]);
+	std :: vector<entityID> lightEnts = sceneManagement :: sceneView(targetScene, LIGHT_COMP_ID);
+	unsigned lightCount = lightEnts.size();
+	lightEnts.resize(LOBSTER_MAX_LIGHTS);
+	
+	float posArray[LOBSTER_MAX_LIGHTS * 3] = { 0 };
+	float colorArray[LOBSTER_MAX_LIGHTS * 4] = { 0 };
+	for(int i = 0; i < lightCount; i++)
+	{
+		// READS OUT CURRENT LIGHT DATA //
+		Light light = *((Light *) targetScene -> components[LIGHT_COMP_ID][lightEnts[i]]);
+		Transform lightTrans = *((Transform *) targetScene -> components[TRANS_COMP_ID][lightEnts[i]]);
+		float luminosity = ((light.color[0] + light.color[1] + light.color[2]) / 3) + 0.001f;
 
-	// DETERMINES LUMINOSITY OF LIGHT SOURCE //
-		// (ADDS A SMALL CONSTANT VALUE TO ENSURE THAT LUMINOSITY IS NEVER ZERO) //
-	float luminosity = ((light.color[0] + light.color[1] + light.color[2]) / 3) + 0.001f;
+		// APPLIES THAT DATA TO THE ARRAY DATA //
+		unsigned posIndex = (i * 3);
+		posArray[posIndex] 		= lightTrans.position[0];
+		posArray[posIndex + 1] 	= lightTrans.position[1];
+		posArray[posIndex + 2] 	= lightTrans.position[2];
+
+		unsigned colIndex = (i * 4);
+		colorArray[colIndex] 		= ((light.color[0]) / luminosity);
+		colorArray[colIndex + 1] 	= ((light.color[1]) / luminosity);
+		colorArray[colIndex + 2] 	= ((light.color[2]) / luminosity);
+		colorArray[colIndex + 3] 	= ((light.color[3]) / luminosity);
+	}
 
 	// SETS COLOR UNIFORM //
-	glUniform4f
-	(
-		UNI_LIGHT_COLOR,
-		light.color[0] / luminosity, light.color[1] / luminosity, 
-		light.color[2] / luminosity, light.color[3]
-	);
-	Transform lightTrans = *((Transform *) targetScene -> 
-		components[TRANS_COMP_ID][lightEnt]);
-	glUniform3f
-	(
-		UNI_LIGHT_POS, 
-		lightTrans.position[0], lightTrans.position[1], lightTrans.position[2]
-	);
+	glUniform3fv(UNI_LIGHT_POS, LOBSTER_MAX_LIGHTS, posArray);
+	glUniform4fv(UNI_LIGHT_POS + LOBSTER_MAX_LIGHTS, LOBSTER_MAX_LIGHTS, colorArray);
 
 	// BEGINS ITERATING THROUGH AND RENDERING VALID ENTITIES //
 	std :: vector<entityID> meshes = sceneManagement :: sceneView
@@ -574,6 +582,9 @@ void sceneManagement :: sceneOut(Scene * inputScene)
 
 void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 {
+	// UPDATES THE REFERENCE TO THE INPUT STATE //
+	APIGlobals :: inputmodule.attr("input_ref") = (*globals :: inputState);
+
 	// CALLS THE UPDATE FUNCTION //
 	for(entityID curEnt : sceneManagement :: sceneView(inputScene, SCRIPT_COMP_ID))
 	{

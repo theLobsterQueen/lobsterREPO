@@ -20,7 +20,6 @@ ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;
 entityID editorGlobals :: curActiveEntity;
 bool editorGlobals :: entitySelected;
 bool editorGlobals :: keyInput;
-bool editorGlobals :: savingScene;
 float editorGlobals :: sidePanelWidth;
 float editorGlobals :: sidePanelHeight;
 float editorGlobals :: bottomPanelWidth;

@@ -14,6 +14,7 @@
 /// </summary> ///
 #define LOBSTER_MAX_ENTITIES 	256
 #define LOBSTER_MAX_COMPONENTS	32
+#define LOBSTER_MAX_LIGHTS		32
 
 // ECS ID'S/MASKS TO IMPROVE READABILITY //
 typedef unsigned short int  	entityID;

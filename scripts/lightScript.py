@@ -16,4 +16,5 @@ class lightScript(coremodule.BaseScript) :
         self.value += (delta_time * self.value_scalar)
         if self.value < 0 or self.value > 1 :
             self.value_scalar = self.value_scalar * -1.0
-        self.lightRef.set_color([1.0, 1.0, 1.0, self.value])
+        colorVal = self.lightRef.get_color()
+        self.lightRef.set_color([colorVal[0], colorVal[1], colorVal[2], self.value])

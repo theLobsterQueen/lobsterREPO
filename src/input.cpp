@@ -89,8 +89,8 @@ void inputManagement :: processInput(entityID cameraID)
 				(globals :: inputState -> cntrlPressed && globals :: inputState -> lmb == true))
 		{
 			globals :: inputState -> mouseInput = true;
-			deltaRot[1] -= mouseDeltaX * rotScalar;
-			deltaRot[0] -= mouseDeltaY * rotScalar;
+			deltaRot[1] += mouseDeltaX * rotScalar;
+			deltaRot[0] += mouseDeltaY * rotScalar;
 		}
 
 		// ZOOMS THE CAMERA IN //

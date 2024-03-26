@@ -17,6 +17,7 @@ std :: vector<float> globals :: tempRot;
 
 ImGuiWindowFlags editorGlobals :: windowFlags;
 ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;
+ImGuiInputTextFlags editorGlobals :: inputTextFlags;
 entityID editorGlobals :: curActiveEntity;
 bool editorGlobals :: entitySelected;
 bool editorGlobals :: keyInput;

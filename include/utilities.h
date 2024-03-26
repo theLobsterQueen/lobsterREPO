@@ -41,5 +41,6 @@ void mouseButtonProcess(InputState * inputState, SDL_Event inputEvent, bool setT
 void modifierKeyProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue);
 
 std :: string compToString(componentID compID);
+compPtr constructComp(componentID compID);
 
 #endif

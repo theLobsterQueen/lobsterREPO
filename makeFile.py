@@ -32,7 +32,7 @@ def compileDir(dirPath) :
         os.system\
         (
             f'g++ -c {dirPath + srcFile} -I ./include/ -I ./vendor/ -I /usr/include/python3.10 -lSDL2'
-            f' -lGL -lGLU -lGLEW -lpython3.10 -Wno-narrowing -Wno-attributes'
+            f' -lGL -lGLU -lGLEW -lpython3.10 -Wno-narrowing -Wno-attributes -Wno-format-security'
             f' `python3.10 -m pybind11 --includes` `python3.10-config --ldflags` -o ./bin/prec/{fileName}'
         )
         print(f"Compiled {srcFile}...")

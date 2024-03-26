@@ -1,4 +1,4 @@
-Fix camera rotation
+Add entities/components through Editor
 Allow Python scripts to add data to entities
 Allow Python scripts to create entities
 Create system for making project directories and manipulating file system through editor

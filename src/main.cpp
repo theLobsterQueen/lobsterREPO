@@ -43,6 +43,8 @@ int main(int argv, char ** args)
 	editorGlobals :: keyInput = false;
 	editorGlobals :: windowFlags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse;
 	editorGlobals :: sceneTreeFlags = ImGuiTreeNodeFlags_DefaultOpen;
+	editorGlobals :: inputTextFlags = ImGuiInputTextFlags_EnterReturnsTrue |
+		ImGuiInputTextFlags_AutoSelectAll;
 	editorGlobals :: entitySelected = false;
 	editorGlobals :: sidePanelWidth = (globals :: winWidth) * 0.2f;
 	editorGlobals :: sidePanelHeight = (globals :: winHeight) * 0.8f;

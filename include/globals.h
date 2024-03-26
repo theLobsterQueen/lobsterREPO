@@ -98,8 +98,9 @@ namespace editorGlobals
 	///			objects. 
 	/// </summary> ///
 
-	extern ImGuiWindowFlags windowFlags;
-	extern ImGuiTreeNodeFlags sceneTreeFlags;
+	extern ImGuiWindowFlags 	windowFlags;
+	extern ImGuiTreeNodeFlags 	sceneTreeFlags;
+	extern ImGuiInputTextFlags	inputTextFlags;
 
 	/// <summary> ///
 	///		This bool describes whether or not the user is currently entering key

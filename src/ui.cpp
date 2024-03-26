@@ -13,6 +13,8 @@ void uiManagement :: drawEditorUI()
 	static bool deleteSceneConfirmation = false;
 	static std :: string deleteSceneTarget = "";
 
+	static unsigned sidePanelMargin = 12;
+
 	// DRAWS MENU BAR //
 	if(ImGui :: BeginMainMenuBar())
 	{
@@ -118,17 +120,24 @@ void uiManagement :: drawEditorUI()
 	if(savingScene)
 	{
 		ImGui :: OpenPopup("Save Scene As...");
-		ImGui :: SetNextWindowSize(ImVec2(globals :: winWidth * 0.4f, globals :: winHeight * 0.3f));
+		ImGui :: SetNextWindowSize(ImVec2(globals :: winWidth * 0.4f, globals :: winHeight * 0.1f));
 		if(ImGui :: BeginPopupModal("Save Scene As..."), NULL, editorGlobals :: windowFlags)
 		{
 			static char inputString[LOB_FILE_NAME_MAX] = "";
 			if(ImGui :: InputText
-					("File Name", inputString, LOB_FILE_NAME_MAX, ImGuiInputTextFlags_EnterReturnsTrue))
+					("File Name", inputString, LOB_FILE_NAME_MAX, editorGlobals :: inputTextFlags))
 			{
 				sceneManagement :: saveScene(globals :: curSceneRef, std :: string(inputString));
 				savingScene = false;
 			}
 
+			if(ImGui :: Button("Submit"))
+			{
+				sceneManagement :: saveScene(globals :: curSceneRef, std :: string(inputString));
+				savingScene = false;
+			}
+
+			ImGui :: SameLine();
 			if(ImGui :: Button("Cancel"))
 				savingScene = false;
 		}
@@ -192,6 +201,17 @@ void uiManagement :: drawEditorUI()
 				editorGlobals :: curActiveEntity = i;
 			ImGui :: TreePop();
 		}
+
+		// CREATES BUTTON FOR ADDING ENTITIES TO THE SCENE //
+		if(ImGui :: Button(uiManagement :: centeredString("Add Entity", sidePanelMargin).c_str()))
+		{
+			entityID newEntity = sceneManagement :: newEntityID(globals :: curSceneRef, "New Entity");
+			sceneManagement :: addComp
+			(
+				globals :: curSceneRef, newEntity,
+				TRANS_COMP_ID, (compPtr) transformHandler :: createTransform()
+			);
+		}
 	} ImGui :: End();
 
 	// DRAWS INSPECTOR //
@@ -210,7 +230,19 @@ void uiManagement :: drawEditorUI()
 		Entity activeEntity = globals :: curSceneRef -> entities[editorGlobals :: curActiveEntity];
 
 		// WRITES OUT ENTITY DATA //
-		ImGui :: Text("Name: %s", activeEntity.name.c_str());
+		static std :: string holder = "";
+		if(holder.size() != 16)
+			holder.resize(16);
+
+		ImGui :: Text("Name: ");
+		ImGui :: SameLine();
+		if(ImGui :: InputTextWithHint
+			("##1", activeEntity.name.c_str(), holder.data(), 16, editorGlobals :: inputTextFlags))
+		{ 
+			globals :: curSceneRef -> entities[editorGlobals :: curActiveEntity].name = holder; 
+			holder = "";
+			holder.resize(16);
+		}
 
 		// RELAYS TRANSFORM COMPONENT DATA //
 		if((activeEntity.mask & (1 << TRANS_COMP_ID)) >= 1)
@@ -294,8 +326,47 @@ void uiManagement :: drawEditorUI()
 				[editorGlobals :: curActiveEntity]);
 			ImGui :: Text("Script Data\n%s", curScript -> name.c_str());
 		}
+
+		// DRAWS BUTTON FOR ADDING NEW COMPONENTS //
+		std :: string menuTitle = uiManagement :: centeredString("Add Component", sidePanelMargin);
+		if(ImGui :: BeginMenu(menuTitle.c_str()))
+		{
+			for(unsigned curComp = 0; curComp < CUR_COMP_MAX; curComp++)
+			{
+				// SKIPS IF ENTITY ALREADY HAS COMPONENT //
+				if((activeEntity.mask & (1 << curComp)) >= 1)
+					continue;
+				// SKIPS OVER INVALID COMPS //
+				if(curComp == MESH_COMP_ID || curComp == SCRIPT_COMP_ID)
+					continue;
+
+				if(ImGui :: MenuItem(compToString(curComp).c_str()))
+				{
+					sceneManagement :: addComp
+					(
+						globals :: curSceneRef,
+						editorGlobals :: curActiveEntity,
+						curComp, constructComp(curComp)
+					);
+				}
+			}
+			ImGui :: EndMenu();
+		}
+
+		// DRAWS BUTTON FOR DESTROYING THIS ENTITY //
+		ImGui :: Text((centeredString("", sidePanelMargin)).c_str());
+		ImGui :: SameLine();
+		if(ImGui :: Button("Delete Entity"))
+			sceneManagement :: deleteEntity(globals :: curSceneRef, editorGlobals :: curActiveEntity);
 	} ImGui :: End();
-
-	// DRAWS FILE SYSTEM //
-
 }
+
+std :: string uiManagement :: centeredString(const char * targetBase, unsigned margin)
+{
+	std :: string retString = "";
+	for(unsigned i = 0; i < margin; i++)
+		retString += " ";
+	retString += targetBase;
+	return retString;
+}
+

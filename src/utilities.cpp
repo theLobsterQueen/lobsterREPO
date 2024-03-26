@@ -179,3 +179,33 @@ std :: string compToString(componentID compID)
 	return std :: string("NULL");
 }
 
+compPtr constructComp(componentID compID)
+{
+	switch(compID)
+	{
+		case TRANS_COMP_ID :
+			return (compPtr) transformHandler :: createTransform();
+		break;
+
+		case MESH_COMP_ID :
+			std :: cout << "INVALID CONSTRUCT COMP! CANNOT CONSTRUCT A COMP OF " << 
+				compToString(MESH_COMP_ID) << std :: endl;
+			return nullptr;
+		break;
+
+		case LIGHT_COMP_ID :
+			return (compPtr) lightHandler :: createLight();
+		break;
+
+		case CAMERA_COMP_ID :
+			return (compPtr) cameraHandler :: createCamera();
+		break;
+
+		case SCRIPT_COMP_ID :
+			std :: cout << "INVALID CONSTRUCT COMP! CANNOT CONSTRUCT A COMP OF " << 
+				compToString(SCRIPT_COMP_ID) << std :: endl;
+			return nullptr;
+		break;
+	}
+	return nullptr;
+}

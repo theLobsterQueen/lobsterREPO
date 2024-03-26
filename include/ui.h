@@ -24,6 +24,13 @@ namespace uiManagement
 	/// </summary> ///
 
 	void drawEditorUI();
+
+	/// <summary> ///
+	///		Centers the string in targetBase around a text line with
+	///			input margin.
+	/// </summary> ///
+
+	std :: string centeredString(const char * targetBase, unsigned margin);
 };
 
 

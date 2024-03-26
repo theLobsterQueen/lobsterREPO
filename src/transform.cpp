@@ -62,11 +62,11 @@ glm :: mat4x4 transformHandler :: getScaleMatrix(Transform * inputTrans)
 glm :: mat4x4 transformHandler :: getRotateMatrix(Transform * inputTrans)
 {
 	glm :: mat4x4 rotMatrix = glm :: mat4x4(1.0f);
-	for(char i = 2; i >= 0; i--)
+	for(char i = 0; i < 2; i++)
 	{
 		glm :: vec3 axis(0.0f, 0.0f, 0.0f);
 		axis[i] = 1.0f;
-		rotMatrix *= glm :: rotate(rotMatrix, glm :: radians(inputTrans -> rotation[i]), axis);
+		rotMatrix = glm :: rotate(rotMatrix, glm :: radians(inputTrans -> rotation[i]), axis);
 	}
 
 	return rotMatrix;

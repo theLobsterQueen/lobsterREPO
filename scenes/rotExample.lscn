@@ -1,8 +1,8 @@
-2DshooterExample
+rotExample
 ENT: Camera
 TRANSFORM
-0/10/30
-0/0/0
+8.93427/0/-3.36366
+0/-46.35/0
 1/1/1
 CAMERA
 0.1
@@ -11,24 +11,24 @@ shaders/vertShader.txt
 shaders/fragShader.txt
 ENT: Light
 TRANSFORM
-0/3/3
+-5/0/3
 0/0/0
 1/1/1
 LIGHT
-1/1/1/0.6
+1/1/1/0
 SCRIPT
 lightScript
 ENT: Light2
 TRANSFORM
-0/1/10
+0/0/0
 0/0/0
 1/1/1
 LIGHT
-5/0/0/0.1
+1/0/1/0
 ENT: Jinx
 TRANSFORM
+0/0/-3
 0/0/0
-0/270/0
 1/1/1
 MESH
 portrait.ply

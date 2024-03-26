@@ -54,8 +54,8 @@ namespace meshHandler
 	/// </summary> ///
 	Mesh * createMesh
 	(
-		std :: vector<GLfloat> inputVertices, 
-		std :: vector<GLuint> inputIndices,
+		std :: vector<GLfloat> inputVertices = std :: vector<GLfloat> { }, 
+		std :: vector<GLuint> inputIndices = std :: vector<GLuint> { },
 		std :: string meshName = "mesh"
 	);
 

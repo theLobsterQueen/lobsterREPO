@@ -40,6 +40,21 @@ void sceneOut(Scene& self)
 pybind11 :: object getEntity(Scene& self, entityID id)
 	{ return pybind11 :: cast(self.entities[id]); }
 
+int addEntity(Scene& self, std :: string entityName)
+{
+	bool returnStat = false;
+	for(entityID i = 0; i < LOBSTER_MAX_ENTITIES; i++)
+		if(self.entities[i].mask == 0)
+		{
+			self.activeEntities++;
+			self.entities[i].mask |= (1 << TRANS_COMP_ID);
+			self.entities[i].name = entityName;
+			self.components[TRANS_COMP_ID][i] = (compPtr) (new Transform);
+			return i;
+		}
+	return -1;
+}
+
 // RETURNS COMPONENT REFERENCES //
 bool getTransComp(Scene& self, entityID id, Transform& transOut)
 {
@@ -64,6 +79,7 @@ PYBIND11_MODULE(_sceneapi, m)
 {
 	pybind11 :: class_<Scene>(m, "Scene")
 		.def("get_entity", &getEntity)
+		.def("add_entity", &addEntity)
 		.def("scene_out", &sceneOut)
 
 		.def("get_transform_comp", &getTransComp)

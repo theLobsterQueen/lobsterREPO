@@ -39,6 +39,12 @@ namespace uiManagement
 	/// </summary> ///
 
 	bool getInputString(std :: string labelString, std :: string& outputData);
+
+	/// <summary> ///
+	///		Quick utility function to add delete buttons for components.
+	/// </summary> ///
+
+	void deleteButton(componentID compID);
 };
 
 

@@ -4193,7 +4193,7 @@ PopupId	./vendor/imgui_internal.h	/^    ImGuiID                 PopupId;        
 PopupId	./vendor/imgui_internal.h	/^    ImGuiID             PopupId;        \/\/ Set on OpenPopup()$/;"	m	struct:ImGuiPopupData	typeref:typename:ImGuiID
 PopupRounding	./vendor/imgui.h	/^    float       PopupRounding;              \/\/ Radius of popup window corners rounding. (Note /;"	m	struct:ImGuiStyle	typeref:typename:float
 Pos	./bin/debug/imgui.ini	/^Pos=0,20$/;"	k	section:Window
-Pos	./bin/debug/imgui.ini	/^Pos=1040,20$/;"	k	section:Window
+Pos	./bin/debug/imgui.ini	/^Pos=1280,20$/;"	k	section:Window
 Pos	./bin/debug/imgui.ini	/^Pos=60,60$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=0,0$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=0,20$/;"	k	section:Window
@@ -4201,6 +4201,7 @@ Pos	./imgui.ini	/^Pos=110,63$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=1280,20$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=40,26$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=456,192$/;"	k	section:Window
+Pos	./imgui.ini	/^Pos=480,405$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=60,60$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=728,47$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=737,147$/;"	k	section:Window
@@ -4825,7 +4826,7 @@ Sin	./vendor/imgui_demo.cpp	/^            static float Sin(void*, int i) { retur
 SingleCharMode	./vendor/imgui_internal.h	/^    bool                    SingleCharMode;     \/\/ Notify when buffer contains same character /;"	m	struct:ImGuiTypingSelectRequest	typeref:typename:bool
 SingleCharModeLock	./vendor/imgui_internal.h	/^    bool            SingleCharModeLock = false; \/\/ After a certain single char repeat count we/;"	m	struct:ImGuiTypingSelectState	typeref:typename:bool
 SingleCharSize	./vendor/imgui_internal.h	/^    ImS8                    SingleCharSize;     \/\/ Length in bytes of first letter codepoint (/;"	m	struct:ImGuiTypingSelectRequest	typeref:typename:ImS8
-Size	./bin/debug/imgui.ini	/^Size=260,500$/;"	k	section:Window
+Size	./bin/debug/imgui.ini	/^Size=320,700$/;"	k	section:Window
 Size	./bin/debug/imgui.ini	/^Size=400,400$/;"	k	section:Window
 Size	./imgui.ini	/^Size=114,48$/;"	k	section:Window
 Size	./imgui.ini	/^Size=123,156$/;"	k	section:Window
@@ -5338,7 +5339,9 @@ Window	./imgui.ini	/^[Window][Example: Simple layout\/left pane_AED60EF8]$/;"	s
 Window	./imgui.ini	/^[Window][Example: Simple layout]$/;"	s
 Window	./imgui.ini	/^[Window][Hello World!]$/;"	s
 Window	./imgui.ini	/^[Window][Inspector]$/;"	s
+Window	./imgui.ini	/^[Window][Load mesh named...]$/;"	s
 Window	./imgui.ini	/^[Window][Save Scene As...]$/;"	s
+Window	./imgui.ini	/^[Window][Save Scene as...]$/;"	s
 Window	./imgui.ini	/^[Window][Scene Tree]$/;"	s
 Window	./imgui.ini	/^[Window][TEST]$/;"	s
 Window	./vendor/imgui_impl_sdl2.cpp	/^    SDL_Window*             Window;$/;"	m	struct:ImGui_ImplSDL2_Data	typeref:typename:SDL_Window *	file:
@@ -5558,6 +5561,7 @@ acsch	./vendor/glm/ext/vector_reciprocal.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> 
 activeEntities	./include/scene.h	/^	unsigned short int activeEntities = 0;$/;"	m	struct:Scene	typeref:typename:unsigned short int
 active_head	./vendor/imstb_rectpack.h	/^   stbrp_node *active_head;$/;"	m	struct:stbrp_context	typeref:typename:stbrp_node *
 addComp	./src/scene.cpp	/^void sceneManagement :: addComp$/;"	f	class:sceneManagement	typeref:typename:void
+add_component	./modulesAPI/coremodule.py	/^    def add_component(self, comp) :$/;"	m	class:BaseScript
 adjugate	./vendor/glm/gtx/matrix_operation.inl	/^	GLM_FUNC_QUALIFIER mat<2, 2, T, Q> adjugate(mat<2, 2, T, Q> const& m)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<2,2,T,Q>
 adjugate	./vendor/glm/gtx/matrix_operation.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, Q> adjugate(mat<3, 3, T, Q> const& m)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<3,3,T,Q>
 adjugate	./vendor/glm/gtx/matrix_operation.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, Q> adjugate(mat<4, 4, T, Q> const& m)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
@@ -6778,6 +6782,7 @@ cot	./vendor/glm/ext/vector_reciprocal.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> co
 coth	./vendor/glm/ext/scalar_reciprocal.inl	/^	GLM_FUNC_QUALIFIER genType coth(genType angle)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
 coth	./vendor/glm/ext/vector_reciprocal.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> coth(vec<L, T, Q> const& x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
 countof	./vendor/glm/detail/setup.hpp	/^		constexpr std::size_t countof(T const (&)[N])$/;"	f	namespace:glm	typeref:typename:std::size_t
+createBaseScene	./src/app.cpp	/^void appManagement :: createBaseScene()$/;"	f	class:appManagement	typeref:typename:void
 createCamera	./src/camera.cpp	/^Camera * cameraHandler :: createCamera(float inputAspect, Pipeline * inputPipeline)$/;"	f	class:cameraHandler	typeref:typename:Camera *
 createInputState	./src/input.cpp	/^InputState * inputManagement :: createInputState()$/;"	f	class:inputManagement	typeref:typename:InputState *
 createLight	./src/light.cpp	/^Light * lightHandler :: createLight(std :: vector<float> lightColor)$/;"	f	class:lightHandler	typeref:typename:Light *
@@ -6785,7 +6790,6 @@ createMesh	./src/mesh.cpp	/^Mesh * meshHandler :: createMesh$/;"	f	class:meshHan
 createPipeline	./src/graphics.cpp	/^Pipeline * graphicManagement :: createPipeline()$/;"	f	class:graphicManagement	typeref:typename:Pipeline *
 createScene	./src/scene.cpp	/^Scene * sceneManagement :: createScene(std :: string inputName)$/;"	f	class:sceneManagement	typeref:typename:Scene *
 createScript	./src/script.cpp	/^Script * scriptHandler :: createScript(std :: string scriptName, entityID entRef)$/;"	f	class:scriptHandler	typeref:typename:Script *
-createTestScene	./src/app.cpp	/^void appManagement :: createTestScene()$/;"	f	class:appManagement	typeref:typename:void
 createTexture	./src/texture.cpp	/^Texture * textureHandler :: createTexture(std :: string textureName)$/;"	f	class:textureHandler	typeref:typename:Texture *
 createTransform	./src/transform.cpp	/^Transform * transformHandler :: createTransform$/;"	f	class:transformHandler	typeref:typename:Transform *
 createTransform	./src/transform.cpp	/^Transform * transformHandler :: createTransform()$/;"	f	class:transformHandler	typeref:typename:Transform *
@@ -6867,6 +6871,7 @@ defaultp	./vendor/glm/detail/qualifier.hpp	/^			defaultp = aligned_highp$/;"	e	e
 degrees	./vendor/glm/detail/func_trigonometric.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType degrees(genType radians)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType
 degrees	./vendor/glm/detail/func_trigonometric.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec<L, T, Q> degrees(vec<L, T, Q> const& v)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec<L,T,Q>
 delay	./vendor/stb_image.h	/^   int delay;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
+deleteButton	./src/ui.cpp	/^void uiManagement :: deleteButton(componentID compID)$/;"	f	class:uiManagement	typeref:typename:void
 deleteEntity	./src/scene.cpp	/^void sceneManagement :: deleteEntity(Scene * targetScene, entityID entityIndex)$/;"	f	class:sceneManagement	typeref:typename:void
 delete_length	./vendor/imstb_textedit.h	/^   IMSTB_TEXTEDIT_POSITIONTYPE  delete_length;$/;"	m	struct:__anon25749c3e0108	typeref:typename:IMSTB_TEXTEDIT_POSITIONTYPE
 delim_left	./vendor/glm/gtx/io.hpp	/^			char_type  delim_left;$/;"	m	class:glm::io::format_punct	typeref:typename:char_type
@@ -7481,9 +7486,9 @@ getCol	./include/math.h	/^		std :: vector<float> getCol(unsigned int colIndex)$/
 getColor	./srcAPI/lightAPI.cpp	/^std :: vector<float> getColor(Light& self)$/;"	f	typeref:typename:std::vector<float>
 getCols	./include/math.h	/^		unsigned int getCols()$/;"	f	class:LobMatrix	typeref:typename:unsigned int
 getData	./include/math.h	/^		float * getData()$/;"	f	class:LobMatrix	typeref:typename:float *
-getEntity	./srcAPI/sceneAPI.cpp	/^pybind11 :: object getEntity(Scene inputScene, entityID id)$/;"	f	typeref:typename:pybind11::object
-getInputString	./src/ui.cpp	/^std :: string uiManagement :: getInputString(std :: string labelString)$/;"	f	class:uiManagement	typeref:typename:std::string
-getLightComp	./srcAPI/sceneAPI.cpp	/^bool getLightComp(Scene inputScene, entityID id, Light& lightOut)$/;"	f	typeref:typename:bool
+getEntity	./srcAPI/sceneAPI.cpp	/^pybind11 :: object getEntity(Scene& self, entityID id)$/;"	f	typeref:typename:pybind11::object
+getInputString	./src/ui.cpp	/^bool uiManagement :: getInputString(std :: string labelString, std :: string& outputData)$/;"	f	class:uiManagement	typeref:typename:bool
+getLightComp	./srcAPI/sceneAPI.cpp	/^bool getLightComp(Scene& self, entityID id, Light& lightOut)$/;"	f	typeref:typename:bool
 getMeshFromPLY	./src/mesh.cpp	/^Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)$/;"	f	class:meshHandler	typeref:typename:Mesh *
 getObjectWorldMatrix	./src/transform.cpp	/^glm :: mat4x4 transformHandler :: getObjectWorldMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:glm::mat4x4
 getPoint	./include/math.h	/^		float getPoint(unsigned int y, unsigned int x)$/;"	f	class:LobMatrix	typeref:typename:float
@@ -7491,7 +7496,7 @@ getRotateMatrix	./src/transform.cpp	/^glm :: mat4x4 transformHandler :: getRotat
 getRow	./include/math.h	/^		std :: vector<float> getRow(unsigned int rowIndex)$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
 getRows	./include/math.h	/^		unsigned int getRows()$/;"	f	class:LobMatrix	typeref:typename:unsigned int
 getScaleMatrix	./src/transform.cpp	/^glm :: mat4x4 transformHandler :: getScaleMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:glm::mat4x4
-getTransComp	./srcAPI/sceneAPI.cpp	/^bool getTransComp(Scene inputScene, entityID id, Transform& transOut)$/;"	f	typeref:typename:bool
+getTransComp	./srcAPI/sceneAPI.cpp	/^bool getTransComp(Scene& self, entityID id, Transform& transOut)$/;"	f	typeref:typename:bool
 getTranslateMatrix	./src/transform.cpp	/^glm :: mat4x4 transformHandler :: getTranslateMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:glm::mat4x4
 getVec	./include/math.h	/^		std :: vector<float> getVec()$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
 getWorldViewMatrix	./src/camera.cpp	/^glm :: mat4x4 cameraHandler :: getWorldViewMatrix(Camera * camera, Transform * transform)$/;"	f	class:cameraHandler	typeref:typename:glm::mat4x4
@@ -11698,6 +11703,7 @@ reflect2D	./vendor/glm/gtx/transform2.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, Q> 
 reflect3D	./vendor/glm/gtx/transform2.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, Q> reflect3D(mat<4, 4, T, Q> const& m, vec<3, T, Q> const& norm/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
 refract	./vendor/glm/detail/func_geometric.inl	/^	GLM_FUNC_QUALIFIER genType refract(genType const& I, genType const& N, genType eta)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
 refract	./vendor/glm/detail/func_geometric.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> refract(vec<L, T, Q> const& I, vec<L, T, Q> const& N, T eta)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
+removeComp	./src/scene.cpp	/^void sceneManagement :: removeComp(Scene * targetScene, entityID entityIndex, componentID compIn/;"	f	class:sceneManagement	typeref:typename:void
 renderScene	./src/scene.cpp	/^void sceneManagement :: renderScene(Scene * targetScene)$/;"	f	class:sceneManagement	typeref:typename:void
 repeat	./vendor/glm/ext/scalar_common.inl	/^	GLM_FUNC_QUALIFIER genType repeat(genType const& Texcoord)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
 repeat	./vendor/glm/ext/vector_common.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> repeat(vec<L, T, Q> const& Texcoord)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
@@ -11815,7 +11821,7 @@ scale_slow	./vendor/glm/ext/matrix_transform.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4,
 scan_n	./vendor/stb_image.h	/^   int scan_n, order[4];$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 sceneManagement	./include/scene.h	/^namespace sceneManagement$/;"	n
 sceneOut	./src/scene.cpp	/^void sceneManagement :: sceneOut(Scene * inputScene)$/;"	f	class:sceneManagement	typeref:typename:void
-sceneOut	./srcAPI/sceneAPI.cpp	/^void sceneOut(Scene inputScene)$/;"	f	typeref:typename:void
+sceneOut	./srcAPI/sceneAPI.cpp	/^void sceneOut(Scene& self)$/;"	f	typeref:typename:void
 sceneRef	./srcAPI/sceneAPI.cpp	/^static Scene sceneRef;$/;"	v	typeref:typename:Scene	file:
 sceneTreeFlags	./globals.cpp	/^ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiTreeNodeFlags
 sceneTreeFlags	./src/globals.cpp	/^ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiTreeNodeFlags
@@ -12472,6 +12478,7 @@ storage	./vendor/glm/detail/qualifier.hpp	/^	struct storage<4, unsigned int, tru
 streamsize_type	./vendor/glm/gtx/io.hpp	/^			typedef ::std::streamsize              streamsize_type;$/;"	t	class:glm::io::basic_state_saver	typeref:typename:::std::streamsize
 stride	./vendor/imstb_truetype.h	/^   int w,h,stride;$/;"	m	struct:__anonecd446350808	typeref:typename:int
 stride_in_bytes	./vendor/imstb_truetype.h	/^   int   stride_in_bytes;$/;"	m	struct:stbtt_pack_context	typeref:typename:int
+stringToComp	./src/utilities.cpp	/^componentID stringToComp(std :: string compName)$/;"	f	typeref:typename:componentID
 subrs	./vendor/imstb_truetype.h	/^   stbtt__buf subrs;                  \/\/ private charstring subroutines index$/;"	m	struct:stbtt_fontinfo	typeref:typename:stbtt__buf
 succ_high	./vendor/stb_image.h	/^   int            succ_high;$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 succ_low	./vendor/stb_image.h	/^   int            succ_low;$/;"	m	struct:__anon212c1e400808	typeref:typename:int

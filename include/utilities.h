@@ -44,5 +44,6 @@ void modifierKeyProcess(InputState * inputState, SDL_Event inputEvent, bool setT
 std :: string compToString(componentID compID);
 componentID stringToComp(std :: string compName);
 compPtr constructComp(componentID compID);
+compPtr copyComp(componentID compID, compPtr copySrc);
 
 #endif

@@ -41,7 +41,8 @@ int main(int argv, char ** args)
 	globals :: clearColor[3] = 0.0f;
 
 	editorGlobals :: keyInput = false;
-	editorGlobals :: windowFlags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse;
+	editorGlobals :: windowFlags = 
+		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse;
 	editorGlobals :: sceneTreeFlags = ImGuiTreeNodeFlags_DefaultOpen;
 	editorGlobals :: inputTextFlags = ImGuiInputTextFlags_EnterReturnsTrue |
 		ImGuiInputTextFlags_AutoSelectAll;
@@ -132,9 +133,9 @@ int main(int argv, char ** args)
 	appManagement :: begin();
 
 	// CLEAN UP APPPLICATION //
+	pybind11 :: finalize_interpreter();
 	SDL_DestroyWindow(globals :: winRef);
 	SDL_Quit();
-	pybind11 :: finalize_interpreter();
 
 	return 0;
 }

@@ -10,6 +10,7 @@
 
 // LOBSTER INCLUDES //
 #include <entity.h>
+#include <APIUtils.h>
 
 /// <summary> ///
 ///		This file holds the struct for the "Script" component,
@@ -19,12 +20,13 @@
 struct Script
 {
 	std :: string name;
+	entityID id;
 	pybind11 :: object code;
 };
 
 namespace scriptHandler
 {
-	Script * createScript(std :: string scriptName, entityID entRef);
+	Script * createScript(std :: string scriptName = "", entityID entRef = 0);
 }
 
 #endif

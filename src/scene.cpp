@@ -14,9 +14,6 @@ void sceneManagement :: changeScene(Scene * targetScene)
 	APIGlobals :: coremodule.attr("scene_ref") = targetScene;
 	globals :: curSceneRef = targetScene;
 	windowManagement :: changeTitle(globals :: winRef, globals :: curSceneRef -> name);
-
-	// STARTS AND INITIALIZES ALL THE SCRIPTS IN THE NEW SCENE //
-	appManagement :: startScripts(true);
 }
 
 entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entityName)
@@ -58,6 +55,17 @@ void sceneManagement :: addComp
 
 	// MODIFIES ENTITY BITMASK //
 	targetScene -> entities[entityIndex].mask |= (1 << compIndex);
+}
+
+void sceneManagement :: removeComp(Scene * targetScene, entityID entityIndex, componentID compIndex)
+{
+	// REMOVES POINTER TO COMPONENT CONTAINER //
+	targetScene -> components[compIndex][entityIndex] = nullptr; 
+
+	// WIPES COMPONENT FROM ENTITY BITMASK //
+	targetScene -> entities[entityIndex].mask ^= (1 << compIndex);
+	if(targetScene -> entities[entityIndex].mask == 0)
+		targetScene -> activeEntities--;
 }
 
 void sceneManagement :: renderScene(Scene * targetScene)
@@ -608,18 +616,39 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 		inputScene -> entities[curEnt] = entRef;
 
 		// CHECKS TO SEE IF SCRIPT WANTS ANY NEW COMPONENTS ADDED //
-		std :: vector<std :: string> compsToAdd = pybind11 :: 
-			cast<std :: vector<std :: string>>(script -> code.attr("comps_to_add"));
+		pybind11 :: list compsToAdd = script -> code.attr("comps_to_add");
+		pybind11 :: list compIDsToAdd = script -> code.attr("comp_ids_to_add");
 		for(unsigned i = 0; i < compsToAdd.size(); i++)
 		{
-			componentID compID = stringToComp(compsToAdd[i]);
+			componentID compID = stringToComp(pybind11 :: cast<std :: string>(compsToAdd[i]));
+			entityID id = pybind11 :: cast<entityID>(compIDsToAdd[i]);
 			sceneManagement :: addComp
 			(
-			 	inputScene, curEnt,
+			 	inputScene, id,
 				compID, constructComp(compID)
 			);
 		}
 	}
 }
 
+void sceneManagement :: copyEntity(Scene * inputScene, entityID copyID)
+{
+	// GETS NEW ENTITY ID //
+	Entity copiedEntity = inputScene -> entities[copyID];
+	entityID entID = sceneManagement :: newEntityID(inputScene, copiedEntity.name);
 
+	// ITERATES THROUGH ALL COMPONENTS ADDED TO THE ENTITY, AND COPIES //
+		// THEM TO THE NEW SLOT MADE IN THE SCENE //
+	for(unsigned compID = 0; compID < CUR_COMP_MAX; compID++)
+	{
+		if((copiedEntity.mask & (1 << compID)) >= 1)
+		{
+			compPtr newComp = copyComp(compID, inputScene -> components[compID][copyID]);
+			sceneManagement :: addComp
+			(
+				inputScene, entID,
+				compID, newComp
+			);
+		}
+	}
+}

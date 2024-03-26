@@ -93,15 +93,27 @@ namespace sceneManagement
 
 	void deleteEntity(Scene * targetScene, entityID entityIndex);
 
+
+	/// <summary> ///
+	///		Copies an entity fully from one ID slot to another.
+	/// </summary> ///
+
+	void copyEntity(Scene * inputScene, entityID copyID);
+
 	/// <summary> ///
 	///		This function adds a component of input type to input entity in the scene.
 	/// </summary> ///
 
 	void addComp
-	// PARAMETERS //
 	(
 		Scene * targetScene, entityID entityIndex, 
 		componentID compIndex, compPtr inputCompPtr
+	);
+
+	void removeComp
+	(
+	 	Scene * targetScene, entityID entityIndex,
+		componentID compIndex
 	);
 
 	/// <summary> ///

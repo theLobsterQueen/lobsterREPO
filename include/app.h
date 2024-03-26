@@ -70,10 +70,10 @@ namespace appManagement
 	void run();
 
 	/// <summary> ///
-	///		This populates the current scene with test draw meshes.
+	///		This populates the editor with a base screen.
 	/// </summary> ///
 
-	void createTestScene();
+	Scene * createBaseScene();
 
 	/// <summary> ///
 	///		Updates the general game state by processing SDL2 events.

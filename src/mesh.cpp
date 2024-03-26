@@ -93,6 +93,7 @@ void meshHandler :: setTexture(Mesh * inputMesh, Texture * inputTexture)
 	inputMesh -> texName = inputTexture -> name;
 
 	// BINDS TEXTURE DATA, IF AVAILABLE //
+	glGenTextures(1, &(inputMesh -> textureID));
 	glBindTexture(GL_TEXTURE_2D, inputMesh -> textureID);
 	glTexImage2D
 	(

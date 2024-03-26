@@ -12,7 +12,7 @@ void uiManagement :: drawEditorUI()
 
 	static bool deleteSceneConfirmation = false;
 	static std :: string deleteSceneTarget = "";
-
+	
 	static unsigned sidePanelMargin = 12;
 
 	// DRAWS MENU BAR //
@@ -20,10 +20,14 @@ void uiManagement :: drawEditorUI()
 	{
 		if(ImGui :: BeginMenu("File"))
 		{
+			if(ImGui :: MenuItem("New Scene"))
+				sceneManagement :: changeScene(appManagement :: createBaseScene());
+			ImGui :: Separator();
 			if(ImGui :: MenuItem("Save Scene"))
 				sceneManagement :: saveScene(globals :: curSceneRef);
 			if(ImGui :: MenuItem("Save Scene As..."))
 				savingScene = true;
+			ImGui :: Separator();
 
 			std :: filesystem :: directory_iterator dirIt;
 			if(ImGui :: BeginMenu("Load Scene"))
@@ -97,9 +101,9 @@ void uiManagement :: drawEditorUI()
 		{
 			if(ImGui :: MenuItem("Play Scene"))
 			{
+				sceneManagement :: saveScene(globals :: curSceneRef);
 				appManagement :: compileScripts();
 				appManagement :: startScripts(true);
-				sceneManagement :: saveScene(globals :: curSceneRef);
 				globals :: isPlaying = true;
 			}
 			if(ImGui :: MenuItem("Stop Scene"))
@@ -233,10 +237,11 @@ void uiManagement :: drawEditorUI()
 		{
 			Transform * curTrans = (Transform *) globals :: curSceneRef -> components[TRANS_COMP_ID]
 				[editorGlobals :: curActiveEntity];
-			
-			std :: string columnNames[3] = { "X", "Y", "Z" };
-			std :: string rowNames[3] = { "_p", "_r", "_s" };
-			ImGui :: Text("Transform Data\n");
+	
+			std :: string rowNames[3] = { "P", "R", "S" };
+			std :: string columnNames[3] = { "_x", "_y", "_z" };
+			ImGui :: Text("Transform Data");
+			uiManagement :: deleteButton(TRANS_COMP_ID);
 			std :: vector<float> * transVecIndices[3] = 
 				{ &(curTrans -> position), &(curTrans -> rotation), &(curTrans -> scale) };
 			for(int row = 0; row < 3; row++)
@@ -244,9 +249,19 @@ void uiManagement :: drawEditorUI()
 				ImGui :: PushItemWidth(editorGlobals :: sidePanelWidth * 0.2f);
 				for(int column = 0; column < 3; column++)
 				{
+					float value = (*transVecIndices[row])[column];
+					if(row == 1 && (value > 360 || value < -360))
+					{
+						while(value >= 360)
+							value -= 360;
+						while(value <= -360)
+							value += 360;
+					}
+					(*transVecIndices[row])[column] = value;
+
 					ImGui :: InputFloat
 					(
-					 	std :: string(columnNames[column] + rowNames[row]).c_str(), 
+					 	std :: string(rowNames[row] + columnNames[column]).c_str(), 
 						&((*transVecIndices[row])[column]),
 						-0.01f, -1.0f, "%.2f"
 					);
@@ -264,9 +279,11 @@ void uiManagement :: drawEditorUI()
 			Camera * curCamera = (Camera *) globals :: curSceneRef -> components[CAMERA_COMP_ID]
 				[editorGlobals :: curActiveEntity];
 			
+			ImGui :: Text("Camera Data");
+			uiManagement :: deleteButton(CAMERA_COMP_ID);
 			ImGui :: Text
 			(
-			 	"Camera Data\n%.2f\t%.2f\n%.2f\n%s\n%s", 
+			 	"\n%.2f\t%.2f\n%.2f\n%s\n%s", 
 				curCamera -> near, curCamera -> far, 
 				curCamera -> aspectRatio,
 				curCamera -> curPipelineRef -> vertShaderName.c_str(),
@@ -281,6 +298,7 @@ void uiManagement :: drawEditorUI()
 			Light * curLight = (Light *) globals :: curSceneRef -> components[LIGHT_COMP_ID]
 				[editorGlobals :: curActiveEntity];
 			ImGui :: Text("Light Data");
+			uiManagement :: deleteButton(LIGHT_COMP_ID);
 			static const char * colorNames[4] = { "r", "g", "b", "a" };
 			for(int i = 0; i < 4; i++)
 			{
@@ -299,7 +317,40 @@ void uiManagement :: drawEditorUI()
 			Mesh * curMesh = (Mesh *) globals :: curSceneRef -> components[MESH_COMP_ID]
 				[editorGlobals :: curActiveEntity];
 
-			ImGui :: Text("Mesh Data\n%s\n%s", curMesh -> name.c_str(), curMesh -> texName.c_str());
+			ImGui :: Text("Mesh Data");
+			uiManagement :: deleteButton(MESH_COMP_ID);
+			static std :: string meshHolder = "";
+			static std :: string texHolder  = "";
+
+			if(meshHolder.size() != 16)
+				meshHolder.resize(16);
+			if(ImGui :: InputTextWithHint
+				("##2", curMesh -> name.c_str(), meshHolder.data(), 16, editorGlobals :: inputTextFlags))
+			{ 
+				Mesh * mesh = meshHandler :: getMeshFromPLY(meshHolder);
+				if(mesh != nullptr)
+				{
+					sceneManagement :: addComp
+					(
+						globals :: curSceneRef, editorGlobals :: curActiveEntity,
+						MESH_COMP_ID, (compPtr) (meshHandler :: getMeshFromPLY(meshHolder))
+					);
+				}
+				meshHolder = "";
+				meshHolder.resize(16);
+			}
+
+			if(texHolder.size() != 16)
+				texHolder.resize(16);
+			if(ImGui :: InputTextWithHint
+				("##3", curMesh -> texName.c_str(), texHolder.data(), 16, editorGlobals :: inputTextFlags))
+			{ 
+				Texture * tex = textureHandler :: createTexture(texHolder);
+				if(tex != nullptr)
+					meshHandler :: setTexture(curMesh, textureHandler :: createTexture(texHolder));
+				texHolder = "";
+				texHolder.resize(16);
+			}
 		}
 
 		// RELAYS SCRIPT DATA //
@@ -308,7 +359,40 @@ void uiManagement :: drawEditorUI()
 			ImGui :: Separator();
 			Script * curScript = (Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID]
 				[editorGlobals :: curActiveEntity]);
-			ImGui :: Text("Script Data\n%s", curScript -> name.c_str());
+			ImGui :: Text("Script Data");
+			uiManagement :: deleteButton(SCRIPT_COMP_ID);
+			ImGui :: SameLine();
+			if(ImGui :: Button("Reload"))
+				appManagement :: compileScripts();
+
+			// GETS INPUT FOR LOADING IN NEW SCRIPT //
+			static std :: string scriptHolder = "";
+			if(scriptHolder.size() != 16)
+				scriptHolder.resize(16);
+
+			if
+			(
+				ImGui :: InputTextWithHint
+				(
+					"##4", curScript -> name.c_str(), scriptHolder.data(), 
+					16, editorGlobals :: inputTextFlags
+				)
+			)
+
+			{ 
+				Script * script = scriptHandler :: 
+					createScript(scriptHolder, editorGlobals :: curActiveEntity);
+				if(script != nullptr)
+				{
+					sceneManagement :: addComp
+					(
+					 	globals :: curSceneRef, editorGlobals :: curActiveEntity,
+						SCRIPT_COMP_ID, (compPtr) (script)
+					);
+				}
+				scriptHolder = "";
+				scriptHolder.resize(16);
+			}
 		}
 
 		// DRAWS BUTTON FOR ADDING NEW COMPONENTS //
@@ -320,9 +404,12 @@ void uiManagement :: drawEditorUI()
 				// SKIPS IF ENTITY ALREADY HAS COMPONENT //
 				if((activeEntity.mask & (1 << curComp)) >= 1)
 					continue;
-				// LOADS 
+
+				// CREATES BASIC ITEMS WITH NON-PARAMETERIZED CONSTRUCTORS //
 				if(ImGui :: MenuItem(compToString(curComp).c_str()))
 				{
+					// IF NEW COMPONENT REQUIRES A FILE TO BE CORRECTLY CONSTRUCTED, //
+						// SETS LOADING BOOL AND CONTINUES //
 					sceneManagement :: addComp
 					(
 						globals :: curSceneRef,
@@ -335,7 +422,12 @@ void uiManagement :: drawEditorUI()
 		}
 
 		// DRAWS BUTTON FOR DESTROYING THIS ENTITY //
-		ImGui :: Text((centeredString("", sidePanelMargin)).c_str());
+		ImGui :: Text((centeredString("", sidePanelMargin / 3)).c_str());
+		ImGui :: SameLine();
+		if(ImGui :: Button("Copy Entity"))
+			sceneManagement :: copyEntity(globals :: curSceneRef, editorGlobals :: curActiveEntity);
+		ImGui :: SameLine();
+		ImGui :: Text((centeredString("", sidePanelMargin / 3)).c_str());
 		ImGui :: SameLine();
 		if(ImGui :: Button("Delete Entity"))
 			sceneManagement :: deleteEntity(globals :: curSceneRef, editorGlobals :: curActiveEntity);
@@ -385,3 +477,12 @@ bool uiManagement :: getInputString(std :: string labelString, std :: string& ou
 	return retValue;
 }
 
+void uiManagement :: deleteButton(componentID compID)
+{
+	ImGui :: SameLine();
+	if(ImGui :: Button(std :: string("Delete " + compToString(compID)).c_str()))
+	{
+		std :: cout << "REMOVING " << compToString(compID) << "!" << std :: endl;
+		sceneManagement :: removeComp(globals :: curSceneRef, editorGlobals :: curActiveEntity, compID);
+	}
+}

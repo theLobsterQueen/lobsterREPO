@@ -3,10 +3,7 @@
 
 // FUNCTION IMPLEMENTATIONS //
 Transform * transformHandler :: createTransform()
-{
-	Transform * newTrans = new Transform;
-	return newTrans;
-}
+	{ return new Transform; }
 
 Transform * transformHandler :: createTransform
 

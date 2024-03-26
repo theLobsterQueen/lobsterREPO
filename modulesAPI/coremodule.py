@@ -1,9 +1,15 @@
+# IMPORTS PYTHON MODULES #
+import inspect
+
 # IMPORTS API MODULES #
 from _coremodule import *
 from _entityapi import *
 from _sceneapi import *
 from _transformapi import *
 from _lightapi import *
+
+# CORE MODULE ATTRIBUTES #
+script_refs = { }
 
 class BaseScript :
     """
@@ -17,10 +23,14 @@ class BaseScript :
         self.data = { }
         self.comp_dict = { } # LIST OF COMPONENTS TO BE EVALUATED WHEN NEXT REVIEWED BY BACKEND #
         self.comps_to_add = [ ] # LIST OF COMPONENTS TO ADD WHEN NEXT REVIEWED BY BACKEND #
+        self.comp_ids_to_add = [ ] # LIST OF IDS THAT CORRELATE WITH THE LIST ABOVE
+            # (HAD TO SEPARATE THEM BECAUSE PYBIND11 WAS BEING MEAN) #
+        self.id = 0
 
     def _initialize(self, entity_id) :
         # LISTS ALL COMPONENTS THAT THE SCRIPT WILL SEARCH FOR #
         componentList = [ "transform", "light" ]
+        self.id = entity_id
 
         # SEARCHES FOR THEM #
         for comp in componentList :
@@ -29,6 +39,12 @@ class BaseScript :
             valid = func(entity_id, temp)
             if valid is True :
                 self.comp_dict[comp] = temp
+
+    # PLACEHOLDER DEFINITIONS FOR SCRIPT METHODS #
+    def _start(self) :
+        pass
+    def _update(self, delta_time) :
+        pass
 
     # INTRINSIC METHODS #
     def _push_data(self) :
@@ -50,8 +66,18 @@ class BaseScript :
             raise ValueError(f"Entity does not have component of type {comp}!")
         return self.comp_dict[comp]
 
-    def add_component(self, comp) :
-        # IF ALREADY HAS COMPONENT, DOES NOTHING #
-        if self.comp_dict.get(comp) :
-            return
-        self.comps_to_add.append(comp)
+    def add_component(self, comp, entID = -1) :
+        if entID == -1 :
+            entID = self.id
+        self.comps_to_add.append(comp.lower())
+        self.comp_ids_to_add.append(entID)
+
+    # METHODS FOR HANDLING ENTITIES #
+    def add_entity(self, entName) :
+        val = scene_ref.add_entity(entName)
+        if(val != -1) :
+            return val
+        else :
+            print("ERROR! ATTEMPTED TO ADD ENTITY TO SCENE, BUT SCENE IS ALREADY AT " +\
+                    "MAX ENTITIES!")
+            raise ValueError

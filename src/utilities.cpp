@@ -188,9 +188,7 @@ compPtr constructComp(componentID compID)
 		break;
 
 		case MESH_COMP_ID :
-			std :: cout << "INVALID CONSTRUCT COMP! CANNOT CONSTRUCT A COMP OF " << 
-				compToString(MESH_COMP_ID) << std :: endl;
-			return nullptr;
+			return (compPtr) meshHandler :: createMesh();
 		break;
 
 		case LIGHT_COMP_ID :
@@ -202,14 +200,51 @@ compPtr constructComp(componentID compID)
 		break;
 
 		case SCRIPT_COMP_ID :
-			std :: cout << "INVALID CONSTRUCT COMP! CANNOT CONSTRUCT A COMP OF " << 
-				compToString(SCRIPT_COMP_ID) << std :: endl;
-			return nullptr;
+			return (compPtr) scriptHandler :: createScript();
 		break;
 	}
 	return nullptr;
 }
 
+compPtr copyComp(componentID compID, compPtr copySrc)
+{
+	switch(compID)
+	{
+		case TRANS_COMP_ID :
+			return (compPtr) (transformHandler :: duplicateTransform((Transform *) (copySrc)));
+		break;
+
+		case MESH_COMP_ID :
+		{
+			Mesh * temp = (Mesh *) copySrc;
+			Mesh * retMesh = meshHandler :: createMesh
+				(temp -> vertexData, temp -> indexData, temp -> name);
+			if(temp -> texName != "")
+				meshHandler :: setTexture(retMesh, textureHandler :: createTexture(temp -> texName));
+			return (compPtr) (retMesh);
+		}
+		break;
+
+		case LIGHT_COMP_ID :
+			return (compPtr) (lightHandler :: createLight(((Light *) (copySrc)) -> color));
+		break;
+
+		case CAMERA_COMP_ID :
+		{
+			Camera * temp = (Camera *) (copySrc);
+			return (compPtr) (cameraHandler :: createCamera(temp -> aspectRatio, temp -> curPipelineRef));
+		}
+		break;
+
+		case SCRIPT_COMP_ID :
+		{
+			Script * temp = (Script *) (copySrc);
+			return (compPtr) scriptHandler :: createScript(temp -> name, temp -> id);
+		}
+		break;
+	}
+	return nullptr;
+}
 componentID stringToComp(std :: string compName)
 {
 	if(compName == "mesh")

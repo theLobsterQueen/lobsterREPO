@@ -1,3 +1,5 @@
-Allow Python scripts to add data to entities
-Allow Python scripts to create entities
+Allow Python scripts to read entities
+Improve Transform API
+Create Mesh API
+Create Game Jam demo
 Create system for making project directories and manipulating file system through editor

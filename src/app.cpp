@@ -28,20 +28,19 @@ void appManagement :: begin()
 	appManagement :: initializeAPI();
 	appManagement :: compileScripts();
 
-	// (TEMP) CREATES TEST SCENE //
-	appManagement :: createTestScene();
+	// CREATES BASE SCENE //
+	sceneManagement :: changeScene(appManagement :: createBaseScene());
 
 	// BEGINS RUNNING THE ENGINE //
 	appManagement :: run();
 }
 
-void appManagement :: createTestScene()
+Scene * appManagement :: createBaseScene()
 {
 	// CREATES CAMERA COMPONENT //
-	Scene * testScene = sceneManagement :: createScene("TEST");
+	Scene * testScene = sceneManagement :: createScene("New Scene");
 	entityID camID = sceneManagement :: newEntityID(testScene, "Camera");
 	float aspect = ((float) globals :: winWidth) / ((float) globals :: winHeight);
-
 	sceneManagement :: addComp
 	(
 		testScene,
@@ -59,82 +58,8 @@ void appManagement :: createTestScene()
 		(compPtr) transformHandler :: createTransform()
 	);
 
-	// ADDS LIGHT TO SCENE //
-	entityID lightID = sceneManagement :: newEntityID(testScene, "Light");
-	Transform * lightTrans = transformHandler :: createTransform();
-	sceneManagement :: addComp
-	(
-		testScene,
-		lightID,
-		TRANS_COMP_ID,
-		(compPtr) lightTrans
-	);
-	transformHandler :: translate
-		(lightTrans, std :: vector<float> { -5.0f, 0.0f, 3.0f });
-
-	sceneManagement :: addComp
-	(
-		testScene,
-		lightID,
-		LIGHT_COMP_ID,
-		(compPtr) lightHandler :: createLight
-			(std :: vector<float> { 1.0f, 1.0f, 1.0f, 0.9f })
-	);
-	sceneManagement :: addComp
-	(
-		testScene, lightID, SCRIPT_COMP_ID,
-		(compPtr) (scriptHandler :: createScript("lightScript", lightID))
-	);
-
-	// ADDS LIGHT TO SCENE //
-	lightID = sceneManagement :: newEntityID(testScene, "Light2");
-	lightTrans = transformHandler :: createTransform();
-	sceneManagement :: addComp
-	(
-		testScene,
-		lightID,
-		TRANS_COMP_ID,
-		(compPtr) lightTrans
-	);
-
-	sceneManagement :: addComp
-	(
-		testScene,
-		lightID,
-		LIGHT_COMP_ID,
-		(compPtr) lightHandler :: createLight
-			(std :: vector<float> { 1.0f, 0.0f, 1.0f, 0.9f })
-	);
-
-	// ADDS MESH AND TRANSFORM //
-	entityID testID = sceneManagement :: newEntityID(testScene, "Jinx");
-	Mesh * sceneMesh = meshHandler :: getMeshFromPLY("portrait.ply");
-	meshHandler :: setTexture(sceneMesh, textureHandler :: createTexture("jinx.png"));
-
-	sceneManagement :: addComp
-	(
-		testScene, testID, MESH_COMP_ID, 
-		(compPtr) (sceneMesh)
-	);
-
-	Transform * meshTrans = transformHandler :: createTransform();
-	transformHandler :: translate
-		(meshTrans, std :: vector<float> { 0.0f, 0.0f, -3.0f });
-
-	sceneManagement :: addComp
-	(
-		testScene, testID, TRANS_COMP_ID, 
-		(compPtr) (meshTrans)
-	);
-
-	// GIVES MESH A TEST SCRIPT //
-	sceneManagement :: addComp
-	(
-		testScene, testID, SCRIPT_COMP_ID,
-		(compPtr) (scriptHandler :: createScript("testFile", testID))
-	);
-
-	sceneManagement :: changeScene(testScene);
+	// RETURNS THE NEWLY CREATED SCENE //
+	return testScene;
 }
 
 void appManagement :: initializeAPI()
@@ -157,6 +82,7 @@ void appManagement :: initializeAPI()
 	// PREPARES THE PYTHON CONTEXT //
 	pybind11 :: exec(std :: string
 		("import sys\nsys.path.append(\"" + APIGlobals :: workingPath + "modulesAPI/\")").c_str());
+	pybind11 :: exec("import inspect");
 	APIGlobals :: coremodule = pybind11 :: module_ :: import("coremodule");
 	APIGlobals :: inputmodule = pybind11 :: module_ :: import("inputmodule");
 
@@ -192,6 +118,13 @@ void appManagement :: compileScripts()
 
 		// EXECUTES CODE IN STRING STREAM //
 		pybind11 :: exec(execStream.str().c_str());
+		pybind11 :: exec
+		(
+		 	"dir = globals().copy()\nfor item in dir :\n\
+			\titem_script = globals()[item]\n\
+			\tif inspect.isclass(item_script) and item_script not in coremodule.script_refs :\n\
+			\t\tcoremodule.script_refs[item] = item_script"
+		);
 		fileStream.close();
 	}
 
@@ -209,6 +142,8 @@ void appManagement :: compileScripts()
 void appManagement :: startScripts(bool initialize)
 {
 	APIGlobals :: inputmodule.attr("input_ref") = (*globals :: inputState);
+	APIGlobals :: coremodule.attr("scene_ref") = (*globals :: curSceneRef);
+
 	if(initialize)
 		for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
 		{ 
@@ -291,7 +226,15 @@ void appManagement :: update()
 				// IF READING ESCAPE KEY, QUITS //
 				if(event.key.keysym.sym == 27)
 				{
-					globals :: isRunning = false;
+					if(globals :: isPlaying)
+					{
+						globals :: isPlaying = false;
+						sceneManagement :: changeScene(sceneManagement :: loadScene
+								(globals :: curSceneRef -> name + ".lscn"));
+					}
+
+					else
+						globals :: isRunning = false;
 					break;
 				}
 

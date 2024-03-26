@@ -606,6 +606,19 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 			(Light *) (inputScene -> components[LIGHT_COMP_ID][curEnt])
 		);
 		inputScene -> entities[curEnt] = entRef;
+
+		// CHECKS TO SEE IF SCRIPT WANTS ANY NEW COMPONENTS ADDED //
+		std :: vector<std :: string> compsToAdd = pybind11 :: 
+			cast<std :: vector<std :: string>>(script -> code.attr("comps_to_add"));
+		for(unsigned i = 0; i < compsToAdd.size(); i++)
+		{
+			componentID compID = stringToComp(compsToAdd[i]);
+			sceneManagement :: addComp
+			(
+			 	inputScene, curEnt,
+				compID, constructComp(compID)
+			);
+		}
 	}
 }
 

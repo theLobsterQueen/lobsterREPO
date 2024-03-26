@@ -119,29 +119,13 @@ void uiManagement :: drawEditorUI()
 	// DRAWS THE "SAVE SCENE AS" MODAL, IF IT'S ACTIVE //
 	if(savingScene)
 	{
-		ImGui :: OpenPopup("Save Scene As...");
-		ImGui :: SetNextWindowSize(ImVec2(globals :: winWidth * 0.4f, globals :: winHeight * 0.1f));
-		if(ImGui :: BeginPopupModal("Save Scene As..."), NULL, editorGlobals :: windowFlags)
+		std :: string saveName = "";
+		if(uiManagement :: getInputString("Save Scene as...", saveName))
 		{
-			static char inputString[LOB_FILE_NAME_MAX] = "";
-			if(ImGui :: InputText
-					("File Name", inputString, LOB_FILE_NAME_MAX, editorGlobals :: inputTextFlags))
-			{
-				sceneManagement :: saveScene(globals :: curSceneRef, std :: string(inputString));
-				savingScene = false;
-			}
-
-			if(ImGui :: Button("Submit"))
-			{
-				sceneManagement :: saveScene(globals :: curSceneRef, std :: string(inputString));
-				savingScene = false;
-			}
-
-			ImGui :: SameLine();
-			if(ImGui :: Button("Cancel"))
-				savingScene = false;
+		   if(saveName != "")	
+			   sceneManagement :: saveScene(globals :: curSceneRef, saveName); 
+		   savingScene = false;
 		}
-		ImGui :: EndPopup();
 	}
 
 	// DRAWS THE "DELETE SCENE" MODAL, IF IT'S ACTIVE //
@@ -336,10 +320,7 @@ void uiManagement :: drawEditorUI()
 				// SKIPS IF ENTITY ALREADY HAS COMPONENT //
 				if((activeEntity.mask & (1 << curComp)) >= 1)
 					continue;
-				// SKIPS OVER INVALID COMPS //
-				if(curComp == MESH_COMP_ID || curComp == SCRIPT_COMP_ID)
-					continue;
-
+				// LOADS 
 				if(ImGui :: MenuItem(compToString(curComp).c_str()))
 				{
 					sceneManagement :: addComp
@@ -368,5 +349,39 @@ std :: string uiManagement :: centeredString(const char * targetBase, unsigned m
 		retString += " ";
 	retString += targetBase;
 	return retString;
+}
+
+bool uiManagement :: getInputString(std :: string labelString, std :: string& outputData)
+{
+	// VARIABLE INITIALIZATION //
+	bool retValue = false;
+
+	ImGui :: OpenPopup(labelString.c_str());
+	ImGui :: SetNextWindowSize(ImVec2(globals :: winWidth * 0.4f, globals :: winHeight * 0.1f));
+	if(ImGui :: BeginPopupModal(labelString.c_str()), NULL, editorGlobals :: windowFlags)
+	{
+		static char inputString[LOB_FILE_NAME_MAX] = "";
+		if(ImGui :: InputText
+			(labelString.c_str(), inputString, LOB_FILE_NAME_MAX, editorGlobals :: inputTextFlags))
+		{ 
+			outputData = std :: string(inputString);
+			retValue = true;
+		}
+
+		if(ImGui :: Button("Submit"))
+		{ 
+			outputData = std :: string(inputString);
+			retValue = true;
+		}
+
+		ImGui :: SameLine();
+		if(ImGui :: Button("Cancel"))
+		{
+			outputData = "";
+			retValue = true;
+		}
+	}
+	ImGui :: EndPopup();
+	return retValue;
 }
 

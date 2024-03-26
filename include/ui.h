@@ -31,6 +31,14 @@ namespace uiManagement
 	/// </summary> ///
 
 	std :: string centeredString(const char * targetBase, unsigned margin);
+
+
+	/// <summary> ///
+	///		Continually waits for the player to input text, and then returns the
+	///			text to the caller once it is submitted.
+	/// </summary> ///
+
+	bool getInputString(std :: string labelString, std :: string& outputData);
 };
 
 

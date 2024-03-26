@@ -15,7 +15,8 @@ class BaseScript :
     def __init__(self) :
         self.name = self.__class__.__name__
         self.data = { }
-        self.comp_dict = { }
+        self.comp_dict = { } # LIST OF COMPONENTS TO BE EVALUATED WHEN NEXT REVIEWED BY BACKEND #
+        self.comps_to_add = [ ] # LIST OF COMPONENTS TO ADD WHEN NEXT REVIEWED BY BACKEND #
 
     def _initialize(self, entity_id) :
         # LISTS ALL COMPONENTS THAT THE SCRIPT WILL SEARCH FOR #
@@ -43,7 +44,14 @@ class BaseScript :
     def _set_data(self, name, item) :
         self.data[name] = item
 
+    # METHODS FOR HANDLING COMPONENTS #
     def get_component(self, comp) :
         if not self.comp_dict.get(comp) :
             raise ValueError(f"Entity does not have component of type {comp}!")
         return self.comp_dict[comp]
+
+    def add_component(self, comp) :
+        # IF ALREADY HAS COMPONENT, DOES NOTHING #
+        if self.comp_dict.get(comp) :
+            return
+        self.comps_to_add.append(comp)

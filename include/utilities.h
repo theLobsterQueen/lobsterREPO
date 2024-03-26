@@ -18,6 +18,7 @@
 
 // LOBSTER INCLUDES //
 #include <input.h>
+#include <light.h>
 #include <importantConstants.h>
 
 // STRUCT PROTOTYPES //
@@ -41,6 +42,7 @@ void mouseButtonProcess(InputState * inputState, SDL_Event inputEvent, bool setT
 void modifierKeyProcess(InputState * inputState, SDL_Event inputEvent, bool setTrue);
 
 std :: string compToString(componentID compID);
+componentID stringToComp(std :: string compName);
 compPtr constructComp(componentID compID);
 
 #endif

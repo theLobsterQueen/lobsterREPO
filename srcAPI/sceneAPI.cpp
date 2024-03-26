@@ -17,11 +17,11 @@
 static Scene sceneRef;
 
 // FUNCTIONS FOR SCENE CLASS //
-void sceneOut(Scene inputScene)
+void sceneOut(Scene& self)
 {
 	for(unsigned i = 0; i < LOBSTER_MAX_ENTITIES; i++)
 	{
-		Entity curEntity = inputScene.entities[i];
+		Entity curEntity = self.entities[i];
 		if(curEntity.mask == 0)
 			continue;
 
@@ -37,25 +37,25 @@ void sceneOut(Scene inputScene)
 	}
 }
 
-pybind11 :: object getEntity(Scene inputScene, entityID id)
-	{ return pybind11 :: cast(inputScene.entities[id]); }
+pybind11 :: object getEntity(Scene& self, entityID id)
+	{ return pybind11 :: cast(self.entities[id]); }
 
 // RETURNS COMPONENT REFERENCES //
-bool getTransComp(Scene inputScene, entityID id, Transform& transOut)
+bool getTransComp(Scene& self, entityID id, Transform& transOut)
 {
-	if((inputScene.entities[id].mask & (1 << TRANS_COMP_ID)) == 0)
+	if((self.entities[id].mask & (1 << TRANS_COMP_ID)) == 0)
 		return false;
 
-	transOut = (*((Transform *) (inputScene.components[TRANS_COMP_ID][id])));
+	transOut = (*((Transform *) (self.components[TRANS_COMP_ID][id])));
 	return true; 
 }
 
-bool getLightComp(Scene inputScene, entityID id, Light& lightOut)
+bool getLightComp(Scene& self, entityID id, Light& lightOut)
 {
-	if((inputScene.entities[id].mask & (1 << LIGHT_COMP_ID)) == 0)
+	if((self.entities[id].mask & (1 << LIGHT_COMP_ID)) == 0)
 		return false;
 
-	lightOut = (*((Light *) (inputScene.components[LIGHT_COMP_ID][id])));
+	lightOut = (*((Light *) (self.components[LIGHT_COMP_ID][id])));
 	return true; 
 }
 

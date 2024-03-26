@@ -59,9 +59,10 @@ Sprint 2 :
 		[X] Inspector-Analog
 			[X] Can Move Entities
 			[X] Can change select values of Components
-			[ ] Can add Components to Entities
+			[X] Can add Components to Entities
 		[X] Scene Tree
-			[ ] Can add Entities
+			[X] Can add Entities
+			[X] Can remove Entities
 	[~] Base Python Integration 
 		[ ] Communicate with Precompiled Engine Files over Runtime Python Scripts
 		[X] Start/Update Method Analogs

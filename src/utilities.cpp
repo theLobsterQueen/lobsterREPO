@@ -209,3 +209,19 @@ compPtr constructComp(componentID compID)
 	}
 	return nullptr;
 }
+
+componentID stringToComp(std :: string compName)
+{
+	if(compName == "mesh")
+		return MESH_COMP_ID;
+	if(compName == "camera")
+		return CAMERA_COMP_ID;
+	if(compName == "script")
+		return SCRIPT_COMP_ID;
+	if(compName == "transform")
+		return TRANS_COMP_ID;
+	if(compName == "light")
+		return LIGHT_COMP_ID;
+
+	return NULL_COMP_ID;
+}

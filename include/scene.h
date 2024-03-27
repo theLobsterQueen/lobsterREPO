@@ -36,6 +36,7 @@
 #include <glm/gtc/type_ptr.hpp> 			// glm :: value_ptr
 #define GLM_ENABLE_EXPERIMENTAL 1
 #include <glm/gtx/string_cast.hpp>			// glm :: to_string
+#include <pybind11/stl.h>
 
 // STRUCT PROTOTYPES //
 struct EngineCore;
@@ -152,19 +153,6 @@ namespace sceneManagement
 	/// </summary> ///
 
 	void updateScene(Scene * inputScene, float deltaTime);
-
-	/// <summary> ///
-	///		This sets the value of a given item by a given entry in returned data dictionarys.
-	/// </summary> ///
-
-	template <class T>
-	void setData(pybind11 :: dict retValue, std :: string entryName, T * data)
-	{
-		try
-			{ (*data) = retValue[entryName.c_str()].cast<T>(); }
-		catch(pybind11 :: error_already_set error)
-			{;}
-	}
 };
 
 #endif

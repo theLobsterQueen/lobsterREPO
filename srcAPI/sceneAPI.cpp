@@ -11,6 +11,7 @@
 #include <scene.h>
 #include <transform.h>
 #include <light.h>
+#include <mesh.h>
 #include <APIUtils.h>
 
 // STATIC TEST FUNCTIONS //
@@ -43,15 +44,20 @@ pybind11 :: object getEntity(Scene& self, entityID id)
 int addEntity(Scene& self, std :: string entityName)
 {
 	bool returnStat = false;
+	std :: cout << "ADDING NEW ENTITY!" << std :: endl;
 	for(entityID i = 0; i < LOBSTER_MAX_ENTITIES; i++)
+	{
+		std :: cout << "ENTITY " << i << " = " << self.entities[i].name << std :: endl;
 		if(self.entities[i].mask == 0)
 		{
+			std :: cout << "RETURNING " << i << std :: endl;
 			self.activeEntities++;
 			self.entities[i].mask |= (1 << TRANS_COMP_ID);
 			self.entities[i].name = entityName;
 			self.components[TRANS_COMP_ID][i] = (compPtr) (new Transform);
 			return i;
 		}
+	}
 	return -1;
 }
 
@@ -74,6 +80,15 @@ bool getLightComp(Scene& self, entityID id, Light& lightOut)
 	return true; 
 }
 
+bool getMeshComp(Scene& self, entityID id, Mesh& compOut)
+{
+	if((self.entities[id].mask & (1 << MESH_COMP_ID)) == 0)
+		return false;
+
+	compOut = (*((Mesh *) (self.components[MESH_COMP_ID][id])));
+	return true; 
+}
+
 // BINDS SCENE CLASS //
 PYBIND11_MODULE(_sceneapi, m)
 {
@@ -83,5 +98,6 @@ PYBIND11_MODULE(_sceneapi, m)
 		.def("scene_out", &sceneOut)
 
 		.def("get_transform_comp", &getTransComp)
-		.def("get_light_comp", &getLightComp);
+		.def("get_light_comp", &getLightComp)
+		.def("get_mesh_comp", &getMeshComp);
 }

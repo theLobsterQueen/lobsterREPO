@@ -37,9 +37,16 @@ namespace appManagement
 	// FUNCTION DEFINITIONS //
 
 	/// <summary> ///
+	///		Does all the initialization/cleanup work that main.cpp used to do.
+	/// </summary> ///
+
+	void initialize();
+	void cleanup();
+
+	/// <summary> ///
 	///		This setups a base empty scene.
 	/// </summary> ///
-	void begin();
+	void begin(std :: string sceneLoad = "");
 
 	/// <summary> ///
 	///		Sets up the working directory, initializes the pybind11 interpreter, and

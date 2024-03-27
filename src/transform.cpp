@@ -18,6 +18,15 @@ Transform * transformHandler :: createTransform
 {
 	Transform * newTrans = new Transform;
 	newTrans -> position = inputPosition;
+	for(unsigned i = 0; i < 3; i++)
+	{
+		float value = inputRotation[i];
+		while(value > 360)
+			value -= 360;
+		while(value < -360)
+			value += 360;
+		inputRotation[i] = value;
+	}
 	newTrans -> rotation = inputRotation;
 	newTrans -> scale = inputScale;
 
@@ -87,7 +96,14 @@ void transformHandler :: rotate
 	(Transform * inputTrans, std :: vector<float> deltaVector)
 {
 	for(int i = 0; i < 3; i++)
-		inputTrans -> rotation[i] = inputTrans -> rotation[i] + deltaVector[i];
+	{
+		float value = inputTrans -> rotation[i] + deltaVector[i];
+		while(value > 360)
+			value -= 360;
+		while(value < -360)
+			value += 360;
+		inputTrans -> rotation[i] = value;
+	}
 }
 
 void transformHandler :: scale

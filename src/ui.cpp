@@ -221,11 +221,17 @@ void uiManagement :: drawEditorUI()
 		static std :: string holder = "";
 		if(holder.size() != 16)
 			holder.resize(16);
-
 		ImGui :: Text("Name: ");
 		ImGui :: SameLine();
-		if(ImGui :: InputTextWithHint
-			("##1", activeEntity.name.c_str(), holder.data(), 16, editorGlobals :: inputTextFlags))
+		if
+		(
+		 	ImGui :: InputTextWithHint
+			(
+				std :: to_string(editorGlobals :: curActiveEntity).c_str(), activeEntity.name.c_str(), 
+				holder.data(), 16, editorGlobals :: inputTextFlags
+			)
+		)
+
 		{ 
 			globals :: curSceneRef -> entities[editorGlobals :: curActiveEntity].name = holder; 
 			holder = "";
@@ -249,16 +255,6 @@ void uiManagement :: drawEditorUI()
 				ImGui :: PushItemWidth(editorGlobals :: sidePanelWidth * 0.2f);
 				for(int column = 0; column < 3; column++)
 				{
-					float value = (*transVecIndices[row])[column];
-					if(row == 1 && (value > 360 || value < -360))
-					{
-						while(value >= 360)
-							value -= 360;
-						while(value <= -360)
-							value += 360;
-					}
-					(*transVecIndices[row])[column] = value;
-
 					ImGui :: InputFloat
 					(
 					 	std :: string(rowNames[row] + columnNames[column]).c_str(), 

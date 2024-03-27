@@ -11,10 +11,13 @@
 #include <importantConstants.h>
 #include <scene.h>
 #include <input.h>
+#include <mesh.h>
 
 // HOLDS ALL OPAQUE DECLARATIONS //
 PYBIND11_MAKE_OPAQUE(Scene);
 PYBIND11_MAKE_OPAQUE(Transform);
+PYBIND11_MAKE_OPAQUE(Light);
+PYBIND11_MAKE_OPAQUE(Mesh);
 PYBIND11_MAKE_OPAQUE(InputState);
 
 // DECLARES NAMESPACE-GLOBAL VARIABLES //

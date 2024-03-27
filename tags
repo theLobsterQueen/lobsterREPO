@@ -5516,14 +5516,16 @@ __gl_glcorearb_h_	./vendor/imgui_impl_opengl3_loader.h	/^#define __gl_glcorearb_
 __gl_h_	./vendor/imgui_impl_opengl3_loader.h	/^#define __gl_h_$/;"	d
 __init__	./modulesAPI/coremodule.py	/^    def __init__(self) :$/;"	m	class:BaseScript
 _apply_op	./vendor/glm/detail/_swizzle.hpp	/^		GLM_FUNC_QUALIFIER void _apply_op(vec<N, T, Q> const& that, const U& op)$/;"	f	struct:glm::detail::_swizzle_base2	typeref:typename:GLM_FUNC_QUALIFIER void
+_awake	./modulesAPI/coremodule.py	/^    def _awake(self) :$/;"	m	class:BaseScript
+_awake	./scripts/testScript.py	/^    def _awake(self) :$/;"	m	class:testScript
 _buffer	./vendor/glm/detail/_swizzle.hpp	/^		char    _buffer[1];$/;"	m	struct:glm::detail::_swizzle_base0	typeref:typename:char[1]
 _grow_capacity	./vendor/imgui.h	/^    inline int          _grow_capacity(int sz) const        { int new_capacity = Capacity ? (Cap/;"	f	struct:ImVector	typeref:typename:int
 _initialize	./modulesAPI/coremodule.py	/^    def _initialize(self, entity_id) :$/;"	m	class:BaseScript
 _internal_	./vendor/glm/gtx/pca.inl	/^	namespace _internal_$/;"	n	namespace:glm	file:
 _push_data	./modulesAPI/coremodule.py	/^    def _push_data(self) :$/;"	m	class:BaseScript
 _set_data	./modulesAPI/coremodule.py	/^    def _set_data(self, name, item) :$/;"	m	class:BaseScript
-_start	./scripts/lightScript.py	/^    def _start(self) :$/;"	m	class:lightScript
-_start	./scripts/testFile.py	/^    def _start(self) :$/;"	m	class:testFile
+_start	./modulesAPI/coremodule.py	/^    def _start(self) :$/;"	m	class:BaseScript
+_start	./scripts/testScript.py	/^    def _start(self) :$/;"	m	class:testScript
 _swizzle	./vendor/glm/detail/_swizzle.hpp	/^	struct _swizzle : public _swizzle_base2<N, T, Q, E0, E1, E2, E3, (E0 == E1 || E0 == E2 || E0 ==/;"	s	namespace:glm::detail
 _swizzle_base0	./vendor/glm/detail/_swizzle.hpp	/^	struct _swizzle_base0$/;"	s	namespace:glm::detail
 _swizzle_base1	./vendor/glm/detail/_swizzle.hpp	/^	struct _swizzle_base1 : public _swizzle_base0<T, N>$/;"	s	namespace:glm::detail
@@ -5541,8 +5543,8 @@ _swizzle_base1	./vendor/glm/detail/type_vec_simd.inl	/^struct _swizzle_base1<L, 
 _swizzle_base1	./vendor/glm/detail/type_vec_simd.inl	/^struct _swizzle_base1<L, uint, Q, E0, E1, E2, E3, true> : public _swizzle_base1<L, uint, Q, E0, /;"	s	file:
 _swizzle_base2	./vendor/glm/detail/_swizzle.hpp	/^	struct _swizzle_base2 : public _swizzle_base1<N, T, Q, E0,E1,E2,E3, detail::is_aligned<Q>::valu/;"	s	namespace:glm::detail
 _swizzle_base2	./vendor/glm/detail/_swizzle.hpp	/^	struct _swizzle_base2<N, T, Q, E0,E1,E2,E3, 1> : public _swizzle_base1<N, T, Q, E0,E1,E2,E3, de/;"	s	namespace:glm::detail
-_update	./scripts/lightScript.py	/^    def _update(self, delta_time) :$/;"	m	class:lightScript
-_update	./scripts/testFile.py	/^    def _update(self, delta_time) :$/;"	m	class:testFile
+_update	./modulesAPI/coremodule.py	/^    def _update(self, delta_time) :$/;"	m	class:BaseScript
+_update	./scripts/testScript.py	/^    def _update(self) :$/;"	m	class:testScript
 abs	./vendor/glm/detail/func_common.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR genFIType abs(genFIType x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR genFIType
 abs	./vendor/glm/detail/func_common.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR int abs(int x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR int
 abs	./vendor/glm/detail/func_common.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec<L, T, Q> abs(vec<L, T, Q> const& x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec<L,T,Q>
@@ -5561,7 +5563,9 @@ acsch	./vendor/glm/ext/vector_reciprocal.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> 
 activeEntities	./include/scene.h	/^	unsigned short int activeEntities = 0;$/;"	m	struct:Scene	typeref:typename:unsigned short int
 active_head	./vendor/imstb_rectpack.h	/^   stbrp_node *active_head;$/;"	m	struct:stbrp_context	typeref:typename:stbrp_node *
 addComp	./src/scene.cpp	/^void sceneManagement :: addComp$/;"	f	class:sceneManagement	typeref:typename:void
-add_component	./modulesAPI/coremodule.py	/^    def add_component(self, comp) :$/;"	m	class:BaseScript
+addEntity	./srcAPI/sceneAPI.cpp	/^int addEntity(Scene& self, std :: string entityName)$/;"	f	typeref:typename:int
+add_component	./modulesAPI/coremodule.py	/^    def add_component(self, comp, entID = -1) :$/;"	m	class:BaseScript
+add_entity	./modulesAPI/coremodule.py	/^    def add_entity(self, entName) :$/;"	m	class:BaseScript
 adjugate	./vendor/glm/gtx/matrix_operation.inl	/^	GLM_FUNC_QUALIFIER mat<2, 2, T, Q> adjugate(mat<2, 2, T, Q> const& m)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<2,2,T,Q>
 adjugate	./vendor/glm/gtx/matrix_operation.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, Q> adjugate(mat<3, 3, T, Q> const& m)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<3,3,T,Q>
 adjugate	./vendor/glm/gtx/matrix_operation.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, Q> adjugate(mat<4, 4, T, Q> const& m)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
@@ -6770,6 +6774,8 @@ convert_vec4_to_vec3	./vendor/glm/detail/func_common.inl	/^	struct convert_vec4_
 convert_vec4_to_vec3	./vendor/glm/detail/func_common_simd.inl	/^		struct convert_vec4_to_vec3<float, Q, true> {$/;"	s	namespace:glm::detail	file:
 convert_vec4_to_vec3	./vendor/glm/detail/func_common_simd.inl	/^	struct convert_vec4_to_vec3<double, Q, true> {$/;"	s	namespace:glm::detail	file:
 convert_vec4_to_vec3	./vendor/glm/detail/func_common_simd.inl	/^	struct convert_vec4_to_vec3<float, Q, true> {$/;"	s	namespace:glm::detail	file:
+copyComp	./src/utilities.cpp	/^compPtr copyComp(componentID compID, compPtr copySrc)$/;"	f	typeref:typename:compPtr
+copyEntity	./src/scene.cpp	/^void sceneManagement :: copyEntity(Scene * inputScene, entityID copyID)$/;"	f	class:sceneManagement	typeref:typename:void
 copy_lane	./vendor/glm/simd/neon.h	/^		static inline float32x4_t copy_lane(float32x4_t vdst, int dlane, float32x4_t vsrc, int slane) /;"	f	namespace:glm::neon	typeref:typename:float32x4_t
 coremodule	./src/APIUtils.cpp	/^pybind11 :: module APIGlobals :: coremodule;$/;"	m	class:APIGlobals 	typeref:typename:pybind11::module
 cos	./vendor/glm/detail/func_trigonometric.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> cos(vec<L, T, Q> const& v)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
@@ -6782,7 +6788,7 @@ cot	./vendor/glm/ext/vector_reciprocal.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> co
 coth	./vendor/glm/ext/scalar_reciprocal.inl	/^	GLM_FUNC_QUALIFIER genType coth(genType angle)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
 coth	./vendor/glm/ext/vector_reciprocal.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> coth(vec<L, T, Q> const& x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
 countof	./vendor/glm/detail/setup.hpp	/^		constexpr std::size_t countof(T const (&)[N])$/;"	f	namespace:glm	typeref:typename:std::size_t
-createBaseScene	./src/app.cpp	/^void appManagement :: createBaseScene()$/;"	f	class:appManagement	typeref:typename:void
+createBaseScene	./src/app.cpp	/^Scene * appManagement :: createBaseScene()$/;"	f	class:appManagement	typeref:typename:Scene *
 createCamera	./src/camera.cpp	/^Camera * cameraHandler :: createCamera(float inputAspect, Pipeline * inputPipeline)$/;"	f	class:cameraHandler	typeref:typename:Camera *
 createInputState	./src/input.cpp	/^InputState * inputManagement :: createInputState()$/;"	f	class:inputManagement	typeref:typename:InputState *
 createLight	./src/light.cpp	/^Light * lightHandler :: createLight(std :: vector<float> lightColor)$/;"	f	class:lightHandler	typeref:typename:Light *
@@ -7500,7 +7506,7 @@ getTransComp	./srcAPI/sceneAPI.cpp	/^bool getTransComp(Scene& self, entityID id,
 getTranslateMatrix	./src/transform.cpp	/^glm :: mat4x4 transformHandler :: getTranslateMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:glm::mat4x4
 getVec	./include/math.h	/^		std :: vector<float> getVec()$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
 getWorldViewMatrix	./src/camera.cpp	/^glm :: mat4x4 cameraHandler :: getWorldViewMatrix(Camera * camera, Transform * transform)$/;"	f	class:cameraHandler	typeref:typename:glm::mat4x4
-get_component	./modulesAPI/coremodule.py	/^    def get_component(self, comp) :$/;"	m	class:BaseScript
+get_component	./modulesAPI/coremodule.py	/^    def get_component(self, comp, entID = -1) :$/;"	m	class:BaseScript
 get_facet	./vendor/glm/gtx/io.inl	/^	GLM_FUNC_QUALIFIER FTy const& get_facet(std::basic_ios<CTy, CTr>& ios)$/;"	f	namespace:glm::io	typeref:typename:GLM_FUNC_QUALIFIER FTy const &
 get_line_begin	./vendor/imgui_internal.h	/^    const char*     get_line_begin(const char* base, int n) { return base + LineOffsets[n]; }$/;"	f	struct:ImGuiTextIndex	typeref:typename:const char *
 get_line_end	./vendor/imgui_internal.h	/^    const char*     get_line_end(const char* base, int n)   { return base + (n + 1 < LineOffsets/;"	f	struct:ImGuiTextIndex	typeref:typename:const char *
@@ -8677,6 +8683,7 @@ i8vec3	./vendor/glm/ext/vector_int3_sized.hpp	/^	typedef vec<3, int8, defaultp>	
 i8vec3	./vendor/glm/fwd.hpp	/^	typedef vec<3, i8, defaultp>	i8vec3;$/;"	t	namespace:glm	typeref:typename:vec<3,i8,defaultp>
 i8vec4	./vendor/glm/ext/vector_int4_sized.hpp	/^	typedef vec<4, int8, defaultp>		i8vec4;$/;"	t	namespace:glm	typeref:typename:vec<4,int8,defaultp>
 i8vec4	./vendor/glm/fwd.hpp	/^	typedef vec<4, i8, defaultp>	i8vec4;$/;"	t	namespace:glm	typeref:typename:vec<4,i8,defaultp>
+id	./include/script.h	/^	entityID id;$/;"	m	struct:Script	typeref:typename:entityID
 id	./vendor/glm/gtx/io.hpp	/^			static std::locale::id id;$/;"	m	class:glm::io::format_punct	typeref:typename:std::locale::id
 id	./vendor/glm/gtx/io.inl	/^	template<typename CTy> std::locale::id format_punct<CTy>::id;$/;"	m	class:glm::io::format_punct<CTy>	typeref:typename:std::locale::id
 id	./vendor/imstb_rectpack.h	/^   int            id;$/;"	m	struct:stbrp_rect	typeref:typename:int
@@ -9027,7 +9034,6 @@ levels	./vendor/glm/gtx/texture.inl	/^	inline T levels(vec<L, T, Q> const& Exten
 lflags	./vendor/stb_image.h	/^   int lflags;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 libgl	./vendor/imgui_impl_opengl3_loader.h	/^static HMODULE libgl;$/;"	v	typeref:typename:HMODULE
 lightHandler	./include/light.h	/^namespace lightHandler$/;"	n
-lightScript	./scripts/lightScript.py	/^class lightScript(coremodule.BaseScript) :$/;"	c
 line0	./vendor/stb_image.h	/^   stbi_uc *line0,*line1;$/;"	m	struct:__anon212c1e400a08	typeref:typename:stbi_uc *
 line1	./vendor/stb_image.h	/^   stbi_uc *line0,*line1;$/;"	m	struct:__anon212c1e400a08	typeref:typename:stbi_uc *
 line_size	./vendor/stb_image.h	/^   int line_size;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
@@ -11827,6 +11833,7 @@ sceneTreeFlags	./globals.cpp	/^ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlag
 sceneTreeFlags	./src/globals.cpp	/^ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiTreeNodeFlags
 sceneView	./src/scene.cpp	/^std :: vector<entityID> sceneManagement :: sceneView$/;"	f	class:sceneManagement	typeref:typename:std::vector<entityID>
 scriptHandler	./include/script.h	/^namespace scriptHandler$/;"	n
+script_refs	./modulesAPI/coremodule.py	/^script_refs = { }$/;"	v
 scroll	./include/input.h	/^	int scroll = 0; bool mmb = false; bool lmb = false; bool rmb = false;$/;"	m	struct:InputState	typeref:typename:int
 sec	./vendor/glm/ext/scalar_reciprocal.inl	/^	GLM_FUNC_QUALIFIER genType sec(genType angle)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
 sec	./vendor/glm/ext/vector_reciprocal.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> sec(vec<L, T, Q> const& x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
@@ -12520,7 +12527,7 @@ test	./vendor/glm/detail/setup.hpp	/^		enum test {value = 0};$/;"	g	struct:glm::
 test	./vendor/glm/detail/setup.hpp	/^		enum test {value = ~0};$/;"	g	struct:glm::detail::is_int
 test	./vendor/glm/ext/scalar_int_sized.hpp	/^		enum test {value = ~0};$/;"	g	struct:glm::detail::is_int
 test	./vendor/glm/ext/scalar_uint_sized.hpp	/^		enum test {value = ~0};$/;"	g	struct:glm::detail::is_int
-testFile	./scripts/testFile.py	/^class testFile(coremodule.BaseScript) :$/;"	c
+testScript	./scripts/testScript.py	/^class testScript(coremodule.BaseScript) :$/;"	c
 texName	./include/mesh.h	/^	std :: string texName;$/;"	m	struct:Mesh	typeref:typename:std::string
 texSurf	./include/mesh.h	/^	SDL_Surface * texSurf;$/;"	m	struct:Mesh	typeref:typename:SDL_Surface *
 textureHandler	./include/texture.h	/^namespace textureHandler$/;"	n

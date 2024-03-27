@@ -3,7 +3,8 @@ import coremodule
 
 class testScript(coremodule.BaseScript) :
     # INTRINSIC MODULES #
-    def _start(self) :
-        bingusID = self.add_entity("Bingus")
-        self.add_component("Light", bingusID)
+    def _awake(self) :
+        self.meshRef = self.get_component("Mesh")
 
+    def _start(self) :
+        self.meshRef.change_tex("rock.png")

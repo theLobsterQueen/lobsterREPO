@@ -2,7 +2,119 @@
 #include <app.h>
 
 // FUNCTION IMPLEMENTATIONS //
-void appManagement :: begin()
+void appManagement :: initialize()
+{
+	// INITIALIZES GLOBALS //
+	globals :: isRunning = true;
+	globals :: isPlaying = false;
+	globals :: winWidth = 1600;
+	globals :: winHeight = 900;
+	globals :: deltaTime = 0;
+
+	globals :: clearColor[0] = 0.1f;
+	globals :: clearColor[1] = 0.1f;
+	globals :: clearColor[2] = 0.4f;
+	globals :: clearColor[3] = 0.0f;
+
+	editorGlobals :: keyInput = false;
+	editorGlobals :: windowFlags = 
+		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse;
+	editorGlobals :: sceneTreeFlags = ImGuiTreeNodeFlags_DefaultOpen;
+	editorGlobals :: inputTextFlags = ImGuiInputTextFlags_EnterReturnsTrue |
+		ImGuiInputTextFlags_AutoSelectAll;
+	editorGlobals :: entitySelected = false;
+	editorGlobals :: sidePanelWidth = (globals :: winWidth) * 0.2f;
+	editorGlobals :: sidePanelHeight = (globals :: winHeight) * 0.8f;
+	editorGlobals :: bottomPanelWidth = (globals :: winWidth);
+	editorGlobals :: bottomPanelHeight = (globals :: winHeight) * 0.2f;
+
+	// INITIALIZES SDL //
+	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
+	{
+		std :: cout << std :: endl << SDL_GetError() << std :: endl;
+		return;
+	}
+
+	// SETS OPEN-GL ATTRIBUTES //
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+
+	// SETS BIT SIZE = 32 RGBA //
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+
+	// ENABLES DOUBLE-BUFFERING //
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	
+	// ENABLES DEPTH BUFFER TESTING AND  INCREASES DEPTH BUFFER SIZE //
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+
+	// FORCES HARDWARE ACCELERATION //
+	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+
+	// CREATES WINDOW AND READS OPEN-GL CONTEXT //
+	int SDL_FLAGS = SDL_WINDOW_OPENGL | SDL_WINDOW_MOUSE_CAPTURE;
+	globals :: winRef = SDL_CreateWindow
+	(
+		"Lobster Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+		globals :: winWidth, globals :: winHeight, SDL_FLAGS
+	);
+
+	globals :: glRef = SDL_GL_CreateContext(globals :: winRef);
+	if(globals :: glRef == nullptr)
+	{
+		std :: cout << "ERROR! OPEN-GL CONTEXT COULD NOT BE CREATED: " << SDL_GetError()
+			<< std :: endl;
+		return;
+	}
+
+	// CODE TAKEN FROM img_impl_opengl3.h //
+
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	
+	// ENABLES KEYBOARD CONTROLS //
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsLight();
+	// Setup Platform/Renderer backends
+	ImGui_ImplSDL2_InitForOpenGL(globals :: winRef, globals :: glRef);
+	ImGui_ImplOpenGL3_Init("#version 430");
+
+	// INITIALIZES GLEW //
+	glewExperimental = GL_TRUE;
+	glewInit();
+
+	// SETS OUT OPEN-GL SETTINGS //
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+	// SETS OUT STB SETTINGS //
+	stbi_set_flip_vertically_on_load(true);
+
+	// PRINTS OUT OPEN-GL VERSION //
+	std :: cout << "GL VENDOR: " << glGetString(GL_VENDOR) << std :: endl;
+	std :: cout << "GL RENDERER: " << glGetString(GL_RENDERER) << std :: endl;
+	std :: cout << "GL VERSION: " << glGetString(GL_VERSION) << std :: endl;
+	std :: cout << "GLSL VERSION: " 
+		<< glGetString(GL_SHADING_LANGUAGE_VERSION) << std :: endl;
+}
+
+void appManagement :: cleanup()
+{
+	// CLEAN UP APPPLICATION //
+	pybind11 :: finalize_interpreter();
+	SDL_DestroyWindow(globals :: winRef);
+	SDL_Quit();
+}
+
+void appManagement :: begin(std :: string sceneLoad)
 {
 	// CREATES BASE RENDER PIPELINE //
 	Pipeline * basePipeline = graphicManagement :: createPipeline();
@@ -29,7 +141,12 @@ void appManagement :: begin()
 	appManagement :: compileScripts();
 
 	// CREATES BASE SCENE //
-	sceneManagement :: changeScene(appManagement :: createBaseScene());
+	Scene * startScene;
+	if(sceneLoad == "")
+		startScene = appManagement :: createBaseScene();
+	else
+		startScene = sceneManagement :: loadScene(sceneLoad);
+	sceneManagement :: changeScene(startScene);
 
 	// BEGINS RUNNING THE ENGINE //
 	appManagement :: run();
@@ -151,6 +268,29 @@ void appManagement :: startScripts(bool initialize)
 				-> code.attr("_initialize")(curEnt); 
 		}
 
+	// RUNS THE AWAKE SCRIPTS, AND ADDS ANY ENTITIES/COMPONENTS TO THE SCENE THAT WERE CREATED //
+	for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
+	{ 
+		Script * script = ((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]));
+		script -> code.attr("_awake")();
+
+		// CHECKS TO SEE IF SCRIPT WANTS ANY NEW COMPONENTS ADDED //
+		std :: vector<pybind11 :: tuple> compsToAdd = 
+			pybind11 :: cast<std :: vector<pybind11 :: tuple>>(script -> code.attr("push_to_add")());
+		for(unsigned i = 0; i < compsToAdd.size(); i++)
+		{
+			componentID compID = stringToComp(pybind11 :: cast<std :: string>(compsToAdd[i][0]));
+			entityID id = pybind11 :: cast<entityID>(compsToAdd[i][1]);
+
+			sceneManagement :: addComp
+			(
+				globals :: curSceneRef, id,
+				compID, constructComp(compID)
+			);
+		}
+	}
+
+	// RUNS THE START SCRIPT //
 	for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
 	{ 
 		((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]))

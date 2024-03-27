@@ -30,6 +30,7 @@ struct Mesh
 {
 	std :: string name;
 	std :: string texName;
+	bool reload = false;
 
 	std :: vector<GLfloat> vertexData = { };
 	std :: vector<GLuint> indexData = { };

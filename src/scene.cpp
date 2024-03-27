@@ -599,29 +599,48 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 		Script * script = ((Script *) (inputScene -> components[SCRIPT_COMP_ID][curEnt]));
 		script -> code.attr("_update")(deltaTime);
 
-		// GETS DATA FROM SCRIPT AND APPLIES IT //
-		pybind11 :: dict retValue = script -> code.attr("_push_data")();
-		Entity entRef = inputScene -> entities[curEnt];
-		sceneManagement :: setData<std :: string>(retValue, "parent_name", &(entRef.name));
-		sceneManagement :: setData<Transform>
-		(
-		 	retValue, "transform",
-			(Transform *) (inputScene -> components[TRANS_COMP_ID][curEnt])
-		);
-		sceneManagement :: setData<Light>
-		(
-		 	retValue, "light",
-			(Light *) (inputScene -> components[LIGHT_COMP_ID][curEnt])
-		);
-		inputScene -> entities[curEnt] = entRef;
+		// GETS A LIST OF COMPONENTS AND THEIR ID REFERENCES FROM SCRIPT //
+		std :: vector<pybind11 :: tuple> retValue = 
+			pybind11 :: cast<std :: vector<pybind11 :: tuple>>(script -> code.attr("_push_data")());
+
+		// FOR EACH ITEM, APPLIES ITS VALUE TO THE ENTITY IT REFERENCES //
+		for(pybind11 :: tuple item : retValue)
+		{
+			std :: string name = pybind11 :: cast<std :: string>(item[0]);
+			entityID id = item[2].cast<entityID>();
+			
+			if(name == "light")
+				(*((Light *) (inputScene -> components[LIGHT_COMP_ID][id]))) =
+					pybind11 :: cast<Light>(item[1]);
+
+			if(name == "transform")
+				(*((Transform *) (inputScene -> components[TRANS_COMP_ID][id]))) =
+					pybind11 :: cast<Transform>(item[1]);
+
+			if(name == "mesh")
+			{
+				Mesh retMesh = pybind11 :: cast<Mesh>(item[1]);
+				if(retMesh.reload == true)
+				{
+					Mesh * newMesh = meshHandler :: getMeshFromPLY(retMesh.name);
+					meshHandler :: setTexture(newMesh, textureHandler :: createTexture(retMesh.texName));
+					sceneManagement :: addComp
+					(
+						inputScene, id,
+						MESH_COMP_ID, (compPtr) newMesh
+					);
+				}
+				script -> code.attr("_reset_values")();
+			}
+		}
 
 		// CHECKS TO SEE IF SCRIPT WANTS ANY NEW COMPONENTS ADDED //
-		pybind11 :: list compsToAdd = script -> code.attr("comps_to_add");
-		pybind11 :: list compIDsToAdd = script -> code.attr("comp_ids_to_add");
+		std :: vector<pybind11 :: tuple> compsToAdd = 
+			pybind11 :: cast <std :: vector<pybind11 :: tuple>> (script -> code.attr("comps_to_add"));
 		for(unsigned i = 0; i < compsToAdd.size(); i++)
 		{
-			componentID compID = stringToComp(pybind11 :: cast<std :: string>(compsToAdd[i]));
-			entityID id = pybind11 :: cast<entityID>(compIDsToAdd[i]);
+			componentID compID = stringToComp(pybind11 :: cast<std :: string>(compsToAdd[i][0]));
+			entityID id = pybind11 :: cast<entityID>(compsToAdd[i][1]);
 			sceneManagement :: addComp
 			(
 			 	inputScene, id,

@@ -592,6 +592,7 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 {
 	// UPDATES THE REFERENCE TO THE INPUT STATE //
 	APIGlobals :: inputmodule.attr("input_ref") = (*globals :: inputState);
+	(*inputScene) = pybind11 :: cast<Scene>(APIGlobals :: coremodule.attr("scene_ref"));
 
 	// CALLS THE UPDATE FUNCTION //
 	for(entityID curEnt : sceneManagement :: sceneView(inputScene, SCRIPT_COMP_ID))
@@ -623,6 +624,8 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 				if(retMesh.reload == true)
 				{
 					Mesh * newMesh = meshHandler :: getMeshFromPLY(retMesh.name);
+					std :: cout << "MESH WITH " << newMesh -> name << " AND TEX " 
+						<< newMesh -> texName << " WITH ID " << id << std :: endl;
 					meshHandler :: setTexture(newMesh, textureHandler :: createTexture(retMesh.texName));
 					sceneManagement :: addComp
 					(

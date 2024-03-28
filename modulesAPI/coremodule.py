@@ -59,19 +59,25 @@ class BaseScript :
     def get_component(self, comp, entID = -1) :
         # RETURNS OWN COMPONENTS #
         comp = comp.lower()
+        search_others = True
         if entID == -1 :
             entID = self.id
-            ret_comp = None
-            for comp_tuple in self.comps :
-                if comp == comp_tuple[0] and self.id == comp_tuple[2] :
-                   ret_comp = comp_tuple[1] 
+            search_others = False
 
-            if ret_comp == None :
-                raise ValueError(f"Entity does not have component of type {comp}!")
+        ret_comp = None
+        for comp_tuple in self.comps :
+            if comp == comp_tuple[0] and entID == comp_tuple[2] :
+               ret_comp = comp_tuple[1] 
+
+        if ret_comp == None and search_others is False :
+            raise ValueError(f"Entity does not have component of type {comp}!")
+        if ret_comp != None :
+            if comp != "transform" :
+                print(f"RETURNING {comp} OF ENTITY ID {comp_tuple[2]}")
             return ret_comp
 
         # OTHERWISE, ATTEMPTS TO GET COMPONENT FROM ID #
-        func = getattr(scene_ref, f"get_{comp.lower()}_comp")
+        func = getattr(scene_ref, f"get_{comp}_comp")
         temp = globals()[comp.title()]() 
         valid = func(entID, temp)
         if valid is True :
@@ -81,10 +87,11 @@ class BaseScript :
             raise ValueError(f"ERROR! COULD NOT FIND {comp} IN ENTITY ID {entID}!")
 
     def add_component(self, comp, entID = -1) :
+        comp = comp.lower()
         if entID == -1 :
             entID = self.id
-        self.comps_to_add.append((comp.lower(), entID))
-    
+        self.comps_to_add.append((comp, entID))
+
     def push_to_add(self) :
         temp = list(self.comps_to_add)
         self.comps_to_add = []
@@ -99,3 +106,15 @@ class BaseScript :
             print("ERROR! ATTEMPTED TO ADD ENTITY TO SCENE, BUT SCENE IS ALREADY AT " +\
                     "MAX ENTITIES!")
             raise ValueError
+
+    def remove_entity(self, entID) :
+        print(f"REMOVING ENTITY AT {entID}!")
+        scene_ref.remove_entity(entID)
+        scene_ref.scene_out()
+        print(self.comps)
+        temp_comps = list(self.comps)
+        for comp_tuple in temp_comps :
+            print(comp_tuple)
+            if comp_tuple[2] == entID :
+                self.comps.remove(comp_tuple)
+        print(self.comps)

@@ -27,6 +27,6 @@ PYBIND11_MODULE(_meshapi, m)
 
 		// BINDS FUNCTIONS //
 		.def("disable_reload", &disableReload)
-		.def("change_mesh", &changeMesh)
-		.def("change_tex", &changeTex);
+		.def("set_mesh", &changeMesh)
+		.def("set_texture", &changeTex);
 }

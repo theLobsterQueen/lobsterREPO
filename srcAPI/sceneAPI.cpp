@@ -26,7 +26,8 @@ void sceneOut(Scene& self)
 		if(curEntity.mask == 0)
 			continue;
 
-		std :: cout << "ENTITY NAME: " << curEntity.name << std :: endl;
+		std :: cout << "ENTITY NAME: " << curEntity.name << " ( " << curEntity.ID << ")"
+			<< std :: endl;
 		if((curEntity.mask & (1 << TRANS_COMP_ID)) >= 1)
 			std :: cout << "\tHAS TRANSFORM!" << std :: endl;
 		if((curEntity.mask & (1 << MESH_COMP_ID)) >= 1)
@@ -43,7 +44,6 @@ pybind11 :: object getEntity(Scene& self, entityID id)
 
 int addEntity(Scene& self, std :: string entityName)
 {
-	bool returnStat = false;
 	std :: cout << "ADDING NEW ENTITY!" << std :: endl;
 	for(entityID i = 0; i < LOBSTER_MAX_ENTITIES; i++)
 	{
@@ -59,6 +59,11 @@ int addEntity(Scene& self, std :: string entityName)
 		}
 	}
 	return -1;
+}
+void removeEntity(Scene& self, entityID id)
+{
+	self.entities[id].mask = 0;
+	self.activeEntities--;
 }
 
 // RETURNS COMPONENT REFERENCES //
@@ -95,6 +100,7 @@ PYBIND11_MODULE(_sceneapi, m)
 	pybind11 :: class_<Scene>(m, "Scene")
 		.def("get_entity", &getEntity)
 		.def("add_entity", &addEntity)
+		.def("remove_entity", &removeEntity)
 		.def("scene_out", &sceneOut)
 
 		.def("get_transform_comp", &getTransComp)

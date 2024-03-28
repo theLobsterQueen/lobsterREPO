@@ -362,16 +362,17 @@ void uiManagement :: drawEditorUI()
 				appManagement :: compileScripts();
 
 			// GETS INPUT FOR LOADING IN NEW SCRIPT //
+			static unsigned scriptNameSize = 32;
 			static std :: string scriptHolder = "";
-			if(scriptHolder.size() != 16)
-				scriptHolder.resize(16);
+			if(scriptHolder.size() != scriptNameSize)
+				scriptHolder.resize(scriptNameSize);
 
 			if
 			(
 				ImGui :: InputTextWithHint
 				(
 					"##4", curScript -> name.c_str(), scriptHolder.data(), 
-					16, editorGlobals :: inputTextFlags
+					scriptNameSize, editorGlobals :: inputTextFlags
 				)
 			)
 
@@ -387,7 +388,7 @@ void uiManagement :: drawEditorUI()
 					);
 				}
 				scriptHolder = "";
-				scriptHolder.resize(16);
+				scriptHolder.resize(scriptNameSize);
 			}
 		}
 

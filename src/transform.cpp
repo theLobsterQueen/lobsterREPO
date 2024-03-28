@@ -113,3 +113,52 @@ void transformHandler :: scale
 		inputTrans -> scale[i] = inputTrans -> scale[i] + deltaVector[i];
 }
 
+void transformHandler :: processOrder
+	(std :: string orderName, entityID entID, std :: vector<pybind11 :: object> params)
+{
+	// READS THE MESH DATA //
+	Transform * transform = ((Transform *) (globals :: curSceneRef -> components[TRANS_COMP_ID][entID]));
+	if(transform == nullptr)
+		sceneManagement :: addComp
+		(
+		 	globals :: curSceneRef, entID,
+			TRANS_COMP_ID, constructComp(TRANS_COMP_ID)
+		);
+	transform = ((Transform *) (globals :: curSceneRef -> components[TRANS_COMP_ID][entID]));
+
+	// SETS THE VALUES OF THE TRANSFORM //
+	if(orderName == "translate")
+		transformHandler :: translate(transform, pybind11 :: cast<std :: vector<float>>(params[0]),
+				pybind11 :: cast<bool>(params[1]));
+
+	if(orderName == "rotate")
+		transformHandler :: rotate(transform, pybind11 :: cast<std :: vector<float>>(params[0]));
+
+	if(orderName == "scale")
+		transformHandler :: scale(transform, pybind11 :: cast<std :: vector<float>>(params[0]));
+
+	if(orderName == "setPosition")
+		transform -> position = pybind11 :: cast<std :: vector<float>>(params[0]);
+
+	if(orderName == "setRotation")
+	{
+		std :: vector<float> rot = pybind11 :: cast<std :: vector<float>>(params[0]);
+		for(char i = 0; i < 3; i++)
+		{
+			float value = rot[i];
+			while(value > 360)
+				value -= 360;
+			while(value < -360)
+				value += 360;
+			rot[i] = value;
+		}
+		transform -> rotation = rot;
+	}
+
+	if(orderName == "setScale")
+		transform -> scale = pybind11 :: cast<std :: vector<float>>(params[0]);
+
+	// RESYNCS THE DATA BETWEEN C++ AND PYTHON COMPONENTS //
+	APIGlobals :: coremodule.attr("get_component")("transform", entID).attr("sync_data")
+		(transform -> position, transform -> rotation, transform -> scale);
+}

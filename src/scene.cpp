@@ -11,9 +11,10 @@ Scene * sceneManagement :: createScene(std :: string inputName)
 void sceneManagement :: changeScene(Scene * targetScene)
 {
 	// ASSIGNS SCENE TO ATTRIBUTE IN COREMODULE //
-	APIGlobals :: coremodule.attr("scene_ref") = targetScene;
 	globals :: curSceneRef = targetScene;
 	windowManagement :: changeTitle(globals :: winRef, globals :: curSceneRef -> name);
+	appManagement :: compileScripts();
+	appManagement :: startScripts();
 }
 
 entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entityName)
@@ -180,7 +181,7 @@ std :: vector<entityID> sceneManagement :: sceneView
 		if(curEnt.mask != 0)
 			entitiesLeft--;
 
-		if((curEnt.mask & (1 << compID)) > 0)
+		if((curEnt.mask & (1 << compID)) >= 1)
 			newVec.push_back(entityIndex);
 		entityIndex++;
 
@@ -590,66 +591,87 @@ void sceneManagement :: sceneOut(Scene * inputScene)
 
 void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 {
-	// UPDATES THE REFERENCE TO THE INPUT STATE //
-	APIGlobals :: inputmodule.attr("input_ref") = (*globals :: inputState);
-	(*inputScene) = pybind11 :: cast<Scene>(APIGlobals :: coremodule.attr("scene_ref"));
-
-	// CALLS THE UPDATE FUNCTION //
+	// PROCESSES ORDERS //
 	for(entityID curEnt : sceneManagement :: sceneView(inputScene, SCRIPT_COMP_ID))
 	{
+		// PULLS DATA //
 		Script * script = ((Script *) (inputScene -> components[SCRIPT_COMP_ID][curEnt]));
-		script -> code.attr("_update")(deltaTime);
+		std :: vector<pybind11 :: tuple> orders = 
+			pybind11 :: cast<std :: vector<pybind11 :: tuple>>(script -> code.attr("push_data")());
 
-		// GETS A LIST OF COMPONENTS AND THEIR ID REFERENCES FROM SCRIPT //
-		std :: vector<pybind11 :: tuple> retValue = 
-			pybind11 :: cast<std :: vector<pybind11 :: tuple>>(script -> code.attr("_push_data")());
-
-		// FOR EACH ITEM, APPLIES ITS VALUE TO THE ENTITY IT REFERENCES //
-		for(pybind11 :: tuple item : retValue)
+		// PROCESSES DATA //
+		for(pybind11 :: tuple order : orders)
 		{
-			std :: string name = pybind11 :: cast<std :: string>(item[0]);
-			entityID id = item[2].cast<entityID>();
-			
-			if(name == "light")
-				(*((Light *) (inputScene -> components[LIGHT_COMP_ID][id]))) =
-					pybind11 :: cast<Light>(item[1]);
+			// VARIABLE INITIALIZATION //
+			componentID compID; std :: string orderName;
+			entityID entID = pybind11 :: cast<entityID>(order[1]);
 
-			if(name == "transform")
-				(*((Transform *) (inputScene -> components[TRANS_COMP_ID][id]))) =
-					pybind11 :: cast<Transform>(item[1]);
-
-			if(name == "mesh")
+			// SEPARATES AND CONFIGURES ORDER TARGET AND NAME //
 			{
-				Mesh retMesh = pybind11 :: cast<Mesh>(item[1]);
-				if(retMesh.reload == true)
+				std :: stringstream ss(pybind11 :: cast<std :: string>(order[0]));
+				std :: string data;
+				char index = 0;
+				while(std :: getline(ss, data, '_'))
 				{
-					Mesh * newMesh = meshHandler :: getMeshFromPLY(retMesh.name);
-					std :: cout << "MESH WITH " << newMesh -> name << " AND TEX " 
-						<< newMesh -> texName << " WITH ID " << id << std :: endl;
-					meshHandler :: setTexture(newMesh, textureHandler :: createTexture(retMesh.texName));
-					sceneManagement :: addComp
-					(
-						inputScene, id,
-						MESH_COMP_ID, (compPtr) newMesh
-					);
+					if(index == 0)
+						compID = stringToComp(data);
+					else
+						orderName = data;
+					index++;
 				}
-				script -> code.attr("_reset_values")();
+			}
+
+			// CONFIGURES THE REMAINING PYBIND DATA INTO A PARAMTER VECTOR //
+			std :: vector<pybind11 :: object> params;
+			for(unsigned i = 2; i < order.size(); i++)
+				params.push_back(order[i]);
+
+			// PROCESSES ORDERS //
+			switch(compID)
+			{
+				case MESH_COMP_ID :
+					meshHandler :: processOrder(orderName, entID, params);
+				break;
+
+				case TRANS_COMP_ID :
+					transformHandler :: processOrder(orderName, entID, params);
+				break;
+
+				case LIGHT_COMP_ID :
+				{
+					if(orderName != "setLight")
+					{
+						std :: cout << "ERROR! INVALID FUNCTION " << orderName 
+							<< " FOR THE LIGHT COMPONENT!" << std :: endl;
+						return;
+					}
+
+					Light * light = ((Light *) (globals :: curSceneRef -> components
+						[LIGHT_COMP_ID][entID]));
+					if(light == nullptr)
+						sceneManagement :: addComp
+						(
+							globals :: curSceneRef, entID,
+							LIGHT_COMP_ID, constructComp(LIGHT_COMP_ID)
+						);
+					light = ((Light *) (globals :: curSceneRef -> components[LIGHT_COMP_ID][entID]));
+					light -> color = (pybind11 :: cast<std :: vector<float>>(params[0]));
+				}
 			}
 		}
 
-		// CHECKS TO SEE IF SCRIPT WANTS ANY NEW COMPONENTS ADDED //
-		std :: vector<pybind11 :: tuple> compsToAdd = 
-			pybind11 :: cast <std :: vector<pybind11 :: tuple>> (script -> code.attr("comps_to_add"));
-		for(unsigned i = 0; i < compsToAdd.size(); i++)
+		// PARSES INPUT AND SENDS IT TO THE API //
+		pybind11 :: object inputRef = APIGlobals :: inputmodule.attr("input_ref");
+		for(char key = 0; key < 127; key++)
 		{
-			componentID compID = stringToComp(pybind11 :: cast<std :: string>(compsToAdd[i][0]));
-			entityID id = pybind11 :: cast<entityID>(compsToAdd[i][1]);
-			sceneManagement :: addComp
-			(
-			 	inputScene, id,
-				compID, constructComp(compID)
-			);
+			if(globals :: inputState -> pressedKeys[key] == 1)
+				inputRef.attr("press_key")(key);
+			else
+				inputRef.attr("unpress_key")(key);
 		}
+
+		// UPDATES SCRIPTS //
+		script -> code.attr("_update")(globals :: deltaTime);
 	}
 }
 

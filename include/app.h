@@ -66,7 +66,7 @@ namespace appManagement
 	///			the scene.
 	/// </summary> ///
 
-	void startScripts(bool initialize = false);
+	void startScripts();
 
 	/// <summary> ///
 	///		When called, puts the engine into the "control loop." This loop will

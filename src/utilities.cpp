@@ -247,6 +247,9 @@ compPtr copyComp(componentID compID, compPtr copySrc)
 }
 componentID stringToComp(std :: string compName)
 {
+	for(auto key : compName)
+		key = std :: tolower(key);
+
 	if(compName == "mesh")
 		return MESH_COMP_ID;
 	if(compName == "camera")
@@ -260,3 +263,6 @@ componentID stringToComp(std :: string compName)
 
 	return NULL_COMP_ID;
 }
+
+bool hasComp(Entity inputEnt, componentID compID)
+	{ return ((inputEnt.mask & (1 << compID)) >= 1); }

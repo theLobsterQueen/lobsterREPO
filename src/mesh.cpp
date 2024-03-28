@@ -307,3 +307,34 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)
 	std :: cout << "LOADED " << inputName << " SUCCESSFULY!" << std :: endl;
 	return meshHandler :: createMesh(vertices, indices, inputName);
 }
+
+
+void meshHandler :: processOrder
+	(std :: string orderName, entityID entID, std :: vector<pybind11 :: object> params)
+{
+	// READS THE MESH DATA //
+	Mesh * mesh = ((Mesh *) (globals :: curSceneRef -> components[MESH_COMP_ID][entID]));
+
+	// CHANGES THE TEXTURE OF THE MESH //
+	if(orderName == "setMesh")
+	{
+		sceneManagement :: addComp
+		(
+			globals :: curSceneRef, entID,
+			MESH_COMP_ID, ((compPtr) (meshHandler :: getMeshFromPLY(
+				pybind11 :: cast<std :: string>(params[0]))))
+		);
+		return;
+	}
+
+	if(orderName == "setTexture")
+	{
+		meshHandler :: setTexture(mesh, textureHandler :: createTexture
+				(pybind11 :: cast<std :: string>(params[0])));
+		return;
+	}
+
+	// IF REACHED THE END OF THE FUNCTION, ORDER NAME MUST'VE BEEN INVALID //
+	std :: cout << "ERROR! INPUT " << compToString(MESH_COMP_ID) << " FUNCTION " << orderName
+		<< " DID NOT HAVE A VALID EXECUTION!" << std :: endl;
+}

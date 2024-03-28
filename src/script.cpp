@@ -12,7 +12,7 @@ Script * scriptHandler :: createScript(std :: string scriptName, entityID entRef
 		{ 
 			newScript -> name = scriptName;
 			newScript -> id = entRef;
-			newScript -> code = APIGlobals :: coremodule.attr("script_refs")[scriptName.c_str()]();
+			newScript -> code = APIGlobals :: coremodule.attr("script_refs")[scriptName.c_str()](entRef);
 		}
 
 		else

@@ -84,6 +84,11 @@ namespace transformHandler
 	/// </summary> ///
 
 	void scale(Transform * inputTrans, std :: vector<float> deltaVector);
+
+	/// <summary> ///
+	///		Processes orders given from the Python API, which pertain to transform components.
+	/// </summary> ///
+	void processOrder(std :: string orderName, entityID entID, std :: vector<pybind11 :: object> params);
 };
 
 #endif

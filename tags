@@ -498,6 +498,7 @@ Commands	./vendor/imgui_demo.cpp	/^    ImVector<const char*> Commands;$/;"	m	str
 CompareWithContextState	./vendor/imgui.cpp	/^void ImGuiStackSizes::CompareWithContextState(ImGuiContext* ctx)$/;"	f	class:ImGuiStackSizes	typeref:typename:void
 CompareWithSortSpecs	./vendor/imgui_demo.cpp	/^    static int IMGUI_CDECL CompareWithSortSpecs(const void* lhs, const void* rhs)$/;"	f	struct:__anon840594cf0211::MyItem	typeref:typename:int IMGUI_CDECL	file:
 CompileShader	./vendor/imgui_impl_opengl3_loader.h	/^        PFNGLCOMPILESHADERPROC            CompileShader;$/;"	m	struct:ImGL3WProcs::__anon9d96c34e0108	typeref:typename:PFNGLCOMPILESHADERPROC
+Component	./modulesAPI/coremodule.py	/^class Component() :$/;"	c
 ConfigData	./vendor/imgui.h	/^    ImVector<ImFontConfig>      ConfigData;         \/\/ Configuration data$/;"	m	struct:ImFontAtlas	typeref:typename:ImVector<ImFontConfig>
 ConfigData	./vendor/imgui.h	/^    const ImFontConfig*         ConfigData;         \/\/ 4-8   \/\/ in  \/\/            \/\/ Poi/;"	m	struct:ImFont	typeref:typename:const ImFontConfig *
 ConfigDataCount	./vendor/imgui.h	/^    short                       ConfigDataCount;    \/\/ 2     \/\/ in  \/\/ ~ 1        \/\/ Num/;"	m	struct:ImFont	typeref:typename:short
@@ -3500,6 +3501,7 @@ InputQueueSurrogate	./vendor/imgui.h	/^    ImWchar16   InputQueueSurrogate;     
 InputScalar	./vendor/imgui_widgets.cpp	/^bool ImGui::InputScalar(const char* label, ImGuiDataType data_type, void* p_data, const void* p_/;"	f	class:ImGui	typeref:typename:bool
 InputScalarN	./vendor/imgui_widgets.cpp	/^bool ImGui::InputScalarN(const char* label, ImGuiDataType data_type, void* p_data, int component/;"	f	class:ImGui	typeref:typename:bool
 InputState	./include/input.h	/^struct InputState$/;"	s
+InputState	./modulesAPI/inputmodule.py	/^class InputState :$/;"	c
 InputText	./vendor/imgui_widgets.cpp	/^bool ImGui::InputText(const char* label, char* buf, size_t buf_size, ImGuiInputTextFlags flags, /;"	f	class:ImGui	typeref:typename:bool
 InputTextCalcTextLenAndLineCount	./vendor/imgui_widgets.cpp	/^static int InputTextCalcTextLenAndLineCount(const char* text_begin, const char** out_text_end)$/;"	f	typeref:typename:int	file:
 InputTextCalcTextSizeW	./vendor/imgui_widgets.cpp	/^static ImVec2 InputTextCalcTextSizeW(ImGuiContext* ctx, const ImWchar* text_begin, const ImWchar/;"	f	typeref:typename:ImVec2	file:
@@ -3807,6 +3809,7 @@ Merge	./vendor/imgui_draw.cpp	/^void ImDrawListSplitter::Merge(ImDrawList* draw_
 MergeGroup	./vendor/imgui_tables.cpp	/^    struct MergeGroup$/;"	s	function:ImGui::TableMergeDrawChannels	file:
 MergeMode	./vendor/imgui.h	/^    bool            MergeMode;              \/\/ false    \/\/ Merge into previous ImFont, so yo/;"	m	struct:ImFontConfig	typeref:typename:bool
 Mesh	./include/mesh.h	/^struct Mesh$/;"	s
+Mesh	./modulesAPI/coremodule.py	/^class Mesh(Component) :$/;"	c
 MetricsActiveWindows	./vendor/imgui.h	/^    int         MetricsActiveWindows;               \/\/ Number of active windows$/;"	m	struct:ImGuiIO	typeref:typename:int
 MetricsHelpMarker	./vendor/imgui.cpp	/^static void MetricsHelpMarker(const char* desc)$/;"	f	typeref:typename:void	file:
 MetricsRenderIndices	./vendor/imgui.h	/^    int         MetricsRenderIndices;               \/\/ Indices output during last call to Rend/;"	m	struct:ImGuiIO	typeref:typename:int
@@ -4124,12 +4127,6 @@ PFNGLVIEWPORTPROC	./vendor/imgui_impl_opengl3_loader.h	/^typedef void (APIENTRYP
 POSITION_VEC	./include/importantConstants.h	/^#define POSITION_VEC	/;"	d
 PRId64	./vendor/imgui_demo.cpp	/^#define PRId64 /;"	d	file:
 PRIu64	./vendor/imgui_demo.cpp	/^#define PRIu64 /;"	d	file:
-PYBIND11_MODULE	./srcAPI/coreModule.cpp	/^PYBIND11_MODULE(_coremodule, m)$/;"	f
-PYBIND11_MODULE	./srcAPI/entityAPI.cpp	/^PYBIND11_MODULE(_entityapi, m)$/;"	f
-PYBIND11_MODULE	./srcAPI/inputModule.cpp	/^PYBIND11_MODULE(_inputmodule, m)$/;"	f
-PYBIND11_MODULE	./srcAPI/lightAPI.cpp	/^PYBIND11_MODULE(_lightapi, m)$/;"	f
-PYBIND11_MODULE	./srcAPI/sceneAPI.cpp	/^PYBIND11_MODULE(_sceneapi, m)$/;"	f
-PYBIND11_MODULE	./srcAPI/transformAPI.cpp	/^PYBIND11_MODULE(_transformapi, m)$/;"	f
 PY_SSIZE_T_CLEAN	./src/main.cpp	/^#define PY_SSIZE_T_CLEAN$/;"	d	file:
 PackIdLines	./vendor/imgui.h	/^    int                         PackIdLines;        \/\/ Custom texture rectangle ID for baked a/;"	m	struct:ImFontAtlas	typeref:typename:int
 PackIdMouseCursors	./vendor/imgui.h	/^    int                         PackIdMouseCursors; \/\/ Custom texture rectangle ID for white p/;"	m	struct:ImFontAtlas	typeref:typename:int
@@ -4194,6 +4191,8 @@ PopupId	./vendor/imgui_internal.h	/^    ImGuiID             PopupId;        \/\/
 PopupRounding	./vendor/imgui.h	/^    float       PopupRounding;              \/\/ Radius of popup window corners rounding. (Note /;"	m	struct:ImGuiStyle	typeref:typename:float
 Pos	./bin/debug/imgui.ini	/^Pos=0,20$/;"	k	section:Window
 Pos	./bin/debug/imgui.ini	/^Pos=1280,20$/;"	k	section:Window
+Pos	./bin/debug/imgui.ini	/^Pos=480,405$/;"	k	section:Window
+Pos	./bin/debug/imgui.ini	/^Pos=560,405$/;"	k	section:Window
 Pos	./bin/debug/imgui.ini	/^Pos=60,60$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=0,0$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=0,20$/;"	k	section:Window
@@ -4202,6 +4201,7 @@ Pos	./imgui.ini	/^Pos=1280,20$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=40,26$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=456,192$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=480,405$/;"	k	section:Window
+Pos	./imgui.ini	/^Pos=481,405$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=60,60$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=728,47$/;"	k	section:Window
 Pos	./imgui.ini	/^Pos=737,147$/;"	k	section:Window
@@ -4828,6 +4828,8 @@ SingleCharModeLock	./vendor/imgui_internal.h	/^    bool            SingleCharMod
 SingleCharSize	./vendor/imgui_internal.h	/^    ImS8                    SingleCharSize;     \/\/ Length in bytes of first letter codepoint (/;"	m	struct:ImGuiTypingSelectRequest	typeref:typename:ImS8
 Size	./bin/debug/imgui.ini	/^Size=320,700$/;"	k	section:Window
 Size	./bin/debug/imgui.ini	/^Size=400,400$/;"	k	section:Window
+Size	./bin/debug/imgui.ini	/^Size=480,90$/;"	k	section:Window
+Size	./bin/debug/imgui.ini	/^Size=640,90$/;"	k	section:Window
 Size	./imgui.ini	/^Size=114,48$/;"	k	section:Window
 Size	./imgui.ini	/^Size=123,156$/;"	k	section:Window
 Size	./imgui.ini	/^Size=1300,54$/;"	k	section:Window
@@ -5161,6 +5163,7 @@ TotalVtxCount	./vendor/imgui.h	/^    int                 TotalVtxCount;      \/\
 TotalWidth	./vendor/imgui_internal.h	/^    ImU32       TotalWidth;$/;"	m	struct:ImGuiMenuColumns	typeref:typename:ImU32
 TouchExtraPadding	./vendor/imgui.h	/^    ImVec2      TouchExtraPadding;          \/\/ Expand reactive bounding box for touch-based sy/;"	m	struct:ImGuiStyle	typeref:typename:ImVec2
 Transform	./include/transform.h	/^struct Transform$/;"	s
+Transform	./modulesAPI/coremodule.py	/^class Transform(Component) :$/;"	c
 Translate	./vendor/imgui_internal.h	/^    void        Translate(const ImVec2& d)          { Min.x += d.x; Min.y += d.y; Max.x += d.x; /;"	f	struct:ImRect	typeref:typename:void
 TranslateX	./vendor/imgui_internal.h	/^    void        TranslateX(float dx)                { Min.x += dx; Max.x += dx; }$/;"	f	struct:ImRect	typeref:typename:void
 TranslateY	./vendor/imgui_internal.h	/^    void        TranslateY(float dy)                { Min.y += dy; Max.y += dy; }$/;"	f	struct:ImRect	typeref:typename:void
@@ -5327,7 +5330,9 @@ WidthOrWeight	./vendor/imgui_internal.h	/^    float                   WidthOrWei
 WidthRequest	./vendor/imgui_internal.h	/^    float                   WidthRequest;                   \/\/ Master width absolute value whe/;"	m	struct:ImGuiTableColumn	typeref:typename:float
 Widths	./vendor/imgui_internal.h	/^    ImU16       Widths[4];          \/\/ Width of:   Icon, Label, Shortcut, Mark  (accumulators /;"	m	struct:ImGuiMenuColumns	typeref:typename:ImU16[4]
 Window	./bin/debug/imgui.ini	/^[Window][Debug##Default]$/;"	s
+Window	./bin/debug/imgui.ini	/^[Window][Delete Scene...]$/;"	s
 Window	./bin/debug/imgui.ini	/^[Window][Inspector]$/;"	s
+Window	./bin/debug/imgui.ini	/^[Window][Save Scene as...]$/;"	s
 Window	./bin/debug/imgui.ini	/^[Window][Scene Tree]$/;"	s
 Window	./imgui.ini	/^[Window][Dear ImGui Debug Log]$/;"	s
 Window	./imgui.ini	/^[Window][Dear ImGui Demo]$/;"	s
@@ -5514,18 +5519,20 @@ __anonfacf64890c0a	./vendor/glm/detail/func_packing.inl	/^		{$/;"	u	function:glm
 __gl3w_h_	./vendor/imgui_impl_opengl3_loader.h	/^#define __gl3w_h_$/;"	d
 __gl_glcorearb_h_	./vendor/imgui_impl_opengl3_loader.h	/^#define __gl_glcorearb_h_ /;"	d
 __gl_h_	./vendor/imgui_impl_opengl3_loader.h	/^#define __gl_h_$/;"	d
-__init__	./modulesAPI/coremodule.py	/^    def __init__(self) :$/;"	m	class:BaseScript
+__init__	./modulesAPI/coremodule.py	/^    def __init__(self, comp_name, input_id) :$/;"	m	class:Component
+__init__	./modulesAPI/coremodule.py	/^    def __init__(self, entity_id) :$/;"	m	class:BaseScript
+__init__	./modulesAPI/coremodule.py	/^    def __init__(self, input_id, mesh_name = "", tex_name = "") :$/;"	m	class:Mesh
+__init__	./modulesAPI/coremodule.py	/^    def __init__(self, input_id, position = [], rotation = [], scale = []) :$/;"	m	class:Transform
+__init__	./modulesAPI/inputmodule.py	/^    def __init__(self) :$/;"	m	class:InputState
+__repr__	./modulesAPI/coremodule.py	/^    def __repr__(self) :$/;"	m	class:Component
 _apply_op	./vendor/glm/detail/_swizzle.hpp	/^		GLM_FUNC_QUALIFIER void _apply_op(vec<N, T, Q> const& that, const U& op)$/;"	f	struct:glm::detail::_swizzle_base2	typeref:typename:GLM_FUNC_QUALIFIER void
 _awake	./modulesAPI/coremodule.py	/^    def _awake(self) :$/;"	m	class:BaseScript
 _awake	./scripts/testScript.py	/^    def _awake(self) :$/;"	m	class:testScript
 _buffer	./vendor/glm/detail/_swizzle.hpp	/^		char    _buffer[1];$/;"	m	struct:glm::detail::_swizzle_base0	typeref:typename:char[1]
 _grow_capacity	./vendor/imgui.h	/^    inline int          _grow_capacity(int sz) const        { int new_capacity = Capacity ? (Cap/;"	f	struct:ImVector	typeref:typename:int
-_initialize	./modulesAPI/coremodule.py	/^    def _initialize(self, entity_id) :$/;"	m	class:BaseScript
 _internal_	./vendor/glm/gtx/pca.inl	/^	namespace _internal_$/;"	n	namespace:glm	file:
-_push_data	./modulesAPI/coremodule.py	/^    def _push_data(self) :$/;"	m	class:BaseScript
-_set_data	./modulesAPI/coremodule.py	/^    def _set_data(self, name, item) :$/;"	m	class:BaseScript
 _start	./modulesAPI/coremodule.py	/^    def _start(self) :$/;"	m	class:BaseScript
-_start	./scripts/testScript.py	/^    def _start(self) :$/;"	m	class:testScript
+_start	./scripts/exampleBingusScript.py	/^    def _start(self) :$/;"	m	class:exampleBingusScript
 _swizzle	./vendor/glm/detail/_swizzle.hpp	/^	struct _swizzle : public _swizzle_base2<N, T, Q, E0, E1, E2, E3, (E0 == E1 || E0 == E2 || E0 ==/;"	s	namespace:glm::detail
 _swizzle_base0	./vendor/glm/detail/_swizzle.hpp	/^	struct _swizzle_base0$/;"	s	namespace:glm::detail
 _swizzle_base1	./vendor/glm/detail/_swizzle.hpp	/^	struct _swizzle_base1 : public _swizzle_base0<T, N>$/;"	s	namespace:glm::detail
@@ -5544,7 +5551,8 @@ _swizzle_base1	./vendor/glm/detail/type_vec_simd.inl	/^struct _swizzle_base1<L, 
 _swizzle_base2	./vendor/glm/detail/_swizzle.hpp	/^	struct _swizzle_base2 : public _swizzle_base1<N, T, Q, E0,E1,E2,E3, detail::is_aligned<Q>::valu/;"	s	namespace:glm::detail
 _swizzle_base2	./vendor/glm/detail/_swizzle.hpp	/^	struct _swizzle_base2<N, T, Q, E0,E1,E2,E3, 1> : public _swizzle_base1<N, T, Q, E0,E1,E2,E3, de/;"	s	namespace:glm::detail
 _update	./modulesAPI/coremodule.py	/^    def _update(self, delta_time) :$/;"	m	class:BaseScript
-_update	./scripts/testScript.py	/^    def _update(self) :$/;"	m	class:testScript
+_update	./scripts/exampleBingusScript.py	/^    def _update(self, delta_time) :$/;"	m	class:exampleBingusScript
+_update	./scripts/testScript.py	/^    def _update(self, delta_time) :$/;"	m	class:testScript
 abs	./vendor/glm/detail/func_common.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR genFIType abs(genFIType x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR genFIType
 abs	./vendor/glm/detail/func_common.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR int abs(int x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR int
 abs	./vendor/glm/detail/func_common.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec<L, T, Q> abs(vec<L, T, Q> const& x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec<L,T,Q>
@@ -5563,9 +5571,7 @@ acsch	./vendor/glm/ext/vector_reciprocal.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> 
 activeEntities	./include/scene.h	/^	unsigned short int activeEntities = 0;$/;"	m	struct:Scene	typeref:typename:unsigned short int
 active_head	./vendor/imstb_rectpack.h	/^   stbrp_node *active_head;$/;"	m	struct:stbrp_context	typeref:typename:stbrp_node *
 addComp	./src/scene.cpp	/^void sceneManagement :: addComp$/;"	f	class:sceneManagement	typeref:typename:void
-addEntity	./srcAPI/sceneAPI.cpp	/^int addEntity(Scene& self, std :: string entityName)$/;"	f	typeref:typename:int
-add_component	./modulesAPI/coremodule.py	/^    def add_component(self, comp, entID = -1) :$/;"	m	class:BaseScript
-add_entity	./modulesAPI/coremodule.py	/^    def add_entity(self, entName) :$/;"	m	class:BaseScript
+add_vecs	./modulesAPI/coremodule.py	/^def add_vecs(vec_1, vec_2) :$/;"	f
 adjugate	./vendor/glm/gtx/matrix_operation.inl	/^	GLM_FUNC_QUALIFIER mat<2, 2, T, Q> adjugate(mat<2, 2, T, Q> const& m)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<2,2,T,Q>
 adjugate	./vendor/glm/gtx/matrix_operation.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, Q> adjugate(mat<3, 3, T, Q> const& m)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<3,3,T,Q>
 adjugate	./vendor/glm/gtx/matrix_operation.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, Q> adjugate(mat<4, 4, T, Q> const& m)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
@@ -5906,7 +5912,7 @@ basic_format_saver	./vendor/glm/gtx/io.hpp	/^		class basic_format_saver$/;"	c	na
 basic_format_saver	./vendor/glm/gtx/io.inl	/^	GLM_FUNC_QUALIFIER basic_format_saver<CTy, CTr>::basic_format_saver(std::basic_ios<CTy, CTr>& a/;"	f	class:glm::io::basic_format_saver	typeref:typename:GLM_FUNC_QUALIFIER
 basic_state_saver	./vendor/glm/gtx/io.hpp	/^		class basic_state_saver {$/;"	c	namespace:glm::io
 basic_state_saver	./vendor/glm/gtx/io.inl	/^	GLM_FUNC_QUALIFIER basic_state_saver<CTy, CTr>::basic_state_saver(std::basic_ios<CTy, CTr>& a)$/;"	f	class:glm::io::basic_state_saver	typeref:typename:GLM_FUNC_QUALIFIER
-begin	./src/app.cpp	/^void appManagement :: begin()$/;"	f	class:appManagement	typeref:typename:void
+begin	./src/app.cpp	/^void appManagement :: begin(std :: string sceneLoad)$/;"	f	class:appManagement	typeref:typename:void
 begin	./vendor/glm/gtx/range.hpp	/^	inline typename genType::value_type * begin(genType& v)$/;"	f	namespace:glm	typeref:typename:genType::value_type *
 begin	./vendor/glm/gtx/range.hpp	/^	inline typename genType::value_type const * begin(genType const& v)$/;"	f	namespace:glm	typeref:typename:genType::value_type const *
 begin	./vendor/imgui.h	/^    const char*         begin() const           { return Buf.Data ? &Buf.front() : EmptyString; /;"	f	struct:ImGuiTextBuffer	typeref:typename:const char *
@@ -5989,9 +5995,7 @@ bool_type	./vendor/glm/detail/type_vec1.hpp	/^		typedef vec<1, bool, Q> bool_typ
 bool_type	./vendor/glm/detail/type_vec2.hpp	/^		typedef vec<2, bool, Q> bool_type;$/;"	t	struct:glm::vec	typeref:typename:vec<2,bool,Q>
 bool_type	./vendor/glm/detail/type_vec3.hpp	/^		typedef vec<3, bool, Q> bool_type;$/;"	t	struct:glm::vec	typeref:typename:vec<3,bool,Q>
 bool_type	./vendor/glm/detail/type_vec4.hpp	/^		typedef vec<4, bool, Q> bool_type;$/;"	t	struct:glm::vec	typeref:typename:vec<4,bool,Q>
-bottomPanelHeight	./globals.cpp	/^float editorGlobals :: bottomPanelHeight;$/;"	m	class:editorGlobals 	typeref:typename:float
 bottomPanelHeight	./src/globals.cpp	/^float editorGlobals :: bottomPanelHeight;$/;"	m	class:editorGlobals 	typeref:typename:float
-bottomPanelWidth	./globals.cpp	/^float editorGlobals :: bottomPanelWidth;$/;"	m	class:editorGlobals 	typeref:typename:float
 bottomPanelWidth	./src/globals.cpp	/^float editorGlobals :: bottomPanelWidth;$/;"	m	class:editorGlobals 	typeref:typename:float
 bottom_y	./vendor/imstb_truetype.h	/^   int x,y,bottom_y;$/;"	m	struct:__anonecd446351108	typeref:typename:int
 bounceEaseIn	./vendor/glm/gtx/easing.inl	/^	GLM_FUNC_QUALIFIER genType bounceEaseIn(genType const& a)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
@@ -6002,6 +6006,7 @@ bpp	./vendor/stb_image.h	/^   int bpp, offset, hsz;$/;"	m	struct:__anon212c1e401
 bss_	./vendor/glm/gtx/io.hpp	/^			basic_state_saver<CTy> const bss_;$/;"	m	class:glm::io::basic_format_saver	typeref:typename:basic_state_saver<CTy> const
 buffer_start	./vendor/stb_image.h	/^   stbi_uc buffer_start[128];$/;"	m	struct:__anon212c1e400308	typeref:typename:stbi_uc[128]
 buflen	./vendor/stb_image.h	/^   int buflen;$/;"	m	struct:__anon212c1e400308	typeref:typename:int
+build	./makeFile.py	/^build = False$/;"	v
 bvec1	./vendor/glm/ext/vector_bool1.hpp	/^	typedef vec<1, bool, defaultp>		bvec1;$/;"	t	namespace:glm	typeref:typename:vec<1,bool,defaultp>
 bvec1	./vendor/glm/fwd.hpp	/^	typedef vec<1, bool, defaultp>	bvec1;$/;"	t	namespace:glm	typeref:typename:vec<1,bool,defaultp>
 bvec2	./vendor/glm/ext/vector_bool2.hpp	/^	typedef vec<2, bool, defaultp>		bvec2;$/;"	t	namespace:glm	typeref:typename:vec<2,bool,defaultp>
@@ -6333,6 +6338,7 @@ centeredString	./src/ui.cpp	/^std :: string uiManagement :: centeredString(const
 cff	./vendor/imstb_truetype.h	/^   stbtt__buf cff;                    \/\/ cff font data$/;"	m	struct:stbtt_fontinfo	typeref:typename:stbtt__buf
 changeScene	./src/scene.cpp	/^void sceneManagement :: changeScene(Scene * targetScene)$/;"	f	class:sceneManagement	typeref:typename:void
 changeTitle	./src/window.cpp	/^void windowManagement :: changeTitle(SDL_Window * window, std :: string windowName)$/;"	f	class:windowManagement	typeref:typename:void
+change_data	./modulesAPI/coremodule.py	/^def change_data(comp_name, entID, attribute_name, new_value) :$/;"	f
 channel	./vendor/stb_image.h	/^   stbi_uc size,type,channel;$/;"	m	struct:__anon212c1e401108	typeref:typename:stbi_uc
 channel_order	./vendor/stb_image.h	/^   int channel_order;$/;"	m	struct:__anon212c1e400508	typeref:typename:int
 char_storage	./vendor/imstb_textedit.h	/^   int                        char_storage;$/;"	m	struct:__anon25749c3e0108	typeref:typename:int
@@ -6351,14 +6357,15 @@ clamp	./vendor/glm/detail/func_common.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR ve
 clamp	./vendor/glm/detail/func_common.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec<L, T, Q> clamp(vec<L, T, Q> const& x, vec<L, T, Q> const& /;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec<L,T,Q>
 clamp	./vendor/glm/ext/scalar_common.inl	/^	GLM_FUNC_QUALIFIER genType clamp(genType const& Texcoord)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
 clamp	./vendor/glm/ext/vector_common.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> clamp(vec<L, T, Q> const& Texcoord)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
+cleanup	./src/app.cpp	/^void appManagement :: cleanup()$/;"	f	class:appManagement	typeref:typename:void
 clear	./vendor/imgui.h	/^    inline void         clear()                             { if (Data) { Size = Capacity = 0; I/;"	f	struct:ImVector	typeref:typename:void
 clear	./vendor/imgui.h	/^    void                clear()                 { Buf.clear(); }$/;"	f	struct:ImGuiTextBuffer	typeref:typename:void
 clear	./vendor/imgui_internal.h	/^    void            clear()                                 { LineOffsets.clear(); EndOffset = 0/;"	f	struct:ImGuiTextIndex	typeref:typename:void
 clear	./vendor/imgui_internal.h	/^    void    clear()                     { Buf.clear(); }$/;"	f	struct:ImChunkStream	typeref:typename:void
-clearColor	./globals.cpp	/^float globals :: clearColor[4];$/;"	m	class:globals 	typeref:typename:float[4]
 clearColor	./src/globals.cpp	/^float globals :: clearColor[4];$/;"	m	class:globals 	typeref:typename:float[4]
 clear_delete	./vendor/imgui.h	/^    inline void         clear_delete()                      { for (int n = 0; n < Size; n++) IM_/;"	f	struct:ImVector	typeref:typename:void
 clear_destruct	./vendor/imgui.h	/^    inline void         clear_destruct()                    { for (int n = 0; n < Size; n++) Dat/;"	f	struct:ImVector	typeref:typename:void
+clear_orders	./modulesAPI/coremodule.py	/^def clear_orders() :$/;"	f
 closeBounded	./vendor/glm/gtx/common.inl	/^	GLM_FUNC_QUALIFIER vec<L, bool, Q> closeBounded(vec<L, T, Q> const& Value, vec<L, T, Q> const& /;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,bool,Q>
 close_libgl	./vendor/imgui_impl_opengl3_loader.h	/^static void close_libgl(void) { FreeLibrary(libgl); }$/;"	f	typeref:typename:void
 closestPointOnLine	./vendor/glm/gtx/closest_point.inl	/^	GLM_FUNC_QUALIFIER vec<2, T, Q> closestPointOnLine$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<2,T,Q>
@@ -6427,6 +6434,7 @@ components	./vendor/glm/gtx/type_trait.inl	/^	length_t const type<mat<C, R, T, Q
 components	./vendor/glm/gtx/type_trait.inl	/^	length_t const type<qua<T, Q> >::components;$/;"	m	class:glm::type<qua<T, Q> >	typeref:typename:length_t const
 components	./vendor/glm/gtx/type_trait.inl	/^	length_t const type<tdualquat<T, Q> >::components;$/;"	m	class:glm::type<tdualquat<T, Q> >	typeref:typename:length_t const
 components	./vendor/glm/gtx/type_trait.inl	/^	length_t const type<vec<L, T, Q> >::components;$/;"	m	class:glm::type<vec<L, T, Q> >	typeref:typename:length_t const
+comps	./modulesAPI/coremodule.py	/^comps = [ ]$/;"	v
 computeCovarianceMatrix	./vendor/glm/gtx/pca.inl	/^	GLM_FUNC_QUALIFIER mat<D, D, T, Q> computeCovarianceMatrix(I const& b, I const& e)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<D,D,T,Q>
 computeCovarianceMatrix	./vendor/glm/gtx/pca.inl	/^	GLM_FUNC_QUALIFIER mat<D, D, T, Q> computeCovarianceMatrix(I const& b, I const& e, vec<D, T, Q>/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<D,D,T,Q>
 computeCovarianceMatrix	./vendor/glm/gtx/pca.inl	/^	GLM_FUNC_QUALIFIER mat<D, D, T, Q> computeCovarianceMatrix(vec<D, T, Q> const* v, size_t n)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<D,D,T,Q>
@@ -6813,10 +6821,8 @@ cubic	./vendor/glm/gtx/spline.inl	/^	GLM_FUNC_QUALIFIER genType cubic$/;"	f	name
 cubicEaseIn	./vendor/glm/gtx/easing.inl	/^	GLM_FUNC_QUALIFIER genType cubicEaseIn(genType const& a)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
 cubicEaseInOut	./vendor/glm/gtx/easing.inl	/^	GLM_FUNC_QUALIFIER genType cubicEaseInOut(genType const& a)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
 cubicEaseOut	./vendor/glm/gtx/easing.inl	/^	GLM_FUNC_QUALIFIER genType cubicEaseOut(genType const& a)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
-curActiveEntity	./globals.cpp	/^entityID editorGlobals :: curActiveEntity;$/;"	m	class:editorGlobals 	typeref:typename:entityID
 curActiveEntity	./src/globals.cpp	/^entityID editorGlobals :: curActiveEntity;$/;"	m	class:editorGlobals 	typeref:typename:entityID
 curPipelineRef	./include/camera.h	/^	Pipeline * curPipelineRef;$/;"	m	struct:Camera	typeref:typename:Pipeline *
-curSceneRef	./globals.cpp	/^Scene * globals :: curSceneRef;$/;"	m	class:globals 	typeref:typename:Scene *
 curSceneRef	./src/globals.cpp	/^Scene * globals :: curSceneRef;$/;"	m	class:globals 	typeref:typename:Scene *
 cur_x	./vendor/stb_image.h	/^   int cur_x, cur_y;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 cur_y	./vendor/stb_image.h	/^   int cur_x, cur_y;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
@@ -6885,7 +6891,6 @@ delim_right	./vendor/glm/gtx/io.hpp	/^			char_type  delim_right;$/;"	m	class:glm
 delimeter	./vendor/glm/gtx/io.hpp	/^		struct delimeter$/;"	s	namespace:glm::io
 delimeter	./vendor/glm/gtx/io.inl	/^	GLM_FUNC_QUALIFIER delimeter<CTy>::delimeter(CTy a, CTy b, CTy c)$/;"	f	class:glm::io::delimeter	typeref:typename:GLM_FUNC_QUALIFIER
 delta	./vendor/stb_image.h	/^   int    delta[17];   \/\/ old 'firstsymbol' - old 'firstcode'$/;"	m	struct:__anon212c1e400708	typeref:typename:int[17]
-deltaTime	./globals.cpp	/^double globals :: deltaTime;$/;"	m	class:globals 	typeref:typename:double
 deltaTime	./src/globals.cpp	/^double globals :: deltaTime;$/;"	m	class:globals 	typeref:typename:double
 depth	./vendor/stb_image.h	/^   int depth;$/;"	m	struct:__anon212c1e400e08	typeref:typename:int
 dequant	./vendor/stb_image.h	/^   stbi__uint16 dequant[4][64];$/;"	m	struct:__anon212c1e400808	typeref:typename:stbi__uint16[4][64]
@@ -7064,7 +7069,6 @@ end	./vendor/imgui_internal.h	/^    inline T*           end()                   
 end	./vendor/imgui_internal.h	/^    inline const T*     end() const                 { return DataEnd; }$/;"	f	struct:ImSpan	typeref:typename:const T *
 entities	./include/scene.h	/^	Entity entities[LOBSTER_MAX_ENTITIES] = { };$/;"	m	struct:Scene	typeref:typename:Entity[]
 entityID	./include/importantConstants.h	/^typedef unsigned short int  	entityID;$/;"	t	typeref:typename:unsigned short int
-entitySelected	./globals.cpp	/^bool editorGlobals :: entitySelected;$/;"	m	class:editorGlobals 	typeref:typename:bool
 entitySelected	./src/globals.cpp	/^bool editorGlobals :: entitySelected;$/;"	m	class:editorGlobals 	typeref:typename:bool
 eob_run	./vendor/stb_image.h	/^   int            eob_run;$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 eof	./vendor/stb_image.h	/^   int      (*eof)   (void *user);                       \/\/ returns nonzero if we are at end o/;"	m	struct:__anon212c1e400208	typeref:typename:int (*)(void * user)
@@ -7113,6 +7117,7 @@ eulerAngleZY	./vendor/glm/gtx/euler_angles.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T
 eulerAngleZYX	./vendor/glm/gtx/euler_angles.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, defaultp> eulerAngleZYX$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,defaultp>
 eulerAngleZYZ	./vendor/glm/gtx/euler_angles.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, defaultp> eulerAngleZYZ$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,defaultp>
 eulerAngles	./vendor/glm/gtc/quaternion.inl	/^	GLM_FUNC_QUALIFIER vec<3, T, Q> eulerAngles(qua<T, Q> const& x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<3,T,Q>
+exampleBingusScript	./scripts/exampleBingusScript.py	/^class exampleBingusScript(coremodule.BaseScript) :$/;"	c
 exp	./vendor/glm/detail/func_exponential.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> exp(vec<L, T, Q> const& x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
 exp	./vendor/glm/ext/quaternion_exponential.inl	/^	GLM_FUNC_QUALIFIER qua<T, Q> exp(qua<T, Q> const& q)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER qua<T,Q>
 exp2	./vendor/glm/detail/func_exponential.inl	/^	GLM_FUNC_QUALIFIER genType exp2(genType x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
@@ -7489,12 +7494,9 @@ genTypeTrait	./vendor/glm/detail/qualifier.hpp	/^	struct genTypeTrait<mat<C, R, 
 genTypeTrait	./vendor/glm/detail/type_quat.inl	/^	struct genTypeTrait<qua<T> >$/;"	s	namespace:glm::detail	file:
 getCameraEntityID	./src/scene.cpp	/^bool sceneManagement :: getCameraEntityID(Scene * targetScene, entityID * entHolder)$/;"	f	class:sceneManagement	typeref:typename:bool
 getCol	./include/math.h	/^		std :: vector<float> getCol(unsigned int colIndex)$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
-getColor	./srcAPI/lightAPI.cpp	/^std :: vector<float> getColor(Light& self)$/;"	f	typeref:typename:std::vector<float>
 getCols	./include/math.h	/^		unsigned int getCols()$/;"	f	class:LobMatrix	typeref:typename:unsigned int
 getData	./include/math.h	/^		float * getData()$/;"	f	class:LobMatrix	typeref:typename:float *
-getEntity	./srcAPI/sceneAPI.cpp	/^pybind11 :: object getEntity(Scene& self, entityID id)$/;"	f	typeref:typename:pybind11::object
 getInputString	./src/ui.cpp	/^bool uiManagement :: getInputString(std :: string labelString, std :: string& outputData)$/;"	f	class:uiManagement	typeref:typename:bool
-getLightComp	./srcAPI/sceneAPI.cpp	/^bool getLightComp(Scene& self, entityID id, Light& lightOut)$/;"	f	typeref:typename:bool
 getMeshFromPLY	./src/mesh.cpp	/^Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)$/;"	f	class:meshHandler	typeref:typename:Mesh *
 getObjectWorldMatrix	./src/transform.cpp	/^glm :: mat4x4 transformHandler :: getObjectWorldMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:glm::mat4x4
 getPoint	./include/math.h	/^		float getPoint(unsigned int y, unsigned int x)$/;"	f	class:LobMatrix	typeref:typename:float
@@ -7502,15 +7504,19 @@ getRotateMatrix	./src/transform.cpp	/^glm :: mat4x4 transformHandler :: getRotat
 getRow	./include/math.h	/^		std :: vector<float> getRow(unsigned int rowIndex)$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
 getRows	./include/math.h	/^		unsigned int getRows()$/;"	f	class:LobMatrix	typeref:typename:unsigned int
 getScaleMatrix	./src/transform.cpp	/^glm :: mat4x4 transformHandler :: getScaleMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:glm::mat4x4
-getTransComp	./srcAPI/sceneAPI.cpp	/^bool getTransComp(Scene& self, entityID id, Transform& transOut)$/;"	f	typeref:typename:bool
 getTranslateMatrix	./src/transform.cpp	/^glm :: mat4x4 transformHandler :: getTranslateMatrix(Transform * inputTrans)$/;"	f	class:transformHandler	typeref:typename:glm::mat4x4
 getVec	./include/math.h	/^		std :: vector<float> getVec()$/;"	f	class:LobMatrix	typeref:typename:std::vector<float>
 getWorldViewMatrix	./src/camera.cpp	/^glm :: mat4x4 cameraHandler :: getWorldViewMatrix(Camera * camera, Transform * transform)$/;"	f	class:cameraHandler	typeref:typename:glm::mat4x4
-get_component	./modulesAPI/coremodule.py	/^    def get_component(self, comp, entID = -1) :$/;"	m	class:BaseScript
+get_component	./modulesAPI/coremodule.py	/^def get_component(comp_name, entID) :$/;"	f
 get_facet	./vendor/glm/gtx/io.inl	/^	GLM_FUNC_QUALIFIER FTy const& get_facet(std::basic_ios<CTy, CTr>& ios)$/;"	f	namespace:glm::io	typeref:typename:GLM_FUNC_QUALIFIER FTy const &
 get_line_begin	./vendor/imgui_internal.h	/^    const char*     get_line_begin(const char* base, int n) { return base + LineOffsets[n]; }$/;"	f	struct:ImGuiTextIndex	typeref:typename:const char *
 get_line_end	./vendor/imgui_internal.h	/^    const char*     get_line_end(const char* base, int n)   { return base + (n + 1 < LineOffsets/;"	f	struct:ImGuiTextIndex	typeref:typename:const char *
+get_mesh	./modulesAPI/coremodule.py	/^    def get_mesh(self) :$/;"	m	class:Mesh
+get_position	./modulesAPI/coremodule.py	/^    def get_position(self) :$/;"	m	class:Transform
 get_proc	./vendor/imgui_impl_opengl3_loader.h	/^static GL3WglProc get_proc(const char *proc)$/;"	f	typeref:typename:GL3WglProc
+get_rotation	./modulesAPI/coremodule.py	/^    def get_rotation(self) :$/;"	m	class:Transform
+get_scale	./modulesAPI/coremodule.py	/^    def get_scale(self) :$/;"	m	class:Transform
+get_texture	./modulesAPI/coremodule.py	/^    def get_texture(self) :$/;"	m	class:Mesh
 gl	./vendor/imgui_impl_opengl3_loader.h	/^    } gl;$/;"	m	union:ImGL3WProcs	typeref:struct:ImGL3WProcs::__anon9d96c34e0108
 glActiveTexture	./vendor/imgui_impl_opengl3_loader.h	/^#define glActiveTexture /;"	d
 glAttachShader	./vendor/imgui_impl_opengl3_loader.h	/^#define glAttachShader /;"	d
@@ -7565,7 +7571,6 @@ glLinkProgram	./vendor/imgui_impl_opengl3_loader.h	/^#define glLinkProgram /;"	d
 glPixelStorei	./vendor/imgui_impl_opengl3_loader.h	/^#define glPixelStorei /;"	d
 glPolygonMode	./vendor/imgui_impl_opengl3_loader.h	/^#define glPolygonMode /;"	d
 glReadPixels	./vendor/imgui_impl_opengl3_loader.h	/^#define glReadPixels /;"	d
-glRef	./globals.cpp	/^void * globals :: glRef;$/;"	m	class:globals 	typeref:typename:void *
 glRef	./src/globals.cpp	/^void * globals :: glRef;$/;"	m	class:globals 	typeref:typename:void *
 glScissor	./vendor/imgui_impl_opengl3_loader.h	/^#define glScissor /;"	d
 glShaderSource	./vendor/imgui_impl_opengl3_loader.h	/^#define glShaderSource /;"	d
@@ -8077,6 +8082,7 @@ h_oversample	./vendor/imstb_truetype.h	/^   unsigned int   h_oversample, v_overs
 ha	./vendor/stb_image.h	/^      int hd,ha;$/;"	m	struct:__anon212c1e400808::__anon212c1e400908	typeref:typename:int
 half2float	./vendor/glm/gtc/packing.inl	/^	GLM_FUNC_QUALIFIER glm::uint half2float(glm::uint h)$/;"	f	namespace:glm::detail	typeref:typename:GLM_FUNC_QUALIFIER glm::uint
 half_pi	./vendor/glm/gtc/constants.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType half_pi()$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType
+hasComp	./src/utilities.cpp	/^bool hasComp(Entity inputEnt, componentID compID)$/;"	f	typeref:typename:bool
 has_preferred_x	./vendor/imstb_textedit.h	/^   unsigned char has_preferred_x;$/;"	m	struct:__anon25749c3e0308	typeref:typename:unsigned char
 hash	./vendor/glm/gtx/hash.hpp	/^	struct hash<glm::mat<2, 2, T, Q> >$/;"	s	namespace:std
 hash	./vendor/glm/gtx/hash.hpp	/^	struct hash<glm::mat<2, 3, T, Q> >$/;"	s	namespace:std
@@ -8783,12 +8789,14 @@ init_gentype	./vendor/glm/detail/qualifier.hpp	/^	struct init_gentype$/;"	s	name
 init_gentype	./vendor/glm/detail/qualifier.hpp	/^	struct init_gentype<genType, GENTYPE_MAT>$/;"	s	namespace:glm::detail
 init_gentype	./vendor/glm/detail/qualifier.hpp	/^	struct init_gentype<genType, GENTYPE_QUAT>$/;"	s	namespace:glm::detail
 init_mode	./vendor/imstb_rectpack.h	/^   int init_mode;$/;"	m	struct:stbrp_context	typeref:typename:int
+initialize	./src/app.cpp	/^void appManagement :: initialize()$/;"	f	class:appManagement	typeref:typename:void
 initializeAPI	./src/app.cpp	/^void appManagement :: initializeAPI()$/;"	f	class:appManagement	typeref:typename:void
 initialized	./vendor/imstb_textedit.h	/^   unsigned char initialized;$/;"	m	struct:__anon25749c3e0308	typeref:typename:unsigned char
 inputManagement	./include/input.h	/^namespace inputManagement$/;"	n
-inputState	./globals.cpp	/^InputState * globals :: inputState;$/;"	m	class:globals 	typeref:typename:InputState *
 inputState	./src/globals.cpp	/^InputState * globals :: inputState;$/;"	m	class:globals 	typeref:typename:InputState *
 inputTextFlags	./src/globals.cpp	/^ImGuiInputTextFlags editorGlobals :: inputTextFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiInputTextFlags
+input_ref	./modulesAPI/inputmodule.py	/^input_ref = InputState()$/;"	v
+input_ref	./scripts/testScript.py	/^input_ref = inputmodule.input_ref$/;"	v
 inputmodule	./src/APIUtils.cpp	/^pybind11 :: module APIGlobals :: inputmodule;$/;"	m	class:APIGlobals 	typeref:typename:pybind11::module
 insert	./vendor/imgui.h	/^    inline T*           insert(const T* it, const T& v)     { IM_ASSERT(it >= Data && it <= Data/;"	f	struct:ImVector	typeref:typename:T *
 insert_length	./vendor/imstb_textedit.h	/^   IMSTB_TEXTEDIT_POSITIONTYPE  insert_length;$/;"	m	struct:__anon25749c3e0108	typeref:typename:IMSTB_TEXTEDIT_POSITIONTYPE
@@ -8864,7 +8872,6 @@ isCompNull	./vendor/glm/gtx/vector_query.inl	/^	GLM_FUNC_QUALIFIER vec<4, bool, 
 isCompNull	./vendor/glm/gtx/vector_query.inl	/^	GLM_FUNC_QUALIFIER vec<L, bool, Q> isCompNull(vec<L, T, Q> const& v, T const& epsilon)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,bool,Q>
 isCompiled	./include/graphics.h	/^	bool isCompiled = false;$/;"	m	struct:Pipeline	typeref:typename:bool
 isIdentity	./vendor/glm/gtx/matrix_query.inl	/^	GLM_FUNC_QUALIFIER bool isIdentity(mat<C, R, T, Q> const& m, T const& epsilon)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER bool
-isKeyPressed	./srcAPI/inputModule.cpp	/^bool isKeyPressed(InputState self, char inputKey)$/;"	f	typeref:typename:bool
 isMultiple	./vendor/glm/ext/scalar_integer.inl	/^	GLM_FUNC_QUALIFIER bool isMultiple(genIUType Value, genIUType Multiple)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER bool
 isMultiple	./vendor/glm/ext/vector_integer.inl	/^	GLM_FUNC_QUALIFIER vec<L, bool, Q> isMultiple(vec<L, T, Q> const& Value, T Multiple)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,bool,Q>
 isMultiple	./vendor/glm/ext/vector_integer.inl	/^	GLM_FUNC_QUALIFIER vec<L, bool, Q> isMultiple(vec<L, T, Q> const& Value, vec<L, T, Q> const& Mu/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,bool,Q>
@@ -8880,7 +8887,6 @@ isOrthogonal	./vendor/glm/gtx/matrix_query.inl	/^	GLM_FUNC_QUALIFIER bool isOrth
 isPlaying	./src/globals.cpp	/^bool globals :: isPlaying;$/;"	m	class:globals 	typeref:typename:bool
 isPowerOfTwo	./vendor/glm/ext/scalar_integer.inl	/^	GLM_FUNC_QUALIFIER bool isPowerOfTwo(genIUType Value)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER bool
 isPowerOfTwo	./vendor/glm/ext/vector_integer.inl	/^	GLM_FUNC_QUALIFIER vec<L, bool, Q> isPowerOfTwo(vec<L, T, Q> const& Value)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,bool,Q>
-isRunning	./globals.cpp	/^bool globals :: isRunning;$/;"	m	class:globals 	typeref:typename:bool
 isRunning	./src/globals.cpp	/^bool globals :: isRunning;$/;"	m	class:globals 	typeref:typename:bool
 is_aligned	./vendor/glm/detail/qualifier.hpp	/^		struct is_aligned<glm::aligned_highp>$/;"	s	namespace:glm::detail
 is_aligned	./vendor/glm/detail/qualifier.hpp	/^		struct is_aligned<glm::aligned_lowp>$/;"	s	namespace:glm::detail
@@ -8898,7 +8904,7 @@ is_int	./vendor/glm/ext/scalar_int_sized.hpp	/^	struct is_int<int8>$/;"	s	namesp
 is_int	./vendor/glm/ext/scalar_uint_sized.hpp	/^	struct is_int<uint16>$/;"	s	namespace:glm::detail
 is_int	./vendor/glm/ext/scalar_uint_sized.hpp	/^	struct is_int<uint64>$/;"	s	namespace:glm::detail
 is_int	./vendor/glm/ext/scalar_uint_sized.hpp	/^	struct is_int<uint8>$/;"	s	namespace:glm::detail
-is_key_pressed	./modulesAPI/inputmodule.py	/^def is_key_pressed(inputKey) :$/;"	f
+is_key_pressed	./modulesAPI/inputmodule.py	/^    def is_key_pressed(self, input_key) :$/;"	m	class:InputState
 is_mat	./vendor/glm/gtx/type_trait.hpp	/^		static bool const is_mat = false;$/;"	m	struct:glm::type	typeref:typename:bool const
 is_mat	./vendor/glm/gtx/type_trait.hpp	/^		static bool const is_mat = true;$/;"	m	struct:glm::type	typeref:typename:bool const
 is_mat	./vendor/glm/gtx/type_trait.inl	/^	bool const type<T>::is_mat;$/;"	m	class:glm::type<T>	typeref:typename:bool const
@@ -11166,6 +11172,7 @@ order	./vendor/glm/gtx/io.hpp	/^		struct order$/;"	s	namespace:glm::io
 order	./vendor/glm/gtx/io.inl	/^	GLM_FUNC_QUALIFIER order::order(order_type a)$/;"	f	class:glm::io::order	typeref:typename:GLM_FUNC_QUALIFIER
 order	./vendor/stb_image.h	/^   int scan_n, order[4];$/;"	m	struct:__anon212c1e400808	typeref:typename:int[4]
 order_type	./vendor/glm/gtx/io.hpp	/^		enum order_type { column_major, row_major};$/;"	g	namespace:glm::io
+orders	./modulesAPI/coremodule.py	/^orders = [ ]$/;"	v
 orientate2	./vendor/glm/gtx/euler_angles.inl	/^	GLM_FUNC_QUALIFIER mat<2, 2, T, defaultp> orientate2$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<2,2,T,defaultp>
 orientate3	./vendor/glm/gtx/euler_angles.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, Q> orientate3$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<3,3,T,Q>
 orientate3	./vendor/glm/gtx/euler_angles.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, defaultp> orientate3$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<3,3,T,defaultp>
@@ -11562,7 +11569,6 @@ perspectiveRH_ZO	./vendor/glm/ext/matrix_clip_space.inl	/^	GLM_FUNC_QUALIFIER ma
 perspectiveZO	./vendor/glm/ext/matrix_clip_space.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, defaultp> perspectiveZO(T fovy, T aspect, T zNear, T zFar)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,defaultp>
 pi	./vendor/glm/ext/scalar_constants.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType pi()$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType
 pickMatrix	./vendor/glm/ext/matrix_projection.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, Q> pickMatrix(vec<2, T, Q> const& center, vec<2, T, Q> const& d/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
-pipelineRefs	./globals.cpp	/^std :: vector<Pipeline *> globals :: pipelineRefs;$/;"	m	class:globals 	typeref:typename:std::vector<Pipeline * >
 pipelineRefs	./src/globals.cpp	/^std :: vector<Pipeline *> globals :: pipelineRefs;$/;"	m	class:globals 	typeref:typename:std::vector<Pipeline * >
 pitch	./vendor/glm/gtc/quaternion.inl	/^	GLM_FUNC_QUALIFIER T pitch(qua<T, Q> const& q)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER T
 pixels	./include/texture.h	/^	unsigned char * pixels;$/;"	m	struct:Texture	typeref:typename:unsigned char *
@@ -11605,6 +11611,7 @@ prefix	./vendor/glm/gtx/string_cast.inl	/^	struct prefix<uint8_t>$/;"	s	namespac
 prefix	./vendor/glm/gtx/string_cast.inl	/^	struct prefix{};$/;"	s	namespace:glm::detail	file:
 prefix	./vendor/stb_image.h	/^   stbi__int16 prefix;$/;"	m	struct:__anon212c1e401208	typeref:typename:stbi__int16
 present	./src/graphics.cpp	/^void graphicManagement :: present()$/;"	f	class:graphicManagement	typeref:typename:void
+press_key	./modulesAPI/inputmodule.py	/^    def press_key(self, input_key) :$/;"	m	class:InputState
 pressedKeys	./include/input.h	/^	std :: bitset<128> pressedKeys = {0};$/;"	m	struct:InputState	typeref:typename:std::bitset<128>
 prevFloat	./vendor/glm/ext/scalar_ulp.inl	/^	GLM_FUNC_QUALIFIER T prevFloat(T x, int ULPs)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER T
 prevFloat	./vendor/glm/ext/scalar_ulp.inl	/^	GLM_FUNC_QUALIFIER double prevFloat(double x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER double
@@ -11633,6 +11640,8 @@ print_matrix_pair_on	./vendor/glm/gtx/io.inl	/^	GLM_FUNC_QUALIFIER std::basic_os
 print_vector_on	./vendor/glm/gtx/io.inl	/^	print_vector_on(std::basic_ostream<CTy, CTr>& os, V const& a)$/;"	f	namespace:glm::detail	typeref:typename:GLM_FUNC_QUALIFIER std::basic_ostream<CTy,CTr> &
 proc_names	./vendor/imgui_impl_opengl3_loader.h	/^static const char *proc_names[] = {$/;"	v	typeref:typename:const char * []
 processInput	./src/input.cpp	/^void inputManagement :: processInput(entityID cameraID)$/;"	f	class:inputManagement	typeref:typename:void
+processOrder	./src/mesh.cpp	/^void meshHandler :: processOrder$/;"	f	class:meshHandler	typeref:typename:void
+processOrder	./src/transform.cpp	/^void transformHandler :: processOrder$/;"	f	class:transformHandler	typeref:typename:void
 proggy_clean_ttf_compressed_data_base85	./vendor/imgui_draw.cpp	/^static const char proggy_clean_ttf_compressed_data_base85[11980 + 1] =$/;"	v	typeref:typename:const char[]	file:
 program	./include/graphics.h	/^	GLuint program;$/;"	m	struct:Pipeline	typeref:typename:GLuint
 progressive	./vendor/stb_image.h	/^   int            progressive;$/;"	m	struct:__anon212c1e400808	typeref:typename:int
@@ -11646,6 +11655,7 @@ ptr	./vendor/imgui.cpp	/^    union { void* ptr; int integer; } tex_id_opaque;$/;
 ptr	./vendor/imgui_impl_opengl3_loader.h	/^    GL3WglProc ptr[59];$/;"	m	union:ImGL3WProcs	typeref:typename:GL3WglProc[59]
 ptr_from_offset	./vendor/imgui_internal.h	/^    T*      ptr_from_offset(int off)    { IM_ASSERT(off >= 4 && off < Buf.Size); return (T*)(voi/;"	f	struct:ImChunkStream	typeref:typename:T *
 push_back	./vendor/imgui.h	/^    inline void         push_back(const T& v)               { if (Size == Capacity) reserve(_gro/;"	f	struct:ImVector	typeref:typename:void
+push_data	./modulesAPI/coremodule.py	/^    def push_data(self) :$/;"	m	class:BaseScript
 push_front	./vendor/imgui.h	/^    inline void         push_front(const T& v)              { if (Size == 0) push_back(v); else /;"	f	struct:ImVector	typeref:typename:void
 pvertices	./vendor/imstb_truetype.h	/^   stbtt_vertex *pvertices;$/;"	m	struct:__anonecd446350f08	typeref:typename:stbtt_vertex *
 pythag	./vendor/glm/gtx/pca.inl	/^		GLM_FUNC_QUALIFIER static T pythag(T const& a, T const& b) {$/;"	f	namespace:glm::_internal_	typeref:typename:GLM_FUNC_QUALIFIER T	file:
@@ -11709,6 +11719,7 @@ reflect2D	./vendor/glm/gtx/transform2.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, Q> 
 reflect3D	./vendor/glm/gtx/transform2.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, Q> reflect3D(mat<4, 4, T, Q> const& m, vec<3, T, Q> const& norm/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
 refract	./vendor/glm/detail/func_geometric.inl	/^	GLM_FUNC_QUALIFIER genType refract(genType const& I, genType const& N, genType eta)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
 refract	./vendor/glm/detail/func_geometric.inl	/^	GLM_FUNC_QUALIFIER vec<L, T, Q> refract(vec<L, T, Q> const& I, vec<L, T, Q> const& N, T eta)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,T,Q>
+reload	./include/mesh.h	/^	bool reload = false;$/;"	m	struct:Mesh	typeref:typename:bool
 removeComp	./src/scene.cpp	/^void sceneManagement :: removeComp(Scene * targetScene, entityID entityIndex, componentID compIn/;"	f	class:sceneManagement	typeref:typename:void
 renderScene	./src/scene.cpp	/^void sceneManagement :: renderScene(Scene * targetScene)$/;"	f	class:sceneManagement	typeref:typename:void
 repeat	./vendor/glm/ext/scalar_common.inl	/^	GLM_FUNC_QUALIFIER genType repeat(genType const& Texcoord)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER genType
@@ -11743,8 +11754,8 @@ root_pi	./vendor/glm/gtc/constants.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR genTy
 root_three	./vendor/glm/gtc/constants.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType root_three()$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType
 root_two	./vendor/glm/gtc/constants.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType root_two()$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType
 root_two_pi	./vendor/glm/gtc/constants.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType root_two_pi()$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR genType
+rotate	./modulesAPI/coremodule.py	/^    def rotate(self, delta_vec) :$/;"	m	class:Transform
 rotate	./src/transform.cpp	/^void transformHandler :: rotate$/;"	f	class:transformHandler	typeref:typename:void
-rotate	./srcAPI/transformAPI.cpp	/^void rotate(Transform& self, std :: vector<float> deltaVec)$/;"	f	typeref:typename:void
 rotate	./vendor/glm/ext/matrix_transform.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, Q> rotate(mat<4, 4, T, Q> const& m, T angle, vec<3, T, Q> const/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
 rotate	./vendor/glm/ext/quaternion_transform.inl	/^	GLM_FUNC_QUALIFIER qua<T, Q> rotate(qua<T, Q> const& q, T const& angle, vec<3, T, Q> const& v)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER qua<T,Q>
 rotate	./vendor/glm/gtx/matrix_transform_2d.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, Q> rotate($/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<3,3,T,Q>
@@ -11814,8 +11825,8 @@ saturation	./vendor/glm/gtx/color_space.inl	/^	GLM_FUNC_QUALIFIER vec<3, T, Q> s
 saturation	./vendor/glm/gtx/color_space.inl	/^	GLM_FUNC_QUALIFIER vec<4, T, Q> saturation(const T s, const vec<4, T, Q>& color)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<4,T,Q>
 saveScene	./src/scene.cpp	/^void sceneManagement :: saveScene(Scene * inputScene, std :: string alternateName)$/;"	f	class:sceneManagement	typeref:typename:void
 scale	./include/transform.h	/^	std :: vector<float> scale = { 1.0f, 1.0f, 1.0f };$/;"	m	struct:Transform	typeref:typename:std::vector<float>
+scale	./modulesAPI/coremodule.py	/^    def scale(self, delta_vec) :$/;"	m	class:Transform
 scale	./src/transform.cpp	/^void transformHandler :: scale$/;"	f	class:transformHandler	typeref:typename:void
-scale	./srcAPI/transformAPI.cpp	/^void scale(Transform& self, std :: vector<float> deltaVec)$/;"	f	typeref:typename:void
 scale	./vendor/glm/ext/matrix_transform.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, Q> scale(mat<4, 4, T, Q> const& m, vec<3, T, Q> const& v)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
 scale	./vendor/glm/gtx/matrix_decompose.inl	/^	GLM_FUNC_QUALIFIER vec<3, T, Q> scale(vec<3, T, Q> const& v, T desiredLength)$/;"	f	namespace:glm::detail	typeref:typename:GLM_FUNC_QUALIFIER vec<3,T,Q>
 scale	./vendor/glm/gtx/matrix_transform_2d.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, Q> scale($/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<3,3,T,Q>
@@ -11827,9 +11838,6 @@ scale_slow	./vendor/glm/ext/matrix_transform.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4,
 scan_n	./vendor/stb_image.h	/^   int scan_n, order[4];$/;"	m	struct:__anon212c1e400808	typeref:typename:int
 sceneManagement	./include/scene.h	/^namespace sceneManagement$/;"	n
 sceneOut	./src/scene.cpp	/^void sceneManagement :: sceneOut(Scene * inputScene)$/;"	f	class:sceneManagement	typeref:typename:void
-sceneOut	./srcAPI/sceneAPI.cpp	/^void sceneOut(Scene& self)$/;"	f	typeref:typename:void
-sceneRef	./srcAPI/sceneAPI.cpp	/^static Scene sceneRef;$/;"	v	typeref:typename:Scene	file:
-sceneTreeFlags	./globals.cpp	/^ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiTreeNodeFlags
 sceneTreeFlags	./src/globals.cpp	/^ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiTreeNodeFlags
 sceneView	./src/scene.cpp	/^std :: vector<entityID> sceneManagement :: sceneView$/;"	f	class:sceneManagement	typeref:typename:std::vector<entityID>
 scriptHandler	./include/script.h	/^namespace scriptHandler$/;"	n
@@ -11844,13 +11852,13 @@ select_start	./vendor/imstb_textedit.h	/^   int select_start;          \/\/ sele
 separator	./vendor/glm/gtx/io.hpp	/^			char_type  separator;$/;"	m	class:glm::io::format_punct	typeref:typename:char_type
 set	./vendor/imgui_internal.h	/^    inline void         set(T* data, T* data_end)   { Data = data; DataEnd = data_end; }$/;"	f	struct:ImSpan	typeref:typename:void
 set	./vendor/imgui_internal.h	/^    inline void         set(T* data, int size)      { Data = data; DataEnd = data + size; }$/;"	f	struct:ImSpan	typeref:typename:void
-setColor	./srcAPI/lightAPI.cpp	/^void setColor(Light& self, std :: vector<float> newVec)$/;"	f	typeref:typename:void
-setData	./include/scene.h	/^	void setData(pybind11 :: dict retValue, std :: string entryName, T * data)$/;"	f	namespace:sceneManagement	typeref:typename:void
 setPoint	./include/math.h	/^		void setPoint(unsigned int y, unsigned int x, float value)$/;"	f	class:LobMatrix	typeref:typename:void
-setPosition	./srcAPI/transformAPI.cpp	/^void setPosition(Transform& self, std :: vector<float> newVec)$/;"	f	typeref:typename:void
-setRotation	./srcAPI/transformAPI.cpp	/^void setRotation(Transform& self, std :: vector<float> newVec)$/;"	f	typeref:typename:void
-setScale	./srcAPI/transformAPI.cpp	/^void setScale(Transform& self, std :: vector<float> newVec)$/;"	f	typeref:typename:void
 setTexture	./src/mesh.cpp	/^void meshHandler :: setTexture(Mesh * inputMesh, Texture * inputTexture)$/;"	f	class:meshHandler	typeref:typename:void
+set_mesh	./modulesAPI/coremodule.py	/^    def set_mesh(self, mesh_name) :$/;"	m	class:Mesh
+set_position	./modulesAPI/coremodule.py	/^    def set_position(self, input_position) :$/;"	m	class:Transform
+set_rotation	./modulesAPI/coremodule.py	/^    def set_rotation(self, input_rotation) :$/;"	m	class:Transform
+set_scale	./modulesAPI/coremodule.py	/^    def set_scale(self, input_scale) :$/;"	m	class:Transform
+set_texture	./modulesAPI/coremodule.py	/^    def set_texture(self, tex_name) :$/;"	m	class:Mesh
 shear	./vendor/glm/ext/matrix_transform.inl	/^    GLM_FUNC_QUALIFIER mat<4, 4, T, Q> shear(mat<4, 4, T, Q> const &m, vec<3, T, Q> const& p, ve/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
 shearX	./vendor/glm/gtx/matrix_transform_2d.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, Q> shearX($/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<3,3,T,Q>
 shearX2D	./vendor/glm/gtx/transform2.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, Q> shearX2D(mat<3, 3, T, Q> const& m, T s)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<3,3,T,Q>
@@ -11861,11 +11869,10 @@ shearY3D	./vendor/glm/gtx/transform2.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, Q> s
 shearZ3D	./vendor/glm/gtx/transform2.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, Q> shearZ3D(mat<4, 4, T, Q> const& m, T s, T t)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
 shear_slow	./vendor/glm/ext/matrix_transform.inl	/^    GLM_FUNC_QUALIFIER mat<4, 4, T, Q> shear_slow(mat<4, 4, T, Q> const &m, vec<3, T, Q> const& /;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
 shiftPressed	./include/input.h	/^	bool shiftPressed = false;$/;"	m	struct:InputState	typeref:typename:bool
+shoot	./scripts/exampleBingusScript.py	/^    def shoot(self) :$/;"	m	class:exampleBingusScript
 shortMix	./vendor/glm/gtx/quaternion.inl	/^	GLM_FUNC_QUALIFIER qua<T, Q> shortMix(qua<T, Q> const& x, qua<T, Q> const& y, T const& a)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER qua<T,Q>
 shrink	./vendor/imgui.h	/^    inline void         shrink(int new_size)                { IM_ASSERT(new_size <= Size); Size /;"	f	struct:ImVector	typeref:typename:void
-sidePanelHeight	./globals.cpp	/^float editorGlobals :: sidePanelHeight;$/;"	m	class:editorGlobals 	typeref:typename:float
 sidePanelHeight	./src/globals.cpp	/^float editorGlobals :: sidePanelHeight;$/;"	m	class:editorGlobals 	typeref:typename:float
-sidePanelWidth	./globals.cpp	/^float editorGlobals :: sidePanelWidth;$/;"	m	class:editorGlobals 	typeref:typename:float
 sidePanelWidth	./src/globals.cpp	/^float editorGlobals :: sidePanelWidth;$/;"	m	class:editorGlobals 	typeref:typename:float
 sign	./vendor/glm/detail/func_common.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR genFIType sign(genFIType x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR genFIType
 sign	./vendor/glm/detail/func_common.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec<L, T, Q> sign(vec<L, T, Q> const& x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec<L,T,Q>
@@ -11928,7 +11935,7 @@ sqrt	./vendor/glm/ext/quaternion_exponential.inl	/^	GLM_FUNC_QUALIFIER qua<T, Q>
 sqrt	./vendor/glm/gtx/integer.inl	/^	GLM_FUNC_QUALIFIER int sqrt(int x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER int
 sqrt	./vendor/glm/gtx/integer.inl	/^	GLM_FUNC_QUALIFIER uint sqrt(uint x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER uint
 squad	./vendor/glm/gtx/quaternion.inl	/^	GLM_FUNC_QUALIFIER qua<T, Q> squad$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER qua<T,Q>
-startScripts	./src/app.cpp	/^void appManagement :: startScripts(bool initialize)$/;"	f	class:appManagement	typeref:typename:void
+startScripts	./src/app.cpp	/^void appManagement :: startScripts()$/;"	f	class:appManagement	typeref:typename:void
 start_x	./vendor/stb_image.h	/^   int start_x, start_y;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 start_y	./vendor/stb_image.h	/^   int start_x, start_y;$/;"	m	struct:__anon212c1e401308	typeref:typename:int
 started	./vendor/imstb_truetype.h	/^   int started;$/;"	m	struct:__anonecd446350f08	typeref:typename:int
@@ -12520,7 +12527,6 @@ tdualquat	./vendor/glm/gtx/dual_quaternion.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEX
 tdualquat	./vendor/glm/gtx/dual_quaternion.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR tdualquat<T, Q>::tdualquat(qua<T, Q> const& r, qua<T, Q> const/;"	f	class:glm::tdualquat	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR
 tdualquat	./vendor/glm/gtx/dual_quaternion.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR tdualquat<T, Q>::tdualquat(tdualquat<T, P> const& d)$/;"	f	class:glm::tdualquat	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR
 tdualquat	./vendor/glm/gtx/dual_quaternion.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR tdualquat<T, Q>::tdualquat(tdualquat<U, P> const& q)$/;"	f	class:glm::tdualquat	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR
-tempRot	./globals.cpp	/^std :: vector<float> globals :: tempRot;$/;"	m	class:globals 	typeref:typename:std::vector<float>
 tempRot	./src/globals.cpp	/^std :: vector<float> globals :: tempRot;$/;"	m	class:globals 	typeref:typename:std::vector<float>
 tempScale	./src/globals.cpp	/^float globals :: tempScale;$/;"	m	class:globals 	typeref:typename:float
 test	./vendor/glm/detail/setup.hpp	/^		enum test {value = 0};$/;"	g	struct:glm::detail::is_int
@@ -12558,8 +12564,8 @@ tq	./vendor/stb_image.h	/^      int tq;$/;"	m	struct:__anon212c1e400808::__anon2
 tquat	./vendor/glm/detail/qualifier.hpp	/^		template <typename T, qualifier Q = defaultp> using tquat = qua<T, Q>;$/;"	t	namespace:glm	typeref:typename:qua<T,Q>
 transferSign	./vendor/glm/gtx/pca.inl	/^		GLM_FUNC_QUALIFIER static T transferSign(T const& v, T const& s)$/;"	f	namespace:glm::_internal_	typeref:typename:GLM_FUNC_QUALIFIER T	file:
 transformHandler	./include/transform.h	/^namespace transformHandler$/;"	n
+translate	./modulesAPI/coremodule.py	/^    def translate(self, delta_vec, globally = False) :$/;"	m	class:Transform
 translate	./src/transform.cpp	/^void transformHandler :: translate$/;"	f	class:transformHandler	typeref:typename:void
-translate	./srcAPI/transformAPI.cpp	/^void translate(Transform& self, std :: vector<float> deltaVec)$/;"	f	typeref:typename:void
 translate	./vendor/glm/ext/matrix_transform.inl	/^	GLM_FUNC_QUALIFIER GLM_CONSTEXPR mat<4, 4, T, Q> translate(mat<4, 4, T, Q> const& m, vec<3, T, /;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER GLM_CONSTEXPR mat<4,4,T,Q>
 translate	./vendor/glm/gtx/matrix_transform_2d.inl	/^	GLM_FUNC_QUALIFIER mat<3, 3, T, Q> translate($/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<3,3,T,Q>
 translate	./vendor/glm/gtx/transform.inl	/^	GLM_FUNC_QUALIFIER mat<4, 4, T, Q> translate(vec<3, T, Q> const& v)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER mat<4,4,T,Q>
@@ -12901,9 +12907,11 @@ unpackUnorm3x5_1x1	./vendor/glm/gtc/packing.inl	/^	GLM_FUNC_QUALIFIER vec4 unpac
 unpackUnorm4x16	./vendor/glm/gtc/packing.inl	/^	GLM_FUNC_QUALIFIER vec4 unpackUnorm4x16(uint64 p)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec4
 unpackUnorm4x4	./vendor/glm/gtc/packing.inl	/^	GLM_FUNC_QUALIFIER vec4 unpackUnorm4x4(uint16 v)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec4
 unpackUnorm4x8	./vendor/glm/detail/func_packing.inl	/^	GLM_FUNC_QUALIFIER vec4 unpackUnorm4x8(uint p)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec4
+unpress_key	./modulesAPI/inputmodule.py	/^    def unpress_key(self, input_key) :$/;"	m	class:InputState
 up	./include/camera.h	/^	std :: vector<float> up = { 0.0f, 1.0f, 0.0f };$/;"	m	struct:Camera	typeref:typename:std::vector<float>
 update	./src/app.cpp	/^void appManagement :: update()$/;"	f	class:appManagement	typeref:typename:void
 updateScene	./src/scene.cpp	/^void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)$/;"	f	class:sceneManagement	typeref:typename:void
+update_bullets	./scripts/exampleBingusScript.py	/^    def update_bullets(self, delta_time) :$/;"	m	class:exampleBingusScript
 uround	./vendor/glm/ext/scalar_common.inl	/^	GLM_FUNC_QUALIFIER uint uround(genType const& x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER uint
 uround	./vendor/glm/ext/vector_common.inl	/^	GLM_FUNC_QUALIFIER vec<L, uint, Q> uround(vec<L, T, Q> const& x)$/;"	f	namespace:glm	typeref:typename:GLM_FUNC_QUALIFIER vec<L,uint,Q>
 usePipeline	./src/graphics.cpp	/^void graphicManagement :: usePipeline(Pipeline * targetPipeline)$/;"	f	class:graphicManagement	typeref:typename:void
@@ -13288,13 +13296,9 @@ width	./vendor/imstb_rectpack.h	/^   int width;$/;"	m	struct:stbrp_context	typer
 width	./vendor/imstb_truetype.h	/^   int   width;$/;"	m	struct:stbtt_pack_context	typeref:typename:int
 width	./vendor/imstb_truetype.h	/^   int width,height;$/;"	m	struct:__anonecd446351108	typeref:typename:int
 width_	./vendor/glm/gtx/io.hpp	/^			streamsize_type width_;$/;"	m	class:glm::io::basic_state_saver	typeref:typename:streamsize_type
-winHeight	./globals.cpp	/^unsigned short int globals :: winHeight;$/;"	m	class:globals 	typeref:typename:unsigned short int
 winHeight	./src/globals.cpp	/^unsigned short int globals :: winHeight;$/;"	m	class:globals 	typeref:typename:unsigned short int
-winRef	./globals.cpp	/^SDL_Window * globals :: winRef;$/;"	m	class:globals 	typeref:typename:SDL_Window *
 winRef	./src/globals.cpp	/^SDL_Window * globals :: winRef;$/;"	m	class:globals 	typeref:typename:SDL_Window *
-winWidth	./globals.cpp	/^unsigned short int globals :: winWidth;$/;"	m	class:globals 	typeref:typename:unsigned short int
 winWidth	./src/globals.cpp	/^unsigned short int globals :: winWidth;$/;"	m	class:globals 	typeref:typename:unsigned short int
-windowFlags	./globals.cpp	/^ImGuiWindowFlags editorGlobals :: windowFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiWindowFlags
 windowFlags	./src/globals.cpp	/^ImGuiWindowFlags editorGlobals :: windowFlags;$/;"	m	class:editorGlobals 	typeref:typename:ImGuiWindowFlags
 windowManagement	./include/window.h	/^namespace windowManagement$/;"	n
 word	./vendor/glm/ext/scalar_ulp.inl	/^	unsigned int word;$/;"	m	union:__anona9da2ea5010a	typeref:typename:unsigned int	file:

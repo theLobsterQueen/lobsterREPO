@@ -103,7 +103,7 @@ void uiManagement :: drawEditorUI()
 			{
 				sceneManagement :: saveScene(globals :: curSceneRef);
 				appManagement :: compileScripts();
-				appManagement :: startScripts(true);
+				appManagement :: startScripts();
 				globals :: isPlaying = true;
 			}
 			if(ImGui :: MenuItem("Stop Scene"))

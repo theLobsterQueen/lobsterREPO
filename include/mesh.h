@@ -4,6 +4,7 @@
 // INCLUDES AND INITIALIZATIONS //
 
 // STD INCLUDES //
+#include <pybind11/pybind11.h>
 #include <vector>
 #include <cmath>
 #include <fstream>
@@ -72,6 +73,13 @@ namespace meshHandler
 	/// </summary> ///
 
 	void setTexture(Mesh * inputMesh, Texture * inputTexture);
+
+	/// <summary> ///
+	///		Processes orders given from the Python API, which pertain to Mesh
+	///			components.
+	/// </summary> ///
+
+	void processOrder(std :: string orderName, entityID entID, std :: vector<pybind11 :: object> params);
 };
 
 #endif

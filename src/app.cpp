@@ -256,38 +256,37 @@ void appManagement :: compileScripts()
 	firstTimeCompile = false;
 }
 
-void appManagement :: startScripts(bool initialize)
+void appManagement :: startScripts()
 {
-	APIGlobals :: inputmodule.attr("input_ref") = (*globals :: inputState);
-	APIGlobals :: coremodule.attr("scene_ref") = (*globals :: curSceneRef);
+	// ADDS ALL CURRENTLY EXISTING COMPONENTS INTO THE API //
+	unsigned curActive = globals :: curSceneRef -> activeEntities;
+	for(entityID curEntID = 0; curEntID < LOBSTER_MAX_ENTITIES && curActive > 0; curEntID++)
+	{
+		Entity curEnt = globals :: curSceneRef -> entities[curEntID];
+		if(curEnt.mask == 0)
+			continue;
 
-	if(initialize)
-		for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
-		{ 
-			((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt])) 
-				-> code.attr("_initialize")(curEnt); 
+		curActive--;
+		Transform * transData = (Transform *) 
+			(globals :: curSceneRef -> components[TRANS_COMP_ID][curEntID]);
+		APIGlobals :: coremodule.attr("Transform")
+			(curEntID, transData -> position, transData -> rotation, transData -> scale);
+
+		if(hasComp(curEnt, MESH_COMP_ID))
+		{
+			Mesh * meshData = (Mesh *) (globals :: curSceneRef -> components[MESH_COMP_ID][curEntID]);
+			APIGlobals :: coremodule.attr("Mesh")(curEntID, meshData -> name, meshData -> texName);
 		}
+	}
+	
+	// CLEARS ORDERS AFTER INITIALIZING SCENE IN ORDER TO STOP DUPLICATE INITIALIZATIONS //
+	APIGlobals :: coremodule.attr("clear_orders")();
 
 	// RUNS THE AWAKE SCRIPTS, AND ADDS ANY ENTITIES/COMPONENTS TO THE SCENE THAT WERE CREATED //
 	for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
 	{ 
-		Script * script = ((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]));
-		script -> code.attr("_awake")();
-
-		// CHECKS TO SEE IF SCRIPT WANTS ANY NEW COMPONENTS ADDED //
-		std :: vector<pybind11 :: tuple> compsToAdd = 
-			pybind11 :: cast<std :: vector<pybind11 :: tuple>>(script -> code.attr("push_to_add")());
-		for(unsigned i = 0; i < compsToAdd.size(); i++)
-		{
-			componentID compID = stringToComp(pybind11 :: cast<std :: string>(compsToAdd[i][0]));
-			entityID id = pybind11 :: cast<entityID>(compsToAdd[i][1]);
-
-			sceneManagement :: addComp
-			(
-				globals :: curSceneRef, id,
-				compID, constructComp(compID)
-			);
-		}
+		((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]))
+			-> code.attr("_awake")(); 
 	}
 
 	// RUNS THE START SCRIPT //

@@ -1,17 +1,144 @@
 # IMPORTS PYTHON MODULES #
 import inspect
 
-# IMPORTS API MODULES #
-from _coremodule import *
-from _entityapi import *
-from _sceneapi import *
-from _meshapi import *
-from _transformapi import *
-from _lightapi import *
+# IMPORTS LOBSTER MODULES #
+import inputmodule
 
 # CORE MODULE ATTRIBUTES #
+comps = [ ]
+orders = [ ]
 script_refs = { }
 
+# CORE MODULE FUNCTIONS #
+def clear_orders() :
+    orders.clear()
+
+# METHODS FOR HANDLING COMPONENTS #
+def get_component(comp_name, entID) :
+    for comp in comps :
+        if comp.__class__.__name__ == comp_name.title() and comp.entity_id == entID :
+            return comp
+    raise ValueError(f"ERROR! COMP OF TYPE {comp_name} IN ENTITY {entID} COULD NOT BE FOUND!")
+
+def change_data(comp_name, entID, attribute_name, new_value) :
+    comp_name = comp_name.lower()
+    attrib = getattr(get_component(comp_name, entID), attribute_name)
+    attrib = new_value
+
+# UTILITY FUNCTIONS #
+def add_vecs(vec_1, vec_2) :
+    if len(vec_1) != len(vec_2) :
+        raise ValueError("ERROR, ATTEMPTING TO ADD TWO VECS OF DIFFERENT DIMENSIONS!")
+    i = 0
+    ret_vec = [ ]
+    while i < len(vec_1) :
+        ret_vec.append(vec_1[i] + vec_2[i])
+        i += 1
+    return ret_vec
+
+# COMPONENT DEFINITIONS #
+class Component() :
+    def __init__(self, comp_name, input_id) :
+        self.entity_id = input_id
+        comps.append(self)
+
+    def __repr__(self) :
+        return f"COMPONENT OF TYPE {self.__class__.__name__.upper()} IN ENTITY {self.entity_id}!"
+
+class Transform(Component) :
+    def __init__(self, input_id, position = [], rotation = [], scale = []) :
+        super().__init__("Transform", input_id)
+
+        # ATTRIBUTE DEFINITIONS #
+        self.position = [ 0.0, 0.0, 0.0 ]
+        self.rotation = [ 0.0, 0.0, 0.0 ]
+        self.scale = [ 0.0, 0.0, 0.0 ]
+
+        # CHECKS FOR ORDERS PACK INTO INIT #
+        if len(position) != 0 :
+            self.set_position(position)
+        if len(rotation) != 0 :
+            self.set_rotation(rotation)
+        if len(scale) != 0 :
+            self.set_scale(scale)
+
+    # GETTER METHODS #
+    def get_position(self) :
+        return list(self.position)
+    def get_rotation(self) :
+        return list(self.rotation)
+    def get_scale(self) :
+        return list(self.scale)
+
+    # SETTER METHODS #
+    def sync_data(self, input_position, input_rotation, input_scale) :
+        self.position = input_position
+        self.rotation = input_rotation
+        self.scale = input_scale
+
+    # ORDER METHODS #
+    def translate(self, delta_vec, globally = False) :
+        orders.append(("transform_translate", self.entity_id, delta_vec, globally))
+    def rotate(self, delta_vec) :
+        orders.append(("transform_rotate", self.entity_id, delta_vec))
+    def scale(self, delta_vec) :
+        orders.append(("transform_scale", self.entity_id, delta_vec))
+
+    def set_position(self, input_position) :
+        self.position = input_position
+        orders.append(("transform_setPosition", self.entity_id, input_position))
+    def set_rotation(self, input_rotation) :
+        self.rotation = input_rotation
+        orders.append(("transform_setRotation", self.entity_id, input_rotation))
+    def set_scale(self, input_scale) :
+        self.scale = input_scale
+        orders.append(("transform_setScale", self.entity_id, input_scale))
+
+class Mesh(Component) :
+    def __init__(self, input_id, mesh_name = "", tex_name = "") :
+        super().__init__("Mesh", input_id)
+
+        # ATTRIBUTE DEFINITIONS #
+        self.tex_name = ""
+        self.mesh_name = ""
+    
+        # LOOKS FOR ODERS PACKED INTO THE INIT #
+        if mesh_name != "" :
+            self.set_mesh(mesh_name)
+        if tex_name != "" :
+            self.set_texture(tex_name)
+
+    # GETTERS #
+    def get_mesh(self) :
+        return self.mesh_name
+    def get_texture(self) :
+        return self.tex_name
+
+    # ORDER METHODS #
+    def set_mesh(self, mesh_name) :
+        self.mesh_name = mesh_name
+        orders.append(("mesh_setMesh", self.entity_id, mesh_name))
+    def set_texture(self, tex_name) :
+        self.tex_name = tex_name
+        orders.append(("mesh_setTexture", self.entity_id, tex_name))
+
+class Light(Component) :
+    def __init__(self, input_id, input_color = []) :
+        super().__init__("Light", input_id)
+        self.color = [ 1.0, 1.0, 1.0, 0.40 ]
+        if len(input_color) != 0 :
+            self.color = input_color
+        self.set_light(self.color)
+
+    # ORDER METHODS #
+    def get_light(self) :
+        return list(self.color)
+
+    def set_light(self, input_color) :
+        self.color = input_color
+        orders.append(("light_setLight", self.entity_id, input_color))
+
+# BASE SCRIPT #
 class BaseScript :
     """
         This class is the base-line script that all Python classes, which intend to interact
@@ -19,33 +146,14 @@ class BaseScript :
     """
 
     # UTILITY FUNCTIONS FOR THE BASE CLASS ONLY #
-    def __init__(self) :
+    def __init__(self, entity_id) :
         self.name = self.__class__.__name__
-        self.comps = [] # LIST OF COMPONENTS TO BE EVALUATED WHEN NEXT REVIEWED BY BACKEND #
-            # INCLUDES AN ENTITY ID REFERENCE AS THE SECOND PART OF EACH ENTRY #
-        self.comps_to_add = [] # LIST OF COMPONENTS TO ADD WHEN NEXT REVIEWED BY BACKEND #
-
-        self.id = 0
-
-    def _initialize(self, entity_id) :
-        # LISTS ALL COMPONENTS THAT THE SCRIPT WILL SEARCH FOR #
-        componentList = [ "transform", "light", "mesh" ]
         self.id = entity_id
 
-        # SEARCHES FOR THEM #
-        for comp in componentList :
-            func = getattr(scene_ref, f"get_{comp}_comp")
-            temp = globals()[comp.title()]()
-            valid = func(entity_id, temp)
-            if valid is True :
-                self.comps.append((comp, temp, self.id))
-
-    def _push_data(self) :
-        return self.comps
-    def _reset_values(self) :
-        for item in self.comps :
-            if item[0] == "mesh" :
-                item[1].disable_reload()
+    def push_data(self) :
+        temp = list(globals()["orders"])
+        globals()["orders"].clear()
+        return temp
 
     # PLACEHOLDER DEFINITIONS FOR CHILD SCRIPT METHODS #
     def _awake(self) :
@@ -55,66 +163,4 @@ class BaseScript :
     def _update(self, delta_time) :
         pass
 
-    # METHODS FOR HANDLING COMPONENTS #
-    def get_component(self, comp, entID = -1) :
-        # RETURNS OWN COMPONENTS #
-        comp = comp.lower()
-        search_others = True
-        if entID == -1 :
-            entID = self.id
-            search_others = False
 
-        ret_comp = None
-        for comp_tuple in self.comps :
-            if comp == comp_tuple[0] and entID == comp_tuple[2] :
-               ret_comp = comp_tuple[1] 
-
-        if ret_comp == None and search_others is False :
-            raise ValueError(f"Entity does not have component of type {comp}!")
-        if ret_comp != None :
-            if comp != "transform" :
-                print(f"RETURNING {comp} OF ENTITY ID {comp_tuple[2]}")
-            return ret_comp
-
-        # OTHERWISE, ATTEMPTS TO GET COMPONENT FROM ID #
-        func = getattr(scene_ref, f"get_{comp}_comp")
-        temp = globals()[comp.title()]() 
-        valid = func(entID, temp)
-        if valid is True :
-            self.comps.append((comp, temp, entID))
-            return temp
-        else :
-            raise ValueError(f"ERROR! COULD NOT FIND {comp} IN ENTITY ID {entID}!")
-
-    def add_component(self, comp, entID = -1) :
-        comp = comp.lower()
-        if entID == -1 :
-            entID = self.id
-        self.comps_to_add.append((comp, entID))
-
-    def push_to_add(self) :
-        temp = list(self.comps_to_add)
-        self.comps_to_add = []
-        return temp
-
-    # METHODS FOR HANDLING ENTITIES #
-    def add_entity(self, entName) :
-        val = scene_ref.add_entity(entName)
-        if(val != -1) :
-            return val
-        else :
-            print("ERROR! ATTEMPTED TO ADD ENTITY TO SCENE, BUT SCENE IS ALREADY AT " +\
-                    "MAX ENTITIES!")
-            raise ValueError
-
-    def remove_entity(self, entID) :
-        print(f"REMOVING ENTITY AT {entID}!")
-        scene_ref.remove_entity(entID)
-        scene_ref.scene_out()
-        print(self.comps)
-        temp_comps = list(self.comps)
-        for comp_tuple in temp_comps :
-            print(comp_tuple)
-            if comp_tuple[2] == entID :
-                self.comps.remove(comp_tuple)
-        print(self.comps)

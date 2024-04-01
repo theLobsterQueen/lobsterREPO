@@ -13,7 +13,7 @@
 #include <vector>
 
 // LOBSTER INCLUDES //
-#include <input.h>
+#include <importantConstants.h>
 #include <vendorIncludes.h>
 
 // STRUCT PROTOTYPES //

@@ -17,7 +17,6 @@
 
 // LOBSTER INCLUDES //
 #include <mesh.h>
-#include <entity.h>
 #include <importantConstants.h>
 #include <window.h>
 #include <transform.h>
@@ -28,6 +27,7 @@
 #include <script.h>
 #include <APIUtils.h>
 #include <app.h>
+#include <entity.h>
 
 // VENDOR INCLUDES //
 #include <glm/glm.hpp>
@@ -153,6 +153,12 @@ namespace sceneManagement
 	/// </summary> ///
 
 	void updateScene(Scene * inputScene, float deltaTime);
+
+	/// <summary> ///
+	///		Pulls all orders pushed from the scripting API. 
+	/// </summary> ///
+
+	void pullOrders(Scene * inputScene);
 };
 
 #endif

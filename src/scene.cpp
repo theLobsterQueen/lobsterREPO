@@ -14,7 +14,6 @@ void sceneManagement :: changeScene(Scene * targetScene)
 	globals :: curSceneRef = targetScene;
 	windowManagement :: changeTitle(globals :: winRef, globals :: curSceneRef -> name);
 	appManagement :: compileScripts();
-	appManagement :: startScripts();
 }
 
 entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entityName)
@@ -24,6 +23,12 @@ entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entit
 		entityIndex++;
 
 	targetScene -> entities[entityIndex].name = entityName;
+	sceneManagement :: addComp
+	(
+	 	targetScene, entityIndex,
+		TRANS_COMP_ID, constructComp(TRANS_COMP_ID)
+	);
+	APIGlobals :: coremodule.attr("Transform")(entityIndex);
 	return entityIndex;
 }
 
@@ -591,7 +596,27 @@ void sceneManagement :: sceneOut(Scene * inputScene)
 
 void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 {
-	// PROCESSES ORDERS //
+	sceneManagement :: pullOrders(inputScene);
+	for(entityID curEnt : sceneManagement :: sceneView(inputScene, SCRIPT_COMP_ID))
+	{
+		// PARSES INPUT AND SENDS IT TO THE API //
+		pybind11 :: object inputRef = APIGlobals :: inputmodule.attr("input_ref");
+		for(char key = 0; key < 127; key++)
+		{
+			if(globals :: inputState -> pressedKeys[key] == 1)
+				inputRef.attr("press_key")(key);
+			else
+				inputRef.attr("unpress_key")(key);
+		}
+
+		// UPDATES SCRIPTS //
+		((Script *) (inputScene -> components[SCRIPT_COMP_ID][curEnt])) -> 
+			code.attr("_update")(globals :: deltaTime);
+	}
+}
+
+void sceneManagement :: pullOrders(Scene * inputScene)
+{
 	for(entityID curEnt : sceneManagement :: sceneView(inputScene, SCRIPT_COMP_ID))
 	{
 		// PULLS DATA //
@@ -604,7 +629,7 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 		{
 			// VARIABLE INITIALIZATION //
 			componentID compID; std :: string orderName;
-			entityID entID = pybind11 :: cast<entityID>(order[1]);
+			entityID entID = pybind11 :: cast<entityID>(order[1].attr("id"));
 
 			// SEPARATES AND CONFIGURES ORDER TARGET AND NAME //
 			{
@@ -636,6 +661,10 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 				case TRANS_COMP_ID :
 					transformHandler :: processOrder(orderName, entID, params);
 				break;
+				
+				case NULL_COMP_ID :
+					entityHandler :: processOrder(orderName, entID, params);
+				break;
 
 				case LIGHT_COMP_ID :
 				{
@@ -659,19 +688,6 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 				}
 			}
 		}
-
-		// PARSES INPUT AND SENDS IT TO THE API //
-		pybind11 :: object inputRef = APIGlobals :: inputmodule.attr("input_ref");
-		for(char key = 0; key < 127; key++)
-		{
-			if(globals :: inputState -> pressedKeys[key] == 1)
-				inputRef.attr("press_key")(key);
-			else
-				inputRef.attr("unpress_key")(key);
-		}
-
-		// UPDATES SCRIPTS //
-		script -> code.attr("_update")(globals :: deltaTime);
 	}
 }
 

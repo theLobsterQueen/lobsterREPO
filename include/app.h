@@ -32,6 +32,9 @@
 #include <APIUtils.h>
 #include <script.h>
 
+// STRUCT PROTOTYPES //
+struct Scene;
+
 namespace appManagement
 {
 	// FUNCTION DEFINITIONS //

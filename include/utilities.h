@@ -23,6 +23,7 @@
 
 // STRUCT PROTOTYPES //
 struct InputState;
+struct Entity;
 
 /// <summary> ///
 ///		These classes are used to debug GLSL shaders and OpenGL shader program objects.

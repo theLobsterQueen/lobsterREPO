@@ -4,10 +4,13 @@
 // INCLUDES AND INITIALIZATIONS //
 
 // STANDARD INCLUDES //
-#include <importantConstants.h>
 #include <vector>
 #include <bitset>
 #include <string>
+
+// LOBSTER INCLUDES //
+#include <importantConstants.h>
+#include <globals.h>
 
 // STRUCT PROTOTYPES //
 struct Scene;
@@ -24,5 +27,14 @@ struct Entity
 		componentMask mask = 0;
 		std :: string name;
 };
+
+// DELAYED INCLUDES TO RESOLVE COMPILER ERRORS //
+#include <scene.h>
+
+// FUNCTION DECLARATIONS //
+namespace entityHandler
+{
+	void processOrder(std :: string orderName, entityID entID, std :: vector<pybind11 :: object>& params);
+}
 
 #endif

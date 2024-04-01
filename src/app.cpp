@@ -200,8 +200,11 @@ void appManagement :: initializeAPI()
 	pybind11 :: exec(std :: string
 		("import sys\nsys.path.append(\"" + APIGlobals :: workingPath + "modulesAPI/\")").c_str());
 	pybind11 :: exec("import inspect");
+	pybind11 :: exec("import coremodule");
+	
 	APIGlobals :: coremodule = pybind11 :: module_ :: import("coremodule");
 	APIGlobals :: inputmodule = pybind11 :: module_ :: import("inputmodule");
+
 
 }
 
@@ -288,6 +291,7 @@ void appManagement :: startScripts()
 		((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]))
 			-> code.attr("_awake")(); 
 	}
+	sceneManagement :: pullOrders(globals :: curSceneRef);
 
 	// RUNS THE START SCRIPT //
 	for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))

@@ -1,3 +1,1 @@
-Create Mesh API
-Create Game Jam demo
 Create system for making project directories and manipulating file system through editor

@@ -24,9 +24,11 @@ void appManagement :: initialize()
 		ImGuiInputTextFlags_AutoSelectAll;
 	editorGlobals :: entitySelected = false;
 	editorGlobals :: sidePanelWidth = (globals :: winWidth) * 0.2f;
-	editorGlobals :: sidePanelHeight = (globals :: winHeight) * 0.8f;
-	editorGlobals :: bottomPanelWidth = (globals :: winWidth);
-	editorGlobals :: bottomPanelHeight = (globals :: winHeight) * 0.2f;
+	editorGlobals :: sidePanelHeight = (globals :: winHeight) * 0.7f;
+	editorGlobals :: bottomPanelWidth = globals :: winWidth - editorGlobals :: sidePanelWidth;
+	editorGlobals :: bottomPanelHeight = globals :: winHeight - editorGlobals :: sidePanelHeight;
+	editorGlobals :: debugText = std :: stringstream("");
+	editorGlobals :: optionsRef = new Options;
 
 	// INITIALIZES SDL //
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -204,8 +206,7 @@ void appManagement :: initializeAPI()
 	
 	APIGlobals :: coremodule = pybind11 :: module_ :: import("coremodule");
 	APIGlobals :: inputmodule = pybind11 :: module_ :: import("inputmodule");
-
-
+	APIGlobals :: appmodule = pybind11 :: module_ :: import("appmodule");
 }
 
 void appManagement :: compileScripts()

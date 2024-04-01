@@ -6,6 +6,7 @@
 // LOBSTER INCLUDES //
 #include <math.h>
 #include <globals.h>
+#include <scene.h>
 
 // STD INCLUDES //
 #include <vector>

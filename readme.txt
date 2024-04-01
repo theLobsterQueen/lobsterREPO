@@ -55,7 +55,7 @@ Sprint 1 (ENGINE BACKEND FUNDAMENTALS) :
 
 Sprint 2 :
 	[X] Save/Load Scenes on Command
-	[~] Build out Engine Frontend, Complete With
+	[X] Build out Engine Frontend, Complete With
 		[X] Inspector-Analog
 			[X] Can Move Entities
 			[X] Can change select values of Components
@@ -67,19 +67,19 @@ Sprint 2 :
 		[ ] Communicate with Precompiled Engine Files over Runtime Python Scripts
 		[X] Start/Update Method Analogs
 	[~] Create a Python Scripting Library to Interact With
-		[ ] Camera Component
+		[X] Camera Component
 		[X] Transform Component
-		[ ] Mesh Component
+		[X] Mesh Component
 		[X] Light Component
 		[ ] [STRETCH] Allow for "exposed" variables, that could be edited
 			directly from the inspector.
-	[~] Separate Scene Editing from Running
+	[X] Separate Scene Editing from Running
 
 Sprint 3 :
-	[ ] Give the Scripting API Additional Capabilities
-		[ ] Add Components to Existing Entities
-		[ ] Create New Entities in a Given Scene
-		[ ] Process Input
+	[~] Give the Scripting API Additional Capabilities
+		[X] Add Components to Existing Entities
+		[X] Create New Entities in a Given Scene
+		[X] Process Input
 		[ ] Change the Current Scene
 	[ ] Create a Project Manager
 		[ ] Can Create new Project Directories

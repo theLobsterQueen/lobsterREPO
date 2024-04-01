@@ -11,10 +11,12 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <vector>
+#include <sstream>
 
 // LOBSTER INCLUDES //
 #include <importantConstants.h>
 #include <vendorIncludes.h>
+#include <options.h>
 
 // STRUCT PROTOTYPES //
 struct Scene;
@@ -67,6 +69,8 @@ namespace globals
 	/// </summary> ///
 
 	extern InputState * inputState;
+
+
 
 	/// <summary> ///
 	///		A collection of all created pipelines within the engine context.
@@ -126,6 +130,14 @@ namespace editorGlobals
 	extern float bottomPanelWidth;
 	extern float bottomPanelHeight;
 
+	extern std :: stringstream debugText;
+
+	/// <summary> ///
+	///		This field contains a reference to an instance of the "Options" struct,
+	///			defining some general parameters for the behavior of the editor.
+	/// </summary> ///
+
+	extern Options * optionsRef;
 };
 
 #endif

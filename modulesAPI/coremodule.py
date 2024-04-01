@@ -1,5 +1,6 @@
 # IMPORTS PYTHON MODULES #
 import inspect
+from datetime import datetime
 
 # IMPORTS LOBSTER MODULES #
 import inputmodule
@@ -35,6 +36,10 @@ def add_vecs(vec_1, vec_2) :
         ret_vec.append(vec_1[i] + vec_2[i])
         i += 1
     return ret_vec
+
+def get_timestamp() :
+    now = datetime.now()
+    return (now.strftime("<%H:%M:%S>: "))
 
 # COMPONENT DEFINITIONS #
 class Component() :
@@ -183,6 +188,17 @@ class BaseScript :
         new_ent = Entity()
         orders.append(("entity_addEntity", new_ent, input_name, new_ent))
         return new_ent
+
+    def debug_log(self, input_message) :
+        if type(input_message) != str :
+            self.debug_error("ERROR! ATTEMPTED TO OUTPUT A NON-STRING DEBUG_LOG MESSAGE!")
+            return
+        orders.append(("DEBUG", get_timestamp() + input_message))
+
+    def debug_error(self, input_message) :
+        if type(input_message) != str :
+            self.debug_error("ERROR! ATTEMPTED TO OUTPUT A NON-STRING DEBUG_ERROR MESSAGE!")
+        orders.append(("ERROR", get_timestamp() + input_message))
 
     # PLACEHOLDER DEFINITIONS FOR CHILD SCRIPT METHODS #
     def _awake(self) :

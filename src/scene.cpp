@@ -430,7 +430,9 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			if(linesRead == 1)
 			{
 				Mesh * meshPtr = ((Mesh *) (newCompPtr));
-				meshHandler :: setTexture(meshPtr, textureHandler :: createTexture(line.c_str()));
+
+				if(line != "")
+					meshHandler :: setTexture(meshPtr, textureHandler :: createTexture(line.c_str()));
 			}
 		}
 
@@ -627,6 +629,21 @@ void sceneManagement :: pullOrders(Scene * inputScene)
 		// PROCESSES DATA //
 		for(pybind11 :: tuple order : orders)
 		{
+			// IF MESSAGE IS DEBUG MESSAGE, IGNORES PROCESSING ORDER AND PRINTS OUT MESSAGE //
+			if(pybind11 :: cast<std :: string>(order[0]) == "DEBUG")
+			{
+				editorGlobals :: debugText << pybind11 :: cast<std :: string>(order[1])
+					<< std :: endl;
+				continue;
+			}
+			if(pybind11 :: cast<std :: string>(order[0]) == "ERROR")
+			{
+				editorGlobals :: debugText << pybind11 :: cast<std :: string>(order[1])
+					<< std :: endl;
+				globals :: isPlaying = false;
+				continue;
+			}
+
 			// VARIABLE INITIALIZATION //
 			componentID compID; std :: string orderName;
 			entityID entID = pybind11 :: cast<entityID>(order[1].attr("id"));

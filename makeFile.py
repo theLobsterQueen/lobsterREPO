@@ -5,7 +5,6 @@ debugPath = "bin/debug"
 name = "LobsterEngine"
 extension = "elf"
 compileAll = False
-build = False
 
 def compileDir(dirPath) :
     toCompile = []
@@ -50,11 +49,3 @@ os.system\
     f'  `python3.10-config --ldflags` -o bin/debug/LobsterEngine.{extension}'
 )
 print("Linking done!")
-
-# IF BUILD IS ACTIVE, ALSO RUNS THE SCRIPT COMPILATION FILE AND THEN LINKS #
-    # ALL COMPILED CODE INTO A SINGLE ARCHIVE #
-if build :
-    os.system("python3 ./scriptFile.py")
-    print("Building compiled script archive!")
-    os.system("ar rs ./bin/libLobsterEngine.a ./bin/prec/*.o")
-    print("Building done!")

@@ -1,1 +1,10 @@
-Create system for making project directories and manipulating file system through editor
+Allow for the scripting API to load, change scenes
+Allow for graceful object instantiation
+Create caching for objects loaded from files
+Create project-directory application, which can create new directories configured to work
+	in the best possible way with the engine
+Create options for resizing the Window
+Separate out the scene viewport and the UI panels to the sides, have SDL
+	render only to the viewport
+Create build dialog for exporting projects
+Fix Windows cross-compilation again

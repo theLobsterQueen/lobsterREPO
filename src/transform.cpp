@@ -85,7 +85,7 @@ void transformHandler :: translate
 	if(!applyGlobal)
 	{
 		glm :: mat4x4 rotMat = getRotateMatrix(inputTrans);
-		delta = glm :: vec4(delta.x, delta.y, delta.z, 1.0f) * rotMat;
+		delta = glm :: vec4(-delta.x, -delta.y, -delta.z, 1.0f) * rotMat;
 	}
 
 	for(int i = 0; i < 3; i++)

@@ -18,6 +18,7 @@ namespace APIGlobals
 {
 	extern pybind11 :: module coremodule;
 	extern pybind11 :: module inputmodule;
+	extern pybind11 :: module appmodule;
 	extern std :: string workingPath;
 }
 

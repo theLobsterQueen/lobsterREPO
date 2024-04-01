@@ -15,6 +15,7 @@ float globals :: clearColor[4];
 float globals :: tempScale;
 std :: vector<float> globals :: tempRot;
 
+
 ImGuiWindowFlags editorGlobals :: windowFlags;
 ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;
 ImGuiInputTextFlags editorGlobals :: inputTextFlags;
@@ -25,3 +26,5 @@ float editorGlobals :: sidePanelWidth;
 float editorGlobals :: sidePanelHeight;
 float editorGlobals :: bottomPanelWidth;
 float editorGlobals :: bottomPanelHeight;
+std :: stringstream editorGlobals :: debugText;
+Options * editorGlobals :: optionsRef;

@@ -117,6 +117,20 @@ void uiManagement :: drawEditorUI()
 			ImGui :: EndMenu();
 		}
 
+		if(ImGui :: BeginMenu("Options"))
+		{
+			if(ImGui :: MenuItem("Hide UI"))
+				editorGlobals :: optionsRef -> hideUIWhilePlaying =
+					!editorGlobals :: optionsRef -> hideUIWhilePlaying;
+			if(editorGlobals :: optionsRef -> hideUIWhilePlaying)
+			{
+				ImGui :: SameLine();
+				ImGui :: Text("X");
+			}
+
+			ImGui :: EndMenu();
+		}
+
 	} ImGui :: EndMainMenuBar();
 	float topBarY = 20.0f;
 
@@ -154,7 +168,7 @@ void uiManagement :: drawEditorUI()
 	}
 
 	// DRAWS ACTIVE USER INTERFACE, IF IN DEVELOPMENT MODE //
-	if(globals :: isPlaying)
+	if(globals :: isPlaying && editorGlobals :: optionsRef -> hideUIWhilePlaying)
 		return;
 
 	// DRAWS SCENE TREE //
@@ -428,6 +442,18 @@ void uiManagement :: drawEditorUI()
 		ImGui :: SameLine();
 		if(ImGui :: Button("Delete Entity"))
 			sceneManagement :: deleteEntity(globals :: curSceneRef, editorGlobals :: curActiveEntity);
+	} ImGui :: End();
+
+	ImGui :: SetNextWindowPos(ImVec2
+		(editorGlobals :: sidePanelWidth, globals :: winHeight - editorGlobals :: bottomPanelHeight));
+	ImGui :: SetNextWindowSize(ImVec2
+		(editorGlobals :: bottomPanelWidth, editorGlobals :: bottomPanelHeight));
+	if(ImGui :: Begin("Debug Log", NULL, editorGlobals :: windowFlags))
+	{
+		std :: string textString = editorGlobals :: debugText.str();
+		if(textString.size() > 2048)
+			textString.erase(0, textString.size() - 2048);
+		ImGui :: TextWrapped(textString.c_str());
 	} ImGui :: End();
 }
 

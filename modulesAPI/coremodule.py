@@ -37,6 +37,15 @@ def add_vecs(vec_1, vec_2) :
         i += 1
     return ret_vec
 
+def assign_vec(vec_1, vec_2) :
+    if len(vec_1) != len(vec_2) :
+        raise ValueError("ERROR, ATTEMPTING TO ADD TWO VECS OF DIFFERENT DIMENSIONS!")
+    i = 0
+    while i < len(vec_1) :
+        vec_1[i] = vec_2[i]
+        i += 1
+    return vec_1
+
 def get_timestamp() :
     now = datetime.now()
     return (now.strftime("<%H:%M:%S>: "))
@@ -45,11 +54,17 @@ def get_timestamp() :
 class Component() :
     def __init__(self, comp_name, input_entity) :
         entity = input_entity
+        self.type = comp_name
         if type(input_entity) != Entity :
             entity = Entity()
             entity.id = input_entity
 
         self.entity = entity
+        
+        # LOOKS FOR DUPLICATES IN THE COMP LIST. IF NONE EXIST, ADDS THIS COMP #
+        for comp in comps :
+            if comp.type == comp_name and comp.entity.id == self.entity.id :
+                return comp
         comps.append(self)
 
     def __repr__(self) :
@@ -74,6 +89,7 @@ class Transform(Component) :
 
     # GETTER METHODS #
     def get_position(self) :
+        print(f"\tREADING POSITION FOR ID ({self.entity.id}) AT {hex(id(self))} AS: {self.position}")
         return list(self.position)
     def get_rotation(self) :
         return list(self.rotation)
@@ -82,7 +98,8 @@ class Transform(Component) :
 
     # SETTER METHODS #
     def sync_data(self, input_position, input_rotation, input_scale) :
-        self.position = input_position
+        assign_vec(self.position, input_position)        
+        print(f"NEW POSITION FOR ID ({self.entity.id}) AT {hex(id(self))}: {self.position}")
         self.rotation = input_rotation
         self.scale = input_scale
 
@@ -95,13 +112,14 @@ class Transform(Component) :
         orders.append(("transform_scale", self.entity, delta_vec))
 
     def set_position(self, input_position) :
-        self.position = input_position
+        assign_vec(self.position, input_position)
+        print(f"SETTING POSITION: {input_position}")
         orders.append(("transform_setPosition", self.entity, input_position))
     def set_rotation(self, input_rotation) :
-        self.rotation = input_rotation
+        assign_vec(self.rotation, input_rotation)
         orders.append(("transform_setRotation", self.entity, input_rotation))
     def set_scale(self, input_scale) :
-        self.scale = input_scale
+        assign_vec(self.scale, input_scale)
         orders.append(("transform_setScale", self.entity, input_scale))
 
 class Mesh(Component) :

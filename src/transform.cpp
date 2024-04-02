@@ -138,7 +138,7 @@ void transformHandler :: processOrder
 		transformHandler :: scale(transform, pybind11 :: cast<std :: vector<float>>(params[0]));
 
 	if(orderName == "setPosition")
-		transform -> position = pybind11 :: cast<std :: vector<float>>(params[0]);
+		{ transform -> position = pybind11 :: cast<std :: vector<float>>(params[0]); }
 
 	if(orderName == "setRotation")
 	{

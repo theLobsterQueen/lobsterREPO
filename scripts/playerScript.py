@@ -12,10 +12,10 @@ class playerScript(coremodule.BaseScript) :
         self.bullets = []
         self.id = 0
         self.fire_timer = 0.0
-        self.fire_max = 1.0
+        self.fire_max = 0.5
 
     def _start(self) :
-        self.trans_ref = coremodule.Transform(self.player_ref)
+        self.trans_ref = coremodule.get_component("Transform", self.player_ref)
         self.move_speed = 20
 
     def _update(self, delta_time) :
@@ -56,9 +56,11 @@ class playerScript(coremodule.BaseScript) :
             if bullet[2] is True :
                 self.debug_log(str(self.trans_ref))
                 self.debug_log(str(bullet[0]))
-                bullet[2] = coremodule.Transform(bullet[0], self.trans_ref.get_position(), 
-                        [ 0.0, 90.0, 0.0 ], [ 0.10, 0.10, 0.10 ])
-                coremodule.Mesh(bullet[0], "portrait.ply")
+                bullet[2] = coremodule.get_component("Transform", bullet[0])
+                bullet[2].set_position(self.trans_ref.get_position())
+                bullet[2].set_rotation([ 0.0, -90.0, 0.0 ]) 
+                bullet[2].set_scale([ 0.10, 0.10, 0.10 ])
+                coremodule.Mesh(bullet[0], "portrait.ply", "rock.png")
 
             # MOVES BULLET FORWARD #
             bullet[2].translate([0.0, c_bullet_speed * delta_time, 0.0], True)

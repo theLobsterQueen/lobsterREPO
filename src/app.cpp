@@ -263,6 +263,7 @@ void appManagement :: compileScripts()
 void appManagement :: startScripts()
 {
 	// ADDS ALL CURRENTLY EXISTING COMPONENTS INTO THE API //
+	APIGlobals :: coremodule.attr("clear_comps")();
 	unsigned curActive = globals :: curSceneRef -> activeEntities;
 	for(entityID curEntID = 0; curEntID < LOBSTER_MAX_ENTITIES && curActive > 0; curEntID++)
 	{

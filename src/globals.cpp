@@ -14,7 +14,8 @@ double globals :: deltaTime;
 float globals :: clearColor[4];
 float globals :: tempScale;
 std :: vector<float> globals :: tempRot;
-
+std :: map<std :: string, Mesh *> globals :: meshCache;
+std :: map<std :: string, Texture *> globals :: textureCache;
 
 ImGuiWindowFlags editorGlobals :: windowFlags;
 ImGuiTreeNodeFlags editorGlobals :: sceneTreeFlags;

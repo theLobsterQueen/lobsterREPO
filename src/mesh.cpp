@@ -182,6 +182,13 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)
 	std :: vector<unsigned int> indices;
 	std :: string line; 
 
+	// CHECKS FOR EXISTING MESH INSTANCES OF THIS FILE //
+	if(globals :: meshCache.count(inputName) > 0)
+	{
+		Mesh * temp = globals :: meshCache[inputName];
+		return meshHandler :: createMesh(temp -> vertexData, temp -> indexData, inputName);
+	}
+
 	// LOADS FILES //
 	std :: ifstream meshFile("./assets/models/" + inputName);
 	
@@ -305,7 +312,10 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)
 	}
 
 	std :: cout << "LOADED " << inputName << " SUCCESSFULY!" << std :: endl;
-	return meshHandler :: createMesh(vertices, indices, inputName);
+	Mesh * newMesh = meshHandler :: createMesh(vertices, indices, inputName);
+	// ADDS MESH TO CACHE //
+	globals :: meshCache[inputName] = newMesh;
+	return newMesh;
 }
 
 

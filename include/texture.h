@@ -10,6 +10,9 @@
 // VENDOR INCLUDES //
 #include <stb_image.h>
 
+// LOBSTER INCLUDES //
+#include <globals.h>
+
 /// <summary> ///
 ///		This struct  defines the dimensions of the image, and holds a reference
 ///			to the beginning of the texture's pixel data in memory.

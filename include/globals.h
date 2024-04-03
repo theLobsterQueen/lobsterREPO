@@ -12,6 +12,7 @@
 #include <GL/glu.h>
 #include <vector>
 #include <sstream>
+#include <map>
 
 // LOBSTER INCLUDES //
 #include <importantConstants.h>
@@ -22,6 +23,8 @@
 struct Scene;
 struct Pipeline;
 struct InputState;
+struct Mesh;
+struct Texture;
 
 /// <summary> ///
 ///		This namespace includes value crucial to keeping the engine functional at the most
@@ -93,6 +96,15 @@ namespace globals
 	extern float clearColor[4];
 	extern float tempScale;
 	extern std :: vector<float> tempRot;
+
+	/// <summary> ///
+	///		These caches hold data loaded from files. They are stored here when loaded so
+	///			that future calls for these files will not have to parse the data from the file
+	///			itself, and can just return a copy of this data.
+	/// </summary> ///
+
+	extern std :: map<std :: string, Mesh *> meshCache;
+	extern std :: map<std :: string, Texture *> textureCache;
 };
 
 namespace editorGlobals

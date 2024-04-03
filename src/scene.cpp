@@ -14,6 +14,7 @@ void sceneManagement :: changeScene(Scene * targetScene)
 	globals :: curSceneRef = targetScene;
 	windowManagement :: changeTitle(globals :: winRef, globals :: curSceneRef -> name);
 	appManagement :: compileScripts();
+	appManagement :: startScripts();
 }
 
 entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entityName)
@@ -612,8 +613,9 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 		}
 
 		// UPDATES SCRIPTS //
-		((Script *) (inputScene -> components[SCRIPT_COMP_ID][curEnt])) -> 
-			code.attr("_update")(globals :: deltaTime);
+		Script * script = ((Script *) (inputScene -> components[SCRIPT_COMP_ID][curEnt]));
+		if(script -> name != "")
+			script -> code.attr("_update")(globals :: deltaTime);
 	}
 }
 
@@ -623,6 +625,9 @@ void sceneManagement :: pullOrders(Scene * inputScene)
 	{
 		// PULLS DATA //
 		Script * script = ((Script *) (inputScene -> components[SCRIPT_COMP_ID][curEnt]));
+		if(script -> name == "")
+			continue;
+
 		std :: vector<pybind11 :: tuple> orders = 
 			pybind11 :: cast<std :: vector<pybind11 :: tuple>>(script -> code.attr("push_data")());
 
@@ -645,7 +650,7 @@ void sceneManagement :: pullOrders(Scene * inputScene)
 			}
 
 			// VARIABLE INITIALIZATION //
-			componentID compID; std :: string orderName;
+			componentID compID; std :: string orderPre; std :: string orderName;
 			entityID entID = pybind11 :: cast<entityID>(order[1].attr("id"));
 
 			// SEPARATES AND CONFIGURES ORDER TARGET AND NAME //
@@ -656,17 +661,33 @@ void sceneManagement :: pullOrders(Scene * inputScene)
 				while(std :: getline(ss, data, '_'))
 				{
 					if(index == 0)
-						compID = stringToComp(data);
+						orderPre = data;
 					else
 						orderName = data;
 					index++;
 				}
 			}
 
+
+
 			// CONFIGURES THE REMAINING PYBIND DATA INTO A PARAMTER VECTOR //
 			std :: vector<pybind11 :: object> params;
 			for(unsigned i = 2; i < order.size(); i++)
 				params.push_back(order[i]);
+
+			// PROCESSES SPECIAL-CASE ORDER PREFIXES //
+			if(orderPre == "scene")
+			{
+				if(orderName == "changeScene")
+				{
+					sceneManagement :: changeScene(sceneManagement :: loadScene
+						(pybind11 :: cast<std :: string>(params[0]) + ".lscn"));
+					return;
+				}
+			}
+
+			// IF NOT A SPECIAL-CASE ORDER, DERIVES COMPONENT ID AND CONTINUES //
+			compID = stringToComp(orderPre);
 
 			// PROCESSES ORDERS //
 			switch(compID)
@@ -681,6 +702,10 @@ void sceneManagement :: pullOrders(Scene * inputScene)
 				
 				case NULL_COMP_ID :
 					entityHandler :: processOrder(orderName, entID, params);
+				break;
+
+				case SCRIPT_COMP_ID :
+					scriptHandler :: processOrder(orderName, entID, params);
 				break;
 
 				case LIGHT_COMP_ID :

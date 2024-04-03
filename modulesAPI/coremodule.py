@@ -2,9 +2,6 @@
 import inspect
 from datetime import datetime
 
-# IMPORTS LOBSTER MODULES #
-import inputmodule
-
 # CORE MODULE ATTRIBUTES #
 comps = [ ]
 orders = [ ]
@@ -30,7 +27,7 @@ def get_component(comp_name, entID) :
             return comp
 
     # IF COULD NOT FIND COMPONENT REFERENCE, CREATES ONE AND RETURNS IT #
-    globals()[comp_name](entID)
+    return globals()[comp_name](entID)
 
 def change_data(comp_name, entID, attribute_name, new_value) :
     comp_name = comp_name.lower()
@@ -156,7 +153,7 @@ class Mesh(Component) :
         orders.append(("mesh_setTexture", self.entity, tex_name))
 
 class Light(Component) :
-    def __init__(self, input_ent, input_color = []) :
+    def __init__(self, input_entity, input_color = []) :
         super().__init__(self.__class__.__name__, input_entity)
         self.color = [ 1.0, 1.0, 1.0, 0.40 ]
         if len(input_color) != 0 :
@@ -170,6 +167,24 @@ class Light(Component) :
     def set_light(self, input_color) :
         self.color = input_color
         orders.append(("light_setLight", self.entity, input_color))
+
+class Script(Component) :
+    def __init__(self, input_entity, input_script = "") :
+        super().__init__(self.__class__.__name__, input_entity)
+        self.script_ref = ""
+        orders.append(("script_addScript", self.entity))
+        if input_script != "" :
+            self.set_script(input_script)
+
+    def set_script(self, input_script) :
+        if type(input_script) != str :
+            self.debug_log\
+                    ("ERROR! Attempted to set script reference, but input_script was not a string!", True)
+        if script_refs.get(input_script) :
+            seld.debug_log(f"ERROR! '{input_script}' could not be found!", True)
+
+        self.script_ref = input_script
+        orders.append(("script_setScript", self.entity, input_script))
 
 # ENTITY OBJECT DEFINITION #
     # THIS CLASS IS USED AS A WRAPPER OBJECT FOR TARGET ID'S, BECAUSE AN ID BY ITSELF CANNOT #

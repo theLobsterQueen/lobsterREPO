@@ -215,17 +215,26 @@ void appManagement :: compileScripts()
 	static bool firstTimeCompile = true;
 
 	// FINDS SCRIPT DIRECTORY //
-	std :: filesystem :: directory_iterator dirIt = 
-		std :: filesystem :: begin(std :: filesystem :: directory_iterator(std :: string
+	std :: filesystem :: directory_iterator dirIt = std :: filesystem :: begin
+		(std :: filesystem :: directory_iterator(std :: string
 		(APIGlobals :: workingPath + "scripts/").c_str())); 
 
 	// RUNS ALL SCRIPTS IN THE SCRIPT DIRECTORY //
+	unsigned scriptsCompiled = 0;
+	APIGlobals :: coremodule.attr("script_refs").attr("clear")();
 	for(std :: filesystem :: directory_entry fileEntry : dirIt)
 	{
 		// DETERMINES WHETHER THE CURRENT FILE IS A PYTHON FILE //
 		std :: string fileName = fileEntry.path().string();
-		if(fileName.find(".py") == std :: string :: npos)
+		if(fileName.find(".py") == std :: string :: npos ||
+			fileName.find(".swp") != std :: string :: npos)
+		{
 			continue;
+		}
+
+		// ICNREMENTS THE SCRIPT COMPILED COUNTER, SO PROGRAM CAN TELL DEVELOPER HOW MANY //
+			// SCRIPTS IT FOUND //
+		scriptsCompiled++;
 
 		// RECONFIGURES THE FILE NAME TO REFER TO THE FILE ITSELF, WITHOUT FOCUSING ON THE PATH //
 			// THEN CREATES AN INPUT FILE STREAM FOR IT. //
@@ -239,6 +248,7 @@ void appManagement :: compileScripts()
 
 		// EXECUTES CODE IN STRING STREAM //
 		pybind11 :: exec(execStream.str().c_str());
+		APIGlobals :: coremodule.attr("script_refs").attr("clear")();
 		pybind11 :: exec
 		(
 		 	"dir = globals().copy()\nfor item in dir :\n\
@@ -258,6 +268,9 @@ void appManagement :: compileScripts()
 				scriptHandler :: createScript(script -> name, curEnt); 
 		}
 	firstTimeCompile = false;
+
+	// REPORTS HOW MANY SCRIPTS WERE FOUND //
+	std :: cout << "FOUND AND COMPILED " << scriptsCompiled << " SCRIPT(S)!" << std :: endl;
 }
 
 void appManagement :: startScripts()
@@ -282,6 +295,19 @@ void appManagement :: startScripts()
 			Mesh * meshData = (Mesh *) (globals :: curSceneRef -> components[MESH_COMP_ID][curEntID]);
 			APIGlobals :: coremodule.attr("Mesh")(curEntID, meshData -> name, meshData -> texName);
 		}
+
+		if(hasComp(curEnt, SCRIPT_COMP_ID))
+		{
+			Script * scriptData = 
+				((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEntID]));
+			APIGlobals :: coremodule.attr("Script")(curEntID, scriptData -> name);
+		}
+
+		if(hasComp(curEnt, LIGHT_COMP_ID))
+		{
+			Light * lightData = (Light *) (globals :: curSceneRef -> components[LIGHT_COMP_ID][curEntID]);
+			APIGlobals :: coremodule.attr("Light")(curEntID, lightData -> color);
+		}
 	}
 	
 	// CLEARS ORDERS AFTER INITIALIZING SCENE IN ORDER TO STOP DUPLICATE INITIALIZATIONS //
@@ -289,18 +315,16 @@ void appManagement :: startScripts()
 
 	// RUNS THE AWAKE SCRIPTS, AND ADDS ANY ENTITIES/COMPONENTS TO THE SCENE THAT WERE CREATED //
 	for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
-	{ 
 		((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]))
 			-> code.attr("_awake")(); 
-	}
+
+	// PULLS AND PROCESS ORDERS FROM AWAKE FUNCTIONS //
 	sceneManagement :: pullOrders(globals :: curSceneRef);
 
 	// RUNS THE START SCRIPT //
 	for(entityID curEnt : sceneManagement :: sceneView(globals :: curSceneRef, SCRIPT_COMP_ID))
-	{ 
-		((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt]))
-			-> code.attr("_start")(); 
-	}
+		((Script *) (globals :: curSceneRef -> components[SCRIPT_COMP_ID][curEnt])) 
+			-> code.attr("_start")();
 }
 
 void appManagement :: run()

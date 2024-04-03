@@ -27,6 +27,7 @@ struct Script
 namespace scriptHandler
 {
 	Script * createScript(std :: string scriptName = "", entityID entRef = 0);
+	void processOrder(std :: string orderName, entityID entID, std :: vector<pybind11 :: object> params);
 }
 
 #endif

@@ -63,8 +63,8 @@ Sprint 2 :
 		[X] Scene Tree
 			[X] Can add Entities
 			[X] Can remove Entities
-	[~] Base Python Integration 
-		[ ] Communicate with Precompiled Engine Files over Runtime Python Scripts
+	[X] Base Python Integration 
+		[X] Communicate with Precompiled Engine Files over Runtime Python Scripts
 		[X] Start/Update Method Analogs
 	[~] Create a Python Scripting Library to Interact With
 		[X] Camera Component
@@ -76,15 +76,18 @@ Sprint 2 :
 	[X] Separate Scene Editing from Running
 
 Sprint 3 :
-	[~] Give the Scripting API Additional Capabilities
+	[X] Give the Scripting API Additional Capabilities
 		[X] Add Components to Existing Entities
 		[X] Create New Entities in a Given Scene
 		[X] Process Input
-		[ ] Change the Current Scene
+		[X] Change the Current Scene
 	[ ] Create a Project Manager
 		[ ] Can Create new Project Directories
 		[ ] Can Manage/List/Delete all Existing Project Directories
-	[ ] Expand Engine Frontend
-		[ ] Filesystem
-			[ ] Create new Files through Editor
-			[ ] Open and access Files using System Default Applications
+	[ ] QoL
+		[ ] "Quick-loading" system for loading new meshes/textures/scripts
+		[ ] Window resizing
+		[ ] Separating the viewport from the UI itself
+		[ ] Transform modifier gizmo, highlights for objects without meshes
+		[ ] Better error handling
+		[ ] Better shader management

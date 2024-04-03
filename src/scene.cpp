@@ -668,8 +668,6 @@ void sceneManagement :: pullOrders(Scene * inputScene)
 				}
 			}
 
-
-
 			// CONFIGURES THE REMAINING PYBIND DATA INTO A PARAMTER VECTOR //
 			std :: vector<pybind11 :: object> params;
 			for(unsigned i = 2; i < order.size(); i++)

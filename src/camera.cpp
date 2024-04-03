@@ -12,6 +12,7 @@ Camera * cameraHandler :: createCamera(float inputAspect, Pipeline * inputPipeli
 	else
 		newCamera -> aspectRatio = ((float) (globals :: winWidth)) / ((float) (globals :: winHeight));
 	newCamera -> FOV = 70;
+	newCamera -> far = 1000.0f;
 
 	// IF INPUT PIPELINE IS NULLPTR, CREATES AN EMPTY ONE TO BE USED //
 	if(inputPipeline == nullptr)

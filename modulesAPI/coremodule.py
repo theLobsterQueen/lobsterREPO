@@ -1,10 +1,12 @@
 # IMPORTS PYTHON MODULES #
 import inspect
-from datetime import datetime
+
+from tools import *
 
 # CORE MODULE ATTRIBUTES #
 comps = [ ]
 orders = [ ]
+orders = orders_ref # ASSIGNS THE PLACEHOLDER REF IN TOOLS TO THE ACTUAL ORDERS LIST #
 script_refs = { }
 
 # CORE MODULE FUNCTIONS #
@@ -34,30 +36,6 @@ def change_data(comp_name, entID, attribute_name, new_value) :
     attrib = getattr(get_component(comp_name, entID), attribute_name)
     attrib = new_value
     
-# UTILITY FUNCTIONS #
-def add_vecs(vec_1, vec_2) :
-    if len(vec_1) != len(vec_2) :
-        raise ValueError("ERROR, ATTEMPTING TO ADD TWO VECS OF DIFFERENT DIMENSIONS!")
-    i = 0
-    ret_vec = [ ]
-    while i < len(vec_1) :
-        ret_vec.append(vec_1[i] + vec_2[i])
-        i += 1
-    return ret_vec
-
-def assign_vec(vec_1, vec_2) :
-    if len(vec_1) != len(vec_2) :
-        raise ValueError("ERROR, ATTEMPTING TO ADD TWO VECS OF DIFFERENT DIMENSIONS!")
-    i = 0
-    while i < len(vec_1) :
-        vec_1[i] = vec_2[i]
-        i += 1
-    return vec_1
-
-def get_timestamp() :
-    now = datetime.now()
-    return (now.strftime("<%H:%M:%S>: "))
-
 # COMPONENT DEFINITIONS #
 class Component() :
     def __init__(self, comp_name, input_entity) :
@@ -67,7 +45,7 @@ class Component() :
             entity = Entity()
             entity.id = input_entity
         self.entity = entity
-        
+
         # LOOKS FOR DUPLICATES IN THE COMP LIST. IF NONE EXIST, ADDS THIS COMP #
         comps.append(self)
 
@@ -109,8 +87,10 @@ class Transform(Component) :
     # ORDER METHODS #
     def translate(self, delta_vec, globally = False) :
         orders.append(("transform_translate", self.entity, delta_vec, globally))
+
     def rotate(self, delta_vec) :
         orders.append(("transform_rotate", self.entity, delta_vec))
+
     def scale(self, delta_vec) :
         orders.append(("transform_scale", self.entity, delta_vec))
 
@@ -186,23 +166,6 @@ class Script(Component) :
         self.script_ref = input_script
         orders.append(("script_setScript", self.entity, input_script))
 
-# ENTITY OBJECT DEFINITION #
-    # THIS CLASS IS USED AS A WRAPPER OBJECT FOR TARGET ID'S, BECAUSE AN ID BY ITSELF CANNOT #
-    # BE RETURNED TO A CLASS IMMEDIATELY AFTER CALLING A "GET_ID" LIKE FUNCTION, BUT A WRAPPER 
-    # CAN HOLD A REFERENCE TO THE ID, WHICH WILL EVENTUALLY BE CONFIGURED CORRECTLY BEFORE THE #
-    # FUNCTIONS THAT USE THE ID FOR THEIR OPERATIONS TAKE EFFECT #
-class Entity() :
-    def __init__(self) :
-        self.id = 0
-        self.deleted = False
-    def __repr__(self) :
-        return f"Entity wrapper with ID: {self.id}"
-    def delete(self) :
-        orders.append(("entity_deleteEntity", self))
-        del(self)
-    def get_component(self, comp_name) :
-        return get_component(comp_name, self.id)
-
 # BASE SCRIPT #
 class BaseScript :
     """
@@ -216,27 +179,7 @@ class BaseScript :
         globals()["orders"].clear()
         return temp
 
-    # UTILITY METHODS FOR CHILD SCRIPTS #
-    def get_entity_by_name(self, input_name) :
-        new_ent = Entity()
-        orders.append(("entity_getEntityByName", new_ent, input_name, new_ent))
-        return new_ent
 
-    def add_entity(self, input_name) :
-        new_ent = Entity()
-        orders.append(("entity_addEntity", new_ent, input_name, new_ent))
-        return new_ent
-
-    def debug_log(self, input_message) :
-        if type(input_message) != str :
-            self.debug_error("ERROR! ATTEMPTED TO OUTPUT A NON-STRING DEBUG_LOG MESSAGE!")
-            return
-        orders.append(("DEBUG", get_timestamp() + input_message))
-
-    def debug_error(self, input_message) :
-        if type(input_message) != str :
-            self.debug_error("ERROR! ATTEMPTED TO OUTPUT A NON-STRING DEBUG_ERROR MESSAGE!")
-        orders.append(("ERROR", get_timestamp() + input_message))
 
     # PLACEHOLDER DEFINITIONS FOR CHILD SCRIPT METHODS #
     def _awake(self) :

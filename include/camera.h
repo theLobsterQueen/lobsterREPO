@@ -50,7 +50,7 @@ struct Camera
 	/// </summary> ///
 
 	float near = 0.1f;
-	float far = 100.0f;
+	float far = 1000.0f;
 
 	/// <summary> ///
 	///		Unit vectors used for calculating the view matrix of the camera.

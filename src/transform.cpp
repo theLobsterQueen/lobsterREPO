@@ -68,7 +68,7 @@ glm :: mat4x4 transformHandler :: getScaleMatrix(Transform * inputTrans)
 glm :: mat4x4 transformHandler :: getRotateMatrix(Transform * inputTrans)
 {
 	glm :: mat4x4 rotMatrix = glm :: mat4x4(1.0f);
-	for(char i = 0; i < 2; i++)
+	for(char i = 0; i < 3; i++)
 	{
 		glm :: vec3 axis(0.0f, 0.0f, 0.0f);
 		axis[i] = 1.0f;
@@ -85,7 +85,7 @@ void transformHandler :: translate
 	if(!applyGlobal)
 	{
 		glm :: mat4x4 rotMat = getRotateMatrix(inputTrans);
-		delta = glm :: vec4(-delta.x, -delta.y, -delta.z, 1.0f) * rotMat;
+		delta = glm :: vec4(delta.x, delta.y, delta.z, 1.0f) * rotMat;
 	}
 
 	for(int i = 0; i < 3; i++)
@@ -128,8 +128,10 @@ void transformHandler :: processOrder
 
 	// SETS THE VALUES OF THE TRANSFORM //
 	if(orderName == "translate")
-		transformHandler :: translate(transform, pybind11 :: cast<std :: vector<float>>(params[0]),
-				pybind11 :: cast<bool>(params[1]));
+	{
+		transformHandler :: translate(transform, pybind11 :: cast<std :: vector<float>>(params[0]), 
+			pybind11 :: cast<bool>(params[1]));
+	}
 
 	if(orderName == "rotate")
 		transformHandler :: rotate(transform, pybind11 :: cast<std :: vector<float>>(params[0]));

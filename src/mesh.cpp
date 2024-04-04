@@ -195,6 +195,12 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)
 	// IF COULD NOT LOAD, ATTEMPTS TO LAOD FROM PERSPECTIVE OF EXECUTABLE LIBRARY //
 	if(!meshFile.is_open())
 		meshFile.open("./../../assets/models/" + inputName);
+	
+	if(!meshFile.is_open())
+		meshFile.open("./srcMODELS/" + inputName);
+
+	if(!meshFile.is_open())
+		meshFile.open("./../../srcMODELS/" + inputName);
 
 	// IF STILL NOT OPEN, RAISES ERROR //
 	if(!meshFile.is_open())

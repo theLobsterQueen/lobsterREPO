@@ -397,7 +397,7 @@ void appManagement :: update()
 				{
 					if(globals :: isPlaying)
 					{
-						globals :: isPlaying = false;
+						sceneManagement :: stop();
 						sceneManagement :: changeScene(sceneManagement :: loadScene
 								(globals :: curSceneRef -> name + ".lscn"));
 					}

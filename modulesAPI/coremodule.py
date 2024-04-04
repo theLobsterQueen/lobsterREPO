@@ -179,14 +179,15 @@ class BaseScript :
         globals()["orders"].clear()
         return temp
 
-
-
     # PLACEHOLDER DEFINITIONS FOR CHILD SCRIPT METHODS #
     def _awake(self) :
         pass
     def _start(self) :
         pass
     def _update(self, delta_time) :
+        pass
+
+    def _on_collision(self, other_id) :
         pass
 
 

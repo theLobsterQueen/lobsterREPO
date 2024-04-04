@@ -23,7 +23,7 @@ struct Scene;
 struct Entity
 {
 	public :
-		entityID ID;
+		entityID id;
 		componentMask mask = 0;
 		std :: string name;
 };

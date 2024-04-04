@@ -100,22 +100,12 @@ void uiManagement :: drawEditorUI()
 		if(ImGui :: BeginMenu("Scene"))
 		{
 			if(ImGui :: MenuItem("Play Scene"))
-			{
-				sceneManagement :: saveScene(globals :: curSceneRef);
-				appManagement :: compileScripts();
-				appManagement :: startScripts();
-				globals :: isPlaying = true;
-				windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
-			}
+				sceneManagement :: play();
 			if(ImGui :: MenuItem("Stop Scene"))
-			{
-				globals :: isPlaying = false;
-				windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
-			}
+				sceneManagement :: stop();
 			if(ImGui :: MenuItem("Reset Scene"))
 			{
-				globals :: isPlaying = false;
-				windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
+				sceneManagement :: stop();
 				sceneManagement :: changeScene(sceneManagement :: loadScene
 						(std :: string(globals :: curSceneRef -> name + ".lscn")));
 			}

@@ -159,6 +159,14 @@ namespace sceneManagement
 	/// </summary> ///
 
 	void pullOrders(Scene * inputScene);
+
+	/// <summary> ///
+	///		These functions control playing and stopping the scene currently in the
+	///			the editor. It also reconfigures the viewport, if necesarry.
+	/// </summary> ///
+	
+	void play();
+	void stop();
 };
 
 #endif

@@ -24,6 +24,7 @@ entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entit
 		entityIndex++;
 
 	targetScene -> entities[entityIndex].name = entityName;
+	targetScene -> entities[entityIndex].id = entityIndex;
 	sceneManagement :: addComp
 	(
 	 	targetScene, entityIndex,
@@ -671,13 +672,27 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 
 	// COLLISION DETECTION STEP //
 	std :: vector<entityID> collideEnts = sceneManagement :: sceneView(inputScene, COLLIDE_COMP_ID);
+	std :: vector<std :: vector<entityID>> collisionEvents = { };
 	for(unsigned i = 0; i < collideEnts.size(); i++)
 	{
 		for(unsigned j = i + 1; j < collideEnts.size(); j++)
 		{
 			if(colliderHandler :: checkCollision(collideEnts[i], collideEnts[j]))
-				std :: cout << "COLLISION DETECTED!" << std :: endl;
+				collisionEvents.push_back(std :: vector<entityID> 
+					{ collideEnts[i], collideEnts[j] });
 		}
+	}
+
+	// WITH ALL COLLISIONS LISTED, CHECKS TO SEE IF ANY COLLIDED ENTITIES HAVE A SCRIPT ATTACHED //
+	for(std :: vector<entityID> entPair : collisionEvents)
+	{
+		if((globals :: curSceneRef -> entities[entPair[0]].mask & (1 << SCRIPT_COMP_ID)) >= 1)
+			((Script *) globals :: curSceneRef -> components[SCRIPT_COMP_ID][entPair[0]])
+				-> code.attr("_on_collision")(entPair[1]);
+
+		if((globals :: curSceneRef -> entities[entPair[1]].mask & (1 << SCRIPT_COMP_ID)) >= 1)
+			((Script *) globals :: curSceneRef -> components[SCRIPT_COMP_ID][entPair[1]])
+				-> code.attr("_on_collision")(entPair[0]);
 	}
 }
 
@@ -813,4 +828,19 @@ void sceneManagement :: copyEntity(Scene * inputScene, entityID copyID)
 			);
 		}
 	}
+}
+
+void sceneManagement :: play()
+{
+	sceneManagement :: saveScene(globals :: curSceneRef);
+	appManagement :: compileScripts();
+	appManagement :: startScripts();
+	globals :: isPlaying = true;
+	windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
+}
+
+void sceneManagement :: stop()
+{
+	globals :: isPlaying = false;
+	windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
 }

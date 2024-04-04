@@ -75,6 +75,7 @@ namespace graphicManagement
 	///			than the lower level SDL2 function.
 	/// </summary> ///
 	void present();
+	void clearScreen(std :: vector<float> color);
 };
 
 #endif

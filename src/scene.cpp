@@ -293,6 +293,21 @@ void sceneManagement :: saveScene(Scene * inputScene, std :: string alternateNam
 				<< tempScript -> name << std :: endl;
 		}
 
+		// SAVES COLLIDERS //
+		if((curEnt.mask & (1 << COLLIDE_COMP_ID)) > 0)
+		{
+			Collider * tempCollider = (Collider *) inputScene -> components[COLLIDE_COMP_ID][i];
+			sceneFile << "COLLIDER" << std :: endl
+				<< tempCollider -> lWidth << std :: endl
+				<< tempCollider -> rWidth << std :: endl
+
+				<< tempCollider -> uHeight << std :: endl
+				<< tempCollider -> dHeight << std :: endl
+
+				<< tempCollider -> fDepth << std :: endl
+				<< tempCollider -> bDepth << std :: endl;
+		}
+
 		// INCREMENTS INDEX AND REDUCES ACTIVE COUNT //
 		i++;
 		activeCount--;
@@ -464,6 +479,25 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 				newCompPtr = ((compPtr) (scriptHandler :: createScript(line, newEntity)));
 		}
 
+		if(compIndex == COLLIDE_COMP_ID)
+		{
+			Collider * colliderPtr = ((Collider *) (newCompPtr));
+			if(linesRead == 0)
+				colliderPtr -> lWidth = std :: stof(line);
+			if(linesRead == 1)
+				colliderPtr -> rWidth = std :: stof(line);
+
+			if(linesRead == 2)
+				colliderPtr -> uHeight = std :: stof(line);
+			if(linesRead == 3)
+				colliderPtr -> dHeight = std :: stof(line);
+
+			if(linesRead == 4)
+				colliderPtr -> fDepth = std :: stof(line);
+			if(linesRead == 5)
+				colliderPtr -> bDepth = std :: stof(line);
+		}
+
 		// CHECKS FOR LOADING DIFFERENTS COMPONENTS //
 
 		// CHECKS FOR TRANSFORMS //
@@ -555,6 +589,23 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			linesRead = -1;
 		}
 
+		if(line.find(std :: string("COLLIDE")) != std :: string :: npos)
+		{
+			// ADDS PREVIOUSLY CONFIGURED COMPONENT, IF ANY //
+			if(compIndex != -1)
+			{
+				sceneManagement :: addComp
+				(
+					newScene, newEntity,
+					compIndex, newCompPtr
+				);
+			}
+
+			newCompPtr = constructComp(COLLIDE_COMP_ID);
+			compIndex = COLLIDE_COMP_ID;
+			linesRead = -1;
+		}
+
 		linesRead++;
 	}
 
@@ -616,6 +667,17 @@ void sceneManagement :: updateScene(Scene * inputScene, float deltaTime)
 		Script * script = ((Script *) (inputScene -> components[SCRIPT_COMP_ID][curEnt]));
 		if(script -> name != "")
 			script -> code.attr("_update")(globals :: deltaTime);
+	}
+
+	// COLLISION DETECTION STEP //
+	std :: vector<entityID> collideEnts = sceneManagement :: sceneView(inputScene, COLLIDE_COMP_ID);
+	for(unsigned i = 0; i < collideEnts.size(); i++)
+	{
+		for(unsigned j = i + 1; j < collideEnts.size(); j++)
+		{
+			if(colliderHandler :: checkCollision(collideEnts[i], collideEnts[j]))
+				std :: cout << "COLLISION DETECTED!" << std :: endl;
+		}
 	}
 }
 

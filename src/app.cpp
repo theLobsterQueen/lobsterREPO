@@ -11,10 +11,10 @@ void appManagement :: initialize()
 	globals :: winHeight = 900;
 	globals :: deltaTime = 0;
 
-	globals :: clearColor[0] = 0.1f;
-	globals :: clearColor[1] = 0.1f;
-	globals :: clearColor[2] = 0.4f;
-	globals :: clearColor[3] = 0.0f;
+	globals :: clearColor[0] = 0.0f;
+	globals :: clearColor[1] = 0.0f;
+	globals :: clearColor[2] = 0.0f;
+	globals :: clearColor[3] = 1.0f;
 
 	editorGlobals :: keyInput = false;
 	editorGlobals :: windowFlags = 
@@ -25,7 +25,7 @@ void appManagement :: initialize()
 	editorGlobals :: entitySelected = false;
 	editorGlobals :: debugText = std :: stringstream("");
 	editorGlobals :: optionsRef = new Options;
-	windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
+
 
 	// INITIALIZES SDL //
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -93,9 +93,12 @@ void appManagement :: initialize()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
+
 	// SETS OUT STB SETTINGS //
 	stbi_set_flip_vertically_on_load(true);
+
+	// CONFIGURES THE VIEWPORT AND DETERMINES UI BOUNDS //
+	windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
 
 	// PRINTS OUT OPEN-GL VERSION //
 	std :: cout << "GL VENDOR: " << glGetString(GL_VENDOR) << std :: endl;

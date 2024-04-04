@@ -15,6 +15,7 @@ Sources :
  	https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html
 	https://www.scratchapixel.com/index.html
 	http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-9-vbo-indexing/
+	http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
 	https://gamedev.stackexchange.com/questions/190054/how-to-calculate-the-forward-up-
 		right-vectors-using-the-rotation-angles
 	https://learnopengl.com/Getting-started/Textures
@@ -27,6 +28,7 @@ Sources :
 	https://youtu.be/XnUMm-uNmvY
 	https://youtu.be/W3gAzLwfIP0?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2
 	https://youtu.be/fvvWr1jaLyw?si=K1bEC0nxx06WJcc2
+	ttps://youtu.be/eED4bSkYCB8?si=WNEqL9Lkay5Sqo6g
 
 	https://www.libsdl.org/
 	https://pthom.github.io/imgui_manual_online/manual/imgui_manual.html

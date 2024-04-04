@@ -1,0 +1,44 @@
+collide_test
+ENT: Camera
+TRANSFORM
+0/0/10
+4/0/0
+1/1/1
+LIGHT
+1/1/1/0.25
+CAMERA
+0.1
+1000
+shaders/vertShader.txt
+shaders/fragShader.txt
+ENT: New
+TRANSFORM
+0/0/0
+0/0/0
+1/1/1
+MESH
+portrait.ply
+jinx.png
+COLLIDER
+1
+1
+1
+1
+1
+1
+ENT: New
+TRANSFORM
+2.1/0/0
+0/0/90
+1/1/1
+MESH
+portrait.ply
+jinx.png
+COLLIDER
+1
+1
+1
+1
+1
+1
+END

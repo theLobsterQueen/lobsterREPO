@@ -175,6 +175,10 @@ std :: string compToString(componentID compID)
 		case SCRIPT_COMP_ID :
 			return std :: string("Script");
 		break;
+
+		case COLLIDE_COMP_ID :
+			return std :: string("Collider");
+		break;
 	}
 	return std :: string("NULL");
 }
@@ -201,6 +205,11 @@ compPtr constructComp(componentID compID)
 
 		case SCRIPT_COMP_ID :
 			return (compPtr) scriptHandler :: createScript();
+		break;
+
+		case COLLIDE_COMP_ID :
+			return (compPtr) colliderHandler :: createCollider
+				(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
 		break;
 	}
 	return nullptr;
@@ -270,7 +279,7 @@ bool hasComp(Entity inputEnt, componentID compID)
 void determineUIBounds()
 {
 	editorGlobals :: sidePanelWidth = (globals :: winWidth) * 0.2f;
-	editorGlobals :: sidePanelHeight = (globals :: winHeight) * 0.7f;
+	editorGlobals :: sidePanelHeight = (globals :: winHeight) * 0.75f;
 	editorGlobals :: bottomPanelWidth = globals :: winWidth - editorGlobals :: sidePanelWidth;
 	editorGlobals :: bottomPanelHeight = globals :: winHeight - editorGlobals :: sidePanelHeight;
 }

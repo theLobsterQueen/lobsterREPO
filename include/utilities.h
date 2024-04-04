@@ -20,6 +20,7 @@
 #include <globals.h>
 #include <input.h>
 #include <light.h>
+#include <collider.h>
 #include <importantConstants.h>
 
 // STRUCT PROTOTYPES //

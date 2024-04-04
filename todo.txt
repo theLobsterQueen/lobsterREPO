@@ -1,12 +1,9 @@
 Allow for graceful object instantiation // POSTPONED UNTIL I CAN FIGURE OUT HOW //
-// (THESE TWO ARE TOGETHER) //
-	Create options for resizing the Window
-	Separate out the scene viewport and the UI panels to the sides, have SDL
-		render only to the viewport
-Add "quick loading" option for loading new meshes/textures/scripts in the editor.
 Add collision detection system
+Add ability to render primitives
 Improve editor so that it can draw things like Transform modification arrows,
 	highlight the boxes of selected items, etc.
 Create build dialog for exporting projects
 Fix Windows cross-compilation again
 Add end-user UI capabilities 
+Add dynamic shader loading

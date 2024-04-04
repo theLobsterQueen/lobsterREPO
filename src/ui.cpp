@@ -105,12 +105,17 @@ void uiManagement :: drawEditorUI()
 				appManagement :: compileScripts();
 				appManagement :: startScripts();
 				globals :: isPlaying = true;
+				windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
 			}
 			if(ImGui :: MenuItem("Stop Scene"))
+			{
 				globals :: isPlaying = false;
+				windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
+			}
 			if(ImGui :: MenuItem("Reset Scene"))
 			{
 				globals :: isPlaying = false;
+				windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
 				sceneManagement :: changeScene(sceneManagement :: loadScene
 						(std :: string(globals :: curSceneRef -> name + ".lscn")));
 			}
@@ -120,8 +125,11 @@ void uiManagement :: drawEditorUI()
 		if(ImGui :: BeginMenu("Options"))
 		{
 			if(ImGui :: MenuItem("Hide UI"))
+			{
 				editorGlobals :: optionsRef -> hideUIWhilePlaying =
 					!editorGlobals :: optionsRef -> hideUIWhilePlaying;
+				windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
+			}
 			if(editorGlobals :: optionsRef -> hideUIWhilePlaying)
 			{
 				ImGui :: SameLine();
@@ -382,6 +390,45 @@ void uiManagement :: drawEditorUI()
 					meshHandler :: setTexture(curMesh, textureHandler :: createTexture(texHolder));
 				texHolder = "";
 				texHolder.resize(16);
+			}
+		}
+
+		// RELAYS COLLIDER DATA //
+		if((activeEntity.mask & (1 << COLLIDE_COMP_ID)) >= 1)
+		{
+			ImGui :: Separator();
+			Collider * curCollider = (Collider *) (globals :: curSceneRef -> components
+				[COLLIDE_COMP_ID][editorGlobals :: curActiveEntity]);
+			ImGui :: Text("Collider Data");
+			float * collideMatrix[9] =
+			{
+				&(curCollider -> rWidth), &(curCollider -> lWidth),
+				&(curCollider -> uHeight), &(curCollider -> dHeight),
+				&(curCollider -> fDepth), &(curCollider -> bDepth)
+			};
+
+			std :: string nameMatrix[9] = 
+			{ 
+				"W_r", "W_l",
+				"H_u", "H_d",
+				"D_f", "D_b" 
+			};
+			uiManagement :: deleteButton(COLLIDE_COMP_ID);
+			for(int row = 0; row < 3; row++)
+			{
+				ImGui :: PushItemWidth(editorGlobals :: sidePanelWidth * 0.2f);
+				for(int column = 0; column < 2; column++)
+				{
+					ImGui :: InputFloat
+					(
+					 	nameMatrix[(row * 2) + column].c_str(), 
+						&(*collideMatrix[(row * 2) + column]),
+						-0.01f, -1.0f, "%.2f"
+					);
+					if(column != 1)
+						ImGui :: SameLine();
+				}
+				ImGui :: PopItemWidth();
 			}
 		}
 

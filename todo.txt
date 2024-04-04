@@ -1,10 +1,8 @@
 Allow for graceful object instantiation // POSTPONED UNTIL I CAN FIGURE OUT HOW //
-Fix non-global translations in regard to how they process rotations
-Create project-directory script, which can create new directories configured to work
-	in the best possible way with the engine
-Create options for resizing the Window
-Separate out the scene viewport and the UI panels to the sides, have SDL
-	render only to the viewport
+// (THESE TWO ARE TOGETHER) //
+	Create options for resizing the Window
+	Separate out the scene viewport and the UI panels to the sides, have SDL
+		render only to the viewport
 Add "quick loading" option for loading new meshes/textures/scripts in the editor.
 Add collision detection system
 Improve editor so that it can draw things like Transform modification arrows,

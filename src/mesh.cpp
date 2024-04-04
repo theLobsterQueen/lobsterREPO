@@ -311,7 +311,6 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)
 		}
 	}
 
-	std :: cout << "LOADED " << inputName << " SUCCESSFULY!" << std :: endl;
 	Mesh * newMesh = meshHandler :: createMesh(vertices, indices, inputName);
 	// ADDS MESH TO CACHE //
 	globals :: meshCache[inputName] = newMesh;

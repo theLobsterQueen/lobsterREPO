@@ -23,12 +23,9 @@ void appManagement :: initialize()
 	editorGlobals :: inputTextFlags = ImGuiInputTextFlags_EnterReturnsTrue |
 		ImGuiInputTextFlags_AutoSelectAll;
 	editorGlobals :: entitySelected = false;
-	editorGlobals :: sidePanelWidth = (globals :: winWidth) * 0.2f;
-	editorGlobals :: sidePanelHeight = (globals :: winHeight) * 0.7f;
-	editorGlobals :: bottomPanelWidth = globals :: winWidth - editorGlobals :: sidePanelWidth;
-	editorGlobals :: bottomPanelHeight = globals :: winHeight - editorGlobals :: sidePanelHeight;
 	editorGlobals :: debugText = std :: stringstream("");
 	editorGlobals :: optionsRef = new Options;
+	windowManagement :: changeSize(globals :: winWidth, globals :: winHeight);
 
 	// INITIALIZES SDL //
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -57,7 +54,7 @@ void appManagement :: initialize()
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
 	// CREATES WINDOW AND READS OPEN-GL CONTEXT //
-	int SDL_FLAGS = SDL_WINDOW_OPENGL | SDL_WINDOW_MOUSE_CAPTURE;
+	int SDL_FLAGS = SDL_WINDOW_OPENGL | SDL_WINDOW_MOUSE_CAPTURE | SDL_WINDOW_RESIZABLE;
 	globals :: winRef = SDL_CreateWindow
 	(
 		"Lobster Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 

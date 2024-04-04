@@ -14,6 +14,7 @@
 
 // LOBSTER INCLUDES //
 #include <globals.h>
+#include <utilities.h>
 
 /// <summary> ///
 ///		This file defines functions that change the appearence of the engine in some way,
@@ -29,6 +30,7 @@ namespace windowManagement
 	///		Changes the title of the main window.
 	/// </summary> ///
 	void changeTitle(SDL_Window * window, std :: string windowName);
+	void changeSize(unsigned x, unsigned y);
 };
 
 #endif

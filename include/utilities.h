@@ -17,6 +17,7 @@
 #include <GL/glu.h>
 
 // LOBSTER INCLUDES //
+#include <globals.h>
 #include <input.h>
 #include <light.h>
 #include <importantConstants.h>
@@ -48,4 +49,5 @@ compPtr constructComp(componentID compID);
 compPtr copyComp(componentID compID, compPtr copySrc);
 bool hasComp(Entity inputEnt, componentID compID);
 
+void determineUIBounds();
 #endif

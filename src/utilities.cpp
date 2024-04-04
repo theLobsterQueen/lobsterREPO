@@ -266,3 +266,11 @@ componentID stringToComp(std :: string compName)
 
 bool hasComp(Entity inputEnt, componentID compID)
 	{ return ((inputEnt.mask & (1 << compID)) >= 1); }
+
+void determineUIBounds()
+{
+	editorGlobals :: sidePanelWidth = (globals :: winWidth) * 0.2f;
+	editorGlobals :: sidePanelHeight = (globals :: winHeight) * 0.7f;
+	editorGlobals :: bottomPanelWidth = globals :: winWidth - editorGlobals :: sidePanelWidth;
+	editorGlobals :: bottomPanelHeight = globals :: winHeight - editorGlobals :: sidePanelHeight;
+}

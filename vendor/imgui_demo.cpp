@@ -11,7 +11,6 @@
 // Get the latest version at https://github.com/ocornut/imgui
 
 //---------------------------------------------------
-// PLEASE DO NOT REMOVE THIS FILE FROM YOUR PROJECT!
 //---------------------------------------------------
 // Message to the person tempted to delete this file when integrating Dear ImGui into their codebase:
 // Think again! It is the most useful reference code that you and other coders will want to refer to and call.

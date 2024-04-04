@@ -128,6 +128,28 @@ void uiManagement :: drawEditorUI()
 				ImGui :: Text("X");
 			}
 
+			ImGui :: Separator();
+			if(ImGui :: BeginMenu("Resize Window"))
+			{
+				if(ImGui :: MenuItem("1600x900"))
+					windowManagement :: changeSize(1600, 900);
+				if(ImGui :: MenuItem("1366x768"))
+					windowManagement :: changeSize(1366, 768);
+				if(ImGui :: MenuItem("1280x720"))
+					windowManagement :: changeSize(1024, 576);
+
+				ImGui :: Separator();
+
+				if(ImGui :: MenuItem("1400x1050"))
+					windowManagement :: changeSize(1600, 900);
+				if(ImGui :: MenuItem("1024x768"))
+					windowManagement :: changeSize(1366, 768);
+				if(ImGui :: MenuItem("800x600"))
+					windowManagement :: changeSize(1024, 576);
+
+				ImGui :: EndMenu();
+			}
+
 			ImGui :: EndMenu();
 		}
 

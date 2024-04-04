@@ -6,7 +6,6 @@
 // Our loader is custom-generated, based on gl3w but automatically filtered to only include
 // enums/functions that we use in our imgui_impl_opengl3.cpp source file in order to be small.
 //
-// YOU SHOULD NOT NEED TO INCLUDE/USE THIS DIRECTLY. THIS IS USED BY imgui_impl_opengl3.cpp ONLY.
 // THE REST OF YOUR APP SHOULD USE A DIFFERENT GL LOADER: ANY GL LOADER OF YOUR CHOICE.
 //
 // IF YOU GET BUILD ERRORS IN THIS FILE (commonly macro redefinitions or function redefinitions):

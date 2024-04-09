@@ -4,6 +4,10 @@
 // FUNCTION IMPLEMENTATIONS //
 Texture * textureHandler :: createTexture(std :: string textureName)
 {
+	// CHECKS TO SEE IF TEXTURE NAME IS EMPTY. IF SO, RETURNS BLANK TEXTURE //
+	if(textureName.size() == 0)
+		return new Texture;
+
 	// CHECKS TO SEE IF TEXTURE IS ALREADY CACHED //
 	if(globals :: textureCache.count(textureName) > 0)
 	{

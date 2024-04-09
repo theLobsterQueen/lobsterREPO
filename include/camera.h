@@ -20,7 +20,6 @@ struct Transform;
 /// <summary> ///
 ///		This component is used to render a view of a scene from a specific point
 ///			to a specific target.
-///		(TODO) Make the camera able to render to targets other than the main window.
 /// </summary> ///
 
 struct Camera

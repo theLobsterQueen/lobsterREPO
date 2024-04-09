@@ -1,6 +1,8 @@
 # IMPORTS AND INIITALIZATIONS #
 from datetime import datetime
 
+name_ids = { }
+
 # ENITY OBJECT DEFINITION #
     # THIS CLASS IS USED AS A WRAPPER OBJECT FOR TARGET ID'S, BECAUSE AN ID BY ITSELF CANNOT #
     # BE RETURNED TO A CLASS IMMEDIATELY AFTER CALLING A "GET_ID" LIKE FUNCTION, BUT A WRAPPER 
@@ -40,10 +42,9 @@ def assign_vec(vec_1, vec_2) :
 def get_timestamp() :
     now = datetime.now()
     return (now.strftime("<%H:%M:%S>: "))
+
 def get_entity_by_name(input_name) :
-    new_ent = Entity()
-    orders_ref.append(("entity_getEntityByName", new_ent, input_name, new_ent))
-    return new_ent
+    return name_ids[input_name]
 
 def add_entity(input_name) :
     new_ent = Entity()

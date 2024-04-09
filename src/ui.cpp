@@ -133,21 +133,89 @@ void uiManagement :: drawEditorUI()
 					windowManagement :: changeSize(1600, 900);
 				if(ImGui :: MenuItem("1366x768"))
 					windowManagement :: changeSize(1366, 768);
-				if(ImGui :: MenuItem("1280x720"))
-					windowManagement :: changeSize(1024, 576);
 
 				ImGui :: Separator();
 
 				if(ImGui :: MenuItem("1400x1050"))
-					windowManagement :: changeSize(1600, 900);
+					windowManagement :: changeSize(1400, 1050);
 				if(ImGui :: MenuItem("1024x768"))
-					windowManagement :: changeSize(1366, 768);
-				if(ImGui :: MenuItem("800x600"))
-					windowManagement :: changeSize(1024, 576);
+					windowManagement :: changeSize(1024, 768);
 
 				ImGui :: EndMenu();
 			}
 
+			ImGui :: Separator();
+			if(ImGui :: BeginMenu("Vertex Shader"))
+			{
+				std :: filesystem :: directory_iterator dirIt;
+				try
+				{ 
+					dirIt = std :: filesystem :: begin
+						(std :: filesystem :: directory_iterator("./shaders")); 
+				}
+
+				catch(std :: filesystem :: filesystem_error err)
+				{
+					dirIt = std :: filesystem :: begin
+						(std :: filesystem :: directory_iterator("./../../shaders")); 
+				}
+
+				for(auto& p : dirIt)
+				{
+
+					std :: string pathName = p.path().string();
+					if(pathName.find(".vert") == std :: string :: npos 
+						|| pathName.find(".swp") != std :: string ::npos)
+					{
+						continue;
+					}
+
+					std :: string fileName = p.path().stem().string();
+					if(ImGui :: MenuItem(fileName.c_str()))
+					{
+						graphicManagement :: loadShader
+							(globals :: pipelineRefs[0], GL_VERTEX_SHADER, (fileName + ".vert").c_str());
+						graphicManagement :: compileProgram(globals :: pipelineRefs[0]);
+					}
+				}
+				ImGui :: EndMenu();
+			}
+			if(ImGui :: BeginMenu("Fragment Shader"))
+			{
+				std :: filesystem :: directory_iterator dirIt;
+				try
+				{ 
+					dirIt = std :: filesystem :: begin
+						(std :: filesystem :: directory_iterator("./shaders")); 
+				}
+
+				catch(std :: filesystem :: filesystem_error err)
+				{
+					dirIt = std :: filesystem :: begin
+						(std :: filesystem :: directory_iterator("./../../shaders")); 
+				}
+
+				for(auto& p : dirIt)
+				{
+
+					std :: string pathName = p.path().string();
+					if(pathName.find(".frag") == std :: string :: npos 
+						|| pathName.find(".swp") != std :: string ::npos)
+					{
+						continue;
+					}
+
+					std :: string fileName = p.path().stem().string();
+					if(ImGui :: MenuItem(fileName.c_str()))
+					{
+						graphicManagement :: loadShader
+							(globals :: pipelineRefs[0], GL_FRAGMENT_SHADER, (fileName + ".frag").c_str());
+						graphicManagement :: compileProgram(globals :: pipelineRefs[0]);
+						graphicManagement :: printPipeline(globals :: pipelineRefs[0]);
+					}
+				}
+				ImGui :: EndMenu();
+			}
 			ImGui :: EndMenu();
 		}
 
@@ -281,7 +349,6 @@ void uiManagement :: drawEditorUI()
 			std :: string rowNames[3] = { "P", "R", "S" };
 			std :: string columnNames[3] = { "_x", "_y", "_z" };
 			ImGui :: Text("Transform Data");
-			uiManagement :: deleteButton(TRANS_COMP_ID);
 			std :: vector<float> * transVecIndices[3] = 
 				{ &(curTrans -> position), &(curTrans -> rotation), &(curTrans -> scale) };
 			for(int row = 0; row < 3; row++)
@@ -349,6 +416,13 @@ void uiManagement :: drawEditorUI()
 
 			ImGui :: Text("Mesh Data");
 			uiManagement :: deleteButton(MESH_COMP_ID);
+			ImGui :: SameLine();
+			if(ImGui :: Button("Clear Cache"))
+			{
+				globals :: meshCache.clear();
+				globals :: textureCache.clear();
+			}
+
 			static std :: string meshHolder = "";
 			static std :: string texHolder  = "";
 
@@ -367,20 +441,30 @@ void uiManagement :: drawEditorUI()
 					);
 				}
 				meshHolder = "";
-				meshHolder.resize(16);
+				meshHolder.resize(17);
 			}
+			ImGui :: SameLine();
+			if(ImGui :: Button("Clear"))
+				sceneManagement :: addComp
+				(
+					globals :: curSceneRef, editorGlobals :: curActiveEntity,
+					MESH_COMP_ID, (compPtr) (meshHandler :: getMeshFromPLY(""))
+				);			
 
 			if(texHolder.size() != 16)
 				texHolder.resize(16);
 			if(ImGui :: InputTextWithHint
 				("##3", curMesh -> texName.c_str(), texHolder.data(), 16, editorGlobals :: inputTextFlags))
-			{ 
+			{
 				Texture * tex = textureHandler :: createTexture(texHolder);
 				if(tex != nullptr)
 					meshHandler :: setTexture(curMesh, textureHandler :: createTexture(texHolder));
 				texHolder = "";
 				texHolder.resize(16);
 			}
+			ImGui :: SameLine();
+			if(ImGui :: Button("Clear"))
+				meshHandler :: setTexture(curMesh, textureHandler :: createTexture(""));
 		}
 
 		// RELAYS COLLIDER DATA //

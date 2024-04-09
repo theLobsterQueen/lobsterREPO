@@ -251,6 +251,18 @@ compPtr copyComp(componentID compID, compPtr copySrc)
 			return (compPtr) scriptHandler :: createScript(temp -> name, temp -> id);
 		}
 		break;
+
+		case COLLIDE_COMP_ID :
+		{
+			Collider * temp = (Collider *) (copySrc);
+			return (compPtr) (colliderHandler :: createCollider
+			(
+				temp -> lWidth, temp -> rWidth,
+				temp -> uHeight, temp -> dHeight,
+				temp -> fDepth, temp -> bDepth
+			));
+		}
+
 	}
 	return nullptr;
 }

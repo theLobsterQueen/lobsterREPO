@@ -123,13 +123,13 @@ void appManagement :: begin(std :: string sceneLoad)
 	graphicManagement :: loadShader
 	(
 		basePipeline, GL_VERTEX_SHADER, 
-		"shaders/vertShader.txt"
+		"base.vert"
 	);
 
 	graphicManagement :: loadShader
 	(
 		basePipeline, GL_FRAGMENT_SHADER, 
-		"shaders/fragShader.txt"
+		"frag2.frag"
 	);
 
 	graphicManagement :: compileProgram(basePipeline);
@@ -219,6 +219,8 @@ void appManagement :: compileScripts()
 		(std :: filesystem :: directory_iterator(std :: string
 		(APIGlobals :: workingPath + "scripts/").c_str())); 
 
+
+
 	// RUNS ALL SCRIPTS IN THE SCRIPT DIRECTORY //
 	unsigned scriptsCompiled = 0;
 	APIGlobals :: coremodule.attr("script_refs").attr("clear")();
@@ -277,6 +279,12 @@ void appManagement :: startScripts()
 {
 	// ADDS ALL CURRENTLY EXISTING COMPONENTS INTO THE API //
 	APIGlobals :: coremodule.attr("clear_comps")();
+	
+	// RESETS NAME-ID DIRECTORY //
+	APIGlobals :: coremodule.attr("name_ids").attr("clear")();
+	pybind11 :: dict tempMap = APIGlobals :: coremodule.attr("name_ids");
+
+	// ITERATES THROUGH ALL ACTIVE ENTITIES //
 	unsigned curActive = globals :: curSceneRef -> activeEntities;
 	for(entityID curEntID = 0; curEntID < LOBSTER_MAX_ENTITIES && curActive > 0; curEntID++)
 	{
@@ -308,6 +316,9 @@ void appManagement :: startScripts()
 			Light * lightData = (Light *) (globals :: curSceneRef -> components[LIGHT_COMP_ID][curEntID]);
 			APIGlobals :: coremodule.attr("Light")(curEntID, lightData -> color);
 		}
+
+		// ADDS THE ENTITY INTO THE NAME-ID DIRECTORY //
+		tempMap[curEnt.name.c_str()] = curEntID;
 	}
 	
 	// CLEARS ORDERS AFTER INITIALIZING SCENE IN ORDER TO STOP DUPLICATE INITIALIZATIONS //

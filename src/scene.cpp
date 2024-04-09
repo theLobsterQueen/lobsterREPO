@@ -86,16 +86,16 @@ void sceneManagement :: renderScene(Scene * targetScene)
 	// READS COMPONENTS FROM CAMERA ENTITY //
 	Camera * camera = (Camera *) 
 		(targetScene -> components[CAMERA_COMP_ID][cameraEntity]);
-	if(!(camera -> curPipelineRef -> isCompiled))
+	if(!(globals :: pipelineRefs[0] -> isCompiled))
 	{
-		std :: cout << "ERROR! ATTEMPTING TO REDER SCENE, BUT TARGET CAMERA'S "
-			<< std :: endl << "RENDER PIPELINE IS UNCOMPILED!" << std :: endl;
+		std :: cout << "ERROR! ATTEMPTING TO REDER SCENE, BUT RENDER PIPELINE IS UNCOMPILED!" 
+			<< std :: endl;
 		return;
 	}
 
 	Transform * transform = (Transform *)
 		(targetScene -> components[TRANS_COMP_ID][cameraEntity]);
-	graphicManagement :: usePipeline(camera -> curPipelineRef);
+	graphicManagement :: usePipeline(globals :: pipelineRefs[0]);
 
 	// GETS MODEL-WORLD AND WORLD-VIEW MATRICES //
 	glm :: mat4x4 worldView = cameraHandler :: getWorldViewMatrix(camera, transform);
@@ -463,13 +463,14 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			if(linesRead == 2)
 			{
 				graphicManagement :: loadShader
-					(cameraPtr -> curPipelineRef, GL_VERTEX_SHADER, "shaders/vertShader.txt");
+					(cameraPtr -> curPipelineRef, GL_VERTEX_SHADER, line.c_str());
 			}
 
 			if(linesRead == 3)
 			{
 				graphicManagement :: loadShader
-					(cameraPtr -> curPipelineRef, GL_FRAGMENT_SHADER, "shaders/fragShader.txt");
+					(cameraPtr -> curPipelineRef, GL_FRAGMENT_SHADER, line.c_str());
+				cameraPtr -> curPipelineRef = globals :: pipelineRefs[0];
 				graphicManagement :: compileProgram(cameraPtr -> curPipelineRef);
 			}
 		}

@@ -76,6 +76,11 @@ namespace graphicManagement
 	/// </summary> ///
 	void present();
 	void clearScreen(std :: vector<float> color);
+
+	/// <summary> ///
+	///		Prints out the current state of the pipeline.
+	/// </summary> ///
+	void printPipeline(Pipeline * inputPipeline);
 };
 
 #endif

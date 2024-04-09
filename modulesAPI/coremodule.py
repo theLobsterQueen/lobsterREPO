@@ -29,6 +29,11 @@ def get_component(comp_name, entID) :
             return comp
 
     # IF COULD NOT FIND COMPONENT REFERENCE, CREATES ONE AND RETURNS IT #
+    try :
+        globals()[comp_name]
+    except KeyError :
+        print(f"ERROR! COULD NOT FIND {comp_name} IN COMPONENT DIRECTORY!")
+
     return globals()[comp_name](entID)
 
 def change_data(comp_name, entID, attribute_name, new_value) :
@@ -172,6 +177,10 @@ class BaseScript :
         This class is the base-line script that all Python classes, which intend to interact
             with the Lobster Engine, must derive from.
     """
+
+    # CONSTRUCTOR #
+    def __init__(self, ent_ref) :
+        self.id = ent_ref
 
     # UTILITY METHODS FOR PARENT CLASS #
     def push_data(self) :

@@ -73,8 +73,6 @@ namespace globals
 
 	extern InputState * inputState;
 
-
-
 	/// <summary> ///
 	///		A collection of all created pipelines within the engine context.
 	/// </summary> ///

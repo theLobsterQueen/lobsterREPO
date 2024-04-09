@@ -21,40 +21,21 @@ void graphicManagement :: loadShader
 // FUNCTION //
 {
 	// DETERMINES WHICH SHADER CONTAINER TO ATTACH NEW SHADER TOO //
-	GLuint * targetShader;
 	std :: cout << shaderPath << std :: endl;
-	switch(shaderType)
-	{
-		case GL_VERTEX_SHADER :
-			targetShader = &(targetPipeline -> vertShader);
-			targetPipeline -> vertShaderName = std :: string(shaderPath);
-		break;
-
-		case GL_FRAGMENT_SHADER :
-			targetShader = &(targetPipeline -> fragShader);
-			targetPipeline -> fragShaderName = std :: string(shaderPath);
-		break;
-
-		default :
-			std :: cout << "ERROR! INVALID SHADER TYPE WHILE IMPORTING " << shaderPath
-				<< std :: endl;
-			return;
-		break;
-	}
 
 	// CREATES NEW SHADER TO ATTACH //
 	GLuint newShader = glCreateShader(shaderType);
 
 	// FINDS AND READS SHADER FILE //
 	std :: string shaderString, line;
-	std :: ifstream shaderFile(shaderPath);
+	std :: ifstream shaderFile(std :: string("./shaders/") + shaderPath);
 	if(!shaderFile.is_open())
 	{
 		// ATTEMPTS TO LOAD IT FROM THE PERSEPCTIVE OF AN EXECUTABLE IN DEBUG/RELEASE //
-		shaderFile.open(std :: string("../../") + shaderPath);
+		shaderFile.open(std :: string("../../shaders/") + shaderPath);
 		if(!shaderFile.is_open())
 		{
-			std :: cout << "COULD NOT FIND SHADER AT " << shaderPath << "!" << std :: endl;
+			std :: cout << "COULD NOT FIND SHADER " << shaderPath << "!" << std :: endl;
 			return;
 		}
 	}
@@ -132,7 +113,24 @@ void graphicManagement :: loadShader
 	}
 
 	// ATTACHES NEW SHADER TO TARGET CONTAINER //
-	(*targetShader) = newShader;
+	switch(shaderType)
+	{
+		case GL_VERTEX_SHADER :
+			targetPipeline -> vertShader = newShader;
+			targetPipeline -> vertShaderName = std :: string(shaderPath);
+		break;
+
+		case GL_FRAGMENT_SHADER :
+			targetPipeline -> fragShader = newShader;
+			targetPipeline -> fragShaderName = std :: string(shaderPath);
+		break;
+
+		default :
+			std :: cout << "ERROR! INVALID SHADER TYPE WHILE IMPORTING " << shaderPath
+				<< std :: endl;
+			return;
+		break;
+	}
 
 	// CLOSES SHADER FILE //
 	shaderFile.close();
@@ -140,12 +138,8 @@ void graphicManagement :: loadShader
 
 void graphicManagement :: compileProgram(Pipeline * targetPipeline)
 {
-	// CHECKS TO ENSURE THAT PIPELINE IS NOT ALREADY COMPILED //
-	if(targetPipeline -> isCompiled)
-		return;
-	
 	// VARIABLE INITIALIZATION //
-	GLuint prog = targetPipeline -> program;
+	GLuint prog = glCreateProgram();
 	GLuint vert = targetPipeline -> vertShader;
 	GLuint frag = targetPipeline -> fragShader;
 	bool failed = false;
@@ -185,6 +179,8 @@ void graphicManagement :: compileProgram(Pipeline * targetPipeline)
 
 	// MARKS THE PIEPLINE AS COMPILED //
 	targetPipeline -> isCompiled = true;
+	targetPipeline -> program = prog;
+	glUseProgram(targetPipeline -> program); 
 }
 
 void graphicManagement :: usePipeline(Pipeline * targetPipeline)
@@ -222,3 +218,12 @@ void graphicManagement :: present()
 
 	SDL_GL_SwapWindow(globals :: winRef); 
 }
+
+void graphicManagement :: printPipeline(Pipeline * inputPipeline)
+{
+	std :: cout << "PIPELINE!" << std :: endl
+		<< "\t" << inputPipeline -> vertShaderName << std :: endl
+		<< "\t" << inputPipeline -> fragShaderName << std :: endl
+		<< "\tIS COMPILED: " << inputPipeline -> isCompiled << std :: endl;
+}
+

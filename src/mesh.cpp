@@ -67,12 +67,12 @@ Mesh * meshHandler :: createMesh
 	glVertexAttribPointer
 	(
 		CORD_VEC, 2, GL_FLOAT, GL_FALSE, 
-		vertexSize, (void *) (6 * sizeof(float))
+		vertexSize, (void *) (10 * sizeof(float))
 	);
 	glVertexAttribPointer
 	(
 		COLOR_VEC, 4, GL_FLOAT, GL_TRUE,
-		vertexSize, (void *) (8 * sizeof(float))
+		vertexSize, (void *) (6 * sizeof(float))
 	);
 
 
@@ -182,6 +182,10 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)
 	std :: vector<unsigned int> indices;
 	std :: string line; 
 
+	// CHECKS IF INPUT NAME IS EMPTY. IF SO, RETURNS EMPTY MESH TO CALLER //
+	if(inputName == "")
+		return (Mesh *) (constructComp(MESH_COMP_ID));
+
 	// CHECKS FOR EXISTING MESH INSTANCES OF THIS FILE //
 	if(globals :: meshCache.count(inputName) > 0)
 	{
@@ -189,7 +193,8 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)
 		return meshHandler :: createMesh(temp -> vertexData, temp -> indexData, inputName);
 	}
 
-	// LOADS FILES //
+	// ELSE, LOADS FILES //
+	std :: cout << "LOADING " << inputName << "FROM FILE!" << std :: endl;
 	std :: ifstream meshFile("./assets/models/" + inputName);
 	
 	// IF COULD NOT LOAD, ATTEMPTS TO LAOD FROM PERSPECTIVE OF EXECUTABLE LIBRARY //
@@ -283,11 +288,11 @@ Mesh * meshHandler :: getMeshFromPLY(std :: string inputName, bool debugPrint)
 				// READS VERTEX/COLOR DATA //
 				if(readingVertex)
 				{
-					// READS NON-COLOR COORDINATES //
-					if(tokensRead < 8)
-						vertices.push_back(std :: stof(data));
-					else
+					// READS POSITION/NORMALS AND TEXTURE COORDINATES //
+					if(tokensRead >= 6 && tokensRead <= 9)
 						vertices.push_back(std :: stof(data) / 255.0f);
+					else
+						vertices.push_back(std :: stof(data));
 				}
 
 				// READS INDEX DATA //

@@ -1,5 +1,4 @@
 import coremodule
-import scenemodule
 
 class scene_2(coremodule.BaseScript) :
     def _start(self) :
@@ -14,4 +13,4 @@ class scene_2(coremodule.BaseScript) :
             self.step = 0.0
 
         if self.counter >= 3.0 :
-            scenemodule.change_scene("Scene_1")
+            coremodule.change_scene("Scene_1")

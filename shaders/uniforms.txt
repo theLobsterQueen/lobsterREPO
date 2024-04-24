@@ -3,5 +3,5 @@ layout (location = 0) uniform mat4 		u_modelWorldMatrix;
 layout (location = 1) uniform mat4 		u_worldViewMatrix;
 layout (location = 2) uniform mat4 		u_viewProjMatrix;
 layout (location = 3) uniform sampler2D u_2DSampler;
-layout (location = 4) uniform vec3 	u_lightPos[c_maxLights];
-layout (location = 5) uniform vec4 	u_lightColor[c_maxLights];
+layout (location = 4) uniform vec3 					u_lightPos[c_maxLights];
+layout (location = 4 + c_maxLights) uniform vec4 	u_lightColor[c_maxLights];

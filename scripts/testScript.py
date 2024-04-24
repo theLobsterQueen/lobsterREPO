@@ -3,9 +3,13 @@ class testScript(coremodule.BaseScript) :
     def _awake(self) :
         self.trans_ref = coremodule.get_component("Transform", self.id)
         self.camera_ref = coremodule.get_component("Transform", coremodule.get_entity_by_name("Camera"))
+        self.ent_ref = coremodule.add_entity("Bingus")
         self.scalar = 1.0
         self.col_cooldown = 0.0
         self.c_col_max = 0.1
+
+    def _start(self) :
+        self.ent_trans = coremodule.get_component("Transform", coremodule.get_entity_by_name("Bingus"))
 
     def _update(self, delta_time) :
         speed = 10.0

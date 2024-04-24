@@ -1,10 +1,9 @@
 // BASIC 3D VERTEX SHADER //
 #version 460
 
-// DEFINES UNIFORMS //
-layout (location = 0) uniform mat4 u_modelWorldMatrix;
-layout (location = 1) uniform mat4 u_worldViewMatrix;
-layout (location = 2) uniform mat4 u_viewProjMatrix;
+// INCLUDES AND INITIALIZATIONS ?/
+#include <constants>
+#include <uniforms>
 
 // INPUT ATTRIBUTES //
 layout (location = 0) in vec3 in_vertexPos;

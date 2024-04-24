@@ -31,9 +31,10 @@ void entityHandler :: processOrder
 
 	if(orderName == "addEntity")
 	{
-		entityID newEnt = sceneManagement :: newEntityID
-			(globals :: curSceneRef, pybind11 :: cast<std :: string>(params[0]));
+		std :: string entName = pybind11 :: cast<std :: string>(params[0]);
+		entityID newEnt = sceneManagement :: newEntityID(globals :: curSceneRef, entName);
 		params[1].attr("id") = newEnt;
+		APIGlobals :: coremodule.attr("name_ids")[entName.c_str()] = newEnt;
 	}
 
 	if(orderName == "deleteEntity")

@@ -83,13 +83,15 @@ Sprint 3 :
 		[X] Create New Entities in a Given Scene
 		[X] Process Input
 		[X] Change the Current Scene
-	[ ] Create a Project Manager
-		[ ] Can Create new Project Directories
-		[ ] Can Manage/List/Delete all Existing Project Directories
-	[ ] QoL
-		[ ] "Quick-loading" system for loading new meshes/textures/scripts
-		[ ] Window resizing
-		[ ] Separating the viewport from the UI itself
-		[ ] Transform modifier gizmo, highlights for objects without meshes
+	[~] QoL
+		[X] "Quick-loading" system for loading new meshes/textures/scripts
+		[X] Window resizing
+		[X] Separating the viewport from the UI itself
 		[ ] Better error handling
-		[ ] Better shader management
+		[X] Better shader management
+
+Build for RELEASE!!! :
+	[ ] Add Documentation
+	[ ] Fix Windows cross-compilation again
+	[ ] Build Release!!!!
+	[ ] [STRETCH] Create Build Dialog for Exporting Projects

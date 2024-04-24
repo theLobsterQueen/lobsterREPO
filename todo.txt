@@ -1,9 +1,6 @@
-Allow for graceful object instantiation // POSTPONED UNTIL I CAN FIGURE OUT HOW //
-Add dynamic shader loading
-Develop collision detection system to support collision with rotated objects
-Improve editor so that it can draw things like Transform modification arrows,
-	highlight the boxes of selected items, etc.
-Create build dialog for exporting projects
+Allow for graceful object instantiation
+Add documentation
 Fix Windows cross-compilation again
-Add end-user UI capabilities 
-
+Build Release!!!!
+Better error handling
+Create build dialog for exporting projects

@@ -14,7 +14,6 @@ void sceneManagement :: changeScene(Scene * targetScene)
 	globals :: curSceneRef = targetScene;
 	windowManagement :: changeTitle(globals :: winRef, globals :: curSceneRef -> name);
 	appManagement :: compileScripts();
-	appManagement :: startScripts();
 }
 
 entityID sceneManagement :: newEntityID(Scene * targetScene, std :: string entityName)
@@ -367,13 +366,17 @@ Scene * sceneManagement :: loadScene(std :: string scenePath)
 			compIndex = -1;
 			std :: stringstream lineStream(line);
 			std :: string data;
+			std :: string newName;
 			unsigned char index = 0;
 			while(lineStream >> data)
 			{
-				if(index == 1)
-					newEntity = sceneManagement :: newEntityID(newScene, data);
+				if(index > 1)
+					newName += " ";
+				if(index >= 1)
+					newName += data;
 				index++;
 			}
+			newEntity = sceneManagement :: newEntityID(newScene, newName);
 		}
 
 		if(line.find(std :: string("END")) != std :: string :: npos)

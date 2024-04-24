@@ -133,14 +133,6 @@ void uiManagement :: drawEditorUI()
 					windowManagement :: changeSize(1600, 900);
 				if(ImGui :: MenuItem("1366x768"))
 					windowManagement :: changeSize(1366, 768);
-
-				ImGui :: Separator();
-
-				if(ImGui :: MenuItem("1400x1050"))
-					windowManagement :: changeSize(1400, 1050);
-				if(ImGui :: MenuItem("1024x768"))
-					windowManagement :: changeSize(1024, 768);
-
 				ImGui :: EndMenu();
 			}
 

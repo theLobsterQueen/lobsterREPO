@@ -12,8 +12,12 @@ script_refs = { }
 # CORE MODULE FUNCTIONS #
 def clear_orders() :
     orders.clear()
+
 def clear_comps() :
     comps.clear()
+
+def change_scene(input_scene) :
+    orders.append(("scene_changeScene", Entity(), input_scene))
 
 # METHODS FOR HANDLING COMPONENTS #
 def get_component(comp_name, entID) :
@@ -195,7 +199,6 @@ class BaseScript :
         pass
     def _update(self, delta_time) :
         pass
-
     def _on_collision(self, other_id) :
         pass
 

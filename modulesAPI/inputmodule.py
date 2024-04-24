@@ -10,11 +10,12 @@ class InputState :
     def unpress_key(self, input_key) :
         self.pressed_keys[input_key.lower()] = False
 
-    def is_key_pressed(self, input_key) :
-        key = input_key.lower()
-        if not self.pressed_keys.get(key) :
-            self.pressed_keys[key] = False
-        return self.pressed_keys[key]
-
 # MODULE ATTRIBUTES #
 input_ref = InputState()
+
+# FUNCTION DEFINITIONS #
+def is_key_pressed(input_key) :
+    key = input_key.lower()
+    if not input_ref.pressed_keys.get(key) :
+        input_ref.pressed_keys[key] = False
+    return input_ref.pressed_keys[key]

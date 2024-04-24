@@ -129,7 +129,7 @@ void appManagement :: begin(std :: string sceneLoad)
 	graphicManagement :: loadShader
 	(
 		basePipeline, GL_FRAGMENT_SHADER, 
-		"frag2.frag"
+		"base.frag"
 	);
 
 	graphicManagement :: compileProgram(basePipeline);
@@ -206,7 +206,6 @@ void appManagement :: initializeAPI()
 	
 	APIGlobals :: coremodule = pybind11 :: module_ :: import("coremodule");
 	APIGlobals :: inputmodule = pybind11 :: module_ :: import("inputmodule");
-	APIGlobals :: appmodule = pybind11 :: module_ :: import("appmodule");
 }
 
 void appManagement :: compileScripts()
@@ -218,8 +217,6 @@ void appManagement :: compileScripts()
 	std :: filesystem :: directory_iterator dirIt = std :: filesystem :: begin
 		(std :: filesystem :: directory_iterator(std :: string
 		(APIGlobals :: workingPath + "scripts/").c_str())); 
-
-
 
 	// RUNS ALL SCRIPTS IN THE SCRIPT DIRECTORY //
 	unsigned scriptsCompiled = 0;

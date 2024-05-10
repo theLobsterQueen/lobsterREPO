@@ -1,9 +1,4 @@
 // README //
-Hey Prof :3
-
-DevBlog link: https://sites.google.com/view/lobsterenginedevblog/home?authuser=0
-The dev blog is updated regularly, so be sure to tune in from time to time!
-
 Sources :
 	Hudson, James. "Lecture3: Transforms." Computer Graphics 1, 9/13/2022, 
 		Shawnee State University.
@@ -87,11 +82,10 @@ Sprint 3 :
 		[X] "Quick-loading" system for loading new meshes/textures/scripts
 		[X] Window resizing
 		[X] Separating the viewport from the UI itself
-		[ ] Better error handling
+		[~] Better error handling
 		[X] Better shader management
 
 Build for RELEASE!!! :
-	[ ] Add Documentation
-	[ ] Fix Windows cross-compilation again
-	[ ] Build Release!!!!
+	[X] Add Documentation
+	[X] Build Release!!!!
 	[ ] [STRETCH] Create Build Dialog for Exporting Projects
